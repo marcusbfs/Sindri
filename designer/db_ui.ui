@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>databaseWindow</class>
+ <widget class="QWidget" name="databaseWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>997</width>
+    <height>640</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Database</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QPushButton" name="btn_search">
+           <property name="text">
+            <string>Search</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="text">
+            <string>Clear</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="le_db_search"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QPushButton" name="pushButton">
+           <property name="text">
+            <string>Add substance</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="text">
+            <string>Edit substance</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="text">
+            <string>Delete substance</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_save_db">
+         <property name="text">
+          <string>Save database</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="tableWidget_db">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="showGrid">
+      <bool>true</bool>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="cornerButtonEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="rowCount">
+      <number>15</number>
+     </property>
+     <property name="columnCount">
+      <number>27</number>
+     </property>
+     <attribute name="horizontalHeaderVisible">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="horizontalHeaderHighlightSections">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>true</bool>
+     </attribute>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>databaseWindow</receiver>
+   <slot>add_substance()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>803</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>651</x>
+     <y>153</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>databaseWindow</receiver>
+   <slot>edit_substance()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>887</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>788</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>le_db_search</sender>
+   <signal>returnPressed()</signal>
+   <receiver>btn_search</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>130</x>
+     <y>32</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>62</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>databaseWindow</receiver>
+   <slot>del_substance()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>984</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>892</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_search</sender>
+   <signal>clicked()</signal>
+   <receiver>databaseWindow</receiver>
+   <slot>search_substance()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>39</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>51</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>databaseWindow</receiver>
+   <slot>clear_search()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>58</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>106</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_save_db</sender>
+   <signal>clicked()</signal>
+   <receiver>databaseWindow</receiver>
+   <slot>save_db()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>985</x>
+     <y>64</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>573</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>le_db_search</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>databaseWindow</receiver>
+   <slot>search_substance()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>246</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>8</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>add_substance()</slot>
+  <slot>del_substance()</slot>
+  <slot>edit_substance()</slot>
+  <slot>search_substance()</slot>
+  <slot>clear_search()</slot>
+  <slot>save_db()</slot>
+ </slots>
+</ui>
