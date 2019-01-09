@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ui.mainwindow_ui import Ui_MainWindow
-from db import databaseWindow
+from databaseWindow import databaseWindow
+import db
 
 
 class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -10,10 +11,13 @@ class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # self.ui.setupUi(self)
         super(mainwindow, self).__init__()
         self.setupUi(self)
+        self.dbw = databaseWindow()
 
     def open_db_window(self):
-        self.dbw = databaseWindow()
         self.dbw.show()
+
+    def closeEvent(self, *args, **kwargs):
+        db.db.close()
 
 
 if __name__ == "__main__":
