@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 from ui.db_substanceProperties_ui import Ui_Form_db_substanceProperties
 
 

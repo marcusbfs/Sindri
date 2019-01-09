@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'designer\db_substanceProperties_ui.ui'
+# Form implementation generated from reading ui file 'designer\db_substanceProperties_ui.ui',
+# licensing of 'designer\db_substanceProperties_ui.ui' applies.
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created: Wed Jan  9 12:23:50 2019
+#      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 
 class Ui_Form_db_substanceProperties(object):
     def setupUi(self, Form_db_substanceProperties):
@@ -86,13 +88,12 @@ class Ui_Form_db_substanceProperties(object):
         QtCore.QMetaObject.connectSlotsByName(Form_db_substanceProperties)
 
     def retranslateUi(self, Form_db_substanceProperties):
-        _translate = QtCore.QCoreApplication.translate
-        Form_db_substanceProperties.setWindowTitle(_translate("Form_db_substanceProperties", "Substance properties"))
-        self.label.setText(_translate("Form_db_substanceProperties", "Name"))
-        self.label_2.setText(_translate("Form_db_substanceProperties", "Formula"))
-        self.label_3.setText(_translate("Form_db_substanceProperties", "CAS number"))
-        self.tabWidget_substanceProperties.setTabText(self.tabWidget_substanceProperties.indexOf(self.tab_identification), _translate("Form_db_substanceProperties", "Identification"))
-        self.tabWidget_substanceProperties.setTabText(self.tabWidget_substanceProperties.indexOf(self.tab_generalData), _translate("Form_db_substanceProperties", "General data"))
+        Form_db_substanceProperties.setWindowTitle(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Substance properties", None, -1))
+        self.label.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Name", None, -1))
+        self.label_2.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Formula", None, -1))
+        self.label_3.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "CAS number", None, -1))
+        self.tabWidget_substanceProperties.setTabText(self.tabWidget_substanceProperties.indexOf(self.tab_identification), QtWidgets.QApplication.translate("Form_db_substanceProperties", "Identification", None, -1))
+        self.tabWidget_substanceProperties.setTabText(self.tabWidget_substanceProperties.indexOf(self.tab_generalData), QtWidgets.QApplication.translate("Form_db_substanceProperties", "General data", None, -1))
 
 
 if __name__ == "__main__":

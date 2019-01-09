@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'designer\mainwindow_ui.ui'
+# Form implementation generated from reading ui file 'designer\mainwindow_ui.ui',
+# licensing of 'designer\mainwindow_ui.ui' applies.
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created: Wed Jan  9 12:24:19 2019
+#      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -29,13 +31,12 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.btn_BancoDeDados.clicked.connect(MainWindow.open_db_window)
+        QtCore.QObject.connect(self.btn_BancoDeDados, QtCore.SIGNAL("clicked()"), MainWindow.open_db_window)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "TPCAE"))
-        self.btn_BancoDeDados.setText(_translate("MainWindow", "Database"))
+        MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "TPCAE", None, -1))
+        self.btn_BancoDeDados.setText(QtWidgets.QApplication.translate("MainWindow", "Database", None, -1))
 
 
 if __name__ == "__main__":

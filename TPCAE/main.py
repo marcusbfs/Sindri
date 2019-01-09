@@ -1,6 +1,6 @@
 import sys
 from mainwindow import mainwindow
-from PyQt5 import QtWidgets
+from PySide2 import QtWidgets
 import db
 
 db.init()

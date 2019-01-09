@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 from ui.db_ui import Ui_databaseWindow
 from db_editSubstanceProperties import Form_EditSubstanceProperties
 import db
@@ -19,6 +19,10 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
                             "Antoine B", "Antoine C", "Pvp min [bar]", "Tmin [K]", "Pvp max [bar]", "Tmax [K]"]
 
         self.tableWidget_db.setHorizontalHeaderLabels(self.col_headers)
+        header = self.tableWidget_db.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
 
         self.load_db()
         self.le_db_search.setFocus()
@@ -56,6 +60,7 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             self.tableWidget_db.insertRow(row_number)
             for col_number, data in enumerate(row_data):
                 self.tableWidget_db.setItem(row_number, col_number, QtWidgets.QTableWidgetItem(str(data)))
+
 
     def search_substance(self):
         substance_string_name = str(self.le_db_search.text())
@@ -157,6 +162,7 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             else:
                 db.db.rollback()
         self.database_changed = False
+        self.le_db_search.clear()
         self.show_full_db()
 
 

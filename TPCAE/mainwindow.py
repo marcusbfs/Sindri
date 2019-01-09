@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 from ui.mainwindow_ui import Ui_MainWindow
 from databaseWindow import databaseWindow
 import db
