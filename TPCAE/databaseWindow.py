@@ -1,9 +1,9 @@
+import os.path
 from PySide2 import QtCore, QtGui, QtWidgets
 from ui.db_ui import Ui_databaseWindow
 from db_editSubstanceProperties import Form_EditSubstanceProperties
 import db
-import sqlite3
-import os.path
+from PySide2 import QtSql
 
 
 class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
@@ -133,11 +133,7 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
         if choice == QtWidgets.QMessageBox.Yes:
             try:
                 db.db.commit()
-                msg = QtWidgets.QMessageBox()
-                msg.setIcon(QtWidgets.QMessageBox.Information)
-                msg.setText("Database saved")
-                msg.setWindowTitle("Confirmation")
-                msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                msg = QtWidgets.QMessageBox.about(self, "Confirmation", "Database has been saved")
                 msg.exec_()
             except:
                 pass

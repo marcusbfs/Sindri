@@ -3,7 +3,7 @@
  <class>databaseWindow</class>
  <widget class="QWidget" name="databaseWindow">
   <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
+   <enum>Qt::ApplicationModal</enum>
   </property>
   <property name="enabled">
    <bool>true</bool>
@@ -89,6 +89,9 @@
     <widget class="QTableWidget" name="tableWidget_db">
      <property name="enabled">
       <bool>true</bool>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
      </property>
      <property name="alternatingRowColors">
       <bool>true</bool>

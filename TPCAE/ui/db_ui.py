@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer\db_ui.ui',
 # licensing of 'designer\db_ui.ui' applies.
 #
-# Created: Wed Jan  9 12:31:49 2019
+# Created: Wed Jan  9 13:58:41 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,7 +13,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 class Ui_databaseWindow(object):
     def setupUi(self, databaseWindow):
         databaseWindow.setObjectName("databaseWindow")
-        databaseWindow.setWindowModality(QtCore.Qt.WindowModal)
+        databaseWindow.setWindowModality(QtCore.Qt.ApplicationModal)
         databaseWindow.setEnabled(True)
         databaseWindow.resize(997, 640)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(databaseWindow)
@@ -56,6 +56,7 @@ class Ui_databaseWindow(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
         self.tableWidget_db = QtWidgets.QTableWidget(databaseWindow)
         self.tableWidget_db.setEnabled(True)
+        self.tableWidget_db.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tableWidget_db.setAlternatingRowColors(True)
         self.tableWidget_db.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.tableWidget_db.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
