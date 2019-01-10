@@ -12,6 +12,7 @@ class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super(mainwindow, self).__init__()
         self.setupUi(self)
         self.dbw = databaseWindow()
+        # self.setWindowFlag(self, )
 
     def open_db_window(self):
         self.dbw.show()

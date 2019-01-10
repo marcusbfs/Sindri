@@ -61,7 +61,6 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             for col_number, data in enumerate(row_data):
                 self.tableWidget_db.setItem(row_number, col_number, QtWidgets.QTableWidgetItem(str(data)))
 
-
     def search_substance(self):
         substance_string_name = str(self.le_db_search.text())
         if substance_string_name == '':
@@ -81,14 +80,30 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
     def add_substance(self):
         pass
 
+    def restore_original_database(self):
+
+        restore_msg = "Are you sure you want to restore the database?"
+        choice = QtWidgets.QMessageBox.question(self, "Restoring database",
+                                                restore_msg,
+                                                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+                                                QtWidgets.QMessageBox.No)
+
+        if choice == QtWidgets.QMessageBox.Yes:
+            try:
+                from shutil import copyfile
+                db.db.close()
+                copyfile(db.database_file + ".orig", db.database_file)
+                db.init()
+                self.search_substance()
+            except:
+                msg = QtWidgets.QMessageBox.about(self, "Error", "Could not restore original database")
+
     def edit_substance(self):
 
         current_row = self.tableWidget_db.currentRow()
         if current_row >= 0:
-            hl_row = self.get_row_values(26)
-            # print(hl_row)
-            self.editSubstanceWindow = Form_EditSubstanceProperties(hl_row)
-            # self.editSubstanceWindow.get_hl_row(hl_row)
+            hr = self.get_row_values(26)
+            self.editSubstanceWindow = Form_EditSubstanceProperties(hl_row=hr)
             self.editSubstanceWindow.show()
 
     def get_row_values(self, n):

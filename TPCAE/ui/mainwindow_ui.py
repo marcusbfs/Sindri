@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer\mainwindow_ui.ui',
 # licensing of 'designer\mainwindow_ui.ui' applies.
 #
-# Created: Wed Jan  9 13:57:47 2019
+# Created: Wed Jan  9 19:38:24 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,13 +13,13 @@ from PySide2 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.setWindowModality(QtCore.Qt.NonModal)
         MainWindow.resize(307, 185)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.btn_BancoDeDados = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_BancoDeDados.setMaximumSize(QtCore.QSize(120, 16777215))
         self.btn_BancoDeDados.setObjectName("btn_BancoDeDados")
         self.horizontalLayout.addWidget(self.btn_BancoDeDados)
         MainWindow.setCentralWidget(self.centralwidget)

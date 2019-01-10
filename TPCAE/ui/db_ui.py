@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer\db_ui.ui',
 # licensing of 'designer\db_ui.ui' applies.
 #
-# Created: Wed Jan  9 13:58:41 2019
+# Created: Wed Jan  9 21:11:35 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -16,10 +16,12 @@ class Ui_databaseWindow(object):
         databaseWindow.setWindowModality(QtCore.Qt.ApplicationModal)
         databaseWindow.setEnabled(True)
         databaseWindow.resize(997, 640)
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(databaseWindow)
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(databaseWindow)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.verticalLayout = QtWidgets.QVBoxLayout()
@@ -34,7 +36,7 @@ class Ui_databaseWindow(object):
         self.le_db_search = QtWidgets.QLineEdit(databaseWindow)
         self.le_db_search.setObjectName("le_db_search")
         self.horizontalLayout.addWidget(self.le_db_search)
-        self.horizontalLayout_3.addLayout(self.horizontalLayout)
+        self.horizontalLayout_4.addLayout(self.horizontalLayout)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
@@ -49,11 +51,17 @@ class Ui_databaseWindow(object):
         self.pushButton_3.setObjectName("pushButton_3")
         self.horizontalLayout_2.addWidget(self.pushButton_3)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.btn_save_db = QtWidgets.QPushButton(databaseWindow)
         self.btn_save_db.setObjectName("btn_save_db")
-        self.verticalLayout_2.addWidget(self.btn_save_db)
-        self.horizontalLayout_3.addLayout(self.verticalLayout_2)
-        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
+        self.horizontalLayout_3.addWidget(self.btn_save_db)
+        self.pushButton_5 = QtWidgets.QPushButton(databaseWindow)
+        self.pushButton_5.setObjectName("pushButton_5")
+        self.horizontalLayout_3.addWidget(self.pushButton_5)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_3)
+        self.horizontalLayout_4.addLayout(self.verticalLayout_2)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_4)
         self.tableWidget_db = QtWidgets.QTableWidget(databaseWindow)
         self.tableWidget_db.setEnabled(True)
         self.tableWidget_db.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
@@ -72,6 +80,7 @@ class Ui_databaseWindow(object):
         self.tableWidget_db.horizontalHeader().setHighlightSections(True)
         self.tableWidget_db.verticalHeader().setVisible(True)
         self.verticalLayout_3.addWidget(self.tableWidget_db)
+        self.verticalLayout_4.addLayout(self.verticalLayout_3)
 
         self.retranslateUi(databaseWindow)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL("clicked()"), databaseWindow.add_substance)
@@ -82,16 +91,19 @@ class Ui_databaseWindow(object):
         QtCore.QObject.connect(self.pushButton_4, QtCore.SIGNAL("clicked()"), databaseWindow.clear_search)
         QtCore.QObject.connect(self.btn_save_db, QtCore.SIGNAL("clicked()"), databaseWindow.save_db)
         QtCore.QObject.connect(self.le_db_search, QtCore.SIGNAL("textChanged(QString)"), databaseWindow.search_substance)
+        QtCore.QObject.connect(self.pushButton_5, QtCore.SIGNAL("clicked()"), databaseWindow.restore_original_database)
         QtCore.QMetaObject.connectSlotsByName(databaseWindow)
 
     def retranslateUi(self, databaseWindow):
         databaseWindow.setWindowTitle(QtWidgets.QApplication.translate("databaseWindow", "Database", None, -1))
         self.btn_search.setText(QtWidgets.QApplication.translate("databaseWindow", "Search", None, -1))
         self.pushButton_4.setText(QtWidgets.QApplication.translate("databaseWindow", "Clear", None, -1))
+        self.pushButton_4.setShortcut(QtWidgets.QApplication.translate("databaseWindow", "Esc", None, -1))
         self.pushButton.setText(QtWidgets.QApplication.translate("databaseWindow", "Add substance", None, -1))
         self.pushButton_2.setText(QtWidgets.QApplication.translate("databaseWindow", "Edit substance", None, -1))
         self.pushButton_3.setText(QtWidgets.QApplication.translate("databaseWindow", "Delete substance", None, -1))
         self.btn_save_db.setText(QtWidgets.QApplication.translate("databaseWindow", "Save database", None, -1))
+        self.pushButton_5.setText(QtWidgets.QApplication.translate("databaseWindow", "Restore original database", None, -1))
 
 
 if __name__ == "__main__":
