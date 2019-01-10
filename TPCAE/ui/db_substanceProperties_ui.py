@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer\db_substanceProperties_ui.ui',
 # licensing of 'designer\db_substanceProperties_ui.ui' applies.
 #
-# Created: Wed Jan  9 22:08:13 2019
+# Created: Wed Jan  9 23:13:34 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -41,7 +41,9 @@ class Ui_Form_db_substanceProperties(object):
         self.horizontalLayout_2.addWidget(self.label)
         self.le_name = QtWidgets.QLineEdit(self.tab_identification)
         self.le_name.setMinimumSize(QtCore.QSize(146, 0))
+        self.le_name.setInputMethodHints(QtCore.Qt.ImhPreferNumbers|QtCore.Qt.ImhUppercaseOnly)
         self.le_name.setText("")
+        self.le_name.setCursorPosition(0)
         self.le_name.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.le_name.setObjectName("le_name")
         self.horizontalLayout_2.addWidget(self.le_name)
@@ -420,6 +422,29 @@ class Ui_Form_db_substanceProperties(object):
         self.tabWidget_substanceProperties.setCurrentIndex(0)
         QtCore.QObject.connect(self.btn_edit_confirm, QtCore.SIGNAL("clicked()"), Form_db_substanceProperties.edit_confirm)
         QtCore.QObject.connect(self.btn_edit_cancel, QtCore.SIGNAL("clicked()"), Form_db_substanceProperties.edit_cancel)
+        QtCore.QObject.connect(self.le_name, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_formula, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_CAS, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_MM, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_Tfp, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_Tb, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_Tc, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_Pc, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_Vc, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_Zc, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_omega, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_a0, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_a1, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_a2, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_a3, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_a4, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_CpTmin, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_CpTmax, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_AntoineA, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_AntoineB, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_AntoineC, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_AntoineTmin, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
+        QtCore.QObject.connect(self.le_AntoineTmax, QtCore.SIGNAL("textChanged(QString)"), Form_db_substanceProperties.lineEdit_changed)
         QtCore.QMetaObject.connectSlotsByName(Form_db_substanceProperties)
 
     def retranslateUi(self, Form_db_substanceProperties):

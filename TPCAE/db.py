@@ -10,6 +10,12 @@ def init():
     db = sqlite3.connect(database_file)
     cursor = db.cursor()
 
+    # Nomes das colunas do database
+    # sql = "select * from database where 1=0;"
+    # cursor.execute(sql)
+    # p = [d[0] for d in cursor.description]
+    # print(p)
+
     # def query(command, arguments=[]):
     #     _db = sqlite3.connect(database_file)
     #     _c = _db.cursor()

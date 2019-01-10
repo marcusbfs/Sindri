@@ -2,8 +2,8 @@ import os.path
 from PySide2 import QtCore, QtGui, QtWidgets
 from ui.db_ui import Ui_databaseWindow
 from db_editSubstanceProperties import Form_EditSubstanceProperties
+from db_addSubstanceProperties import Form_AddSubstanceProperties
 import db
-from PySide2 import QtSql
 
 
 class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
@@ -78,7 +78,8 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
                 self.tableWidget_db.setRowCount(0)
 
     def add_substance(self):
-        pass
+        self.addSubstanceWindow = Form_AddSubstanceProperties()
+        self.addSubstanceWindow.show()
 
     def restore_original_database(self):
 
@@ -95,6 +96,7 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
                 copyfile(db.database_file + ".orig", db.database_file)
                 db.init()
                 self.search_substance()
+                self.database_changed = False
             except:
                 msg = QtWidgets.QMessageBox.about(self, "Error", "Could not restore original database")
 
@@ -104,7 +106,11 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
         if current_row >= 0:
             hr = self.get_row_values(26)
             self.editSubstanceWindow = Form_EditSubstanceProperties(hl_row=hr)
+            self.connect(self.editSubstanceWindow, QtCore.SIGNAL('editConfirmed'),self, self.ping())
             self.editSubstanceWindow.show()
+
+    def ping(self):
+        print("sinal emitido")
 
     def get_row_values(self, n):
 

@@ -43,32 +43,33 @@
     <session id="1192220256">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.20" value="1" />
+          <entry key="project.open.time.24" value="1" />
           <entry key="project.open.time.71" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="7" />
+          <entry key="py" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="7" />
+          <entry key="Python" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="19" />
-          <entry key="py" value="11470" />
+          <entry key="py" value="22694" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="19" />
-          <entry key="Python" value="11470" />
+          <entry key="Python" value="22694" />
         </counts>
       </usages-collector>
     </session>
@@ -87,28 +88,28 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TPCAE/mainwindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            <state>
+              <caret column="43" selection-start-column="43" selection-end-column="43" />
               <folding>
-                <element signature="e#0#42#0" expanded="true" />
                 <marker date="1547069695800" expanded="true" signature="221:230" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TPCAE/db_editSubstanceProperties.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="40" column="27" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
+            <state relative-caret-position="204">
+              <caret line="85" selection-start-line="85" selection-end-line="85" />
               <folding>
-                <element signature="e#0#42#0" expanded="true" />
-                <marker date="1547079594415" expanded="true" signature="116:119" ph="..." />
-                <marker date="1547079594415" expanded="true" signature="206:210" ph="..." />
-                <marker date="1547079594415" expanded="true" signature="606:615" ph="..." />
-                <marker date="1547079594415" expanded="true" signature="1800:1809" ph="..." />
-                <marker date="1547079594415" expanded="true" signature="1800:1901" ph="..." />
+                <marker date="1547088636075" expanded="true" signature="126:129" ph="..." />
+                <marker date="1547088636075" expanded="true" signature="216:220" ph="..." />
+                <marker date="1547088636075" expanded="true" signature="1987:1996" ph="..." />
+                <marker date="1547088636075" expanded="true" signature="3001:3010" ph="..." />
+                <marker date="1547088636075" expanded="true" signature="3001:3102" ph="..." />
+                <marker date="1547088636075" expanded="true" signature="7029:7145" ph="..." />
+                <marker date="1547088636075" expanded="true" signature="7172:7211" ph="..." />
               </folding>
             </state>
           </provider>
@@ -117,15 +118,30 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TPCAE/databaseWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="867">
-              <caret line="90" column="16" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="16" />
+            <state relative-caret-position="238">
+              <caret line="91" column="16" selection-start-line="91" selection-start-column="16" selection-end-line="91" selection-end-column="16" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1547076590818" expanded="true" signature="265:269" ph="..." />
-                <marker date="1547076590818" expanded="true" signature="1717:1936" ph="..." />
-                <marker date="1547076590818" expanded="true" signature="1971:2390" ph="..." />
-                <marker date="1547076590818" expanded="true" signature="3952:3956" ph="..." />
-                <marker date="1547076590818" expanded="true" signature="3981:3987" ph="..." />
+                <marker date="1547090769100" expanded="true" signature="305:309" ph="..." />
+                <marker date="1547090769100" expanded="true" signature="1757:1976" ph="..." />
+                <marker date="1547090769100" expanded="true" signature="2011:2430" ph="..." />
+                <marker date="1547090769100" expanded="true" signature="3149:3258" ph="..." />
+                <marker date="1547090769100" expanded="true" signature="4128:4132" ph="..." />
+                <marker date="1547090769100" expanded="true" signature="4157:4163" ph="..." />
+                <marker date="1547090769100" expanded="true" signature="4528:4565" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TPCAE/db_addSubstanceProperties.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="39" column="24" selection-start-line="39" selection-start-column="24" selection-end-line="39" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#44#0" expanded="true" />
+                <marker date="1547090698823" expanded="true" signature="4103:4109" ph="..." />
               </folding>
             </state>
           </provider>
@@ -134,8 +150,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TPCAE/db.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="10" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+            <state relative-caret-position="221">
+              <caret line="13" column="36" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -167,9 +183,10 @@
         <option value="$PROJECT_DIR$/TPCAE/db_substanceProperties.py" />
         <option value="$PROJECT_DIR$/TPCAE/main.py" />
         <option value="$PROJECT_DIR$/TPCAE/mainwindow.py" />
-        <option value="$PROJECT_DIR$/TPCAE/db.py" />
-        <option value="$PROJECT_DIR$/TPCAE/databaseWindow.py" />
         <option value="$PROJECT_DIR$/TPCAE/db_editSubstanceProperties.py" />
+        <option value="$PROJECT_DIR$/TPCAE/db_addSubstanceProperties.py" />
+        <option value="$PROJECT_DIR$/TPCAE/databaseWindow.py" />
+        <option value="$PROJECT_DIR$/TPCAE/db.py" />
       </list>
     </option>
   </component>
@@ -183,7 +200,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -206,6 +222,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -225,6 +242,27 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.main">
+    <configuration name="db" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="software" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/TPCAE" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TPCAE/db.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="software" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -270,10 +308,12 @@
     <list>
       <item itemvalue="Python.mainwindow" />
       <item itemvalue="Python.main" />
+      <item itemvalue="Python.db" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.db" />
         <item itemvalue="Python.mainwindow" />
       </list>
     </recent_temporary>
@@ -293,14 +333,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12328767" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3290735" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3290735" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -334,10 +373,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/mainwindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        <state>
+          <caret column="43" selection-start-column="43" selection-end-column="43" />
           <folding>
-            <element signature="e#0#42#0" expanded="true" />
             <marker date="1547069695800" expanded="true" signature="221:230" ph="..." />
           </folding>
         </state>
@@ -345,37 +383,51 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/db.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="10" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+        <state relative-caret-position="221">
+          <caret line="13" column="36" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/databaseWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="90" column="16" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="16" />
+        <state relative-caret-position="238">
+          <caret line="91" column="16" selection-start-line="91" selection-start-column="16" selection-end-line="91" selection-end-column="16" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1547076590818" expanded="true" signature="265:269" ph="..." />
-            <marker date="1547076590818" expanded="true" signature="1717:1936" ph="..." />
-            <marker date="1547076590818" expanded="true" signature="1971:2390" ph="..." />
-            <marker date="1547076590818" expanded="true" signature="3952:3956" ph="..." />
-            <marker date="1547076590818" expanded="true" signature="3981:3987" ph="..." />
+            <marker date="1547090769100" expanded="true" signature="305:309" ph="..." />
+            <marker date="1547090769100" expanded="true" signature="1757:1976" ph="..." />
+            <marker date="1547090769100" expanded="true" signature="2011:2430" ph="..." />
+            <marker date="1547090769100" expanded="true" signature="3149:3258" ph="..." />
+            <marker date="1547090769100" expanded="true" signature="4128:4132" ph="..." />
+            <marker date="1547090769100" expanded="true" signature="4157:4163" ph="..." />
+            <marker date="1547090769100" expanded="true" signature="4528:4565" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/db_editSubstanceProperties.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="40" column="27" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
+        <state relative-caret-position="204">
+          <caret line="85" selection-start-line="85" selection-end-line="85" />
           <folding>
-            <element signature="e#0#42#0" expanded="true" />
-            <marker date="1547079594415" expanded="true" signature="116:119" ph="..." />
-            <marker date="1547079594415" expanded="true" signature="206:210" ph="..." />
-            <marker date="1547079594415" expanded="true" signature="606:615" ph="..." />
-            <marker date="1547079594415" expanded="true" signature="1800:1809" ph="..." />
-            <marker date="1547079594415" expanded="true" signature="1800:1901" ph="..." />
+            <marker date="1547088636075" expanded="true" signature="126:129" ph="..." />
+            <marker date="1547088636075" expanded="true" signature="216:220" ph="..." />
+            <marker date="1547088636075" expanded="true" signature="1987:1996" ph="..." />
+            <marker date="1547088636075" expanded="true" signature="3001:3010" ph="..." />
+            <marker date="1547088636075" expanded="true" signature="3001:3102" ph="..." />
+            <marker date="1547088636075" expanded="true" signature="7029:7145" ph="..." />
+            <marker date="1547088636075" expanded="true" signature="7172:7211" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/db_addSubstanceProperties.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="39" column="24" selection-start-line="39" selection-start-column="24" selection-end-line="39" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+            <marker date="1547090698823" expanded="true" signature="4103:4109" ph="..." />
           </folding>
         </state>
       </provider>
