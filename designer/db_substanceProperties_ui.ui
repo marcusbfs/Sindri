@@ -454,7 +454,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>   </string>
+                <string/>
                </property>
               </widget>
              </item>
@@ -494,7 +494,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>   </string>
+                <string/>
                </property>
               </widget>
              </item>
@@ -1040,15 +1040,15 @@
    <sender>btn_edit_confirm</sender>
    <signal>clicked()</signal>
    <receiver>Form_db_substanceProperties</receiver>
-   <slot>edit_confirm()</slot>
+   <slot>confirm_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>304</x>
-     <y>285</y>
+     <x>303</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
-     <x>133</x>
-     <y>257</y>
+     <x>187</x>
+     <y>287</y>
     </hint>
    </hints>
   </connection>
@@ -1056,390 +1056,21 @@
    <sender>btn_edit_cancel</sender>
    <signal>clicked()</signal>
    <receiver>Form_db_substanceProperties</receiver>
-   <slot>edit_cancel()</slot>
+   <slot>cancel_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>398</x>
-     <y>294</y>
+     <x>404</x>
+     <y>283</y>
     </hint>
     <hint type="destinationlabel">
-     <x>286</x>
-     <y>239</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_name</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>170</x>
-     <y>80</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>4</x>
-     <y>79</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_formula</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>162</x>
-     <y>155</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>116</x>
-     <y>293</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_CAS</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>147</x>
-     <y>228</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>110</x>
-     <y>195</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_MM</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>253</x>
-     <y>52</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>6</x>
-     <y>50</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_Tfp</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>257</x>
-     <y>80</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>424</x>
-     <y>69</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_Tb</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>245</x>
-     <y>108</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>7</x>
-     <y>112</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_Tc</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>283</x>
-     <y>138</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>429</x>
-     <y>136</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_Pc</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>275</x>
-     <y>170</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>7</x>
-     <y>164</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_Vc</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>269</x>
-     <y>195</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>429</x>
+     <x>369</x>
      <y>187</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_Zc</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>264</x>
-     <y>223</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>5</x>
-     <y>207</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_omega</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>237</x>
-     <y>245</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>427</x>
-     <y>257</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_a0</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>123</x>
-     <y>137</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>357</x>
-     <y>5</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_a1</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>155</x>
-     <y>162</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>429</x>
-     <y>37</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_a2</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>137</x>
-     <y>190</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>427</x>
-     <y>21</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_a3</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>105</x>
-     <y>220</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>6</x>
-     <y>268</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_a4</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>114</x>
-     <y>242</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>426</x>
-     <y>162</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_CpTmin</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>282</x>
-     <y>223</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>423</x>
-     <y>213</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_CpTmax</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>381</x>
-     <y>225</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>428</x>
-     <y>243</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_AntoineA</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>250</x>
-     <y>71</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>424</x>
-     <y>15</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_AntoineB</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>274</x>
-     <y>101</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>33</x>
-     <y>1</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_AntoineC</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>211</x>
-     <y>134</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>38</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_AntoineTmin</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>225</x>
-     <y>159</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>199</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_AntoineTmax</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Form_db_substanceProperties</receiver>
-   <slot>lineEdit_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>247</x>
-     <y>188</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>427</x>
-     <y>288</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>edit_confirm()</slot>
-  <slot>edit_cancel()</slot>
-  <slot>lineEdit_changed()</slot>
+  <slot>confirm_clicked()</slot>
+  <slot>cancel_clicked()</slot>
  </slots>
 </ui>

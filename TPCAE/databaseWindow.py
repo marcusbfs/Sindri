@@ -20,6 +20,8 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
 
         self.tableWidget_db.setHorizontalHeaderLabels(self.col_headers)
         header = self.tableWidget_db.horizontalHeader()
+        # for i in range(len(self.col_headers)):
+        #     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
@@ -51,16 +53,14 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             pass
 
     def update_table_db(self, results):
-        number_cols = len(results[0])
-
         self.tableWidget_db.setRowCount(0)
-        self.tableWidget_db.setColumnCount(number_cols)
 
         for row_number, row_data in enumerate(results):
             self.tableWidget_db.insertRow(row_number)
             for col_number, data in enumerate(row_data):
                 self.tableWidget_db.setItem(row_number, col_number, QtWidgets.QTableWidgetItem(str(data)))
 
+    # @QtCore.Slot()
     def search_substance(self):
         substance_string_name = str(self.le_db_search.text())
         if substance_string_name == '':
@@ -106,11 +106,13 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
         if current_row >= 0:
             hr = self.get_row_values(26)
             self.editSubstanceWindow = Form_EditSubstanceProperties(hl_row=hr)
-            self.connect(self.editSubstanceWindow, QtCore.SIGNAL('editConfirmed'),self, self.ping())
+            self.editSubstanceWindow.signal_changes_made.connect(self.search_substance)
+            self.editSubstanceWindow.signal_changes_made.connect(self.is_subtance_edited)
             self.editSubstanceWindow.show()
 
-    def ping(self):
-        print("sinal emitido")
+    def is_subtance_edited(self, s):
+        if s == True:
+            self.database_changed = True
 
     def get_row_values(self, n):
 
@@ -176,7 +178,7 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
                                                     QtWidgets.QMessageBox.No)
             if choice == QtWidgets.QMessageBox.Yes:
                 db.db.commit()
-            else:
+            elif choice == QtWidgets.QMessageBox.No:
                 db.db.rollback()
         self.database_changed = False
         self.le_db_search.clear()

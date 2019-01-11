@@ -4,6 +4,8 @@ import db
 
 
 class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProperties):
+    signal_changes_made = QtCore.Signal(bool)
+
     def __init__(self, parent=None, hl_row=None):
         super(Form_EditSubstanceProperties, self).__init__(parent)
         self.setupUi(self)
@@ -11,6 +13,31 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         self.hl_row = hl_row
         self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
         self.changes_made = False
+
+        # Connect buttons
+        self.connect(self.le_name, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_formula, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_CAS, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_MM, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_Tfp, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_Tb, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_Tc, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_Pc, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_Vc, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_Zc, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_omega, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_a0, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_a1, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_a2, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_a3, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_a4, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_CpTmin, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_CpTmax, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_AntoineA, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_AntoineB, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_AntoineC, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_AntoineTmin, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(self.le_AntoineTmax, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
 
         self.Formula = self.hl_row[0]
         self.Name = self.hl_row[1]
@@ -49,6 +76,9 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
 
         self.load_entries()
 
+    def pingEdit(self):
+        print("ping from edit")
+
     def load_entries(self):
         self.le_formula.setText(self.Formula)
         self.le_name.setText(self.Name)
@@ -83,10 +113,10 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         else:
             return ["", ""]
 
-    def edit_confirm(self):
+    def confirm_clicked(self):
         if self.changes_made:
 
-            edit_confirm_msg = "Save changes?"
+            edit_confirm_msg = "Save editions?"
             choice = QtWidgets.QMessageBox.question(self, "Saving changes",
                                                     edit_confirm_msg,
                                                     QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
@@ -137,10 +167,9 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
                     db.cursor.execute(query_GENERAL)
                     db.cursor.execute(query_CP)
                     db.cursor.execute(query_ANTOINE)
-                    # self.connect(self.editSubstanceWindow, QtCore.SIGNAL('editConfirmed'), self.search_substance())
+                    self.close()
                 except:
                     msg = QtWidgets.QMessageBox.about(self, "Error", "Could not save changes")
-                self.emit(QtCore.SIGNAL('editConfirmed'))
 
     def isFloat(self, s):
         try:
@@ -152,5 +181,9 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
     def lineEdit_changed(self):
         self.changes_made = True
 
-    def edit_cancel(self):
+    def cancel_clicked(self):
+        self.changes_made = False
         self.close()
+
+    def closeEvent(self, QCloseEvent):
+        self.signal_changes_made.emit(self.changes_made)
