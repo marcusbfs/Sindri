@@ -1,4 +1,4 @@
-from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtWidgets
 from ui.db_substanceProperties_ui import Ui_Form_db_substanceProperties
 import db
 
@@ -75,9 +75,6 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         self.colLen = len(self.columnHeaders)
 
         self.load_entries()
-
-    def pingEdit(self):
-        print("ping from edit")
 
     def load_entries(self):
         self.le_formula.setText(self.Formula)

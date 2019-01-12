@@ -1,9 +1,11 @@
-from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtWidgets
 from ui.db_substanceProperties_ui import Ui_Form_db_substanceProperties
 import db
 
 
 class Form_AddSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProperties):
+    signal = QtCore.Signal(bool)
+
     def __init__(self, parent=None):
         super(Form_AddSubstanceProperties, self).__init__(parent)
         self.setupUi(self)
@@ -17,6 +19,7 @@ class Form_AddSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substancePropert
                               'CpIG', 'Cpliq', 'ANTOINE_A', 'ANTOINE_B', 'ANTOINE_C', '`Pvpmin, bar`', '`Tmin, K`',
                               '`Pvpmax, bar`', '`Tmax, K`']
         self.colLen = len(self.columnHeaders)
+        self.substance_added = False
 
     def confirm_clicked(self):
 
@@ -36,8 +39,9 @@ class Form_AddSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substancePropert
                  self.le_AntoineTmin.text(), "", self.le_AntoineTmax.text(),
                  )
 
-        print(len(items))
         db.cursor.execute(query, items)
+        self.substance_added = True
+        self.close()
 
     def isFloat(self, s):
         try:
@@ -48,3 +52,6 @@ class Form_AddSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substancePropert
 
     def cancel_clicked(self):
         self.close()
+
+    def closeEvent(self, QCloseEvent):
+        self.signal.emit(self.substance_added)

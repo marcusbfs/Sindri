@@ -1,5 +1,5 @@
 import os.path
-from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2 import QtWidgets
 from ui.db_ui import Ui_databaseWindow
 from db_editSubstanceProperties import Form_EditSubstanceProperties
 from db_addSubstanceProperties import Form_AddSubstanceProperties
@@ -30,9 +30,6 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
         self.le_db_search.setFocus()
         self.database_changed = False
 
-    # def __del__(self):
-    #     self.db.close()
-
     def load_db(self):
         # Abrir banco de dados
         if os.path.isfile(self.dbfile):
@@ -60,7 +57,6 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             for col_number, data in enumerate(row_data):
                 self.tableWidget_db.setItem(row_number, col_number, QtWidgets.QTableWidgetItem(str(data)))
 
-    # @QtCore.Slot()
     def search_substance(self):
         substance_string_name = str(self.le_db_search.text())
         if substance_string_name == '':
@@ -70,7 +66,6 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
                 query = "SELECT * FROM database WHERE Name LIKE '%" + substance_string_name + "%'" + \
                         " OR Formula LIKE '%" + substance_string_name + "%'" + \
                         " OR `CAS #` LIKE '%" + substance_string_name + "%'"
-                # print(query)
                 db.cursor.execute(query)
                 results = db.cursor.fetchall()
                 self.update_table_db(results)
@@ -79,6 +74,8 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
 
     def add_substance(self):
         self.addSubstanceWindow = Form_AddSubstanceProperties()
+        self.addSubstanceWindow.signal.connect(self.is_database_edited)
+        self.addSubstanceWindow.signal.connect(self.search_substance)
         self.addSubstanceWindow.show()
 
     def restore_original_database(self):
@@ -107,10 +104,10 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             hr = self.get_row_values(26)
             self.editSubstanceWindow = Form_EditSubstanceProperties(hl_row=hr)
             self.editSubstanceWindow.signal_changes_made.connect(self.search_substance)
-            self.editSubstanceWindow.signal_changes_made.connect(self.is_subtance_edited)
+            self.editSubstanceWindow.signal_changes_made.connect(self.is_database_edited)
             self.editSubstanceWindow.show()
 
-    def is_subtance_edited(self, s):
+    def is_database_edited(self, s):
         if s == True:
             self.database_changed = True
 
@@ -166,7 +163,6 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
 
     def clear_search(self):
         self.le_db_search.clear()
-        # self.show_full_db()
         self.le_db_search.setFocus()
 
     def closeEvent(self, QCloseEvent):
