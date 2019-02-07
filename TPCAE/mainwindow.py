@@ -1,7 +1,9 @@
 from PySide2 import QtWidgets
+from PySide2.QtCore import Slot
+import db
 from ui.mainwindow_ui import Ui_MainWindow
 from databaseWindow import databaseWindow
-import db
+from pureSubstanceCalculationsWindow import Window_PureSubstanceCalculations
 
 
 class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -9,9 +11,15 @@ class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super(mainwindow, self).__init__()
         self.setupUi(self)
         self.dbw = databaseWindow()
+        self.btn_PureSubstanceCalculations.clicked.connect(self.open_PureSubstanceCalculations)
 
     def open_db_window(self):
         self.dbw.show()
+
+    @Slot()
+    def open_PureSubstanceCalculations(self):
+        self.pureSubsWin = Window_PureSubstanceCalculations()
+        self.pureSubsWin.show()
 
     def closeEvent(self, *args, **kwargs):
         db.db.close()
