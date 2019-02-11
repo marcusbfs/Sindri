@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from constants import *
 from db_utils import get_compound_properties
+import units
 
 eos_options = {"van der Waals (1890)": "van_der_waals_1890",
                "Redlich and Kwong (1949)": "redlich_and_kwong_1949",
@@ -18,7 +19,7 @@ class EOS:
         self.eos = eos.lower()
         self.compound = get_compound_properties(name, formula)
         self.Tc = self.compound["Tc_K"]
-        self.Pc = self.compound["Pc_bar"] * 1e5  # convert to pascal
+        self.Pc = self.compound["Pc_bar"] * units.bar_to_Pa  # convert to pascal
         self.omega = self.compound["omega"]
         self.T = T
         self.P = P
@@ -32,6 +33,7 @@ class EOS:
         return r
 
     def initialize(self):
+        # try:
         self.Tr = self.T / self.Tc
         self.Pc_RTc = self.Pc / (R_IG * self.Tc)
 
@@ -72,7 +74,8 @@ class EOS:
             self.b = .07780 / self.Pc_RTc
             self.delta = .15559 / self.Pc_RTc
             self.epsilon = -.006053 / self.Pc_RTc ** 2
-            self.alpha = (1. + (.37464 + 1.54226 * self.omega - .2699 * self.omega ** 2) * (1. - self.Tr ** .5)) ** 2
+            self.alpha = (1. + (.37464 + 1.54226 * self.omega - .2699 * self.omega ** 2) * (
+                    1. - self.Tr ** .5)) ** 2
             self.theta = self.a * self.alpha
 
         elif self.eos == "soave_1984":
@@ -85,6 +88,8 @@ class EOS:
             self.theta = self.a * self.alpha
 
         self.eta = self.b
+        # except:
+        #     raise TypeError("One or more variables needed are not set")
 
     def return_P(self, V):
         # return - P + R_IG * T / (V - b) - theta * (V - eta) / ((V - b) * (V ** 2 + delta * V + epsilon))
@@ -106,13 +111,17 @@ class EOS:
         epsilonl = self.epsilon * P_RT ** 2
         etal = Bl
 
-        coefs = [1., deltal - Bl - 1., thetal + epsilonl - deltal * (Bl + 1.), epsilonl * (Bl + 1.) + thetal * etal]
+        coefs = [1., deltal - Bl - 1., thetal + epsilonl - deltal * (Bl + 1.), -(epsilonl * (Bl + 1.) + thetal * etal)]
         r = np.roots(coefs)
         real_valued = r.real[abs(r.imag) < 1e-7]
-        return real_valued[real_valued > 0]
+        ans = real_valued[real_valued > 0]
+        if ans.size == 0:
+            raise Exception("There are no positive real roots for Z")
+        return ans
 
     def return_V(self):
-        return self.return_Z() * R_IG * self.T / self.P
+        ans = self.return_Z() * R_IG * self.T / self.P
+        return ans
 
     def diagram_PV(self, vi, vf, n_of_points):
         self.multiple_diagram_PV(self, vi, vf, n_of_points, self.T)
