@@ -1,4 +1,7 @@
 import numpy as np
+import sympy as sp
+from scipy.integrate import quad
+from scipy.misc import derivative
 import matplotlib.pyplot as plt
 from constants import *
 from db_utils import get_compound_properties
@@ -104,20 +107,62 @@ class EOS:
         self.eos = name
 
     def return_Z(self):
-        P_RT = self.P / (R_IG * self.T)
+        return self.return_Zfunc(self.T, self.P)
+
+    def return_Zfunc(self, _T, _P):
+        P_RT = _P / (R_IG * _T)
         Bl = self.b * P_RT
         deltal = self.delta * P_RT
-        thetal = self.theta * self.P / (R_IG * self.T) ** 2
+        thetal = self.theta * _P / (R_IG * _T) ** 2
         epsilonl = self.epsilon * P_RT ** 2
         etal = Bl
 
         coefs = [1., deltal - Bl - 1., thetal + epsilonl - deltal * (Bl + 1.), -(epsilonl * (Bl + 1.) + thetal * etal)]
         r = np.roots(coefs)
-        real_valued = r.real[abs(r.imag) < 1e-7]
-        ans = real_valued[real_valued > 0]
+        real_valued = r.real[abs(r.imag) < 1e-5]
+        ans = real_valued[real_valued >= 0]
         if ans.size == 0:
             raise Exception("There are no positive real roots for Z")
         return ans
+
+    def return_ZfuncOfP(self, _P):
+        return self.return_Zfunc(self.T, _P)
+
+    def return_ZfuncOfT(self, _T):
+        return self.return_Zfunc(_T, self.P)
+
+    def return_HR(self, _P, state):
+        sT = self.T
+
+        if state == "liq":
+            def f(P):
+                Z_t = lambda T: np.min(self.return_Zfunc(T, P))
+                dz = derivative(Z_t, sT)
+                ans = -sT * dz / P
+                return ans
+        elif state == "vap":
+            def f(P):
+                Z_t = lambda T: np.max(self.return_Zfunc(T, P))
+                dz = derivative(Z_t, sT)
+                ans = -sT * dz / P
+                return ans
+
+        ans = quad(f, 0, _P)
+        return ans[0] * R_IG * self.T
+
+    def return_GR(self, _P, state):
+        # G_R/(R*T) = integral(0, P, (Z-1)/P, dP) (constant T)
+        if state == "liq":
+            def f(P):
+                if P == 0: return 0
+                return (np.min(self.return_ZfuncOfP(P)) - 1.0) / P
+        elif state == "vap":
+            def f(P):
+                if P == 0: return 0
+                return (np.max(self.return_ZfuncOfP(P)) - 1.0) / P
+
+        ans = quad(f, 0, _P)
+        return ans[0] * R_IG * self.T
 
     def return_V(self):
         ans = self.return_Z() * R_IG * self.T / self.P
@@ -144,7 +189,8 @@ class EOS:
             p = self.return_P(v)
             ax.plot(v, p, label="T = " + str(round(temps[i], 2)) + " K")
 
-        title = "PV diagram - " + self.compound["Name"].title() + " - " + self.eos_options[self.eos]
+        # title = "PV diagram - " + self.compound["Name"].title() + " - " + self.eos_options[self.eos]
+        title = "PV diagram - " + self.compound["Name"].title()
         ax.set(xlabel="molar volume (m3/mol)", ylabel="pressure (Pa)", title=title)
         ax.grid()
         ax.legend()
@@ -166,18 +212,20 @@ if __name__ == "__main__":
     P = 1.0e5
 
     c = EOS(cname, cformula, eos, T, P)
-    c.show_eos_options()
-    r = c.return_V()
-    print(r)
-
-    rr = c.return_P(r)
-    print(rr)
-
-    vi = 1.1e-4
-    vf = 7.08e-4
-    n = 10000
-
-    T = [359.8, 369.8, 379.8]
-    T = np.linspace(350, 390, 4)
-
-    c.multiple_diagram_PV(vi, vf, n, T)
+    # c.show_eos_options()
+    # r = c.return_V()
+    # print(r)
+    #
+    # rr = c.return_P(r)
+    # print(rr)
+    #
+    # vi = 1.1e-4
+    # vf = 7.08e-4
+    # n = 10000
+    #
+    # T = [359.8, 369.8, 379.8]
+    # T = np.linspace(350, 390, 4)
+    #
+    # c.multiple_diagram_PV(vi, vf, n, T)
+    a = c.return_Z()
+    print(a)
