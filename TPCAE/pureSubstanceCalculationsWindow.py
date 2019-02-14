@@ -1,14 +1,16 @@
-import numpy as np
 import os
+
+import numpy as np
 from PySide2 import QtCore, QtWidgets
-from ui.pure_substance_calculations_ui import Ui_PureSubstanceCalculationsWindow
+
+import IdealGasPropertiesPureSubstance as IGprop
+import antoineVP
 import db
 import db_utils
-import utils
-import eos2 as eos
-import antoineVP
+import eos
 import units
-import IdealGasPropertiesPureSubstance as IGprop
+import utils
+from ui.pure_substance_calculations_ui import Ui_PureSubstanceCalculationsWindow
 
 
 class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
@@ -95,10 +97,10 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                 self.maxVs = utils.float2str(np.max(self.Vs), _decimals, _lt, _gt)
                 self.minZs = utils.float2str(np.min(self.Zs), _decimals, _lt, _gt)
                 self.maxZs = utils.float2str(np.max(self.Zs), _decimals, _lt, _gt)
-                self.tableWidget_results.setItem(0, 0, QtWidgets.QTableWidgetItem(self.minVs))
-                self.tableWidget_results.setItem(0, 1, QtWidgets.QTableWidgetItem(self.maxVs))
-                self.tableWidget_results.setItem(1, 0, QtWidgets.QTableWidgetItem(self.minZs))
-                self.tableWidget_results.setItem(1, 1, QtWidgets.QTableWidgetItem(self.maxZs))
+                # self.tableWidget_results.setItem(0, 0, QtWidgets.QTableWidgetItem(self.minVs))
+                # self.tableWidget_results.setItem(0, 1, QtWidgets.QTableWidgetItem(self.maxVs))
+                # self.tableWidget_results.setItem(1, 0, QtWidgets.QTableWidgetItem(self.minZs))
+                # self.tableWidget_results.setItem(1, 1, QtWidgets.QTableWidgetItem(self.maxZs))
                 # add to plain text editor
                 self.plainTextEdit_results.appendPlainText("Vc [m3/mol]: " + self.minVs + " (liquid), " +
                                                            self.maxVs + " (vapor)")
@@ -114,8 +116,8 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                 self.rhos = self.compound["Mol. Wt."] * 1e-3 / self.Vs
                 maxrhos = utils.float2str(np.max(self.rhos), _decimals, _lt, _gt)
                 minrhos = utils.float2str(np.min(self.rhos), _decimals, _lt, _gt)
-                self.tableWidget_results.setItem(2, 0, QtWidgets.QTableWidgetItem(maxrhos))
-                self.tableWidget_results.setItem(2, 1, QtWidgets.QTableWidgetItem(minrhos))
+                # self.tableWidget_results.setItem(2, 0, QtWidgets.QTableWidgetItem(maxrhos))
+                # self.tableWidget_results.setItem(2, 1, QtWidgets.QTableWidgetItem(minrhos))
                 self.plainTextEdit_results.appendPlainText("Density [kg/m3]: " + maxrhos + " (liquid), " +
                                                            minrhos + " (vapor)")
             else:
@@ -127,9 +129,7 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                                                   self.compound["ANTOINE_C"],
                                                   self.compound["Tmin_K"], self.compound["Tmax_K"])
                 self.P_antoine = ans_antoine[0] * units.bar_to_Pa
-                displayP_antoine = utils.float2str(self.P_antoine * units.Pa_to_bar, _decimals, _lt,
-                                                   _gt) + " bar, " + utils.float2str(self.P_antoine, _decimals, _lt,
-                                                                                     _gt) + " Pa"
+                displayP_antoine = utils.float2str(self.P_antoine * units.Pa_to_bar, _decimals, _lt, _gt) + " bar"
                 if ans_antoine[1]:
                     displayP_antoine = displayP_antoine + " (" + ans_antoine[1] + ")"
                 self.plainTextEdit_results.appendPlainText("Pvp (Antoine): " + displayP_antoine)
@@ -144,8 +144,9 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                     print("error calculating fluid state")
 
             # calculate cp and
-            if self.compound["a0"] and self.compound["a1"] and self.compound["a2"] and self.compound["a3"] and \
-                    self.compound["a4"]:
+            if self.compound["a0"] is not None and self.compound["a1"] is not None and self.compound[
+                "a2"] is not None and self.compound["a3"] is not None and \
+                    self.compound["a4"] is not None:
                 a0 = self.compound["a0"]
                 a1 = self.compound["a1"]
                 a2 = self.compound["a2"]
@@ -163,8 +164,7 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                     print("error calculating Cp")
                 # deltaH_IG
                 try:
-                    T1 = self.Tref
-                    self.deltaH_IG = IGprop.return_deltaH_IG(T1, self.T, a0, a1, a2, a3, a4)
+                    self.deltaH_IG = IGprop.return_deltaH_IG(self.Tref, self.T, a0, a1, a2, a3, a4)
                     msg = "deltaH_IG " + " [J mol-1]: " + utils.float2str(self.deltaH_IG, 4, lt=_lt, gt=_gt)
                     self.plainTextEdit_results.appendPlainText(msg)
                 except:
@@ -177,13 +177,13 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                     self.maxVs = np.max(self.Vs)
                     self.minZs = np.min(self.Zs)
                     self.maxZs = np.max(self.Zs)
-                    print(self.deltaH_IG)
-                    print(self.c.return_HR_given_VT(self.Pref, self.Tref, state="vap"))
-                    print(self.c.return_HR_given_VT(self.P, self.T, state="vap"))
-                    self.deltaH_liq = self.deltaH_IG - (self.c.return_HR_given_VT(self.Pref, self.Tref, state="liq") -
-                                                        self.c.return_HR_given_VT(self.P, self.T, state="liq"))
-                    self.deltaH_vap = self.deltaH_IG - (self.c.return_HR_given_VT(self.Pref, self.Tref, state="vap") -
-                                                        self.c.return_HR_given_VT(self.P, self.T, state="vap"))
+
+                    HRproc_vap = self.c.return_HR_given_VT(self.P, self.T, "vap")
+                    HRref_vap = self.c.return_HR_given_VT(self.Pref, self.Tref, "vap")
+                    HRproc_liq = self.c.return_HR_given_VT(self.P, self.T, "liq")
+                    HRref_liq = self.c.return_HR_given_VT(self.Pref, self.Tref, "liq")
+                    self.deltaH_liq = self.deltaH_IG - (HRproc_liq - HRref_liq)
+                    self.deltaH_vap = self.deltaH_IG - (HRproc_vap - HRref_vap)
                     msg = "deltaH [J mol-1]: " + utils.float2str(self.deltaH_liq, 4, lt=_lt,
                                                                  gt=_gt) + " (liq.), " + utils.float2str(
                         self.deltaH_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
@@ -203,10 +203,12 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
 
                 # deltaS
                 try:
-                    self.deltaS_liq = self.deltaS_IG - (self.c.return_SR_given_VT(self.Pref, self.Tref, state="liq") -
-                                                        self.c.return_SR_given_VT(self.P, self.T, state="liq"))
-                    self.deltaS_vap = self.deltaS_IG - (self.c.return_SR_given_VT(self.Pref, self.Tref, state="vap") -
-                                                        self.c.return_SR_given_VT(self.P, self.T, state="vap"))
+                    SRproc_vap = self.c.return_SR_given_VT(self.P, self.T, "vap")
+                    SRref_vap = self.c.return_SR_given_VT(self.Pref, self.Tref, "vap")
+                    SRproc_liq = self.c.return_SR_given_VT(self.P, self.T, "liq")
+                    SRref_liq = self.c.return_SR_given_VT(self.Pref, self.Tref, "liq")
+                    self.deltaS_liq = self.deltaS_IG - (SRproc_liq - SRref_liq)
+                    self.deltaS_vap = self.deltaS_IG - (SRproc_vap - SRref_vap)
                     msg = "deltaS [J mol-1 K-1]: " + utils.float2str(self.deltaS_liq, 4, lt=_lt,
                                                                      gt=_gt) + " (liq.), " + utils.float2str(
                         self.deltaS_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
@@ -214,20 +216,6 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                 except:
                     # TODO
                     print("error calculating deltaS")
-
-                # fugacity
-                try:
-                    self.fugacity_liq = - (self.c.return_f_given_VT(self.Pref, self.Tref, state="liq") -
-                                           self.c.return_f_given_VT(self.P, self.T, state="liq"))
-                    self.fugacity_vap = - (self.c.return_f_given_VT(self.Pref, self.Tref, state="vap") -
-                                           self.c.return_f_given_VT(self.P, self.T, state="vap"))
-                    msg = "fugacity [Pa]: " + utils.float2str(self.fugacity_liq, 4, lt=_lt,
-                                                              gt=_gt) + " (liq.), " + utils.float2str(
-                        self.fugacity_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
-                    self.plainTextEdit_results.appendPlainText(msg)
-                except:
-                    # TODO
-                    print("error calculating fugacity")
 
                 # deltaG_IG
                 try:
@@ -240,13 +228,18 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
 
                 # deltaG
                 try:
-                    self.deltaG_liq = self.deltaG_IG + self.c.return_GR(self.P, "liq")
-                    self.deltaG_vap = self.deltaG_IG + self.c.return_GR(self.P, "vap")
-                    msg = "deltaG [J mol-1]: " + utils.float2str(self.deltaG_liq, 4, lt=_lt,
-                                                                 gt=_gt) + " (liq.), " + utils.float2str(
+                    GRproc_vap = self.c.return_GR_given_VT(self.P, self.T, "vap")
+                    GRref_vap = self.c.return_GR_given_VT(self.Pref, self.Tref, "vap")
+                    GRproc_liq = self.c.return_GR_given_VT(self.P, self.T, "liq")
+                    GRref_liq = self.c.return_GR_given_VT(self.Pref, self.Tref, "liq")
+                    self.deltaG_liq = self.deltaG_IG - (GRproc_liq - GRref_liq)
+                    self.deltaG_vap = self.deltaG_IG - (GRproc_vap - GRref_vap)
+                    msg = "deltaG [J mol-1 K-1]: " + utils.float2str(self.deltaG_liq, 4, lt=_lt,
+                                                                     gt=_gt) + " (liq.), " + utils.float2str(
                         self.deltaG_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
                     self.plainTextEdit_results.appendPlainText(msg)
                 except:
+                    # TODO
                     print("error calculating deltaG")
 
                 # deltaU_IG
@@ -258,6 +251,23 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                     # TODO
                     print("error calculating deltaU_IG")
 
+                # deltaU
+                try:
+                    URproc_vap = self.c.return_UR_given_VT(self.P, self.T, "vap")
+                    URref_vap = self.c.return_UR_given_VT(self.Pref, self.Tref, "vap")
+                    URproc_liq = self.c.return_UR_given_VT(self.P, self.T, "liq")
+                    URref_liq = self.c.return_UR_given_VT(self.Pref, self.Tref, "liq")
+                    self.deltaU_liq = self.deltaU_IG - (URproc_liq - URref_liq)
+                    self.deltaU_vap = self.deltaU_IG - (URproc_vap - URref_vap)
+                    msg = "deltaU [J mol-1 K-1]: " + utils.float2str(self.deltaU_liq, 4, lt=_lt,
+                                                                     gt=_gt) + " (liq.), " + utils.float2str(
+                        self.deltaU_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
+                    self.plainTextEdit_results.appendPlainText(msg)
+                except:
+                    # TODO
+                    print("error calculating deltaU")
+
+                # deltaA_IG
                 try:
                     self.deltaA_IG = IGprop.return_deltaA_IG(self.deltaU_IG, self.T, self.deltaS_IG)
                     msg = "deltaA_IG " + " [J mol-1]: " + utils.float2str(self.deltaA_IG, 4, lt=_lt, gt=_gt)
@@ -265,6 +275,48 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                 except:
                     # TODO
                     print("error calculating deltaA_IG")
+
+                # deltaA
+                try:
+                    ARproc_vap = self.c.return_AR_given_VT(self.P, self.T, "vap")
+                    ARref_vap = self.c.return_AR_given_VT(self.Pref, self.Tref, "vap")
+                    ARproc_liq = self.c.return_AR_given_VT(self.P, self.T, "liq")
+                    ARref_liq = self.c.return_AR_given_VT(self.Pref, self.Tref, "liq")
+                    self.deltaA_liq = self.deltaA_IG - (ARproc_liq - ARref_liq)
+                    self.deltaA_vap = self.deltaA_IG - (ARproc_vap - ARref_vap)
+                    msg = "deltaA [J mol-1 K-1]: " + utils.float2str(self.deltaA_liq, 4, lt=_lt,
+                                                                     gt=_gt) + " (liq.), " + utils.float2str(
+                        self.deltaA_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
+                    self.plainTextEdit_results.appendPlainText(msg)
+                except:
+                    # TODO
+                    print("error calculating deltaA")
+
+                # fugacity
+                try:
+                    self.fugacity_liq = self.c.return_fliq_given_VT(self.P, self.T) * units.Pa_to_bar
+                    self.fugacity_vap = self.c.return_fvap_given_VT(self.P, self.T) * units.Pa_to_bar
+                    msg = "fugacity [bar]: " + utils.float2str(self.fugacity_liq, 4, lt=_lt,
+                                                               gt=_gt) + " (liq.), " + utils.float2str(
+                        self.fugacity_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
+                    self.plainTextEdit_results.appendPlainText(msg)
+                except:
+                    # TODO
+                    print("error calculating fugacity")
+
+                # Pvp from EOS
+                try:
+                    tol = 1e-4
+                    maxit = 100
+                    try:
+                        self.Pvp_eos, k = self.c.return_Pvp_EOS(self.T, self.P_antoine, tol=tol, k=maxit)  # Pa
+                    except:
+                        self.Pvp_eos, k = self.c.return_Pvp_EOS(self.T, units.bar_to_Pa, tol=tol, k=maxit)  # Pa
+                    msg = "Pvp (EOS) [bar]: " + utils.float2str(self.Pvp_eos * units.Pa_to_bar, 4,
+                                                                lt=_lt) + " - iterations: " + str(k)
+                    self.plainTextEdit_results.appendPlainText(msg)
+                except:
+                    print("error calculating Pvp from EOS")
 
         else:
             msg = QtWidgets.QMessageBox.about(self, "Error", "Please, select compound and EOS")

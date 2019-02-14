@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/pure_substance_calculations_ui.ui',
 # licensing of 'designer/pure_substance_calculations_ui.ui' applies.
 #
-# Created: Tue Feb 12 20:59:45 2019
+# Created: Wed Feb 13 23:56:02 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -54,28 +54,6 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.listWidget_eos_options.setObjectName("listWidget_eos_options")
         self.gridLayout.addWidget(self.listWidget_eos_options, 0, 0, 1, 1)
         self.gridLayout_3.addWidget(self.groupBox_EOS, 1, 0, 1, 1)
-        self.groupBox_results = QtWidgets.QGroupBox(PureSubstanceCalculationsWindow)
-        self.groupBox_results.setObjectName("groupBox_results")
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.groupBox_results)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        self.tableWidget_results = QtWidgets.QTableWidget(self.groupBox_results)
-        self.tableWidget_results.setRowCount(3)
-        self.tableWidget_results.setColumnCount(2)
-        self.tableWidget_results.setObjectName("tableWidget_results")
-        self.tableWidget_results.setColumnCount(2)
-        self.tableWidget_results.setRowCount(3)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_results.setVerticalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_results.setVerticalHeaderItem(1, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_results.setVerticalHeaderItem(2, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_results.setHorizontalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_results.setHorizontalHeaderItem(1, item)
-        self.gridLayout_2.addWidget(self.tableWidget_results, 0, 0, 1, 1)
-        self.gridLayout_3.addWidget(self.groupBox_results, 0, 1, 1, 1)
         self.groupBox_processVariables = QtWidgets.QGroupBox(PureSubstanceCalculationsWindow)
         self.groupBox_processVariables.setMinimumSize(QtCore.QSize(0, 50))
         self.groupBox_processVariables.setObjectName("groupBox_processVariables")
@@ -129,16 +107,6 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.btn_calculate.setFont(font)
         self.btn_calculate.setObjectName("btn_calculate")
         self.gridLayout_3.addWidget(self.btn_calculate, 4, 0, 1, 1)
-        self.groupBox_resultstxt = QtWidgets.QGroupBox(PureSubstanceCalculationsWindow)
-        self.groupBox_resultstxt.setObjectName("groupBox_resultstxt")
-        self.gridLayout_6 = QtWidgets.QGridLayout(self.groupBox_resultstxt)
-        self.gridLayout_6.setObjectName("gridLayout_6")
-        self.plainTextEdit_results = QtWidgets.QPlainTextEdit(self.groupBox_resultstxt)
-        self.plainTextEdit_results.setReadOnly(True)
-        self.plainTextEdit_results.setPlainText("")
-        self.plainTextEdit_results.setObjectName("plainTextEdit_results")
-        self.gridLayout_6.addWidget(self.plainTextEdit_results, 0, 0, 1, 1)
-        self.gridLayout_3.addWidget(self.groupBox_resultstxt, 1, 1, 5, 1)
         self.groupBox_refVariables = QtWidgets.QGroupBox(PureSubstanceCalculationsWindow)
         self.groupBox_refVariables.setObjectName("groupBox_refVariables")
         self.gridLayout_7 = QtWidgets.QGridLayout(self.groupBox_refVariables)
@@ -177,6 +145,16 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.horizontalLayout_4.addWidget(self.comboBox_refPunit)
         self.gridLayout_7.addLayout(self.horizontalLayout_4, 0, 1, 1, 1)
         self.gridLayout_3.addWidget(self.groupBox_refVariables, 3, 0, 1, 1)
+        self.groupBox_resultstxt = QtWidgets.QGroupBox(PureSubstanceCalculationsWindow)
+        self.groupBox_resultstxt.setObjectName("groupBox_resultstxt")
+        self.gridLayout_6 = QtWidgets.QGridLayout(self.groupBox_resultstxt)
+        self.gridLayout_6.setObjectName("gridLayout_6")
+        self.plainTextEdit_results = QtWidgets.QPlainTextEdit(self.groupBox_resultstxt)
+        self.plainTextEdit_results.setReadOnly(True)
+        self.plainTextEdit_results.setPlainText("")
+        self.plainTextEdit_results.setObjectName("plainTextEdit_results")
+        self.gridLayout_6.addWidget(self.plainTextEdit_results, 0, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.groupBox_resultstxt, 0, 1, 6, 1)
 
         self.retranslateUi(PureSubstanceCalculationsWindow)
         QtCore.QObject.connect(self.le_searchSubstance, QtCore.SIGNAL("returnPressed()"), self.btn_searchSubstance.click)
@@ -188,12 +166,6 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.btn_searchSubstance.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Search", None, -1))
         self.le_searchSubstance.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "methane", None, -1))
         self.groupBox_EOS.setTitle(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Equation of state", None, -1))
-        self.groupBox_results.setTitle(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Results", None, -1))
-        self.tableWidget_results.verticalHeaderItem(0).setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Molar volume (m3/mol)", None, -1))
-        self.tableWidget_results.verticalHeaderItem(1).setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Z", None, -1))
-        self.tableWidget_results.verticalHeaderItem(2).setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Density (kg/m3)", None, -1))
-        self.tableWidget_results.horizontalHeaderItem(0).setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Liquid", None, -1))
-        self.tableWidget_results.horizontalHeaderItem(1).setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Vapor", None, -1))
         self.groupBox_processVariables.setTitle(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Process variables", None, -1))
         self.label.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "T", None, -1))
         self.le_procT.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "150", None, -1))
@@ -206,7 +178,6 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.comboBox_procPunit.setItemText(1, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "atm", None, -1))
         self.comboBox_procPunit.setItemText(2, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Pa", None, -1))
         self.btn_calculate.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Calculate", None, -1))
-        self.groupBox_resultstxt.setTitle(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Results 2.0", None, -1))
         self.groupBox_refVariables.setTitle(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Reference variables", None, -1))
         self.label_3.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "T", None, -1))
         self.le_refT.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "300", None, -1))
@@ -218,6 +189,8 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.comboBox_refPunit.setItemText(0, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "bar", None, -1))
         self.comboBox_refPunit.setItemText(1, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "atm", None, -1))
         self.comboBox_refPunit.setItemText(2, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Pa", None, -1))
+        self.groupBox_resultstxt.setTitle(
+            QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Results 2.0", None, -1))
 
 
 if __name__ == "__main__":

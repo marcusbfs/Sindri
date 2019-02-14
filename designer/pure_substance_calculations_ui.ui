@@ -125,50 +125,6 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QGroupBox" name="groupBox_results">
-     <property name="title">
-      <string>Results</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <widget class="QTableWidget" name="tableWidget_results">
-        <property name="rowCount">
-         <number>3</number>
-        </property>
-        <property name="columnCount">
-         <number>2</number>
-        </property>
-        <row>
-         <property name="text">
-          <string>Molar volume (m3/mol)</string>
-         </property>
-        </row>
-        <row>
-         <property name="text">
-          <string>Z</string>
-         </property>
-        </row>
-        <row>
-         <property name="text">
-          <string>Density (kg/m3)</string>
-         </property>
-        </row>
-        <column>
-         <property name="text">
-          <string>Liquid</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Vapor</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
    <item row="2" column="0">
     <widget class="QGroupBox" name="groupBox_processVariables">
      <property name="minimumSize">
@@ -288,25 +244,6 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1" rowspan="5">
-    <widget class="QGroupBox" name="groupBox_resultstxt">
-     <property name="title">
-      <string>Results 2.0</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_6">
-      <item row="0" column="0">
-       <widget class="QPlainTextEdit" name="plainTextEdit_results">
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-        <property name="plainText">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
    <item row="3" column="0">
     <widget class="QGroupBox" name="groupBox_refVariables">
      <property name="title">
@@ -398,6 +335,25 @@
      </layout>
     </widget>
    </item>
+      <item row="0" column="1" rowspan="6">
+          <widget class="QGroupBox" name="groupBox_resultstxt">
+              <property name="title">
+                  <string>Results 2.0</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_6">
+                  <item row="0" column="0">
+                      <widget class="QPlainTextEdit" name="plainTextEdit_results">
+                          <property name="readOnly">
+                              <bool>true</bool>
+                          </property>
+                          <property name="plainText">
+                              <string/>
+                          </property>
+                      </widget>
+                  </item>
+              </layout>
+          </widget>
+      </item>
   </layout>
  </widget>
  <resources/>

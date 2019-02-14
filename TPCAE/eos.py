@@ -1,11 +1,13 @@
 import numpy as np
 import sympy as sp
 from scipy.integrate import quad
-from scipy.misc import derivative
-import matplotlib.pyplot as plt
+
+import units
+# from scipy.optimize import root_scalar
+# from scipy.misc import derivative
+# import matplotlib.pyplot as plt
 from constants import *
 from db_utils import get_compound_properties
-import units
 
 eos_options = {"van der Waals (1890)": "van_der_waals_1890",
                "Redlich and Kwong (1949)": "redlich_and_kwong_1949",
@@ -24,10 +26,26 @@ class EOS:
         self.Tc = self.compound["Tc_K"]
         self.Pc = self.compound["Pc_bar"] * units.bar_to_Pa  # convert to pascal
         self.omega = self.compound["omega"]
-        self.T = T
-        self.P = P
+        self.Tval = T
+        self.Pval = P
+
+        self.Z, self.deltal, self.Bl, self.thetal, self.epsilonl = sp.symbols('Z deltal Bl thetal epsilonl', real=True)
+        self.a, self.b, self.P, self.T, self.delta, self.theta, self.epsilon = sp.symbols('a b P T delta theta epsilon',
+                                                                                          real=True)
+        self.alpha = sp.symbols('alpha', real=True)
+        self.Tr, self.Pr = sp.symbols('Tr Pr', real=True)
+
+        self.V = sp.symbols('V', real=True)
+
+        self.Z_V_T = None
+        self.Z_P_T = None
+        self.Vval = None
 
         self.initialize()
+
+        self.return_Z_V_T()
+        self.return_Z_P_T()
+
         self.eos_options = eos_options
 
     def show_eos_options(self):
@@ -90,116 +108,154 @@ class EOS:
                     1. - self.Tr ** .5)) ** 2
             self.theta = self.a * self.alpha
 
-        self.eta = self.b
-        # except:
-        #     raise TypeError("One or more variables needed are not set")
+    def return_Z_V_T(self):
+        if not self.Z_V_T:
+            self.Z_V_T = self.V / (self.V - self.b) - ((self.theta / (R_IG * self.T) * self.V * (self.V - self.b))) / (
+                    (self.V - self.b) * (self.V ** 2 + self.delta * self.V + self.epsilon))
+        # print(self.Z_V_T)
+        return self.Z_V_T
 
-    def return_P(self, V):
-        # return - P + R_IG * T / (V - b) - theta * (V - eta) / ((V - b) * (V ** 2 + delta * V + epsilon))
-        return R_IG * self.T / (V - self.b) - self.theta * (V - self.eta) / (
-                (V - self.b) * (V ** 2 + self.delta * V + self.epsilon))
+    def return_Z_P_T(self):
+        if not self.Z_P_T:
+            self.eos_eq = self.Z ** 3 + (self.deltal - self.Bl - 1) * self.Z ** 2 + self.Z * (
+                    self.thetal + self.epsilonl - self.deltal * (self.Bl + 1)) - (
+                                  self.epsilonl * (self.Bl + 1) + self.Bl * self.thetal)
+            self.eos_eq = self.eos_eq.subs(self.Bl, self.b * self.P / (R_IG * self.T))
+            self.eos_eq = self.eos_eq.subs(self.deltal, self.delta * self.P / (R_IG * self.T))
+            self.eos_eq = self.eos_eq.subs(self.thetal, self.theta * self.P / (R_IG * self.T) ** 2)
+            self.Z_P_T = self.eos_eq.subs(self.epsilonl, self.epsilon * (self.P / (R_IG * self.T)) ** 2)
+        # print(self.Z_P_T)
+        return self.Z_P_T
 
-    def def_T(self, T):
-        self.T = T
-        self.initialize()
+    def return_Z_given_PT(self, _P, _T):
+        # self.return_Z_P_T()
+        f = sp.lambdify([self.P, self.T], self.return_Z_P_T())
+        # print(f(_P, _T))
+        p = sp.Poly(f(_P, _T), self.Z).coeffs()
+        # print(p.coeffs())
 
-    def def_EOS(self, name):
-        self.eos = name
-
-    def return_Z(self):
-        return self.return_Zfunc(self.T, self.P)
-
-    def return_Zfunc(self, _T, _P):
-        P_RT = _P / (R_IG * _T)
-        Bl = self.b * P_RT
-        deltal = self.delta * P_RT
-        thetal = self.theta * _P / (R_IG * _T) ** 2
-        epsilonl = self.epsilon * P_RT ** 2
-        etal = Bl
-
-        coefs = [1., deltal - Bl - 1., thetal + epsilonl - deltal * (Bl + 1.), -(epsilonl * (Bl + 1.) + thetal * etal)]
-        r = np.roots(coefs)
+        r = np.roots(p)
         real_valued = r.real[abs(r.imag) < 1e-5]
         ans = real_valued[real_valued >= 0]
         if ans.size == 0:
             raise Exception("There are no positive real roots for Z")
+        # print(ans)
+        self.Zval = ans
         return ans
 
-    def return_ZfuncOfP(self, _P):
-        return self.return_Zfunc(self.T, _P)
+    def return_V_given_PT(self, _P, _T):
+        ans = self.return_Z_given_PT(_P, _T) * R_IG * _T / _P
+        # print(ans)
+        self.Vval = ans
+        return ans
 
-    def return_ZfuncOfT(self, _T):
-        return self.return_Zfunc(_T, self.P)
-
-    def return_HR(self, _P, state):
-        sT = self.T
-
-        if state == "liq":
-            def f(P):
-                Z_t = lambda T: np.min(self.return_Zfunc(T, P))
-                dz = derivative(Z_t, sT)
-                ans = -sT * dz / P
-                return ans
-        elif state == "vap":
-            def f(P):
-                Z_t = lambda T: np.max(self.return_Zfunc(T, P))
-                dz = derivative(Z_t, sT)
-                ans = -sT * dz / P
-                return ans
-
-        ans = quad(f, 0, _P)
-        return ans[0] * R_IG * self.T
-
-    def return_GR(self, _P, state):
-        # G_R/(R*T) = integral(0, P, (Z-1)/P, dP) (constant T)
-        if state == "liq":
-            def f(P):
-                if P == 0: return 0
-                return (np.min(self.return_ZfuncOfP(P)) - 1.0) / P
-        elif state == "vap":
-            def f(P):
-                if P == 0: return 0
-                return (np.max(self.return_ZfuncOfP(P)) - 1.0) / P
-
-        ans = quad(f, 0, _P)
-        return ans[0] * R_IG * self.T
+    def return_Z(self):
+        return self.return_Z_given_PT(self.Pval, self.Tval)
 
     def return_V(self):
-        ans = self.return_Z() * R_IG * self.T / self.P
-        return ans
+        return self.return_V_given_PT(self.Pval, self.Tval)
 
-    def diagram_PV(self, vi, vf, n_of_points):
-        self.multiple_diagram_PV(self, vi, vf, n_of_points, self.T)
-        # v = np.linspace(vi, vf, n_of_points, endpoint=True)
-        # p = self.return_P(v)
-        #
-        # fig, ax = plt.subplots()
-        # ax.plot(v, p)
-        # ax.set(xlabel="molar volume (m3/mol)", ylabel="pressure (Pa)")
-        # ax.grid()
-        # plt.show()
+    def return_UR_given_VT(self, _P, _T, state):
+        _V = self.return_V_given_PT(_P, _T)
+        if state == "liq":
+            _V = np.min(_V)
+        elif state == "vap":
+            _V = np.max(_V)
+        f_to_integrate = self.T * sp.diff(self.Z_V_T, self.T) / self.V
+        f_to_integrate = sp.lambdify(self.V, f_to_integrate.subs(self.T, _T))
+        ans = quad(f_to_integrate, _V, np.inf)[0]
+        return ans * _T * R_IG
 
-    def multiple_diagram_PV(self, vi, vf, n_of_points, temps):
-        temps = np.atleast_1d(temps)
-        v = np.linspace(vi, vf, n_of_points, endpoint=True)
-        fig, ax = plt.subplots()
+    def return_AR_given_VT(self, _P, _T, state):
+        _V = self.return_V_given_PT(_P, _T)
+        if state == "liq":
+            _V = np.min(_V)
+        elif state == "vap":
+            _V = np.max(_V)
+        _Z = float(self.Z_V_T.subs([(self.V, _V), (self.T, _T)]).evalf())
+        f_to_integrate = (1 - self.Z_V_T) / self.V
+        f_to_integrate = sp.lambdify(self.V, f_to_integrate.subs(self.T, _T))
+        ans = quad(f_to_integrate, _V, np.inf)[0] + np.log(_Z)
+        return ans * _T * R_IG
 
-        for i in range(len(temps)):
-            self.def_T(temps[i])
-            p = self.return_P(v)
-            ax.plot(v, p, label="T = " + str(round(temps[i], 2)) + " K")
+    def return_SR_given_VT(self, _P, _T, state):
+        _V = self.return_V_given_PT(_P, _T)
+        if state == "liq":
+            _V = np.min(_V)
+        elif state == "vap":
+            _V = np.max(_V)
+        # _Z = float(self.Z_V_T.subs([(self.V, _V), (self.T, _T)]).evalf())
+        # f_to_integrate = (self.T * sp.diff(self.Z_V_T, self.T) - 1 + self.Z_V_T) / self.V
+        # f_to_integrate = sp.lambdify(self.V, f_to_integrate.subs(self.T, _T))
+        # ans = quad(f_to_integrate, _V, np.inf)[0] - np.log(float(_Z))
+        # print("S1: ", ans)
+        UR_RT = self.return_UR_given_VT(_P, _T, state)
+        AR_RT = self.return_AR_given_VT(_P, _T, state)
+        ans = (UR_RT - AR_RT) / (R_IG * _T)
+        # print("S2: ", ans)
+        return ans * R_IG
 
-        # title = "PV diagram - " + self.compound["Name"].title() + " - " + self.eos_options[self.eos]
-        title = "PV diagram - " + self.compound["Name"].title()
-        ax.set(xlabel="molar volume (m3/mol)", ylabel="pressure (Pa)", title=title)
-        ax.grid()
-        ax.legend()
-        plt.show()
+    def return_HR_given_VT(self, _P, _T, state):
+        _V = self.return_V_given_PT(_P, _T)
+        if state == "liq":
+            _V = np.min(_V)
+        elif state == "vap":
+            _V = np.max(_V)
+        _Z = float(self.Z_V_T.subs([(self.V, _V), (self.T, _T)]).evalf())
+        # f_to_integrate = self.T * sp.diff(self.Z_V_T, self.T) / self.V
+        # f_to_integrate = sp.lambdify(self.V, f_to_integrate.subs(self.T, _T))
+        # ans = quad(f_to_integrate, _V, np.inf)[0] + 1 - _Z
+        # print("H1: ", ans)
+        UD_RT = self.return_UR_given_VT(_P, _T, state) / (R_IG * _T)
+        ans = UD_RT + 1. - _Z
+        # print("H2: ", ans)
+        return ans * R_IG * _T
+
+    def return_GR_given_VT(self, _P, _T, state):
+        _V = self.return_V_given_PT(_P, _T)
+        if state == "liq":
+            _V = np.min(_V)
+        elif state == "vap":
+            _V = np.max(_V)
+        _Z = float(self.Z_V_T.subs([(self.V, _V), (self.T, _T)]).evalf())
+        AR_RT = self.return_AR_given_VT(_P, _T, state) / (R_IG * _T)
+        ans = AR_RT + 1 - _Z
+        return ans * R_IG * _T
+
+    def return_fliq_given_VT(self, _P, _T):
+        _V = self.return_V_given_PT(_P, _T)
+        _V = np.min(_V)
+        ans = -self.return_GR_given_VT(_P, _T, "liq") / (R_IG * _T)
+        return _P * np.e ** ans
+
+    def return_fvap_given_VT(self, _P, _T):
+        _V = self.return_V_given_PT(_P, _T)
+        _V = np.max(_V)
+        ans = -self.return_GR_given_VT(_P, _T, "vap") / (R_IG * _T)
+        return _P * np.e ** ans
+
+    def return_Pvp_EOS(self, _T, initialP, tol=1e-3, k=500):
+        _P = initialP
+        # f_of_P = lambda p: self.return_fliq_given_VT(p, _T) - self.return_fvap_given_VT(p, _T)
+        # print(f_of_P(initialP))
+        # ans = root_scalar(f_of_P, x0=_P)
+        # print(ans)
+        error = 0.01
+        for i in range(k):
+            fL = self.return_fliq_given_VT(_P, _T)
+            fV = self.return_fvap_given_VT(_P, _T)
+            _P = _P * fL / fV
+            error = fL / fV - 1.0
+            if abs(error) < tol: return _P, i
+
+        return _P, str(i) + " (max iterations)"
 
 
 if __name__ == "__main__":
-    cname = "propane"
-    cformula = "C3H8"
+    # cname = "propane"
+    # cformula = "C3H8"
+    cname = "water"
+    cformula = "H2O"
 
     eos = "van_der_waals_1890"
     eos = "redlich_and_kwong_1949"
@@ -212,20 +268,9 @@ if __name__ == "__main__":
     P = 1.0e5
 
     c = EOS(cname, cformula, eos, T, P)
-    # c.show_eos_options()
-    # r = c.return_V()
-    # print(r)
-    #
-    # rr = c.return_P(r)
-    # print(rr)
-    #
-    # vi = 1.1e-4
-    # vf = 7.08e-4
-    # n = 10000
-    #
-    # T = [359.8, 369.8, 379.8]
-    # T = np.linspace(350, 390, 4)
-    #
-    # c.multiple_diagram_PV(vi, vf, n, T)
-    a = c.return_Z()
+    c.return_Z_given_PT(P, T)
+    c.return_V_given_PT(P, T)
+    # c.return_UR()
+    # c.return_AR()
+    a = c.return_HR_given_VT(2.034e-5, 222)
     print(a)
