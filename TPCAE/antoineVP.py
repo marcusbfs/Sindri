@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def antoineVP(T, A, B, C, Tmin, Tmax):
     """
     log10(Pvp) = A - B/(T + C - 273.15)

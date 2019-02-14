@@ -1,11 +1,10 @@
 import numpy as np
 import sympy as sp
 from scipy.integrate import quad
-from scipy.misc import derivative
-import matplotlib.pyplot as plt
+
+import units
 from constants import R_IG
 from db_utils import get_compound_properties
-import units
 
 eos_options = {"van der Waals (1890)": "van_der_waals_1890",
                "Redlich and Kwong (1949)": "redlich_and_kwong_1949",
