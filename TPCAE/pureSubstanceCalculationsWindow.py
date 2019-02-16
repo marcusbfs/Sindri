@@ -10,6 +10,7 @@ import db_utils
 import eos
 import units
 import utils
+from constants import R_IG
 from ui.pure_substance_calculations_ui import Ui_PureSubstanceCalculationsWindow
 
 
@@ -82,25 +83,35 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
             self.plainTextEdit_results.clear()
 
             try:  # to initialize EOS
-                self.c = eos.EOS(self.compound["Name"], self.compound["Formula"], eos.eos_options[self.eosname], self.T,
-                                 self.P)
+                self.c = eos.EOS(self.compound["Name"], self.compound["Formula"], eos.eos_options[self.eosname])
+                self.plainTextEdit_results.appendPlainText("compound: {:s} ({:s})".format(
+                    self.c.compound["Name"], self.c.compound["Formula"]
+                ))
+                self.plainTextEdit_results.appendPlainText(
+                    "equation of state: {0:s})".format(self.listWidget_eos_options.currentItem().text()))
             except Exception as e:
                 err = "One or more of the following properties is not set: Tc, Pc, omega"
                 msg = QtWidgets.QMessageBox.about(self, "Error", str(err))
                 return 1
 
             try:  # calculate Zc and Vc
-                self.Zs = self.c.return_Z()
-                self.Vs = self.c.return_V()
+                self.Zs = self.c.return_Z_given_PT(self.P, self.T)
+                self.Zliq = np.min(self.Zs)
+                self.Zvap = np.max(self.Zs)
+                self.Vliq = self.T * R_IG * self.Zliq / self.P
+                self.Vvap = self.T * R_IG * self.Zvap / self.P
+
+                self.Zsref = self.c.return_Z_given_PT(self.Pref, self.Tref)
+                self.Zliqref = np.min(self.Zsref)
+                self.Zvapref = np.max(self.Zsref)
+                self.Vliqref = self.Tref * R_IG * self.Zliqref / self.Pref
+                self.Vvapref = self.Tref * R_IG * self.Zvapref / self.Pref
+
                 # add to tablewidget
-                self.minVs = utils.float2str(np.min(self.Vs), _decimals, _lt, _gt)
-                self.maxVs = utils.float2str(np.max(self.Vs), _decimals, _lt, _gt)
-                self.minZs = utils.float2str(np.min(self.Zs), _decimals, _lt, _gt)
-                self.maxZs = utils.float2str(np.max(self.Zs), _decimals, _lt, _gt)
-                # self.tableWidget_results.setItem(0, 0, QtWidgets.QTableWidgetItem(self.minVs))
-                # self.tableWidget_results.setItem(0, 1, QtWidgets.QTableWidgetItem(self.maxVs))
-                # self.tableWidget_results.setItem(1, 0, QtWidgets.QTableWidgetItem(self.minZs))
-                # self.tableWidget_results.setItem(1, 1, QtWidgets.QTableWidgetItem(self.maxZs))
+                self.minVs = utils.float2str(self.Vliq, _decimals, _lt, _gt)
+                self.maxVs = utils.float2str(self.Vvap, _decimals, _lt, _gt)
+                self.minZs = utils.float2str(self.Zliq, _decimals, _lt, _gt)
+                self.maxZs = utils.float2str(self.Zvap, _decimals, _lt, _gt)
                 # add to plain text editor
                 self.plainTextEdit_results.appendPlainText("Vc [m3/mol]: " + self.minVs + " (liquid), " +
                                                            self.maxVs + " (vapor)")
@@ -112,17 +123,20 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
 
             # print(self.Vs)
             # print(self.Zs)
-            if self.compound["Mol. Wt."]:
-                self.rhos = self.compound["Mol. Wt."] * 1e-3 / self.Vs
-                maxrhos = utils.float2str(np.max(self.rhos), _decimals, _lt, _gt)
-                minrhos = utils.float2str(np.min(self.rhos), _decimals, _lt, _gt)
+            if self.compound["Mol. Wt."] is not None:
+                self.rholiq = self.compound["Mol. Wt."] * 1e-3 / self.Vliq  # all densisties are in kg/m3
+                self.rhovap = self.compound["Mol. Wt."] * 1e-3 / self.Vvap
+                maxrhos = utils.float2str(self.rholiq, _decimals, _lt, _gt)
+                minrhos = utils.float2str(self.rhovap, _decimals, _lt, _gt)
                 # self.tableWidget_results.setItem(2, 0, QtWidgets.QTableWidgetItem(maxrhos))
                 # self.tableWidget_results.setItem(2, 1, QtWidgets.QTableWidgetItem(minrhos))
                 self.plainTextEdit_results.appendPlainText("Density [kg/m3]: " + maxrhos + " (liquid), " +
                                                            minrhos + " (vapor)")
             else:
-                self.rhos = ["", ""]
+                # TODO
+                print("error calculating densities")
 
+            # TODO calcular Pvp antoine depois de Pvp eos?
             # Calculate Pvp - antoine
             if self.compound["ANTOINE_A"] and self.compound["ANTOINE_C"] and self.compound["ANTOINE_B"]:
                 ans_antoine = antoineVP.antoineVP(self.T, self.compound["ANTOINE_A"], self.compound["ANTOINE_B"],
@@ -143,7 +157,7 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                     # TODO
                     print("error calculating fluid state")
 
-            # calculate cp and
+            # calculate Ideal Properties
             if self.compound["a0"] is not None and self.compound["a1"] is not None and self.compound[
                 "a2"] is not None and self.compound["a3"] is not None and \
                     self.compound["a4"] is not None:
@@ -154,155 +168,82 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                 a4 = self.compound["a4"]
                 _gt = 1e5
 
-                # cp
                 try:
-                    self.Cp = IGprop.return_Cp(self.T, a0, a1, a2, a3, a4)
-                    msg = "Cp at T=" + str(self.T) + " [J mol-1 K-1]: " + utils.float2str(self.Cp, 4, lt=_lt, gt=_gt)
-                    self.plainTextEdit_results.appendPlainText(msg)
-                except:
-                    # TODO
-                    print("error calculating Cp")
-                # deltaH_IG
-                try:
-                    self.deltaH_IG = IGprop.return_deltaH_IG(self.Tref, self.T, a0, a1, a2, a3, a4)
-                    msg = "deltaH_IG " + " [J mol-1]: " + utils.float2str(self.deltaH_IG, 4, lt=_lt, gt=_gt)
-                    self.plainTextEdit_results.appendPlainText(msg)
-                except:
-                    # TODO
-                    print("error calculating deltaH_IG")
+                    self.IG_properties = IGprop.return_IdealGasProperties(self.Tref, self.T, self.Pref, self.P,
+                                                                          a0, a1, a2, a3, a4
+                                                                          )
+                    self.Cp_IG = self.IG_properties["Cp_IG"]
+                    self.dH_IG = self.IG_properties["dH_IG"]
+                    self.dG_IG = self.IG_properties["dG_IG"]
+                    self.dU_IG = self.IG_properties["dU_IG"]
+                    self.dS_IG = self.IG_properties["dS_IG"]
+                    self.dA_IG = self.IG_properties["dA_IG"]
 
-                # deltaH
-                try:
-                    self.minVs = np.min(self.Vs)
-                    self.maxVs = np.max(self.Vs)
-                    self.minZs = np.min(self.Zs)
-                    self.maxZs = np.max(self.Zs)
+                    Cpstr = utils.float2str(self.Cp_IG, _decimals, _lt, _gt)
+                    Hstr = utils.float2str(self.dH_IG, _decimals, _lt, _gt)
+                    Astr = utils.float2str(self.dA_IG, _decimals, _lt, _gt)
+                    Sstr = utils.float2str(self.dS_IG, _decimals, _lt, _gt)
+                    Ustr = utils.float2str(self.dU_IG, _decimals, _lt, _gt)
+                    Gstr = utils.float2str(self.dG_IG, _decimals, _lt, _gt)
 
-                    HRproc_vap = self.c.return_HR_given_VT(self.P, self.T, "vap")
-                    HRref_vap = self.c.return_HR_given_VT(self.Pref, self.Tref, "vap")
-                    HRproc_liq = self.c.return_HR_given_VT(self.P, self.T, "liq")
-                    HRref_liq = self.c.return_HR_given_VT(self.Pref, self.Tref, "liq")
-                    self.deltaH_liq = self.deltaH_IG - (HRproc_liq - HRref_liq)
-                    self.deltaH_vap = self.deltaH_IG - (HRproc_vap - HRref_vap)
-                    msg = "deltaH [J mol-1]: " + utils.float2str(self.deltaH_liq, 4, lt=_lt,
-                                                                 gt=_gt) + " (liq.), " + utils.float2str(
-                        self.deltaH_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
-                    self.plainTextEdit_results.appendPlainText(msg)
-                except:
-                    print("error calculating deltaH")
+                    self.plainTextEdit_results.appendPlainText("Cp at T [J mol-1 K-1]: " + Cpstr)
+                    self.plainTextEdit_results.appendPlainText("dH_IG [J mol-1]: " + Hstr)
+                    self.plainTextEdit_results.appendPlainText("dS_IG [J mol-1 K-1]: " + Sstr)
+                    self.plainTextEdit_results.appendPlainText("dG_IG [J mol-1]: " + Gstr)
+                    self.plainTextEdit_results.appendPlainText("dU_IG [J mol-1]: " + Ustr)
+                    self.plainTextEdit_results.appendPlainText("dA_IG [J mol-1]: " + Astr)
 
-                # deltaS_IG
-                try:
-                    self.deltaS_IG = IGprop.return_deltaS_IG(self.Tref, self.T, self.Pref, self.P,
-                                                             a0, a1, a2, a3, a4)
-                    msg = "deltaS_IG " + " [J mol-1 K-1]: " + utils.float2str(self.deltaS_IG, 4, lt=_lt, gt=_gt)
-                    self.plainTextEdit_results.appendPlainText(msg)
                 except:
-                    # TODO
-                    print("error calculating deltaS_IG")
+                    print("error calculating ideal gas properties")
 
-                # deltaS
+                # calculating departure functions and residual properties
                 try:
-                    SRproc_vap = self.c.return_SR_given_VT(self.P, self.T, "vap")
-                    SRref_vap = self.c.return_SR_given_VT(self.Pref, self.Tref, "vap")
-                    SRproc_liq = self.c.return_SR_given_VT(self.P, self.T, "liq")
-                    SRref_liq = self.c.return_SR_given_VT(self.Pref, self.Tref, "liq")
-                    self.deltaS_liq = self.deltaS_IG - (SRproc_liq - SRref_liq)
-                    self.deltaS_vap = self.deltaS_IG - (SRproc_vap - SRref_vap)
-                    msg = "deltaS [J mol-1 K-1]: " + utils.float2str(self.deltaS_liq, 4, lt=_lt,
-                                                                     gt=_gt) + " (liq.), " + utils.float2str(
-                        self.deltaS_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
-                    self.plainTextEdit_results.appendPlainText(msg)
-                except:
-                    # TODO
-                    print("error calculating deltaS")
 
-                # deltaG_IG
-                try:
-                    self.deltaG_IG = IGprop.return_deltaG_IG(self.deltaH_IG, self.T, self.deltaS_IG)
-                    msg = "deltaG_IG " + " [J mol-1]: " + utils.float2str(self.deltaG_IG, 4, lt=_lt, gt=_gt)
-                    self.plainTextEdit_results.appendPlainText(msg)
-                except:
-                    # TODO
-                    print("error calculating deltaG_IG")
+                    self.residualDelta_vap = self.c.return_delta_ResProperties(self.Pref, self.Tref, self.Vvapref,
+                                                                               self.Zvapref,
+                                                                               self.P, self.T, self.Vvap, self.Zvap)
 
-                # deltaG
-                try:
-                    GRproc_vap = self.c.return_GR_given_VT(self.P, self.T, "vap")
-                    GRref_vap = self.c.return_GR_given_VT(self.Pref, self.Tref, "vap")
-                    GRproc_liq = self.c.return_GR_given_VT(self.P, self.T, "liq")
-                    GRref_liq = self.c.return_GR_given_VT(self.Pref, self.Tref, "liq")
-                    self.deltaG_liq = self.deltaG_IG - (GRproc_liq - GRref_liq)
-                    self.deltaG_vap = self.deltaG_IG - (GRproc_vap - GRref_vap)
-                    msg = "deltaG [J mol-1 K-1]: " + utils.float2str(self.deltaG_liq, 4, lt=_lt,
-                                                                     gt=_gt) + " (liq.), " + utils.float2str(
-                        self.deltaG_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
-                    self.plainTextEdit_results.appendPlainText(msg)
-                except:
-                    # TODO
-                    print("error calculating deltaG")
+                    self.residualDelta_liq = self.c.return_delta_ResProperties(self.Pref, self.Tref, self.Vliqref,
+                                                                               self.Zliqref,
+                                                                               self.P, self.T, self.Vliq, self.Zliq)
 
-                # deltaU_IG
-                try:
-                    self.deltaU_IG = IGprop.return_deltaU_IG(self.deltaG_IG, self.T, self.deltaS_IG)
-                    msg = "deltaU_IG " + " [J mol-1]: " + utils.float2str(self.deltaU_IG, 4, lt=_lt, gt=_gt)
-                    self.plainTextEdit_results.appendPlainText(msg)
-                except:
-                    # TODO
-                    print("error calculating deltaU_IG")
+                    self.dH_vap = self.dH_IG - self.residualDelta_vap["HR"]
+                    self.dS_vap = self.dS_IG - self.residualDelta_vap["SR"]
+                    self.dG_vap = self.dG_IG - self.residualDelta_vap["GR"]
+                    self.dU_vap = self.dU_IG - self.residualDelta_vap["UR"]
+                    self.dA_vap = self.dA_IG - self.residualDelta_vap["AR"]
+                    self.fugacity_vap = self.residualDelta_vap["f"]
 
-                # deltaU
-                try:
-                    URproc_vap = self.c.return_UR_given_VT(self.P, self.T, "vap")
-                    URref_vap = self.c.return_UR_given_VT(self.Pref, self.Tref, "vap")
-                    URproc_liq = self.c.return_UR_given_VT(self.P, self.T, "liq")
-                    URref_liq = self.c.return_UR_given_VT(self.Pref, self.Tref, "liq")
-                    self.deltaU_liq = self.deltaU_IG - (URproc_liq - URref_liq)
-                    self.deltaU_vap = self.deltaU_IG - (URproc_vap - URref_vap)
-                    msg = "deltaU [J mol-1 K-1]: " + utils.float2str(self.deltaU_liq, 4, lt=_lt,
-                                                                     gt=_gt) + " (liq.), " + utils.float2str(
-                        self.deltaU_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
-                    self.plainTextEdit_results.appendPlainText(msg)
-                except:
-                    # TODO
-                    print("error calculating deltaU")
+                    self.dH_liq = self.dH_IG - self.residualDelta_liq["HR"]
+                    self.dS_liq = self.dS_IG - self.residualDelta_liq["SR"]
+                    self.dG_liq = self.dG_IG - self.residualDelta_liq["GR"]
+                    self.dU_liq = self.dU_IG - self.residualDelta_liq["UR"]
+                    self.dA_liq = self.dA_IG - self.residualDelta_liq["AR"]
+                    self.fugacity_liq = self.residualDelta_liq["f"]
 
-                # deltaA_IG
-                try:
-                    self.deltaA_IG = IGprop.return_deltaA_IG(self.deltaU_IG, self.T, self.deltaS_IG)
-                    msg = "deltaA_IG " + " [J mol-1]: " + utils.float2str(self.deltaA_IG, 4, lt=_lt, gt=_gt)
-                    self.plainTextEdit_results.appendPlainText(msg)
-                except:
-                    # TODO
-                    print("error calculating deltaA_IG")
+                    Hstr = utils.float2str(self.dH_liq, _decimals, _lt, _gt) + " (liq.), " + utils.float2str(
+                        self.dH_vap, _decimals, _lt, _gt) + " (vap.)"
+                    Sstr = utils.float2str(self.dS_liq, _decimals, _lt, _gt) + " (liq.), " + utils.float2str(
+                        self.dS_vap, _decimals, _lt, _gt) + " (vap.)"
+                    Gstr = utils.float2str(self.dG_liq, _decimals, _lt, _gt) + " (liq.), " + utils.float2str(
+                        self.dG_vap, _decimals, _lt, _gt) + " (vap.)"
+                    Ustr = utils.float2str(self.dU_liq, _decimals, _lt, _gt) + " (liq.), " + utils.float2str(
+                        self.dU_vap, _decimals, _lt, _gt) + " (vap.)"
+                    Astr = utils.float2str(self.dA_liq, _decimals, _lt, _gt) + " (liq.), " + utils.float2str(
+                        self.dA_vap, _decimals, _lt, _gt) + " (vap.)"
+                    fstr = utils.float2str(self.fugacity_liq * units.Pa_to_bar, _decimals, 10 ** (2 - _decimals),
+                                           _gt) + " (liq.), " + utils.float2str(
+                        self.fugacity_vap * units.Pa_to_bar, _decimals, 10 ** (2 - _decimals), _gt) + " (vap.)"
 
-                # deltaA
-                try:
-                    ARproc_vap = self.c.return_AR_given_VT(self.P, self.T, "vap")
-                    ARref_vap = self.c.return_AR_given_VT(self.Pref, self.Tref, "vap")
-                    ARproc_liq = self.c.return_AR_given_VT(self.P, self.T, "liq")
-                    ARref_liq = self.c.return_AR_given_VT(self.Pref, self.Tref, "liq")
-                    self.deltaA_liq = self.deltaA_IG - (ARproc_liq - ARref_liq)
-                    self.deltaA_vap = self.deltaA_IG - (ARproc_vap - ARref_vap)
-                    msg = "deltaA [J mol-1 K-1]: " + utils.float2str(self.deltaA_liq, 4, lt=_lt,
-                                                                     gt=_gt) + " (liq.), " + utils.float2str(
-                        self.deltaA_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
-                    self.plainTextEdit_results.appendPlainText(msg)
-                except:
-                    # TODO
-                    print("error calculating deltaA")
+                    self.plainTextEdit_results.appendPlainText("dH [J mol-1]: " + Hstr)
+                    self.plainTextEdit_results.appendPlainText("dS [J mol-1 K-1]: " + Sstr)
+                    self.plainTextEdit_results.appendPlainText("dG [J mol-1]: " + Gstr)
+                    self.plainTextEdit_results.appendPlainText("dU [J mol-1]: " + Ustr)
+                    self.plainTextEdit_results.appendPlainText("dA [J mol-1]: " + Astr)
+                    self.plainTextEdit_results.appendPlainText("fugacity [bar]: " + fstr)
 
-                # fugacity
-                try:
-                    self.fugacity_liq = self.c.return_fliq_given_VT(self.P, self.T) * units.Pa_to_bar
-                    self.fugacity_vap = self.c.return_fvap_given_VT(self.P, self.T) * units.Pa_to_bar
-                    msg = "fugacity [bar]: " + utils.float2str(self.fugacity_liq, 4, lt=_lt,
-                                                               gt=_gt) + " (liq.), " + utils.float2str(
-                        self.fugacity_vap, 4, lt=_lt, gt=_gt) + " (vap.)"
-                    self.plainTextEdit_results.appendPlainText(msg)
                 except:
-                    # TODO
-                    print("error calculating fugacity")
+                    print("error calculating residual properties")
 
                 # Pvp from EOS
                 try:
@@ -343,9 +284,12 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
             self.show_full_db()
         else:
             try:
-                query = "SELECT * FROM database WHERE Name LIKE '%" + substance_string_name + "%'" + \
-                        " OR Formula LIKE '%" + substance_string_name + "%'" + \
-                        " OR `CAS #` LIKE '%" + substance_string_name + "%'"
+                # query = "SELECT * FROM database WHERE Name LIKE '%" + substance_string_name + "%'" + \
+                #         " OR Formula LIKE '%" + substance_string_name + "%'" + \
+                #         " OR `CAS #` LIKE '%" + substance_string_name + "%'"
+                query = "SELECT * FROM database WHERE Name LIKE '" + substance_string_name + "%'" + \
+                        " OR Formula LIKE '" + substance_string_name + "%'" + \
+                        " OR `CAS #` LIKE '" + substance_string_name + "%'"
                 db.cursor.execute(query)
                 results = db.cursor.fetchall()
                 self.update_table_db(results)

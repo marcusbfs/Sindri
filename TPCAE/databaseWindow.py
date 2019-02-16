@@ -1,9 +1,11 @@
 import os.path
+
 from PySide2 import QtWidgets
-from ui.db_ui import Ui_databaseWindow
-from db_editSubstanceProperties import Form_EditSubstanceProperties
-from db_addSubstanceProperties import Form_AddSubstanceProperties
+
 import db
+from db_addSubstanceProperties import Form_AddSubstanceProperties
+from db_editSubstanceProperties import Form_EditSubstanceProperties
+from ui.db_ui import Ui_databaseWindow
 
 
 class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
@@ -63,9 +65,9 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             self.show_full_db()
         else:
             try:
-                query = "SELECT * FROM database WHERE Name LIKE '%" + substance_string_name + "%'" + \
-                        " OR Formula LIKE '%" + substance_string_name + "%'" + \
-                        " OR `CAS #` LIKE '%" + substance_string_name + "%'"
+                query = "SELECT * FROM database WHERE Name LIKE '" + substance_string_name + "%'" + \
+                        " OR Formula LIKE '" + substance_string_name + "%'" + \
+                        " OR `CAS #` LIKE '" + substance_string_name + "%'"
                 db.cursor.execute(query)
                 results = db.cursor.fetchall()
                 self.update_table_db(results)
@@ -136,9 +138,9 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             if choice == QtWidgets.QMessageBox.Yes:
                 try:
                     self.database_changed = True
-                    query = "DELETE FROM database WHERE Formula LIKE '%" + row_values[0] + "%'" + \
-                            " AND Name LIKE '%" + row_values[1] + "%'" + \
-                            " AND `CAS #` LIKE '%" + row_values[2] + "%'"
+                    query = "DELETE FROM database WHERE Formula LIKE '" + row_values[0] + "%'" + \
+                            " AND Name LIKE '" + row_values[1] + "%'" + \
+                            " AND `CAS #` LIKE '" + row_values[2] + "%'"
                     db.cursor.execute(query)
                     self.search_substance()
                 except:

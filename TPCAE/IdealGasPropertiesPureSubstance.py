@@ -1,4 +1,5 @@
 import numpy as np
+
 from constants import R_IG
 
 
@@ -72,6 +73,24 @@ def abs_rel_err(x, y):
     return np.abs((x - y) / x)
 
 
+def return_IdealGasProperties(Tref, T, Pref, P, a0, a1, a2, a3, a4):
+    Cp_IG = return_Cp(T, a0, a1, a2, a3, a4)
+    dH_IG = return_deltaH_IG(Tref, T, a0, a1, a2, a3, a4)
+    dS_IG = return_deltaS_IG(Tref, T, Pref, P, a0, a1, a2, a3, a4)
+    dG_IG = return_deltaG_IG(dH_IG, T, dS_IG)
+    dU_IG = return_deltaU_IG(dG_IG, T, dS_IG)
+    dA_IG = return_deltaA_IG(dU_IG, T, dS_IG)
+    dict_ans = {
+        "Cp_IG": Cp_IG,
+        "dH_IG": dH_IG,
+        "dS_IG": dS_IG,
+        "dG_IG": dG_IG,
+        "dU_IG": dU_IG,
+        "dA_IG": dA_IG
+    }
+    return dict_ans
+
+
 # residual properties
 
 # G_R/(R*T) = integral(0, P, (Z-1)/P, dP) (constant T)
@@ -86,8 +105,13 @@ if __name__ == "__main__":
     a4 = -.499e-11
     T1 = 298.15
     T2 = 330
+    P1 = 1
+    P2 = 2
 
     cp_IG = return_Cp(T, a0, a1, a2, a3, a4)
     deltaH_IG = return_deltaH_IG(T1, T2, a0, a1, a2, a3, a4)
     print("cp_IG: ", cp_IG)
     print("deltaH_IG: ", deltaH_IG)
+
+    d = return_IdealGasProperties(T1, T2, P1, P2, a0, a1, a2, a3, a4)
+    print(d)
