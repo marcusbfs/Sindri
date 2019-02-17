@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/pure_substance_calculations_ui.ui',
 # licensing of 'designer/pure_substance_calculations_ui.ui' applies.
 #
-# Created: Sat Feb 16 15:13:24 2019
+# Created: Sun Feb 17 12:45:23 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -54,11 +54,6 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.horizontalLayout_3.addWidget(self.le_refT)
         self.comboBox_refTunit = QtWidgets.QComboBox(self.groupBox_refVariables)
         self.comboBox_refTunit.setObjectName("comboBox_refTunit")
-        self.comboBox_refTunit.addItem("")
-        self.comboBox_refTunit.addItem("")
-        self.comboBox_refTunit.addItem("")
-        self.comboBox_refTunit.addItem("")
-        self.comboBox_refTunit.setItemText(3, "")
         self.horizontalLayout_3.addWidget(self.comboBox_refTunit)
         self.gridLayout_7.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
@@ -71,9 +66,6 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.horizontalLayout_4.addWidget(self.le_refP)
         self.comboBox_refPunit = QtWidgets.QComboBox(self.groupBox_refVariables)
         self.comboBox_refPunit.setObjectName("comboBox_refPunit")
-        self.comboBox_refPunit.addItem("")
-        self.comboBox_refPunit.addItem("")
-        self.comboBox_refPunit.addItem("")
         self.horizontalLayout_4.addWidget(self.comboBox_refPunit)
         self.gridLayout_7.addLayout(self.horizontalLayout_4, 0, 1, 1, 1)
         self.gridLayout_3.addWidget(self.groupBox_refVariables, 3, 0, 1, 1)
@@ -120,11 +112,6 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.horizontalLayout.addWidget(self.le_procT)
         self.comboBox_procTunit = QtWidgets.QComboBox(self.groupBox_processVariables)
         self.comboBox_procTunit.setObjectName("comboBox_procTunit")
-        self.comboBox_procTunit.addItem("")
-        self.comboBox_procTunit.addItem("")
-        self.comboBox_procTunit.addItem("")
-        self.comboBox_procTunit.addItem("")
-        self.comboBox_procTunit.setItemText(3, "")
         self.horizontalLayout.addWidget(self.comboBox_procTunit)
         self.gridLayout_5.addLayout(self.horizontalLayout, 0, 0, 1, 1)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
@@ -137,9 +124,6 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.horizontalLayout_2.addWidget(self.le_procP)
         self.comboBox_procPunit = QtWidgets.QComboBox(self.groupBox_processVariables)
         self.comboBox_procPunit.setObjectName("comboBox_procPunit")
-        self.comboBox_procPunit.addItem("")
-        self.comboBox_procPunit.addItem("")
-        self.comboBox_procPunit.addItem("")
         self.horizontalLayout_2.addWidget(self.comboBox_procPunit)
         self.gridLayout_5.addLayout(self.horizontalLayout_2, 0, 1, 1, 1)
         self.gridLayout_3.addWidget(self.groupBox_processVariables, 2, 0, 1, 1)
@@ -198,20 +182,8 @@ class Ui_PureSubstanceCalculationsWindow(object):
             QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Reference variables", None, -1))
         self.label_3.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "T", None, -1))
         self.le_refT.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "300", None, -1))
-        self.comboBox_refTunit.setItemText(0, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "K",
-                                                                               None, -1))
-        self.comboBox_refTunit.setItemText(1, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "ºC",
-                                                                               None, -1))
-        self.comboBox_refTunit.setItemText(2, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "ºF",
-                                                                               None, -1))
         self.label_4.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "P", None, -1))
         self.le_refP.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "1", None, -1))
-        self.comboBox_refPunit.setItemText(0, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "bar",
-                                                                               None, -1))
-        self.comboBox_refPunit.setItemText(1, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "atm",
-                                                                               None, -1))
-        self.comboBox_refPunit.setItemText(2, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Pa",
-                                                                               None, -1))
         self.btn_calculate.setText(
             QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Calculate", None, -1))
         self.btn_diagrams.setText(
@@ -220,14 +192,8 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.groupBox_processVariables.setTitle(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Process variables", None, -1))
         self.label.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "T", None, -1))
         self.le_procT.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "150", None, -1))
-        self.comboBox_procTunit.setItemText(0, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "K", None, -1))
-        self.comboBox_procTunit.setItemText(1, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "ºC", None, -1))
-        self.comboBox_procTunit.setItemText(2, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "ºF", None, -1))
         self.label_2.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "P", None, -1))
         self.le_procP.setText(QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "1", None, -1))
-        self.comboBox_procPunit.setItemText(0, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "bar", None, -1))
-        self.comboBox_procPunit.setItemText(1, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "atm", None, -1))
-        self.comboBox_procPunit.setItemText(2, QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Pa", None, -1))
         self.groupBox_searchSubstance.setTitle(
             QtWidgets.QApplication.translate("PureSubstanceCalculationsWindow", "Search substance", None, -1))
         self.btn_searchSubstance.setText(

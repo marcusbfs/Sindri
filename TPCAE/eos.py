@@ -14,10 +14,13 @@ eos_options = {"van der Waals (1890)": "van_der_waals_1890",
                "Wilson (1964)": "wilson_1964",
                "Soave (1972)": "soave_1972",
                "Peng and Robinson (1976)": "peng_and_robinson_1976",
+               "Péneloux, et al. (1982)": "peneloux_et_al_1982",
                "Adachi, et al. (1983)": "adachi_et_al_1983",
                "Soave (1984)": "soave_1984",
                "Adachi, et al. (1985)": "adachi_et_al_1985",
                "Twu, et al. (1995)": "twu_et_al_1995",
+               "Gasem, et al. PR modification (2001)": "gasem_et_al_pr_2001",
+               "Gasem, et al. Twu modificaton (2001)": "gasem_et_al_twu_2001",
                }
 
 
@@ -90,6 +93,25 @@ class EOS:
             self.alpha = (1. + (.48 + 1.574 * self.omega - .176 * self.omega ** 2) * (1. - self.Tr ** .5)) ** 2
             self.theta = self.a * self.alpha
 
+
+        elif self.eos == "peng_and_robinson_1976":
+            self.a = .45724 * (R_IG * self.Tc) ** 2 / self.Pc
+            self.b = .07780 / self.Pc_RTc
+            self.delta = .15559 / self.Pc_RTc
+            self.epsilon = -.006053 / self.Pc_RTc ** 2
+            self.alpha = (1. + (.37464 + 1.54226 * self.omega - .2699 * self.omega ** 2) * (
+                    1. - self.Tr ** .5)) ** 2
+            self.theta = self.a * self.alpha
+
+        elif self.eos == "peneloux_et_al_1982":
+            self.a = .42748 * (R_IG * self.Tc) ** 2 / self.Pc
+            self.b = .08664 / self.Pc_RTc
+            c = .40768 * (R_IG * self.Tc / self.Pc) * (0.00385 + 0.08775 * self.omega)
+            self.delta = self.b + 2 * c
+            self.epsilon = c * (self.b + c)
+            self.alpha = (1. + (.48 + 1.574 * self.omega - .176 * self.omega ** 2) * (1. - self.Tr ** .5)) ** 2
+            self.theta = self.a * self.alpha
+
         elif self.eos == "adachi_et_al_1983":
             b1 = R_IG * self.Tc * (.08974 - .03452 * self.omega + 0.00330 * self.omega ** 2) / self.Pc
             b2 = R_IG * self.Tc * (
@@ -103,15 +125,6 @@ class EOS:
             self.delta = b3 - b2
             self.epsilon = -b2 * b3
             self.alpha = (1 + (.407 + 1.3787 * self.omega - .2933 * self.omega ** 2) * (1. - self.Tr ** .5)) ** 2
-            self.theta = self.a * self.alpha
-
-        elif self.eos == "peng_and_robinson_1976":
-            self.a = .45724 * (R_IG * self.Tc) ** 2 / self.Pc
-            self.b = .07780 / self.Pc_RTc
-            self.delta = .15559 / self.Pc_RTc
-            self.epsilon = -.006053 / self.Pc_RTc ** 2
-            self.alpha = (1. + (.37464 + 1.54226 * self.omega - .2699 * self.omega ** 2) * (
-                    1. - self.Tr ** .5)) ** 2
             self.theta = self.a * self.alpha
 
         elif self.eos == "soave_1984":
@@ -143,6 +156,25 @@ class EOS:
             self.a = (R_IG * self.Tc) ** 2 * 0.457235528921 / self.Pc
             alpha0 = self.Tr ** (-0.171813) * sp.exp(0.125283 * (1 - self.Tr ** 1.77634))
             alpha1 = self.Tr ** (-.607352) * sp.exp(0.511614 * (1 - self.Tr ** 2.20517))
+            self.alpha = alpha0 + self.omega * (alpha1 - alpha0)
+            self.theta = self.a * self.alpha
+
+        elif self.eos == "gasem_et_al_pr_2001":
+            self.a = .45724 * (R_IG * self.Tc) ** 2 / self.Pc
+            self.b = .07780 / self.Pc_RTc
+            self.delta = 2 * self.b
+            self.epsilon = -self.b ** 2
+            self.alpha = (1. + (0.386590 + 1.50226 * self.omega - .1687 * self.omega ** 2) * (
+                    1. - self.Tr ** .5)) ** 2
+            self.theta = self.a * self.alpha
+
+        elif self.eos == "gasem_et_al_twu_2001":
+            self.a = .45724 * (R_IG * self.Tc) ** 2 / self.Pc
+            self.b = .07780 / self.Pc_RTc
+            self.delta = 2 * self.b
+            self.epsilon = -self.b ** 2
+            alpha0 = self.Tr ** (-0.207176) * sp.exp(0.092099 * (1 - self.Tr ** (1.94800)))
+            alpha1 = self.Tr ** (-0.502297) * sp.exp(0.603486 * (1 - self.Tr ** (2.09626)))
             self.alpha = alpha0 + self.omega * (alpha1 - alpha0)
             self.theta = self.a * self.alpha
 

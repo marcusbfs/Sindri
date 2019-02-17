@@ -90,28 +90,7 @@
          </widget>
         </item>
         <item>
-            <widget class="QComboBox" name="comboBox_refTunit">
-          <item>
-           <property name="text">
-            <string>K</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>ºC</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>ºF</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string/>
-           </property>
-          </item>
-         </widget>
+            <widget class="QComboBox" name="comboBox_refTunit"/>
         </item>
        </layout>
       </item>
@@ -132,23 +111,7 @@
          </widget>
         </item>
         <item>
-            <widget class="QComboBox" name="comboBox_refPunit">
-          <item>
-           <property name="text">
-            <string>bar</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>atm</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Pa</string>
-           </property>
-          </item>
-         </widget>
+            <widget class="QComboBox" name="comboBox_refPunit"/>
         </item>
        </layout>
       </item>
@@ -235,28 +198,7 @@
          </widget>
         </item>
         <item>
-            <widget class="QComboBox" name="comboBox_procTunit">
-          <item>
-           <property name="text">
-            <string>K</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>ºC</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>ºF</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string/>
-           </property>
-          </item>
-         </widget>
+            <widget class="QComboBox" name="comboBox_procTunit"/>
         </item>
        </layout>
       </item>
@@ -277,23 +219,7 @@
          </widget>
         </item>
         <item>
-            <widget class="QComboBox" name="comboBox_procPunit">
-          <item>
-           <property name="text">
-            <string>bar</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>atm</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Pa</string>
-           </property>
-          </item>
-         </widget>
+            <widget class="QComboBox" name="comboBox_procPunit"/>
         </item>
        </layout>
       </item>

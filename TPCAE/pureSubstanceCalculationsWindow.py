@@ -30,6 +30,12 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
         self.sname = " "
         self.eosname = " "
 
+        # add combobox units options
+        self.comboBox_procTunit.addItems(units.temperature_options)
+        self.comboBox_refTunit.addItems(units.temperature_options)
+        self.comboBox_procPunit.addItems(units.pressure_options)
+        self.comboBox_refPunit.addItems(units.pressure_options)
+
         # tablewidget -> database
         self.tableWidget_searchSubstance.itemSelectionChanged.connect(self.substance_selected)
         self.dbfile = db.database_file
@@ -88,7 +94,18 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                     self.c.compound["Name"], self.c.compound["Formula"]
                 ))
                 self.plainTextEdit_results.appendPlainText(
-                    "equation of state: {0:s})".format(self.listWidget_eos_options.currentItem().text()))
+                    "equation of state: {0:s}".format(self.listWidget_eos_options.currentItem().text()))
+                self.plainTextEdit_results.appendPlainText(
+                    "process state: {:.3f} K, {:s} bar".format(self.T,
+                                                               utils.float2str(self.P * units.Pa_to_bar, 3, lt=1e-2,
+                                                                               gt=1e4))
+                )
+                self.plainTextEdit_results.appendPlainText(
+                    "reference state: {:.3f} K, {:s} bar".format(self.Tref,
+                                                                 utils.float2str(self.Pref * units.Pa_to_bar, 3,
+                                                                                 lt=1e-2,
+                                                                                 gt=1e4))
+                )
             except Exception as e:
                 err = "One or more of the following properties is not set: Tc, Pc, omega"
                 msg = QtWidgets.QMessageBox.about(self, "Error", str(err))
