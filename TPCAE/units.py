@@ -37,9 +37,9 @@ def K_to_F(K): return C_to_F(K_to_C(K))
 
 
 pressure_dict = {
+    "bar": 1e5,
     "Pa": 1,
     "kPa": 1000,
-    "bar": 1e5,
     "atm": 101235.0,
     "psi": 6894.7572931783,
 }
