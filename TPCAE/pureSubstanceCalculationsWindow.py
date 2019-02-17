@@ -24,9 +24,6 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
         self.btn_searchSubstance.clicked.connect(self.search_substance)
         self.btn_calculate.clicked.connect(self.calculatePureSubstance)
 
-        # self.statusbar.setObjectName("statusbar")
-        # self.setStatusBar(self.statusbar)
-
         self.sname = " "
         self.eosname = " "
 
