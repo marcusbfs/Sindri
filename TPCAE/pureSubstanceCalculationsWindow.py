@@ -94,14 +94,14 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                     "equation of state: {0:s}".format(self.listWidget_eos_options.currentItem().text()))
                 self.plainTextEdit_results.appendPlainText(
                     "process state: {:.3f} K, {:s} bar".format(self.T,
-                                                               utils.float2str(self.P * units.Pa_to_bar, 3, lt=1e-2,
-                                                                               gt=1e4))
+                                                               utils.f2str(self.P * units.Pa_to_bar, 3, lt=1e-2,
+                                                                           gt=1e4))
                 )
                 self.plainTextEdit_results.appendPlainText(
                     "reference state: {:.3f} K, {:s} bar".format(self.Tref,
-                                                                 utils.float2str(self.Pref * units.Pa_to_bar, 3,
-                                                                                 lt=1e-2,
-                                                                                 gt=1e4))
+                                                                 utils.f2str(self.Pref * units.Pa_to_bar, 3,
+                                                                             lt=1e-2,
+                                                                             gt=1e4))
                 )
             except Exception as e:
                 err = "One or more of the following properties is not set: Tc, Pc, omega"
@@ -121,10 +121,10 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                 self.Vliqref = self.Tref * R_IG * self.Zliqref / self.Pref
                 self.Vvapref = self.Tref * R_IG * self.Zvapref / self.Pref
 
-                self.minVs = utils.float2str(self.Vliq, _decimals, _lt, _gt)
-                self.maxVs = utils.float2str(self.Vvap, _decimals, _lt, _gt)
-                self.minZs = utils.float2str(self.Zliq, _decimals, _lt, _gt)
-                self.maxZs = utils.float2str(self.Zvap, _decimals, _lt, _gt)
+                self.minVs = utils.f2str(self.Vliq, _decimals, _lt, _gt)
+                self.maxVs = utils.f2str(self.Vvap, _decimals, _lt, _gt)
+                self.minZs = utils.f2str(self.Zliq, _decimals, _lt, _gt)
+                self.maxZs = utils.f2str(self.Zvap, _decimals, _lt, _gt)
                 # add to plain text editor
                 self.plainTextEdit_results.appendPlainText("Vc [m3/mol]: " + self.minVs + " (liquid), " +
                                                            self.maxVs + " (vapor)")
@@ -139,8 +139,8 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
             if self.compound["Mol. Wt."] is not None:
                 self.rholiq = self.compound["Mol. Wt."] * 1e-3 / self.Vliq  # all densisties are in kg/m3
                 self.rhovap = self.compound["Mol. Wt."] * 1e-3 / self.Vvap
-                maxrhos = utils.float2str(self.rholiq, _decimals, _lt, _gt)
-                minrhos = utils.float2str(self.rhovap, _decimals, _lt, _gt)
+                maxrhos = utils.f2str(self.rholiq, _decimals, _lt, _gt)
+                minrhos = utils.f2str(self.rhovap, _decimals, _lt, _gt)
                 # self.tableWidget_results.setItem(2, 0, QtWidgets.QTableWidgetItem(maxrhos))
                 # self.tableWidget_results.setItem(2, 1, QtWidgets.QTableWidgetItem(minrhos))
                 self.plainTextEdit_results.appendPlainText("Density [kg/m3]: " + maxrhos + " (liquid), " +
@@ -155,8 +155,8 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                 ans_antoine = antoineVP.antoineVP(self.T, self.compound["ANTOINE_A"], self.compound["ANTOINE_B"],
                                                   self.compound["ANTOINE_C"],
                                                   self.compound["Tmin_K"], self.compound["Tmax_K"])
-                self.P_antoine = ans_antoine[0] * units.bar_to_Pa
-                displayP_antoine = utils.float2str(self.P_antoine * units.Pa_to_bar, _decimals, _lt, _gt) + " bar"
+                self.P_antoine = ans_antoine.Pvp * units.bar_to_Pa
+                displayP_antoine = utils.f2str(self.P_antoine * units.Pa_to_bar, _decimals, _lt, _gt) + " bar"
                 if ans_antoine[1]:
                     displayP_antoine = displayP_antoine + " (" + ans_antoine[1] + ")"
                 self.plainTextEdit_results.appendPlainText("Pvp (Antoine): " + displayP_antoine)
@@ -183,8 +183,11 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
 
                 try:
                     self.IG_properties = IGprop.return_IdealGasProperties(self.Tref, self.T, self.Pref, self.P,
-                                                                          a0, a1, a2, a3, a4
+                                                                          a0, a1, a2, a3, a4,
+                                                                          self.c.compound["Tcpmin_K"],
+                                                                          self.c.compound["Tcpmax_K"]
                                                                           )
+                    print(self.c.compound["Tcpmin_K"])
                     self.Cp_IG = self.IG_properties["Cp_IG"]
                     self.dH_IG = self.IG_properties["dH_IG"]
                     self.dG_IG = self.IG_properties["dG_IG"]
@@ -192,12 +195,15 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                     self.dS_IG = self.IG_properties["dS_IG"]
                     self.dA_IG = self.IG_properties["dA_IG"]
 
-                    Cpstr = utils.float2str(self.Cp_IG, _decimals, _lt, _gt)
-                    Hstr = utils.float2str(self.dH_IG, _decimals, _lt, _gt)
-                    Astr = utils.float2str(self.dA_IG, _decimals, _lt, _gt)
-                    Sstr = utils.float2str(self.dS_IG, _decimals, _lt, _gt)
-                    Ustr = utils.float2str(self.dU_IG, _decimals, _lt, _gt)
-                    Gstr = utils.float2str(self.dG_IG, _decimals, _lt, _gt)
+                    Cpstr = utils.f2str(self.Cp_IG, _decimals, _lt, _gt)
+                    Hstr = utils.f2str(self.dH_IG, _decimals, _lt, _gt)
+                    Astr = utils.f2str(self.dA_IG, _decimals, _lt, _gt)
+                    Sstr = utils.f2str(self.dS_IG, _decimals, _lt, _gt)
+                    Ustr = utils.f2str(self.dU_IG, _decimals, _lt, _gt)
+                    Gstr = utils.f2str(self.dG_IG, _decimals, _lt, _gt)
+
+                    if self.IG_properties["msg"] is not None:
+                        self.plainTextEdit_results.appendPlainText("Cp calculation is out of bound ({:s})".format(msg))
 
                     self.plainTextEdit_results.appendPlainText("Cp at T [J mol-1 K-1]: " + Cpstr)
                     self.plainTextEdit_results.appendPlainText("dH_IG [J mol-1]: " + Hstr)
@@ -234,18 +240,18 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                     self.dA_liq = self.dA_IG - self.residualDelta_liq["AR"]
                     self.fugacity_liq = self.residualDelta_liq["f"]
 
-                    Hstr = utils.float2str(self.dH_liq, _decimals, _lt, _gt) + " (liq.), " + utils.float2str(
+                    Hstr = utils.f2str(self.dH_liq, _decimals, _lt, _gt) + " (liq.), " + utils.f2str(
                         self.dH_vap, _decimals, _lt, _gt) + " (vap.)"
-                    Sstr = utils.float2str(self.dS_liq, _decimals, _lt, _gt) + " (liq.), " + utils.float2str(
+                    Sstr = utils.f2str(self.dS_liq, _decimals, _lt, _gt) + " (liq.), " + utils.f2str(
                         self.dS_vap, _decimals, _lt, _gt) + " (vap.)"
-                    Gstr = utils.float2str(self.dG_liq, _decimals, _lt, _gt) + " (liq.), " + utils.float2str(
+                    Gstr = utils.f2str(self.dG_liq, _decimals, _lt, _gt) + " (liq.), " + utils.f2str(
                         self.dG_vap, _decimals, _lt, _gt) + " (vap.)"
-                    Ustr = utils.float2str(self.dU_liq, _decimals, _lt, _gt) + " (liq.), " + utils.float2str(
+                    Ustr = utils.f2str(self.dU_liq, _decimals, _lt, _gt) + " (liq.), " + utils.f2str(
                         self.dU_vap, _decimals, _lt, _gt) + " (vap.)"
-                    Astr = utils.float2str(self.dA_liq, _decimals, _lt, _gt) + " (liq.), " + utils.float2str(
+                    Astr = utils.f2str(self.dA_liq, _decimals, _lt, _gt) + " (liq.), " + utils.f2str(
                         self.dA_vap, _decimals, _lt, _gt) + " (vap.)"
-                    fstr = utils.float2str(self.fugacity_liq * units.Pa_to_bar, _decimals, 10 ** (2 - _decimals),
-                                           _gt) + " (liq.), " + utils.float2str(
+                    fstr = utils.f2str(self.fugacity_liq * units.Pa_to_bar, _decimals, 10 ** (2 - _decimals),
+                                       _gt) + " (liq.), " + utils.f2str(
                         self.fugacity_vap * units.Pa_to_bar, _decimals, 10 ** (2 - _decimals), _gt) + " (vap.)"
 
                     self.plainTextEdit_results.appendPlainText("dH [J mol-1]: " + Hstr)
@@ -266,8 +272,8 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                         self.Pvp_eos, k = self.c.return_Pvp_EOS(self.T, self.P_antoine, tol=tol, k=maxit)  # Pa
                     except:
                         self.Pvp_eos, k = self.c.return_Pvp_EOS(self.T, units.bar_to_Pa, tol=tol, k=maxit)  # Pa
-                    msg = "Pvp (EOS) [bar]: " + utils.float2str(self.Pvp_eos * units.Pa_to_bar, 4,
-                                                                lt=_lt) + " - iterations: " + str(k)
+                    msg = "Pvp (EOS) [bar]: " + utils.f2str(self.Pvp_eos * units.Pa_to_bar, 4,
+                                                            lt=_lt) + " - iterations: " + str(k)
                     self.plainTextEdit_results.appendPlainText(msg)
                 except:
                     print("error calculating Pvp from EOS")

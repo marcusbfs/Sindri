@@ -451,4 +451,5 @@ if __name__ == "__main__":
     # pvp_eos = pvp_eos * units.Pa_to_bar
 
     # test diagram plots
-    a = c.PV_diagrams("volume", "Pa", "m3/mol", "K", 1, 2, 1000, 50)
+    # a = c.PV_diagrams("volume", "Pa", "m3/mol", "K", 1, 2, 1000, 50)
+    print(c.compound)

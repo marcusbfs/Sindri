@@ -1,3 +1,4 @@
+from collections import namedtuple
 import numpy as np
 
 
@@ -18,7 +19,10 @@ def antoineVP(T, A, B, C, Tmin, Tmax):
     elif T > Tmax:
         msg = "T > Tmax"
 
-    return [ans, msg]
+    retval = namedtuple('Pvp_antoine', ['Pvp', 'msg'])
+    ans = retval(ans, msg)
+
+    return ans
 
 
 if __name__ == "__main__":
@@ -26,5 +30,6 @@ if __name__ == "__main__":
     B = 1070.2
     C = 228.83
     T = 309.429
-    ans = antoineVP(T, A, B, C)
+    ans = antoineVP(T, A, B, C, 0, 100)
     print(ans)
+    print(type(ans))

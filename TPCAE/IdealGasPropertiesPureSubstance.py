@@ -1,6 +1,6 @@
-import numpy as np
-
+from collections import namedtuple
 from constants import R_IG
+import numpy as np
 
 
 def return_fluidState(P, Pc, T, Tc, Pvp, delta=1e-3):
@@ -25,20 +25,25 @@ def return_fluidState(P, Pc, T, Tc, Pvp, delta=1e-3):
 
 # ideal gas properties
 
-def return_Cp(T, a0, a1, a2, a3, a4):
+def return_Cp(T, a0, a1, a2, a3, a4, Tmin, Tmax):
     """
     Cp/R_IG = a0 + a1*T + a2*T**2 + a3*T**3 + a4*T**4
     :param T: temperature, K
     :param a0, a1, a2, a3, a4: constants
     :return: Cp_IG, J mol-1 K-1
     """
+    cp = namedtuple('Cp', ['Cp', 'msg'])
+    msg = None
+    if T < Tmin:
+        msg = "T < Tmin"
+    elif T > Tmax:
+        msg = "T > Tmax"
     ans = R_IG * (a0 + a1 * T + a2 * T ** 2 + a3 * T ** 3 + a4 * T ** 4)
-
+    ans = cp(ans, msg)
     return ans
 
 
 def return_deltaH_IG(T1, T2, a0, a1, a2, a3, a4):
-    # deltaH_IG = integral(T1, T2, Cp_IG, T)
     ans = R_IG * (a0 * (T2 - T1) +
                   (T2 ** 2 - T1 ** 2) * a1 / 2 +
                   (T2 ** 3 - T1 ** 3) * a2 / 3 +
@@ -49,7 +54,6 @@ def return_deltaH_IG(T1, T2, a0, a1, a2, a3, a4):
 
 
 def return_deltaS_IG(T1, T2, P1, P2, a0, a1, a2, a3, a4):
-    # deltaS_IG = integrate(T1, T2, Cp_IG/T, T) - R*ln(P2/P1)
     ans = R_IG * (
             -3 * T1 ** 4 * a4 - 4 * T1 ** 3 * a3 - 6 * T1 ** 2 * a2 - 12 * T1 * a1 +
             3 * T2 ** 4 * a4 + 4 * T2 ** 3 * a3 + 6 * T2 ** 2 * a2 + 12 * T2 * a1 - 12 * a0 * np.log(
@@ -70,11 +74,15 @@ def return_deltaA_IG(dU, T, dS):
 
 
 def abs_rel_err(x, y):
-    return np.abs((x - y) / x)
+    if x != 0:
+        return np.abs((x - y) / x)
+    return np.abs(x - y)
 
 
-def return_IdealGasProperties(Tref, T, Pref, P, a0, a1, a2, a3, a4):
-    Cp_IG = return_Cp(T, a0, a1, a2, a3, a4)
+def return_IdealGasProperties(Tref, T, Pref, P, a0, a1, a2, a3, a4, Tmin, Tmax):
+    Cp_IG = return_Cp(T, a0, a1, a2, a3, a4, Tmin, Tmax)
+    msg = Cp_IG.msg
+    Cp_IG = Cp_IG.Cp
     dH_IG = return_deltaH_IG(Tref, T, a0, a1, a2, a3, a4)
     dS_IG = return_deltaS_IG(Tref, T, Pref, P, a0, a1, a2, a3, a4)
     dG_IG = return_deltaG_IG(dH_IG, T, dS_IG)
@@ -86,32 +94,7 @@ def return_IdealGasProperties(Tref, T, Pref, P, a0, a1, a2, a3, a4):
         "dS_IG": dS_IG,
         "dG_IG": dG_IG,
         "dU_IG": dU_IG,
-        "dA_IG": dA_IG
+        "dA_IG": dA_IG,
+        "msg": msg
     }
     return dict_ans
-
-
-# residual properties
-
-# G_R/(R*T) = integral(0, P, (Z-1)/P, dP) (constant T)
-
-
-if __name__ == "__main__":
-    T = 298.15
-    a0 = 3.212
-    a1 = 7.16e-3
-    a2 = -1.528e-5
-    a3 = 1.445e-8
-    a4 = -.499e-11
-    T1 = 298.15
-    T2 = 330
-    P1 = 1
-    P2 = 2
-
-    cp_IG = return_Cp(T, a0, a1, a2, a3, a4)
-    deltaH_IG = return_deltaH_IG(T1, T2, a0, a1, a2, a3, a4)
-    print("cp_IG: ", cp_IG)
-    print("deltaH_IG: ", deltaH_IG)
-
-    d = return_IdealGasProperties(T1, T2, P1, P2, a0, a1, a2, a3, a4)
-    print(d)
