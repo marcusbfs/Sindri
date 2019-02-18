@@ -3,9 +3,7 @@ import sympy as sp
 from scipy.integrate import quad
 
 import units
-# from scipy.optimize import root_scalar
-# from scipy.misc import derivative
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from constants import *
 from db_utils import get_compound_properties
 
@@ -274,7 +272,7 @@ class EOS:
 
     def return_Z_given_PT(self, _P, _T):
         # self.return_Z_P_T()
-        f = sp.lambdify([self.P, self.T], self.return_Z_P_T())
+        f = sp.lambdify([self.P, self.T], self.return_Z_P_T(), modules="numpy")
         # print(f(_P, _T))
         p = sp.Poly(f(_P, _T), self.Z).coeffs()
         # print(p.coeffs())
@@ -297,12 +295,12 @@ class EOS:
     def return_departureProperties(self, _P, _T, _V, _Z):
         # calculate UR
         f_to_integrate = self.T * sp.diff(self.Z_V_T, self.T) / self.V
-        f_to_integrate = sp.lambdify(self.V, f_to_integrate.subs(self.T, _T))
+        f_to_integrate = sp.lambdify(self.V, f_to_integrate.subs(self.T, _T), modules="numpy")
         UR_RT = quad(f_to_integrate, _V, np.inf)[0]
         UR = UR_RT * _T * R_IG
         # calculate AR
         f_to_integrate = (1 - self.Z_V_T) / self.V
-        f_to_integrate = sp.lambdify(self.V, f_to_integrate.subs(self.T, _T))
+        f_to_integrate = sp.lambdify(self.V, f_to_integrate.subs(self.T, _T), modules="numpy")
         AR_RT = quad(f_to_integrate, _V, np.inf)[0] + np.log(_Z)
         AR = AR_RT * _T * R_IG
         # calculate HR
@@ -348,7 +346,7 @@ class EOS:
         _P = initialP
 
         f_to_integrate = (1 - self.Z_V_T) / self.V
-        f_to_integrate = sp.lambdify(self.V, f_to_integrate.subs(self.T, _T))
+        f_to_integrate = sp.lambdify(self.V, f_to_integrate.subs(self.T, _T), modules="numpy")
 
         def helper_f(hv, hz):
             return hz - 1. - np.log(hz) - quad(f_to_integrate, hv, np.inf)[0]
@@ -369,6 +367,42 @@ class EOS:
 
         return _P, str(i) + " (max iterations)"
 
+    def PV_diagrams(self, var, Punit, Vunit, Tunit, a, b, points, Ts):
+        # TODO converter unidades antes
+        Tfp = self.compound["Tfp_K"]  # freezing point temperature at 1 atm, K
+        Tb = self.compound["Tb_K"]  # boiling temperature at 1 atm, K
+        Tc = self.Tc
+        Pc = self.Pc
+
+        Tvec = np.linspace(Tfp, Tc, points)
+        # # print(Tvec)
+        #
+        # check if compound has antoine coefs
+        if self.compound["ANTOINE_A"] is not None:
+            import antoineVP
+            ant_A = self.compound["ANTOINE_A"]
+            ant_B = self.compound["ANTOINE_B"]
+            ant_C = self.compound["ANTOINE_C"]
+            ant_Tmin = self.compound["Tmin_K"]
+            ant_Tmax = self.compound["Tmax_K"]
+            #
+            Pvp_guess = [antoineVP.antoineVP(T, ant_A, ant_B, ant_C, ant_Tmin, ant_Tmax)[0] * units.bar_to_Pa for T in
+                         Tvec]
+        else:
+            Pvp_guess = [1 for T in Tvec]
+
+        # print(Pvp_guess)
+        Pvp = [self.return_Pvp_EOS(T, P)[0] for T, P in zip(Tvec, Pvp_guess)]
+
+        V = [np.min(self.return_V_given_PT(P, T)) for P, T in zip(Pvp, Tvec)]
+
+        fig, ax = plt.subplots()
+        ax.plot(V, Pvp)
+        plt.show()
+
+        if var == "volume":
+            x = np.linspace(a, b, points)
+
 
 if __name__ == "__main__":
     cname = "methane"
@@ -387,15 +421,34 @@ if __name__ == "__main__":
     Tref = 300  # k
     Pref = 1 * units.bar_to_Pa  # bar
 
+    from time import time
+
     c = EOS(cname, cformula, eos)
 
-    Zs = c.return_Z_given_PT(P, T)
-    print(Zs)
-    Vs = c.return_V_given_PT(P, T)
-    print(Vs)
+    # s1 = time()
+    # Zs = c.return_Z_given_PT(P, T)
+    # s2 = time()
+    # print("return_Z_given_PT: ", s2 - s1)
+    #
+    # s1 = time()
+    # Vs = c.return_V_given_PT(P, T)
+    # s2 = time()
+    # print("return_V_given_PT: ", s2 - s1)
+    #
+    # Zvap = np.max(Zs)
+    # Vvap = np.max(Vs)
+    #
+    # # c.return_departureProperties(P, T, Vvap, Zvap)
+    # s1 = time()
+    # dp = c.return_departureProperties(P, T, Vvap, Zvap)
+    # s2 = time()
+    # print("depProp: ", s2 - s1)
+    #
+    # s1 = time()
+    # pvp_eos, pvp_msg = c.return_Pvp_EOS(T, units.bar_to_Pa, tol=1e-8, k=500)
+    # s2 = time()
+    # print("Pvp_EOS: ", s2 - s1)
+    # pvp_eos = pvp_eos * units.Pa_to_bar
 
-    Zvap = np.max(Zs)
-    Vvap = np.max(Vs)
-
-    # c.return_departureProperties(P, T, Vvap, Zvap)
-    c.return_departureProperties()
+    # test diagram plots
+    a = c.PV_diagrams("volume", "Pa", "m3/mol", "K", 1, 2, 1000, 50)

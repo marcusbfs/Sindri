@@ -93,7 +93,8 @@ def convert_to_SI(unit, number, s):
 def conv_unit(number, a, b):
     if a in pressure_dict and b in pressure_dict:
         ans = number * pressure_dict[a] / pressure_dict[b]
-        return ans
+    elif a in volume_dict and b in volume_dict:
+        ans = number * volume_dict[a] / volume_dict[b]
     elif a in temperature_dict_to_K and b in temperature_dict_from_K:
         ans = temperature_dict_from_K[b](temperature_dict_to_K[a](number))
     else:

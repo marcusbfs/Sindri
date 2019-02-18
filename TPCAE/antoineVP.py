@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def antoineVP(T, A, B, C, Tmin, Tmax):
     """
     log10(Pvp) = A - B/(T + C - 273.15)
@@ -8,6 +11,8 @@ def antoineVP(T, A, B, C, Tmin, Tmax):
     """
     msg = None
     ans = 10 ** (A - B / (T + C - 273.15))
+
+    # T = np.asarray(T)
     if T < Tmin:
         msg = "T < Tmin"
     elif T > Tmax:

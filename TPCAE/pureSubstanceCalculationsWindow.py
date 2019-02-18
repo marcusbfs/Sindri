@@ -121,7 +121,6 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                 self.Vliqref = self.Tref * R_IG * self.Zliqref / self.Pref
                 self.Vvapref = self.Tref * R_IG * self.Zvapref / self.Pref
 
-                # add to tablewidget
                 self.minVs = utils.float2str(self.Vliq, _decimals, _lt, _gt)
                 self.maxVs = utils.float2str(self.Vvap, _decimals, _lt, _gt)
                 self.minZs = utils.float2str(self.Zliq, _decimals, _lt, _gt)
