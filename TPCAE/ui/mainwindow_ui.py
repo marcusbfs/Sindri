@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -26,24 +27,34 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout.addItem(spacerItem)
         self.btn_BancoDeDados = QtWidgets.QPushButton(self.frame)
         self.btn_BancoDeDados.setMaximumSize(QtCore.QSize(120, 16777215))
         self.btn_BancoDeDados.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.btn_BancoDeDados.setObjectName("btn_BancoDeDados")
         self.horizontalLayout.addWidget(self.btn_BancoDeDados)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout.addItem(spacerItem1)
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_2.addItem(spacerItem2)
         self.btn_PureSubstanceCalculations = QtWidgets.QPushButton(self.frame)
-        self.btn_PureSubstanceCalculations.setObjectName("btn_PureSubstanceCalculations")
+        self.btn_PureSubstanceCalculations.setObjectName(
+            "btn_PureSubstanceCalculations"
+        )
         self.horizontalLayout_2.addWidget(self.btn_PureSubstanceCalculations)
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem3 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_2.addItem(spacerItem3)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
@@ -57,21 +68,31 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        QtCore.QObject.connect(self.btn_BancoDeDados, QtCore.SIGNAL("clicked()"), MainWindow.open_db_window)
+        QtCore.QObject.connect(
+            self.btn_BancoDeDados, QtCore.SIGNAL("clicked()"), MainWindow.open_db_window
+        )
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "TPCAE", None, -1))
-        self.btn_BancoDeDados.setText(QtWidgets.QApplication.translate("MainWindow", "Database", None, -1))
-        self.btn_PureSubstanceCalculations.setText(QtWidgets.QApplication.translate("MainWindow", "Pure substance calculations", None, -1))
+        MainWindow.setWindowTitle(
+            QtWidgets.QApplication.translate("MainWindow", "TPCAE", None, -1)
+        )
+        self.btn_BancoDeDados.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Database", None, -1)
+        )
+        self.btn_PureSubstanceCalculations.setText(
+            QtWidgets.QApplication.translate(
+                "MainWindow", "Pure substance calculations", None, -1
+            )
+        )
 
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-

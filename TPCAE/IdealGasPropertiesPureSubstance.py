@@ -25,6 +25,7 @@ def return_fluidState(P, Pc, T, Tc, Pvp, delta=1e-3):
 
 # ideal gas properties
 
+
 def return_Cp(T, a0, a1, a2, a3, a4, Tmin, Tmax):
     """
     Cp/R_IG = a0 + a1*T + a2*T**2 + a3*T**3 + a4*T**4
@@ -32,7 +33,7 @@ def return_Cp(T, a0, a1, a2, a3, a4, Tmin, Tmax):
     :param a0, a1, a2, a3, a4: constants
     :return: Cp_IG, J mol-1 K-1
     """
-    cp = namedtuple('Cp', ['Cp', 'msg'])
+    cp = namedtuple("Cp", ["Cp", "msg"])
     msg = None
     if T < Tmin:
         msg = "T < Tmin"
@@ -44,20 +45,34 @@ def return_Cp(T, a0, a1, a2, a3, a4, Tmin, Tmax):
 
 
 def return_deltaH_IG(T1, T2, a0, a1, a2, a3, a4):
-    ans = R_IG * (a0 * (T2 - T1) +
-                  (T2 ** 2 - T1 ** 2) * a1 / 2 +
-                  (T2 ** 3 - T1 ** 3) * a2 / 3 +
-                  (T2 ** 4 - T1 ** 4) * a3 / 4 +
-                  (T2 ** 5 - T1 ** 5) * a4 / 5
-                  )
+    ans = R_IG * (
+        a0 * (T2 - T1)
+        + (T2 ** 2 - T1 ** 2) * a1 / 2
+        + (T2 ** 3 - T1 ** 3) * a2 / 3
+        + (T2 ** 4 - T1 ** 4) * a3 / 4
+        + (T2 ** 5 - T1 ** 5) * a4 / 5
+    )
     return ans
 
 
 def return_deltaS_IG(T1, T2, P1, P2, a0, a1, a2, a3, a4):
-    ans = R_IG * (
-            -3 * T1 ** 4 * a4 - 4 * T1 ** 3 * a3 - 6 * T1 ** 2 * a2 - 12 * T1 * a1 +
-            3 * T2 ** 4 * a4 + 4 * T2 ** 3 * a3 + 6 * T2 ** 2 * a2 + 12 * T2 * a1 - 12 * a0 * np.log(
-        T1) + 12 * a0 * np.log(T2) - 12 * np.log(P2 / P1)) / 12
+    ans = (
+        R_IG
+        * (
+            -3 * T1 ** 4 * a4
+            - 4 * T1 ** 3 * a3
+            - 6 * T1 ** 2 * a2
+            - 12 * T1 * a1
+            + 3 * T2 ** 4 * a4
+            + 4 * T2 ** 3 * a3
+            + 6 * T2 ** 2 * a2
+            + 12 * T2 * a1
+            - 12 * a0 * np.log(T1)
+            + 12 * a0 * np.log(T2)
+            - 12 * np.log(P2 / P1)
+        )
+        / 12
+    )
     return ans
 
 
@@ -95,6 +110,6 @@ def return_IdealGasProperties(Tref, T, Pref, P, a0, a1, a2, a3, a4, Tmin, Tmax):
         "dG_IG": dG_IG,
         "dU_IG": dU_IG,
         "dA_IG": dA_IG,
-        "msg": msg
+        "msg": msg,
     }
     return dict_ans

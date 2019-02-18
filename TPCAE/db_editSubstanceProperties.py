@@ -11,33 +11,93 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         self.setupUi(self)
 
         self.hl_row = hl_row
-        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
+        self.setWindowFlags(
+            QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint
+        )
         self.changes_made = False
 
         # Connect buttons
-        self.connect(self.le_name, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_formula, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_CAS, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_MM, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_Tfp, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_Tb, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_Tc, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_Pc, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_Vc, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_Zc, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_omega, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_a0, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_a1, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_a2, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_a3, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_a4, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_CpTmin, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_CpTmax, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_AntoineA, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_AntoineB, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_AntoineC, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_AntoineTmin, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
-        self.connect(self.le_AntoineTmax, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed)
+        self.connect(
+            self.le_name, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_formula,
+            QtCore.SIGNAL("textChanged(QString)"),
+            self.lineEdit_changed,
+        )
+        self.connect(
+            self.le_CAS, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_MM, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_Tfp, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_Tb, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_Tc, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_Pc, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_Vc, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_Zc, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_omega, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_a0, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_a1, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_a2, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_a3, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_a4, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_CpTmin, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_CpTmax, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
+        )
+        self.connect(
+            self.le_AntoineA,
+            QtCore.SIGNAL("textChanged(QString)"),
+            self.lineEdit_changed,
+        )
+        self.connect(
+            self.le_AntoineB,
+            QtCore.SIGNAL("textChanged(QString)"),
+            self.lineEdit_changed,
+        )
+        self.connect(
+            self.le_AntoineC,
+            QtCore.SIGNAL("textChanged(QString)"),
+            self.lineEdit_changed,
+        )
+        self.connect(
+            self.le_AntoineTmin,
+            QtCore.SIGNAL("textChanged(QString)"),
+            self.lineEdit_changed,
+        )
+        self.connect(
+            self.le_AntoineTmax,
+            QtCore.SIGNAL("textChanged(QString)"),
+            self.lineEdit_changed,
+        )
 
         self.Formula = self.hl_row[0]
         self.Name = self.hl_row[1]
@@ -68,10 +128,34 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
 
         self.setWindowTitle("Edit substance - " + str(self.Name))
 
-        self.columnHeaders = ['Formula', 'Name', '`CAS #`', '`Mol. Wt.`', '`Tfp, K`', '`Tb, K`', '`Tc, K`', '`Pc, bar`',
-                              '`Vc, cm3/mol`', '`Zc = PcVc/RTc`', 'Omega', '`Trange, K`', 'a0', 'a1', 'a2', 'a3', 'a4',
-                              'CpIG', 'Cpliq', 'ANTOINE_A', 'ANTOINE_B', 'ANTOINE_C', '`Pvpmin, bar`', '`Tmin, K`',
-                              '`Pvpmax, bar`', '`Tmax, K`']
+        self.columnHeaders = [
+            "Formula",
+            "Name",
+            "`CAS #`",
+            "`Mol. Wt.`",
+            "`Tfp, K`",
+            "`Tb, K`",
+            "`Tc, K`",
+            "`Pc, bar`",
+            "`Vc, cm3/mol`",
+            "`Zc = PcVc/RTc`",
+            "Omega",
+            "`Trange, K`",
+            "a0",
+            "a1",
+            "a2",
+            "a3",
+            "a4",
+            "CpIG",
+            "Cpliq",
+            "ANTOINE_A",
+            "ANTOINE_B",
+            "ANTOINE_C",
+            "`Pvpmin, bar`",
+            "`Tmin, K`",
+            "`Pvpmax, bar`",
+            "`Tmax, K`",
+        ]
         self.colLen = len(self.columnHeaders)
 
         self.load_entries()
@@ -105,8 +189,8 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         self.changes_made = False
 
     def extract_Cp_Tminmax(self, s):
-        if '-' in s:
-            return s.split('-')
+        if "-" in s:
+            return s.split("-")
         else:
             return ["", ""]
 
@@ -114,50 +198,159 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         if self.changes_made:
 
             edit_confirm_msg = "Save editions?"
-            choice = QtWidgets.QMessageBox.question(self, "Saving changes",
-                                                    edit_confirm_msg,
-                                                    QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
-                                                    QtWidgets.QMessageBox.No)
+            choice = QtWidgets.QMessageBox.question(
+                self,
+                "Saving changes",
+                edit_confirm_msg,
+                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+                QtWidgets.QMessageBox.No,
+            )
 
             if choice == QtWidgets.QMessageBox.Yes:
-                query_WHERE = " WHERE Formula LIKE '%" + self.Formula + "%'" + \
-                              " AND Name LIKE '%" + self.Name + "%'" + \
-                              " AND `CAS #` LIKE '%" + self.CAS + "%'"
+                query_WHERE = (
+                    " WHERE Formula LIKE '%"
+                    + self.Formula
+                    + "%'"
+                    + " AND Name LIKE '%"
+                    + self.Name
+                    + "%'"
+                    + " AND `CAS #` LIKE '%"
+                    + self.CAS
+                    + "%'"
+                )
 
-                query_ID = "UPDATE database SET " + self.columnHeaders[0] + " = '" + self.le_formula.text() + "'" + \
-                           ", " + self.columnHeaders[1] + " = '" + self.le_name.text() + "'" + \
-                           ", " + self.columnHeaders[2] + " = '" + self.le_CAS.text() + "'" + \
-                           query_WHERE
+                query_ID = (
+                    "UPDATE database SET "
+                    + self.columnHeaders[0]
+                    + " = '"
+                    + self.le_formula.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[1]
+                    + " = '"
+                    + self.le_name.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[2]
+                    + " = '"
+                    + self.le_CAS.text()
+                    + "'"
+                    + query_WHERE
+                )
 
-                query_GENERAL = "update database set " + self.columnHeaders[3] + "='" + self.le_MM.text() + "'" + \
-                                ", " + self.columnHeaders[4] + " = '" + self.le_Tfp.text() + "'" + \
-                                ", " + self.columnHeaders[5] + " = '" + self.le_Tb.text() + "'" + \
-                                ", " + self.columnHeaders[6] + " = '" + self.le_Tc.text() + "'" + \
-                                ", " + self.columnHeaders[7] + " = '" + self.le_Pc.text() + "'" + \
-                                ", " + self.columnHeaders[8] + " = '" + self.le_Vc.text() + "'" + \
-                                ", " + self.columnHeaders[9] + " = '" + self.le_Zc.text() + "'" + \
-                                ", " + self.columnHeaders[10] + " = '" + self.le_omega.text() + "'" + \
-                                query_WHERE
+                query_GENERAL = (
+                    "update database set "
+                    + self.columnHeaders[3]
+                    + "='"
+                    + self.le_MM.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[4]
+                    + " = '"
+                    + self.le_Tfp.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[5]
+                    + " = '"
+                    + self.le_Tb.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[6]
+                    + " = '"
+                    + self.le_Tc.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[7]
+                    + " = '"
+                    + self.le_Pc.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[8]
+                    + " = '"
+                    + self.le_Vc.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[9]
+                    + " = '"
+                    + self.le_Zc.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[10]
+                    + " = '"
+                    + self.le_omega.text()
+                    + "'"
+                    + query_WHERE
+                )
 
-                if self.isFloat(self.le_CpTmin.text()) and self.isFloat(self.le_CpTmax.text()):
+                if self.isFloat(self.le_CpTmin.text()) and self.isFloat(
+                    self.le_CpTmax.text()
+                ):
                     Trange = self.le_CpTmin.text() + "-" + self.le_CpTmax.text()
                 else:
                     Trange = ""
 
-                query_CP = "update database set " + self.columnHeaders[11] + "='" + Trange + "'" + \
-                           ", " + self.columnHeaders[12] + " = '" + self.le_a0.text() + "'" + \
-                           ", " + self.columnHeaders[13] + " = '" + self.le_a1.text() + "'" + \
-                           ", " + self.columnHeaders[14] + " = '" + self.le_a2.text() + "'" + \
-                           ", " + self.columnHeaders[15] + " = '" + self.le_a3.text() + "'" + \
-                           ", " + self.columnHeaders[16] + " = '" + self.le_a4.text() + "'" + \
-                           query_WHERE
+                query_CP = (
+                    "update database set "
+                    + self.columnHeaders[11]
+                    + "='"
+                    + Trange
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[12]
+                    + " = '"
+                    + self.le_a0.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[13]
+                    + " = '"
+                    + self.le_a1.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[14]
+                    + " = '"
+                    + self.le_a2.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[15]
+                    + " = '"
+                    + self.le_a3.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[16]
+                    + " = '"
+                    + self.le_a4.text()
+                    + "'"
+                    + query_WHERE
+                )
 
-                query_ANTOINE = "update database set " + self.columnHeaders[19] + "='" + self.le_AntoineA.text() + "'" + \
-                                ", " + self.columnHeaders[20] + " = '" + self.le_AntoineB.text() + "'" + \
-                                ", " + self.columnHeaders[21] + " = '" + self.le_AntoineC.text() + "'" + \
-                                ", " + self.columnHeaders[23] + " = '" + self.le_AntoineTmin.text() + "'" + \
-                                ", " + self.columnHeaders[25] + " = '" + self.le_AntoineTmax.text() + "'" + \
-                                query_WHERE
+                query_ANTOINE = (
+                    "update database set "
+                    + self.columnHeaders[19]
+                    + "='"
+                    + self.le_AntoineA.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[20]
+                    + " = '"
+                    + self.le_AntoineB.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[21]
+                    + " = '"
+                    + self.le_AntoineC.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[23]
+                    + " = '"
+                    + self.le_AntoineTmin.text()
+                    + "'"
+                    + ", "
+                    + self.columnHeaders[25]
+                    + " = '"
+                    + self.le_AntoineTmax.text()
+                    + "'"
+                    + query_WHERE
+                )
 
                 try:
                     db.cursor.execute(query_ID)
@@ -166,7 +359,9 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
                     db.cursor.execute(query_ANTOINE)
                     self.close()
                 except:
-                    msg = QtWidgets.QMessageBox.about(self, "Error", "Could not save changes")
+                    msg = QtWidgets.QMessageBox.about(
+                        self, "Error", "Could not save changes"
+                    )
 
     def isFloat(self, s):
         try:

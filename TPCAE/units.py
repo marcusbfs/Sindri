@@ -6,12 +6,7 @@ pressure_dict = {
     "psi": 6894.7572931783,
 }
 
-volume_dict = {
-    "m3": 1,
-    "L": 1e-3,
-    "cm3": 1e6,
-    "ft3": 1 / 35.3145,
-}
+volume_dict = {"m3": 1, "L": 1e-3, "cm3": 1e6, "ft3": 1 / 35.3145}
 
 temperature_dict_to_K = {
     "K": lambda K: K,

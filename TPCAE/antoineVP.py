@@ -1,35 +1,44 @@
 from collections import namedtuple
-import numpy as np
 
 
 def antoineVP(T, A, B, C, Tmin, Tmax):
-    """
-    log10(Pvp) = A - B/(T + C - 273.15)
+    """Returns the vapor pressure at T temperature using the Antoine equation.
 
-    :param T: Temperature, K
-    :param A, B, C: Antoine paramaters
-    :return: vapor pressure, bar
+    Apply the Antoine equation:
+        log10(P) = A - B/(T + C - 273.15)
+    where P is the vapor pressure, bar, T is the temperature, K, and A, B and C are the Antoine parameters.
+    Tmin and Tmax gives the range in which the Antoine equation is valid.
+
+    Parameters
+    ----------
+    T : float
+        Temperature in Kelvin used to calculate the vapor pressure.
+    A, B, C : float
+        Antoine equation parameters.
+    Tmin : float
+        Lower bound temperature to Antoine equation.
+    Tmax : float
+        Higher bound temperature to Antoine equation.
+
+    Returns
+    -------
+    retval : namedtuple
+        Namedtuple containing information.
+    retval.Pvp : float
+        Calculated vapor pressure at 'T', ginve in bar.
+    retval.msg : None or str
+        Returns a message warning of out of bounds calculation. If returned value is None, then there's no error.
+
     """
     msg = None
     ans = 10 ** (A - B / (T + C - 273.15))
 
-    # T = np.asarray(T)
     if T < Tmin:
         msg = "T < Tmin"
     elif T > Tmax:
         msg = "T > Tmax"
 
-    retval = namedtuple('Pvp_antoine', ['Pvp', 'msg'])
+    retval = namedtuple("Pvp_antoine", ["Pvp", "msg"])
     ans = retval(ans, msg)
 
     return ans
-
-
-if __name__ == "__main__":
-    A = 4.1199
-    B = 1070.2
-    C = 228.83
-    T = 309.429
-    ans = antoineVP(T, A, B, C, 0, 100)
-    print(ans)
-    print(type(ans))

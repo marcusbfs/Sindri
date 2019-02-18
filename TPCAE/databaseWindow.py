@@ -15,10 +15,34 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
 
         self.dbfile = db.database_file
         # 26 colunas
-        self.col_headers = ["Formula", "Name", "CAS #", "Mol. Wt.", "Tfp [K]", "Tb [K]",
-                            "Tc [K]", "Pc [bar]", "Vc [cm3/mol]", "Zc", "Omega", "T range (Cp) [K]",
-                            "a0", "a1", "a2", "a3", "a4", "Cp IG", "Cp liq.", "Antoine A",
-                            "Antoine B", "Antoine C", "Pvp min [bar]", "Tmin [K]", "Pvp max [bar]", "Tmax [K]"]
+        self.col_headers = [
+            "Formula",
+            "Name",
+            "CAS #",
+            "Mol. Wt.",
+            "Tfp [K]",
+            "Tb [K]",
+            "Tc [K]",
+            "Pc [bar]",
+            "Vc [cm3/mol]",
+            "Zc",
+            "Omega",
+            "T range (Cp) [K]",
+            "a0",
+            "a1",
+            "a2",
+            "a3",
+            "a4",
+            "Cp IG",
+            "Cp liq.",
+            "Antoine A",
+            "Antoine B",
+            "Antoine C",
+            "Pvp min [bar]",
+            "Tmin [K]",
+            "Pvp max [bar]",
+            "Tmax [K]",
+        ]
 
         self.tableWidget_db.setHorizontalHeaderLabels(self.col_headers)
         header = self.tableWidget_db.horizontalHeader()
@@ -57,17 +81,27 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
         for row_number, row_data in enumerate(results):
             self.tableWidget_db.insertRow(row_number)
             for col_number, data in enumerate(row_data):
-                self.tableWidget_db.setItem(row_number, col_number, QtWidgets.QTableWidgetItem(str(data)))
+                self.tableWidget_db.setItem(
+                    row_number, col_number, QtWidgets.QTableWidgetItem(str(data))
+                )
 
     def search_substance(self):
         substance_string_name = str(self.le_db_search.text())
-        if substance_string_name == '':
+        if substance_string_name == "":
             self.show_full_db()
         else:
             try:
-                query = "SELECT * FROM database WHERE Name LIKE '" + substance_string_name + "%'" + \
-                        " OR Formula LIKE '" + substance_string_name + "%'" + \
-                        " OR `CAS #` LIKE '" + substance_string_name + "%'"
+                query = (
+                    "SELECT * FROM database WHERE Name LIKE '"
+                    + substance_string_name
+                    + "%'"
+                    + " OR Formula LIKE '"
+                    + substance_string_name
+                    + "%'"
+                    + " OR `CAS #` LIKE '"
+                    + substance_string_name
+                    + "%'"
+                )
                 db.cursor.execute(query)
                 results = db.cursor.fetchall()
                 self.update_table_db(results)
@@ -83,21 +117,27 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
     def restore_original_database(self):
 
         restore_msg = "Are you sure you want to restore the database?"
-        choice = QtWidgets.QMessageBox.question(self, "Restoring database",
-                                                restore_msg,
-                                                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
-                                                QtWidgets.QMessageBox.No)
+        choice = QtWidgets.QMessageBox.question(
+            self,
+            "Restoring database",
+            restore_msg,
+            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+            QtWidgets.QMessageBox.No,
+        )
 
         if choice == QtWidgets.QMessageBox.Yes:
             try:
                 from shutil import copyfile
+
                 db.db.close()
                 copyfile(db.database_file + ".orig", db.database_file)
                 db.init()
                 self.search_substance()
                 self.database_changed = False
             except:
-                msg = QtWidgets.QMessageBox.about(self, "Error", "Could not restore original database")
+                msg = QtWidgets.QMessageBox.about(
+                    self, "Error", "Could not restore original database"
+                )
 
     def edit_substance(self):
 
@@ -106,7 +146,9 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             hr = self.get_row_values(26)
             self.editSubstanceWindow = Form_EditSubstanceProperties(hl_row=hr)
             self.editSubstanceWindow.signal_changes_made.connect(self.search_substance)
-            self.editSubstanceWindow.signal_changes_made.connect(self.is_database_edited)
+            self.editSubstanceWindow.signal_changes_made.connect(
+                self.is_database_edited
+            )
             self.editSubstanceWindow.show()
 
     def is_database_edited(self, s):
@@ -130,17 +172,28 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
         if current_row >= 0:
 
             row_values = self.get_row_values(3)
-            choice = QtWidgets.QMessageBox.question(self, "Deleting item",
-                                                    "Are you sure you want to delete '" + row_values[1] + "'?",
-                                                    QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
-                                                    QtWidgets.QMessageBox.No)
+            choice = QtWidgets.QMessageBox.question(
+                self,
+                "Deleting item",
+                "Are you sure you want to delete '" + row_values[1] + "'?",
+                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+                QtWidgets.QMessageBox.No,
+            )
 
             if choice == QtWidgets.QMessageBox.Yes:
                 try:
                     self.database_changed = True
-                    query = "DELETE FROM database WHERE Formula LIKE '" + row_values[0] + "%'" + \
-                            " AND Name LIKE '" + row_values[1] + "%'" + \
-                            " AND `CAS #` LIKE '" + row_values[2] + "%'"
+                    query = (
+                        "DELETE FROM database WHERE Formula LIKE '"
+                        + row_values[0]
+                        + "%'"
+                        + " AND Name LIKE '"
+                        + row_values[1]
+                        + "%'"
+                        + " AND `CAS #` LIKE '"
+                        + row_values[2]
+                        + "%'"
+                    )
                     db.cursor.execute(query)
                     self.search_substance()
                 except:
@@ -148,14 +201,19 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
 
     def save_db(self):
         self.database_changed = False
-        choice = QtWidgets.QMessageBox.question(self, "Saving database",
-                                                "Are you sure you want to save the database?",
-                                                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
-                                                QtWidgets.QMessageBox.No)
+        choice = QtWidgets.QMessageBox.question(
+            self,
+            "Saving database",
+            "Are you sure you want to save the database?",
+            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+            QtWidgets.QMessageBox.No,
+        )
         if choice == QtWidgets.QMessageBox.Yes:
             try:
                 db.db.commit()
-                msg = QtWidgets.QMessageBox.about(self, "Confirmation", "Database has been saved")
+                msg = QtWidgets.QMessageBox.about(
+                    self, "Confirmation", "Database has been saved"
+                )
                 msg.exec_()
             except:
                 pass
@@ -170,10 +228,13 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
     def closeEvent(self, QCloseEvent):
         if self.database_changed:
             quit_msg = "Do you want to save the database?"
-            choice = QtWidgets.QMessageBox.question(self, "Database has been changed",
-                                                    quit_msg,
-                                                    QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
-                                                    QtWidgets.QMessageBox.No)
+            choice = QtWidgets.QMessageBox.question(
+                self,
+                "Database has been changed",
+                quit_msg,
+                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+                QtWidgets.QMessageBox.No,
+            )
             if choice == QtWidgets.QMessageBox.Yes:
                 db.db.commit()
             elif choice == QtWidgets.QMessageBox.No:

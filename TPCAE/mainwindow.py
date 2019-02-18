@@ -11,7 +11,9 @@ class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super(mainwindow, self).__init__()
         self.setupUi(self)
         self.dbw = databaseWindow()
-        self.btn_PureSubstanceCalculations.clicked.connect(self.open_PureSubstanceCalculations)
+        self.btn_PureSubstanceCalculations.clicked.connect(
+            self.open_PureSubstanceCalculations
+        )
 
     def open_db_window(self):
         self.dbw.show()
