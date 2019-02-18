@@ -9,6 +9,7 @@ import db
 import db_utils
 import eos
 import units
+from units import conv_unit
 import utils
 from constants import R_IG
 from ui.pure_substance_calculations_ui import Ui_PureSubstanceCalculationsWindow
@@ -65,12 +66,10 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
         self.refTunit = self.comboBox_refTunit.currentText()
         self.refPunit = self.comboBox_refPunit.currentText()
         try:
-            self.T = units.convert_to_SI("temperature", float(self.le_procT.text()),
-                                         self.procTunit)  # convert to Kelvin
-            self.P = units.convert_to_SI("pressure", float(self.le_procP.text()), self.procPunit)  # convert to pascal
-            self.Tref = units.convert_to_SI("temperature", float(self.le_refT.text()),
-                                            self.refTunit)  # convert to Kelvin
-            self.Pref = units.convert_to_SI("pressure", float(self.le_refP.text()), self.refPunit)  # convert to pascal
+            self.T = conv_unit(float(self.le_procT.text()), self.procTunit, "K")  # convert to Kelvin
+            self.P = conv_unit(float(self.le_procP.text()), self.procPunit, "Pa")  # convert to pascal
+            self.Tref = conv_unit(float(self.le_refT.text()), self.refTunit, "K")  # convert to Kelvin
+            self.Pref = conv_unit(float(self.le_refP.text()), self.refPunit, "Pa")  # convert to pascal
         except:
             # TODO
             print("error process variables")
@@ -94,14 +93,13 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                     "equation of state: {0:s}".format(self.listWidget_eos_options.currentItem().text()))
                 self.plainTextEdit_results.appendPlainText(
                     "process state: {:.3f} K, {:s} bar".format(self.T,
-                                                               utils.f2str(self.P * units.Pa_to_bar, 3, lt=1e-2,
+                                                               utils.f2str(conv_unit(self.P, "Pa", "bar"), 3, lt=1e-2,
                                                                            gt=1e4))
                 )
                 self.plainTextEdit_results.appendPlainText(
                     "reference state: {:.3f} K, {:s} bar".format(self.Tref,
-                                                                 utils.f2str(self.Pref * units.Pa_to_bar, 3,
-                                                                             lt=1e-2,
-                                                                             gt=1e4))
+                                                                 utils.f2str(conv_unit(self.Pref, "Pa", "bar"), 3,
+                                                                             lt=1e-2, gt=1e4))
                 )
             except Exception as e:
                 err = "One or more of the following properties is not set: Tc, Pc, omega"
@@ -155,16 +153,15 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                 ans_antoine = antoineVP.antoineVP(self.T, self.compound["ANTOINE_A"], self.compound["ANTOINE_B"],
                                                   self.compound["ANTOINE_C"],
                                                   self.compound["Tmin_K"], self.compound["Tmax_K"])
-                self.P_antoine = ans_antoine.Pvp * units.bar_to_Pa
-                displayP_antoine = utils.f2str(self.P_antoine * units.Pa_to_bar, _decimals, _lt, _gt) + " bar"
+                self.P_antoine = conv_unit(ans_antoine.Pvp, "bar", "Pa")
+                displayP_antoine = utils.f2str(conv_unit(self.P_antoine, "Pa", "bar"), _decimals, _lt, _gt) + " bar"
                 if ans_antoine[1]:
                     displayP_antoine = displayP_antoine + " (" + ans_antoine[1] + ")"
                 self.plainTextEdit_results.appendPlainText("Pvp (Antoine): " + displayP_antoine)
 
                 try:
-                    self.state = IGprop.return_fluidState(self.P, self.compound["Pc_bar"] * units.bar_to_Pa,
-                                                          self.T, self.compound["Tc_K"],
-                                                          self.P_antoine)
+                    self.state = IGprop.return_fluidState(self.P, conv_unit(self.compound["Pc_bar"], "bar", "Pa"),
+                                                          self.T, self.compound["Tc_K"], self.P_antoine)
                     self.plainTextEdit_results.appendPlainText("fluid state: " + self.state)
                 except:
                     # TODO
@@ -187,7 +184,6 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                                                                           self.c.compound["Tcpmin_K"],
                                                                           self.c.compound["Tcpmax_K"]
                                                                           )
-                    print(self.c.compound["Tcpmin_K"])
                     self.Cp_IG = self.IG_properties["Cp_IG"]
                     self.dH_IG = self.IG_properties["dH_IG"]
                     self.dG_IG = self.IG_properties["dG_IG"]
@@ -250,9 +246,10 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                         self.dU_vap, _decimals, _lt, _gt) + " (vap.)"
                     Astr = utils.f2str(self.dA_liq, _decimals, _lt, _gt) + " (liq.), " + utils.f2str(
                         self.dA_vap, _decimals, _lt, _gt) + " (vap.)"
-                    fstr = utils.f2str(self.fugacity_liq * units.Pa_to_bar, _decimals, 10 ** (2 - _decimals),
-                                       _gt) + " (liq.), " + utils.f2str(
-                        self.fugacity_vap * units.Pa_to_bar, _decimals, 10 ** (2 - _decimals), _gt) + " (vap.)"
+                    fstr = utils.f2str(conv_unit(self.fugacity_liq, "Pa", "bar"), _decimals, 10 ** (2 - _decimals),
+                                       _gt) + " (liq.), " + utils.f2str(conv_unit(self.fugacity_vap, "Pa", "bar"),
+                                                                        _decimals, 10 ** (2 - _decimals),
+                                                                        _gt) + " (vap.)"
 
                     self.plainTextEdit_results.appendPlainText("dH [J mol-1]: " + Hstr)
                     self.plainTextEdit_results.appendPlainText("dS [J mol-1 K-1]: " + Sstr)
@@ -269,10 +266,14 @@ class Window_PureSubstanceCalculations(QtWidgets.QWidget, Ui_PureSubstanceCalcul
                     tol = 1e-4
                     maxit = 100
                     try:
-                        self.Pvp_eos, k = self.c.return_Pvp_EOS(self.T, self.P_antoine, tol=tol, k=maxit)  # Pa
+                        Pvp_eos_ret = self.c.return_Pvp_EOS(self.T, self.P_antoine, tol=tol, k=maxit)  # Pa
+
                     except:
-                        self.Pvp_eos, k = self.c.return_Pvp_EOS(self.T, units.bar_to_Pa, tol=tol, k=maxit)  # Pa
-                    msg = "Pvp (EOS) [bar]: " + utils.f2str(self.Pvp_eos * units.Pa_to_bar, 4,
+                        Pvp_eos_ret = self.c.return_Pvp_EOS(self.T, conv_unit(1, "bar", "Pa"), tol=tol,
+                                                            k=maxit)  # Pa
+                    self.Pvp_eos = Pvp_eos_ret.Pvp
+                    k = Pvp_eos_ret.msg
+                    msg = "Pvp (EOS) [bar]: " + utils.f2str(conv_unit(self.Pvp_eos, "Pa", "bar"), 4,
                                                             lt=_lt) + " - iterations: " + str(k)
                     self.plainTextEdit_results.appendPlainText(msg)
                 except:

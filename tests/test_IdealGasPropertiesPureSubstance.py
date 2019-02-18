@@ -58,12 +58,11 @@ def test_return_deltaA_IG():
     assert approx(dA_IG, 1e-5) == 1866.46441
 
 
-def def_abs_err_zero_value():
+def test_abs_err_zero_value():
     x = abs_rel_err(0, 1)
-    assert 1 == x
+    assert approx(x, 1e-5) == 1
 
 
-def def_abs_err():
+def test_abs_err():
     x = abs_rel_err(.5, .7)
-    print(x)
-    assert x == .4
+    assert approx(x, 1e-5) == .4

@@ -5,6 +5,5 @@ name = methane["Name"]
 formula = methane["Formula"]
 
 
-# TODO how to test it?
-# def test_get_compound_properties_return_correct_dictionary():
-#     assert methane == get_compound_properties(name, formula)
+def test_get_compound_properties_return_correct_dictionary():
+    assert methane == get_compound_properties(name, formula)

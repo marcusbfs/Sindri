@@ -1,10 +1,11 @@
+from collections import namedtuple
 import numpy as np
 import sympy as sp
 from scipy.integrate import quad
 
-import units
+from units import conv_unit
 import matplotlib.pyplot as plt
-from constants import *
+from constants import R_IG
 from db_utils import get_compound_properties
 
 eos_options = {"van der Waals (1890)": "van_der_waals_1890",
@@ -32,7 +33,7 @@ class EOS:
         self.eos = eos.lower()
         self.compound = get_compound_properties(name, formula)
         self.Tc = self.compound["Tc_K"]
-        self.Pc = self.compound["Pc_bar"] * units.bar_to_Pa  # convert to pascal
+        self.Pc = conv_unit(self.compound["Pc_bar"], "bar", "Pa")  # convert to pascal
         self.Zc = self.compound["Zc"]
         self.Vc = self.compound["Vc_cm3/mol"]
         self.omega = self.compound["omega"]
@@ -40,7 +41,6 @@ class EOS:
         self.V, self.T = sp.symbols('V T', real=True, positive=True)
         self.P = sp.symbols('P', real=True)
         self.Z, self.deltal, self.Bl, self.thetal, self.epsilonl = sp.symbols('Z deltal Bl thetal epsilonl', real=True)
-        self.a, self.b, self.delta, self.theta, self.epsilon = sp.symbols('a b delta theta epsilon', real=True)
         self.alpha = sp.symbols('alpha', real=True)
         self.Tr, self.Pr = sp.symbols('Tr Pr', real=True)
 
@@ -56,7 +56,7 @@ class EOS:
 
     def show_eos_options(self):
         r = list(self.eos_options.keys())
-        print(r)
+        # print(r)
         return r
 
     def initialize(self):
@@ -351,6 +351,8 @@ class EOS:
         def helper_f(hv, hz):
             return hz - 1. - np.log(hz) - quad(f_to_integrate, hv, np.inf)[0]
 
+        PvpEOS = namedtuple('Pvp_EOS', ['Pvp', 'iter', 'msg'])
+
         for i in range(1, k + 1):
             Zs = self.return_Z_given_PT(_P, _T)
             Zl = np.min(Zs)
@@ -363,9 +365,15 @@ class EOS:
             _P = _P * fL / fV
             error = fL / fV - 1.0
             if abs(error) < tol:
-                return _P, i
+                return PvpEOS(_P, i, str(i))
 
-        return _P, str(i) + " (max iterations)"
+        return PvpEOS(_P, k, str(k) + " (max iterations)")
+
+    def change_eos(self, new_eos):
+        self.eos = new_eos.lower()
+        self.Z_V_T = None
+        self.Z_P_T = None
+        self.initialize()
 
     def PV_diagrams(self, var, Punit, Vunit, Tunit, a, b, points, Ts):
         # TODO converter unidades antes
@@ -386,7 +394,8 @@ class EOS:
             ant_Tmin = self.compound["Tmin_K"]
             ant_Tmax = self.compound["Tmax_K"]
             #
-            Pvp_guess = [antoineVP.antoineVP(T, ant_A, ant_B, ant_C, ant_Tmin, ant_Tmax)[0] * units.bar_to_Pa for T in
+            Pvp_guess = [conv_unit(antoineVP.antoineVP(T, ant_A, ant_B, ant_C, ant_Tmin, ant_Tmax)[0], "bar", "Pa") for
+                         T in
                          Tvec]
         else:
             Pvp_guess = [1 for T in Tvec]
@@ -402,54 +411,3 @@ class EOS:
 
         if var == "volume":
             x = np.linspace(a, b, points)
-
-
-if __name__ == "__main__":
-    cname = "methane"
-    cformula = "CH4"
-
-    # eos = "van_der_waals_1890"
-    # eos = "redlich_and_kwong_1949"
-    # eos = "wilson_1964"
-    # eos = "soave_1972"
-    eos = "peng_and_robinson_1976"
-    # eos = "soave_1984"
-
-    T = 150  # k
-    P = 1 * units.bar_to_Pa  # bar
-
-    Tref = 300  # k
-    Pref = 1 * units.bar_to_Pa  # bar
-
-    from time import time
-
-    c = EOS(cname, cformula, eos)
-
-    # s1 = time()
-    # Zs = c.return_Z_given_PT(P, T)
-    # s2 = time()
-    # print("return_Z_given_PT: ", s2 - s1)
-    #
-    # s1 = time()
-    # Vs = c.return_V_given_PT(P, T)
-    # s2 = time()
-    # print("return_V_given_PT: ", s2 - s1)
-    #
-    # Zvap = np.max(Zs)
-    # Vvap = np.max(Vs)
-    #
-    # # c.return_departureProperties(P, T, Vvap, Zvap)
-    # s1 = time()
-    # dp = c.return_departureProperties(P, T, Vvap, Zvap)
-    # s2 = time()
-    # print("depProp: ", s2 - s1)
-    #
-    # s1 = time()
-    # pvp_eos, pvp_msg = c.return_Pvp_EOS(T, units.bar_to_Pa, tol=1e-8, k=500)
-    # s2 = time()
-    # print("Pvp_EOS: ", s2 - s1)
-    # pvp_eos = pvp_eos * units.Pa_to_bar
-
-    # test diagram plots
-    # a = c.PV_diagrams("volume", "Pa", "m3/mol", "K", 1, 2, 1000, 50)
-    print(c.compound)
