@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="added some EOS, organized units code">
+      <change afterPath="$PROJECT_DIR$/TPCAE/diagrams.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_diagrams.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/IdealGasPropertiesPureSubstance.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/IdealGasPropertiesPureSubstance.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/antoineVP.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/antoineVP.py" afterDir="false" />
@@ -13,11 +16,19 @@
       <change beforePath="$PROJECT_DIR$/TPCAE/eos.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/eos.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/mainwindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/mainwindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/requirements_to_deploy.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/ui/db_substanceProperties_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/ui/db_substanceProperties_ui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/ui/db_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/ui/db_ui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/ui/mainwindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/ui/mainwindow_ui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/ui/pure_substance_calculations_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/ui/pure_substance_calculations_ui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/units.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/units.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/db_compound.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/db_compound.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_IdealGasPropertiesPureSubstance.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_IdealGasPropertiesPureSubstance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_antoineVP.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_antoineVP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_eos.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_eos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_units.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_units.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,24 +39,54 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py">
+        <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="430" column="30" selection-start-line="430" selection-start-column="30" selection-end-line="430" selection-end-column="30" />
+            <state relative-caret-position="430">
+              <caret line="675" selection-start-line="675" selection-end-line="675" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/test_eos.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-221">
+              <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
               <folding>
-                <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#0#6#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/diagrams.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="616" column="24" selection-start-line="616" selection-start-column="24" selection-end-line="616" selection-end-column="24" />
+            <state relative-caret-position="107">
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
               <folding>
-                <element signature="e#0#34#0" expanded="true" />
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/units.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="10" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tests/test_diagrams.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="30" column="35" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -94,11 +135,13 @@
         <option value="$PROJECT_DIR$/TPCAE/eos2.py" />
         <option value="$PROJECT_DIR$/TPCAE/sympy_testes.py" />
         <option value="$PROJECT_DIR$/TPCAE/eos_backup.py" />
+        <option value="$PROJECT_DIR$/TPCAE/constants.py" />
         <option value="$PROJECT_DIR$/TPCAE/tests/test_constants.py" />
+        <option value="$PROJECT_DIR$/TPCAE/antoineVP.py" />
         <option value="$PROJECT_DIR$/tests/db_compound.py" />
         <option value="$PROJECT_DIR$/TPCAE/utils.py" />
         <option value="$PROJECT_DIR$/tests/test_utils.py" />
-        <option value="$PROJECT_DIR$/tests/test_antoineVP.py" />
+        <option value="$PROJECT_DIR$/TPCAE/db_utils.py" />
         <option value="$PROJECT_DIR$/tests/__init__.py" />
         <option value="$PROJECT_DIR$/TPCAE/conftest.py" />
         <option value="$PROJECT_DIR$/setup.py" />
@@ -113,12 +156,12 @@
         <option value="$PROJECT_DIR$/tests/test_IdealGasPropertiesPureSubstance.py" />
         <option value="$PROJECT_DIR$/tests/test_db_utils.py" />
         <option value="$PROJECT_DIR$/tests/test_db.py" />
-        <option value="$PROJECT_DIR$/tests/test_eos.py" />
-        <option value="$PROJECT_DIR$/TPCAE/antoineVP.py" />
-        <option value="$PROJECT_DIR$/TPCAE/constants.py" />
-        <option value="$PROJECT_DIR$/TPCAE/db_utils.py" />
         <option value="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" />
+        <option value="$PROJECT_DIR$/tests/test_antoineVP.py" />
+        <option value="$PROJECT_DIR$/tests/test_eos.py" />
         <option value="$PROJECT_DIR$/TPCAE/eos.py" />
+        <option value="$PROJECT_DIR$/TPCAE/diagrams.py" />
+        <option value="$PROJECT_DIR$/tests/test_diagrams.py" />
       </list>
     </option>
   </component>
@@ -136,6 +179,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -153,18 +197,21 @@
               <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
               <item name="TPCAE" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/workspace/venv_TPCAE" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -192,28 +239,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest in tests">
-    <configuration name="antoineVP" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="software" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/TPCAE" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TPCAE/antoineVP.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="software" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -235,7 +261,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_eos.test_return_deltaH_using_peng_and_robinson_1976" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_diagrams.test_plot_PV_diagram_values" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="software" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -246,11 +272,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_eos.test_return_deltaH_using_peng_and_robinson_1976&quot;" />
+      <option name="_new_target" value="&quot;test_diagrams.test_plot_PV_diagram_values&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest in test_antoineVP.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_eos.test_return_P_given_VT_numpy_array" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="software" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -261,7 +287,22 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_antoineVP.py&quot;" />
+      <option name="_new_target" value="&quot;test_eos.test_return_P_given_VT_numpy_array&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest in test_diagrams.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="software" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_diagrams.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
@@ -281,19 +322,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main" />
       <item itemvalue="Python tests.pytest in tests" />
-      <item itemvalue="Python tests.pytest for test_eos.test_return_deltaH_using_peng_and_robinson_1976" />
-      <item itemvalue="Python tests.pytest in test_antoineVP.py" />
-      <item itemvalue="Python.antoineVP" />
+      <item itemvalue="Python tests.pytest for test_eos.test_return_P_given_VT_numpy_array" />
+      <item itemvalue="Python tests.pytest in test_diagrams.py" />
+      <item itemvalue="Python tests.pytest for test_diagrams.test_plot_PV_diagram_values" />
+      <item itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.pytest in tests" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python tests.pytest in test_antoineVP.py" />
-        <item itemvalue="Python.antoineVP" />
-        <item itemvalue="Python tests.pytest for test_eos.test_return_deltaH_using_peng_and_robinson_1976" />
+        <item itemvalue="Python tests.pytest in tests" />
+        <item itemvalue="Python tests.pytest for test_diagrams.test_plot_PV_diagram_values" />
+        <item itemvalue="Python tests.pytest in test_diagrams.py" />
+        <item itemvalue="Python tests.pytest for test_eos.test_return_P_given_VT_numpy_array" />
       </list>
     </recent_temporary>
   </component>
@@ -333,34 +374,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_in_test_antoineVP_py - 2019.02.18 at 17h 02m 39s.xml">
-      <configuration name="pytest in test_antoineVP.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_diagrams_test_plot_PV_diagram_values - 2019.02.18 at 23h 29m 39s.xml">
+      <configuration name="pytest for test_diagrams.test_plot_PV_diagram_values" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_antoineVP_py - 2019.02.18 at 17h 07m 34s.xml">
-      <configuration name="pytest in test_antoineVP.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_diagrams_test_plot_PV_diagram_values - 2019.02.18 at 23h 38m 54s.xml">
+      <configuration name="pytest for test_diagrams.test_plot_PV_diagram_values" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.18 at 17h 08m 22s.xml">
+    <history-entry file="pytest_for_test_diagrams_test_plot_PV_diagram_values - 2019.02.18 at 23h 41m 08s.xml">
+      <configuration name="pytest for test_diagrams.test_plot_PV_diagram_values" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_diagrams_test_plot_PV_diagram_values - 2019.02.18 at 23h 42m 03s.xml">
+      <configuration name="pytest for test_diagrams.test_plot_PV_diagram_values" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_diagrams_test_plot_PV_diagram_values - 2019.02.18 at 23h 43m 04s.xml">
+      <configuration name="pytest for test_diagrams.test_plot_PV_diagram_values" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_diagrams_test_plot_PV_diagram_values - 2019.02.18 at 23h 44m 34s.xml">
+      <configuration name="pytest for test_diagrams.test_plot_PV_diagram_values" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_diagrams_test_plot_PV_diagram_values - 2019.02.18 at 23h 45m 10s.xml">
+      <configuration name="pytest for test_diagrams.test_plot_PV_diagram_values" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_diagrams_test_plot_PV_diagram_values - 2019.02.18 at 23h 46m 48s.xml">
+      <configuration name="pytest for test_diagrams.test_plot_PV_diagram_values" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_in_tests - 2019.02.18 at 23h 47m 21s.xml">
       <configuration name="pytest in tests" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.18 at 17h 44m 23s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.18 at 17h 57m 35s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.18 at 17h 58m 09s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.18 at 18h 08m 22s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.18 at 18h 20m 04s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.18 at 18h 21m 29s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.18 at 18h 23m 03s.xml">
+    <history-entry file="pytest_in_tests - 2019.02.18 at 23h 48m 18s.xml">
       <configuration name="pytest in tests" configurationId="tests" />
     </history-entry>
   </component>
@@ -381,15 +422,15 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49947312" weight="0.3290735" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.47945204" weight="0.2744681" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.47629082" weight="0.2744681" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49894625" weight="0.3258786" />
-      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49683878" weight="0.3287234" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4841939" weight="0.34042552" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5205479" side_tool="true" visible="true" weight="0.2744681" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49789253" weight="0.3287234" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.48314014" weight="0.34042552" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5237092" side_tool="true" visible="true" weight="0.2744681" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.49789253" weight="0.3258786" />
-      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.49789253" weight="0.39829606" />
+      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.49578503" weight="0.39787233" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -479,6 +520,13 @@
     <entry file="file://$PROJECT_DIR$/TPCAE/ui/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/constants.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="7" selection-start-column="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_constants.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -500,10 +548,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/units.py">
+    <entry file="file://$PROJECT_DIR$/TPCAE/databaseWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="10" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
+        <state relative-caret-position="119">
+          <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/db_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
@@ -514,10 +569,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_antoineVP.py">
+    <entry file="file://$PROJECT_DIR$/TPCAE/db.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="24" lean-forward="true" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
+        <state relative-caret-position="340">
+          <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -542,10 +597,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/db_addSubstanceProperties.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/IdealGasPropertiesPureSubstance.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-544">
           <caret line="2" column="11" lean-forward="true" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitattributes">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1263">
+          <caret line="373" column="21" selection-start-line="373" selection-start-column="21" selection-end-line="373" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -556,69 +626,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_eos.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="54" column="94" selection-start-line="54" selection-start-column="94" selection-end-line="54" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/antoineVP.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+        <state relative-caret-position="-187">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/constants.py">
+    <entry file="file://$PROJECT_DIR$/tests/test_antoineVP.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="53" selection-start-line="1" selection-start-column="53" selection-end-line="1" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/databaseWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1003">
-          <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="10" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/db_addSubstanceProperties.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-765" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/db_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="39" column="23" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="430" column="30" selection-start-line="430" selection-start-column="30" selection-end-line="430" selection-end-column="30" />
+        <state relative-caret-position="493">
+          <caret line="29" column="28" lean-forward="true" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/units.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="10" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_eos.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-221">
+          <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#6#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="616" column="24" selection-start-line="616" selection-start-column="24" selection-end-line="616" selection-end-column="24" />
+        <state relative-caret-position="430">
+          <caret line="675" selection-start-line="675" selection-end-line="675" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/diagrams.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
           <folding>
-            <element signature="e#0#34#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_diagrams.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="35" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>

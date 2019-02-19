@@ -6,7 +6,12 @@ import pytest
 # temperatures conversions
 class TestTemperaturesConversions(object):
     def test_temperatures_have_the_same_number_of_conversions_from_and_to_Kelvin(self):
-        from TPCAE.units import temperature_dict_to_K, temperature_options, temperature_dict_from_K
+        from TPCAE.units import (
+            temperature_dict_to_K,
+            temperature_options,
+            temperature_dict_from_K,
+        )
+
         assert temperature_dict_from_K.keys() == temperature_dict_to_K.keys()
         assert list(temperature_dict_from_K.keys()) == temperature_options
 

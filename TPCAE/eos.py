@@ -391,7 +391,7 @@ class EOS:
 
     def return_Z_V_T(self):
         """
-        Creates the symbolic equation
+        Creates the symbolic equation:
             Z = V / (V - b) - ((theta / (R_IG * T)) * V) / (V**2 + delta * V + epsilon)
 
         Returns
@@ -401,8 +401,8 @@ class EOS:
         """
         if self.Z_V_T is None:
             self.Z_V_T = self.V / (self.V - self.b) - (
-                (self.theta / (R_IG * self.T) * self.V * (self.V - self.b))
-            ) / ((self.V - self.b) * (self.V ** 2 + self.delta * self.V + self.epsilon))
+                self.theta / (R_IG * self.T)
+            ) * self.V / (self.V ** 2 + self.delta * self.V + self.epsilon)
         return self.Z_V_T
 
     def return_Z_P_T(self):
@@ -434,19 +434,19 @@ class EOS:
         return self.Z_P_T
 
     def return_Z_given_PT(self, _P, _T):
-        """ return the positive roots (Z) of the cubic equation.
+        """ Return the positive roots (Z) of the cubic equation.
 
         parameters
         ----------
-        _p : float
+        _P : float
             pressure, pa.
-        _t : float
+        _T : float
             temperature, k.
 
-        returns
+        Returns
         -------
         ans : array, float
-            returns an array of the real roots of the cubic equation of state. the minimum value of this array
+            Returns an array of the real roots of the cubic equation of state. The minimum value of this array
             corresponds to the vapor state, while the maximum value corresponds to the liquid state.
 
         """
@@ -481,6 +481,27 @@ class EOS:
         ans = self.return_Z_given_PT(_P, _T) * R_IG * _T / _P
         self.Vval = ans
         return ans
+
+    def return_P_given_VT(self, _V, _T):
+        """ Return the values of '_P' given '_V' and '_T' using the cubic equation of state.
+
+        Parameters
+        ----------
+        _V : float
+            molar volume, m3/mol.
+        _T : float
+            temperature, Kelvin.
+
+        Returns
+        -------
+        _P : float
+            pressure at '_T' and '_V', Pascal.
+
+        """
+        self.return_Z_V_T()
+        _func = sp.lambdify([self.V, self.T], self.Z_V_T, modules="numpy")
+        _P = _func(_V, _T) * R_IG * _T / _V
+        return _P
 
     def return_departureProperties(self, _P, _T, _V, _Z):
         """
@@ -617,44 +638,44 @@ class EOS:
         self.Z_P_T = None
         self.initialize()
 
-    def PV_diagrams(self, var, Punit, Vunit, Tunit, a, b, points, Ts):
-        # TODO converter unidades antes
-        Tfp = self.compound["Tfp_K"]  # freezing point temperature at 1 atm, K
-        Tb = self.compound["Tb_K"]  # boiling temperature at 1 atm, K
-        Tc = self.Tc
-        Pc = self.Pc
-
-        Tvec = np.linspace(Tfp, Tc, points)
-        # # print(Tvec)
-        #
-        # check if compound has antoine coefs
-        if self.compound["ANTOINE_A"] is not None:
-            import antoineVP
-
-            ant_A = self.compound["ANTOINE_A"]
-            ant_B = self.compound["ANTOINE_B"]
-            ant_C = self.compound["ANTOINE_C"]
-            ant_Tmin = self.compound["Tmin_K"]
-            ant_Tmax = self.compound["Tmax_K"]
-            #
-            Pvp_guess = [
-                conv_unit(
-                    antoineVP.antoineVP(T, ant_A, ant_B, ant_C, ant_Tmin, ant_Tmax)[0],
-                    "bar",
-                    "Pa",
-                )
-                for T in Tvec
-            ]
-        else:
-            Pvp_guess = [1 for T in Tvec]
-
-        Pvp = [self.return_Pvp_EOS(T, P)[0] for T, P in zip(Tvec, Pvp_guess)]
-
-        V = [np.min(self.return_V_given_PT(P, T)) for P, T in zip(Pvp, Tvec)]
-
-        fig, ax = plt.subplots()
-        ax.plot(V, Pvp)
-        plt.show()
-
-        if var == "volume":
-            x = np.linspace(a, b, points)
+    # def PV_diagrams(self, var, Punit, Vunit, Tunit, a, b, points, Ts):
+    #     # TODO converter unidades antes
+    #     Tfp = self.compound["Tfp_K"]  # freezing point temperature at 1 atm, K
+    #     Tb = self.compound["Tb_K"]  # boiling temperature at 1 atm, K
+    #     Tc = self.Tc
+    #     Pc = self.Pc
+    #
+    #     Tvec = np.linspace(Tfp, Tc, points)
+    #     # # print(Tvec)
+    #     #
+    #     # check if compound has antoine coefs
+    #     if self.compound["ANTOINE_A"] is not None:
+    #         import antoineVP
+    #
+    #         ant_A = self.compound["ANTOINE_A"]
+    #         ant_B = self.compound["ANTOINE_B"]
+    #         ant_C = self.compound["ANTOINE_C"]
+    #         ant_Tmin = self.compound["Tmin_K"]
+    #         ant_Tmax = self.compound["Tmax_K"]
+    #         #
+    #         Pvp_guess = [
+    #             conv_unit(
+    #                 antoineVP.antoineVP(T, ant_A, ant_B, ant_C, ant_Tmin, ant_Tmax)[0],
+    #                 "bar",
+    #                 "Pa",
+    #             )
+    #             for T in Tvec
+    #         ]
+    #     else:
+    #         Pvp_guess = [1 for T in Tvec]
+    #
+    #     Pvp = [self.return_Pvp_EOS(T, P)[0] for T, P in zip(Tvec, Pvp_guess)]
+    #
+    #     V = [np.min(self.return_V_given_PT(P, T)) for P, T in zip(Pvp, Tvec)]
+    #
+    #     fig, ax = plt.subplots()
+    #     ax.plot(V, Pvp)
+    #     plt.show()
+    #
+    #     if var == "volume":
+    #         x = np.linspace(a, b, points)

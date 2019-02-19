@@ -1,5 +1,13 @@
-from TPCAE.IdealGasPropertiesPureSubstance import return_fluidState, return_Cp, return_deltaH_IG, return_deltaS_IG, \
-    return_deltaA_IG, return_deltaG_IG, return_deltaU_IG, abs_rel_err
+from TPCAE.IdealGasPropertiesPureSubstance import (
+    return_fluidState,
+    return_Cp,
+    return_deltaH_IG,
+    return_deltaS_IG,
+    return_deltaA_IG,
+    return_deltaG_IG,
+    return_deltaU_IG,
+    abs_rel_err,
+)
 from pytest import approx
 from tests.db_compound import methane
 
@@ -11,13 +19,23 @@ a4 = methane["a4"]
 
 
 def test_return_fluidState_verified_from_internet_values():
-    state = return_fluidState(1.0, methane["Pc_bar"], 298.15, methane["Tc_K"], 10.1, delta=1e-8)
-    assert state == 'superheated steam'
+    state = return_fluidState(
+        1.0, methane["Pc_bar"], 298.15, methane["Tc_K"], 10.1, delta=1e-8
+    )
+    assert state == "superheated steam"
 
 
 def test_return_Cp_validation_with_methane():
-    cp = return_Cp(298.16, methane["a0"], methane["a1"], methane["a2"], methane["a3"], methane["a4"],
-                   methane["Tcpmin_K"], methane["Tcpmax_K"])
+    cp = return_Cp(
+        298.16,
+        methane["a0"],
+        methane["a1"],
+        methane["a2"],
+        methane["a3"],
+        methane["a4"],
+        methane["Tcpmin_K"],
+        methane["Tcpmax_K"],
+    )
     assert approx(cp.Cp, 1e-5) == 35.7780112
 
 
@@ -64,5 +82,5 @@ def test_abs_err_zero_value():
 
 
 def test_abs_err():
-    x = abs_rel_err(.5, .7)
-    assert approx(x, 1e-5) == .4
+    x = abs_rel_err(0.5, 0.7)
+    assert approx(x, 1e-5) == 0.4
