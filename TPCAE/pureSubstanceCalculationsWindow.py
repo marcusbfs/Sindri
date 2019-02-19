@@ -4,7 +4,7 @@ import numpy as np
 from PySide2 import QtCore, QtWidgets
 
 import IdealGasPropertiesPureSubstance as IGprop
-import antoineVP
+import vapor_pressure
 import db
 import db_utils
 import eos
@@ -158,7 +158,7 @@ class Window_PureSubstanceCalculations(
                 msg = QtWidgets.QMessageBox.about(self, "Error", str(err))
                 return 1
 
-            try:  # calculate Zc and Vc
+            try:  # calculate Z and V
                 self.Zs = self.c.return_Z_given_PT(self.P, self.T)
                 self.Zliq = np.min(self.Zs)
                 self.Zvap = np.max(self.Zs)
@@ -177,14 +177,14 @@ class Window_PureSubstanceCalculations(
                 self.maxZs = utils.f2str(self.Zvap, _decimals, _lt, _gt)
                 # add to plain text editor
                 self.plainTextEdit_results.appendPlainText(
-                    "Vc [m3/mol]: "
+                    "V [m3/mol]: "
                     + self.minVs
                     + " (liquid), "
                     + self.maxVs
                     + " (vapor)"
                 )
                 self.plainTextEdit_results.appendPlainText(
-                    "Zc: " + self.minZs + " (liquid), " + self.maxZs + " (vapor)"
+                    "Z: " + self.minZs + " (liquid), " + self.maxZs + " (vapor)"
                 )
             except Exception as e:
                 msg = QtWidgets.QMessageBox.about(self, "Error", str(e))
@@ -207,49 +207,6 @@ class Window_PureSubstanceCalculations(
             else:
                 # TODO
                 print("error calculating densities")
-
-            # TODO calcular Pvp antoine depois de Pvp eos?
-            # Calculate Pvp - antoine
-            if (
-                self.compound["ANTOINE_A"]
-                and self.compound["ANTOINE_C"]
-                and self.compound["ANTOINE_B"]
-            ):
-                ans_antoine = antoineVP.antoineVP(
-                    self.T,
-                    self.compound["ANTOINE_A"],
-                    self.compound["ANTOINE_B"],
-                    self.compound["ANTOINE_C"],
-                    self.compound["Tmin_K"],
-                    self.compound["Tmax_K"],
-                )
-                self.P_antoine = conv_unit(ans_antoine.Pvp, "bar", "Pa")
-                displayP_antoine = (
-                    utils.f2str(
-                        conv_unit(self.P_antoine, "Pa", "bar"), _decimals, _lt, _gt
-                    )
-                    + " bar"
-                )
-                if ans_antoine[1]:
-                    displayP_antoine = displayP_antoine + " (" + ans_antoine[1] + ")"
-                self.plainTextEdit_results.appendPlainText(
-                    "Pvp (Antoine): " + displayP_antoine
-                )
-
-                try:
-                    self.state = IGprop.return_fluidState(
-                        self.P,
-                        conv_unit(self.compound["Pc_bar"], "bar", "Pa"),
-                        self.T,
-                        self.compound["Tc_K"],
-                        self.P_antoine,
-                    )
-                    self.plainTextEdit_results.appendPlainText(
-                        "fluid state: " + self.state
-                    )
-                except:
-                    # TODO
-                    print("error calculating fluid state")
 
             # calculate Ideal Properties
             if (
@@ -390,18 +347,19 @@ class Window_PureSubstanceCalculations(
                         + utils.f2str(self.dA_vap, _decimals, _lt, _gt)
                         + " (vap.)"
                     )
+                    _f_decimals = 10
                     fstr = (
                         utils.f2str(
                             conv_unit(self.fugacity_liq, "Pa", "bar"),
-                            _decimals,
-                            10 ** (2 - _decimals),
+                            _f_decimals,
+                            10 ** (6 - _f_decimals),
                             _gt,
                         )
                         + " (liq.), "
                         + utils.f2str(
                             conv_unit(self.fugacity_vap, "Pa", "bar"),
-                            _decimals,
-                            10 ** (2 - _decimals),
+                            _f_decimals,
+                            10 ** (6 - _f_decimals),
                             _gt,
                         )
                         + " (vap.)"
@@ -423,17 +381,20 @@ class Window_PureSubstanceCalculations(
 
                 # Pvp from EOS
                 try:
-                    tol = 1e-4
+                    tol = 1e-6
                     maxit = 100
                     try:
-                        Pvp_eos_ret = self.c.return_Pvp_EOS(
-                            self.T, self.P_antoine, tol=tol, k=maxit
-                        )  # Pa
-
+                        Pvpguess = vapor_pressure.leeKeslerVP(
+                            conv_unit(self.compound["Pc_bar"], "bar", "Pa"),
+                            self.T / self.compound["Tc_K"],
+                            self.compound["omega"],
+                        )
                     except:
-                        Pvp_eos_ret = self.c.return_Pvp_EOS(
-                            self.T, conv_unit(1, "bar", "Pa"), tol=tol, k=maxit
-                        )  # Pa
+                        Pvpguess = conv_unit(1, "bar", "Pa")
+                    # Pvpguess = conv_unit(1, "bar", "Pa")
+                    Pvp_eos_ret = self.c.return_Pvp_EOS(
+                        self.T, Pvpguess, tol=tol, k=maxit
+                    )  # Pa
                     self.Pvp_eos = Pvp_eos_ret.Pvp
                     if Pvp_eos_ret.msg is not None:
                         k = Pvp_eos_ret.msg
@@ -442,13 +403,71 @@ class Window_PureSubstanceCalculations(
 
                     msg = (
                         "Pvp (EOS) [bar]: "
-                        + utils.f2str(conv_unit(self.Pvp_eos, "Pa", "bar"), 4, lt=_lt)
+                        + utils.f2str(conv_unit(self.Pvp_eos, "Pa", "bar"), 10, lt=1e-4)
                         + " - iterations: "
                         + str(k)
                     )
                     self.plainTextEdit_results.appendPlainText(msg)
                 except:
                     print("error calculating Pvp from EOS")
+
+                try:
+                    self.state = IGprop.return_fluidState(
+                        self.P,
+                        conv_unit(self.compound["Pc_bar"], "bar", "Pa"),
+                        self.T,
+                        self.compound["Tc_K"],
+                        self.Pvp_eos,
+                    )
+                    self.plainTextEdit_results.appendPlainText(
+                        "fluid state: " + self.state
+                    )
+                except:
+                    # TODO
+                    print("error calculating fluid state")
+                # calculate Lee-Kesler pvp
+                try:
+
+                    Pvp_LK = vapor_pressure.leeKeslerVP(
+                        conv_unit(self.compound["Pc_bar"], "bar", "Pa"),
+                        self.T / self.compound["Tc_K"],
+                        self.compound["omega"],
+                    )
+                    msg = "Pvp (Lee-Kesler) [bar]: " + utils.f2str(
+                        conv_unit(Pvp_LK, "Pa", "bar"), 10, lt=1e-4
+                    )
+                    self.plainTextEdit_results.appendPlainText(msg)
+                except:
+                    # TODO
+                    print("error calculating Lee-Kesler vapor pressure")
+
+                # Calculate Pvp - antoine
+                try:
+                    ans_antoine = vapor_pressure.antoineVP(
+                        self.T,
+                        self.compound["ANTOINE_A"],
+                        self.compound["ANTOINE_B"],
+                        self.compound["ANTOINE_C"],
+                        self.compound["Tmin_K"],
+                        self.compound["Tmax_K"],
+                    )
+                    self.P_antoine = ans_antoine.Pvp
+                    displayP_antoine = (
+                        utils.f2str(
+                            conv_unit(self.P_antoine, "Pa", "bar"), _decimals, _lt, _gt
+                        )
+                        + " bar"
+                    )
+                    if ans_antoine[1]:
+                        displayP_antoine = (
+                            displayP_antoine + " (" + ans_antoine[1] + ")"
+                        )
+                    self.plainTextEdit_results.appendPlainText(
+                        "Pvp (Antoine) [bar]: " + displayP_antoine
+                    )
+                except:
+                    # TODO
+                    print("error calculating Antoine vapor pressure")
 
         else:
             msg = QtWidgets.QMessageBox.about(

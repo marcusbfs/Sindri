@@ -2,6 +2,7 @@ from collections import namedtuple
 import numpy as np
 import sympy as sp
 from scipy.integrate import quad
+from polyEqSolver import solve_cubic
 
 import matplotlib.pyplot as plt
 from constants import R_IG
@@ -73,11 +74,15 @@ class EOS:
 
         self.Z_V_T = None
         self.Z_P_T = None
+        self.Z_P_T_coefs = None
+        self.dZ_VT_dT = None
+        self.numfunc_P_given_VT = None
 
         self.initialize()
 
         self.return_Z_V_T()
         self.return_Z_P_T()
+        self.return_diff_Z_V_T_dT()
 
         self.eos_options = eos_options
 
@@ -386,9 +391,6 @@ class EOS:
             self.alpha = alpha0 + self.omega * (alpha1 - alpha0)
             self.theta = self.a * self.alpha
 
-        self.return_Z_V_T()
-        self.return_Z_P_T()
-
     def return_Z_V_T(self):
         """
         Creates the symbolic equation:
@@ -403,7 +405,6 @@ class EOS:
             self.Z_V_T = self.V / (self.V - self.b) - (
                 self.theta / (R_IG * self.T)
             ) * self.V / (self.V ** 2 + self.delta * self.V + self.epsilon)
-        return self.Z_V_T
 
     def return_Z_P_T(self):
         """
@@ -454,12 +455,51 @@ class EOS:
         p = sp.Poly(f(_P, _T), self.Z).coeffs()
 
         r = np.roots(p)
-        real_valued = r.real[abs(r.imag) < 1e-5]
+        real_valued = r.real[abs(r.imag) < 1e-8]
         ans = real_valued[real_valued >= 0]
         if ans.size == 0:
             raise Exception("There are no positive real roots for Z")
         self.Zval = ans
+
         return ans
+
+    def return_Z_numerically_given_PT(self, _P, _T):
+        # def return_Z_given_PT(self, _P, _T):
+        """ Return the positive roots (Z) of the cubic equation.
+
+        parameters
+        ----------
+        _P : float
+            pressure, pa.
+        _T : float
+            temperature, k.
+
+        Returns
+        -------
+        ans : array, float
+            Returns an array of the real roots of the cubic equation of state. The minimum value of this array
+            corresponds to the vapor state, while the maximum value corresponds to the liquid state.
+
+        """
+        Bl = self.b * _P / (R_IG * _T)
+        deltal = self.delta * _P / (R_IG * _T)
+        epsilonl = self.epsilon * (_P / (R_IG * _T)) ** 2
+        func_theta = sp.lambdify([self.T], self.theta, modules="numpy")
+        # thetal = (
+        #     self.theta.subs([(self.P, _P), (self.T, _T)]).evalf()
+        #     * _P
+        #     / (R_IG * _T) ** 2
+        # )
+        thetal = func_theta(_T) * _P / (R_IG * _T) ** 2
+
+        coefs = (
+            1.0,
+            deltal - Bl - 1.0,
+            thetal + epsilonl - deltal * (Bl + 1.0),
+            -(epsilonl * (Bl + 1.0) + thetal * Bl),
+        )
+
+        return solve_cubic(coefs)
 
     def return_V_given_PT(self, _P, _T):
         """ Return the positive roots (V) of the cubic equation.
@@ -482,6 +522,12 @@ class EOS:
         self.Vval = ans
         return ans
 
+    def create_numfunc_P_given_VT(self):
+        if self.numfunc_P_given_VT is None:
+            self.numfunc_P_given_VT = sp.lambdify(
+                [self.V, self.T], self.Z_V_T, modules="numpy"
+            )
+
     def return_P_given_VT(self, _V, _T):
         """ Return the values of '_P' given '_V' and '_T' using the cubic equation of state.
 
@@ -498,10 +544,43 @@ class EOS:
             pressure at '_T' and '_V', Pascal.
 
         """
-        self.return_Z_V_T()
-        _func = sp.lambdify([self.V, self.T], self.Z_V_T, modules="numpy")
-        _P = _func(_V, _T) * R_IG * _T / _V
+        self.create_numfunc_P_given_VT()
+        _P = self.numfunc_P_given_VT(_V, _T) * R_IG * _T / _V
         return _P
+
+    # def return_T_given_VP(self, _V, _P):
+    #     """ Return the values of '_T' given '_V' and '_P' using the cubic equation of state.
+    #
+    #     Parameters
+    #     ----------
+    #     _V : float
+    #         molar volume, m3/mol.
+    #     _P : float
+    #         pressure, Pascal.
+    #
+    #     Returns
+    #     -------
+    #     _T : float
+    #         temperature at '_P' and '_V', Kelvin.
+    #
+    #     """
+    #     eq = self.Z_P_T.subs()
+    #     _func = sp.lambdify([self.V, self.P], self.Z_P_T.subs([(self.Z, )]), modules="numpy")
+    #     _P = _func(_V, _T) * R_IG * _T / _V
+    #     return _P
+
+    def return_diff_Z_V_T_dT(self):
+        if self.dZ_VT_dT is None:
+            self.return_Z_V_T()
+            self.dZ_VT_dT = sp.diff(self.Z_V_T, self.T)
+
+    def return_numfunc_dZdT_given_V_at_T(self, _T):
+        self.return_diff_Z_V_T_dT()
+        return sp.lambdify([self.V], self.dZ_VT_dT.subs(self.T, _T), modules="numpy")
+
+    def return_numfunc_Z_given_V_T_at_T(self, _T):
+        self.return_Z_V_T()
+        return sp.lambdify([self.V], self.Z_V_T.subs(self.T, _T), modules="numpy")
 
     def return_departureProperties(self, _P, _T, _V, _Z):
         """
@@ -526,19 +605,20 @@ class EOS:
             functions. The dictionary keys are: 'HR', 'SR', 'GR', 'UR', 'AR', 'f'.
 
         """
+        numfunc_dZdT = self.return_numfunc_dZdT_given_V_at_T(_T)
+        numfunc_Z = self.return_numfunc_Z_given_V_T_at_T(_T)
+
+        def _func_UR(vv):
+            return _T * numfunc_dZdT(vv) / vv
+
+        def _func_AR(vv):
+            return (1.0 - numfunc_Z(vv)) / vv
+
         # calculate UR
-        f_to_integrate = self.T * sp.diff(self.Z_V_T, self.T) / self.V
-        f_to_integrate = sp.lambdify(
-            self.V, f_to_integrate.subs(self.T, _T), modules="numpy"
-        )
-        UR_RT = quad(f_to_integrate, _V, np.inf)[0]
+        UR_RT = quad(_func_UR, _V, np.inf)[0]
         UR = UR_RT * _T * R_IG
         # calculate AR
-        f_to_integrate = (1 - self.Z_V_T) / self.V
-        f_to_integrate = sp.lambdify(
-            self.V, f_to_integrate.subs(self.T, _T), modules="numpy"
-        )
-        AR_RT = quad(f_to_integrate, _V, np.inf)[0] + np.log(_Z)
+        AR_RT = quad(_func_AR, _V, np.inf)[0] + np.log(_Z)
         AR = AR_RT * _T * R_IG
         # calculate HR
         HR_RT = UR_RT + 1.0 - _Z
@@ -595,6 +675,7 @@ class EOS:
         """
         _P = initialP
 
+        self.return_Z_V_T()
         f_to_integrate = (1 - self.Z_V_T) / self.V
         f_to_integrate = sp.lambdify(
             self.V, f_to_integrate.subs(self.T, _T), modules="numpy"
@@ -621,6 +702,112 @@ class EOS:
 
         return PvpEOS(_P, k, str(k) + " (max iterations)")
 
+    def all_calculations_at_P_T(self, _P, _T, _Pref, _Tref):
+        import IdealGasPropertiesPureSubstance as IGPROP
+        from vapor_pressure import leeKeslerVP
+
+        # todo apply try and except here by sections
+
+        Zs = self.return_Z_numerically_given_PT(_P, _T)
+        Zliq = np.min(Zs)
+        Zvap = np.max(Zs)
+        Vliq = Zliq * R_IG * _T / _P
+        Vvap = Zvap * R_IG * _T / _P
+        rholiq = self.compound["Mol. Wt."] * 1e-3 / Vliq
+        rhovap = self.compound["Mol. Wt."] * 1e-3 / Vvap
+
+        Zsref = self.return_Z_numerically_given_PT(_Pref, _Tref)
+        Zliqref = np.min(Zsref)
+        Zvapref = np.max(Zsref)
+        Vliqref = Zliqref * R_IG * _Tref / _Pref
+        Vvapref = Zvapref * R_IG * _Tref / _Pref
+
+        a0 = self.compound["a0"]
+        a1 = self.compound["a1"]
+        a2 = self.compound["a2"]
+        a3 = self.compound["a3"]
+        a4 = self.compound["a4"]
+        Tmin = self.compound["Tcpmin_K"]
+        Tmax = self.compound["Tcpmax_K"]
+
+        IGprop = IGPROP.return_IdealGasProperties(
+            _Tref, _T, _Pref, _P, a0, a1, a2, a3, a4, Tmin, Tmax
+        )
+        dProp_liq = self.return_delta_ResProperties(
+            _Pref, _Tref, Vliqref, Zliqref, _P, _T, Vliq, Zliq
+        )
+        dProp_vap = self.return_delta_ResProperties(
+            _Pref, _Tref, Vvapref, Zvapref, _P, _T, Vvap, Zvap
+        )
+
+        dH_liq = IGprop["dH_IG"] - dProp_liq["HR"]
+        dS_liq = IGprop["dS_IG"] - dProp_liq["SR"]
+        dG_liq = IGprop["dG_IG"] - dProp_liq["GR"]
+        dU_liq = IGprop["dU_IG"] - dProp_liq["UR"]
+        dA_liq = IGprop["dA_IG"] - dProp_liq["AR"]
+        f_liq = dProp_liq["f"]
+
+        dH_vap = IGprop["dH_IG"] - dProp_vap["HR"]
+        dS_vap = IGprop["dS_IG"] - dProp_vap["SR"]
+        dG_vap = IGprop["dG_IG"] - dProp_vap["GR"]
+        dU_vap = IGprop["dU_IG"] - dProp_vap["UR"]
+        dA_vap = IGprop["dA_IG"] - dProp_vap["AR"]
+        f_vap = dProp_vap["f"]
+
+        Pvp_guess = leeKeslerVP(
+            conv_unit(self.compound["Pc_bar"], "bar", "Pa"),
+            _T / self.compound["Tc_K"],
+            self.compound["omega"],
+        )
+
+        Pvp = self.return_Pvp_EOS(_T, Pvp_guess, tol=1e-5, k=1000).Pvp
+
+        state = IGPROP.return_fluidState(
+            _P,
+            conv_unit(self.compound["Pc_bar"], "bar", "Pa"),
+            _T,
+            self.compound["Tc_K"],
+            Pvp,
+            delta=1e-4,
+        )
+
+        ideal_dict = {
+            "Cp": IGprop["Cp_IG"],
+            "dH": IGprop["dH_IG"],
+            "dS": IGprop["dS_IG"],
+            "dG": IGprop["dG_IG"],
+            "dU": IGprop["dU_IG"],
+            "dA": IGprop["dA_IG"],
+        }
+
+        liq_dict = {
+            "Z": Zliq,
+            "V": Vliq,
+            "rho": rholiq,
+            "dH": dH_liq,
+            "dS": dS_liq,
+            "dG": dG_liq,
+            "dU": dU_liq,
+            "dA": dA_liq,
+            "f": f_liq,
+        }
+
+        vap_dict = {
+            "Z": Zvap,
+            "V": Vvap,
+            "rho": rhovap,
+            "dH": dH_vap,
+            "dS": dS_vap,
+            "dG": dG_vap,
+            "dU": dU_vap,
+            "dA": dA_vap,
+            "f": f_vap,
+        }
+        prop = namedtuple("prop", ["ideal", "liq", "vap", "Pvp", "state"])
+
+        retprop = prop(ideal_dict, liq_dict, vap_dict, Pvp, state)
+        return retprop
+
     def change_eos(self, new_eos):
         """ Change and update the cubic equation of state used by this class.
 
@@ -637,45 +824,3 @@ class EOS:
         self.Z_V_T = None
         self.Z_P_T = None
         self.initialize()
-
-    # def PV_diagrams(self, var, Punit, Vunit, Tunit, a, b, points, Ts):
-    #     # TODO converter unidades antes
-    #     Tfp = self.compound["Tfp_K"]  # freezing point temperature at 1 atm, K
-    #     Tb = self.compound["Tb_K"]  # boiling temperature at 1 atm, K
-    #     Tc = self.Tc
-    #     Pc = self.Pc
-    #
-    #     Tvec = np.linspace(Tfp, Tc, points)
-    #     # # print(Tvec)
-    #     #
-    #     # check if compound has antoine coefs
-    #     if self.compound["ANTOINE_A"] is not None:
-    #         import antoineVP
-    #
-    #         ant_A = self.compound["ANTOINE_A"]
-    #         ant_B = self.compound["ANTOINE_B"]
-    #         ant_C = self.compound["ANTOINE_C"]
-    #         ant_Tmin = self.compound["Tmin_K"]
-    #         ant_Tmax = self.compound["Tmax_K"]
-    #         #
-    #         Pvp_guess = [
-    #             conv_unit(
-    #                 antoineVP.antoineVP(T, ant_A, ant_B, ant_C, ant_Tmin, ant_Tmax)[0],
-    #                 "bar",
-    #                 "Pa",
-    #             )
-    #             for T in Tvec
-    #         ]
-    #     else:
-    #         Pvp_guess = [1 for T in Tvec]
-    #
-    #     Pvp = [self.return_Pvp_EOS(T, P)[0] for T, P in zip(Tvec, Pvp_guess)]
-    #
-    #     V = [np.min(self.return_V_given_PT(P, T)) for P, T in zip(Pvp, Tvec)]
-    #
-    #     fig, ax = plt.subplots()
-    #     ax.plot(V, Pvp)
-    #     plt.show()
-    #
-    #     if var == "volume":
-    #         x = np.linspace(a, b, points)
