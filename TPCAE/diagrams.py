@@ -2,54 +2,96 @@ import numpy as np
 from vapor_pressure import leeKeslerVP
 from units import conv_unit
 import matplotlib.pyplot as plt
+from scipy import interpolate
 
-valid_diagrams = ["PV", "TS", "TV", "PS", "PT"]
+valid_diagrams = ["PV", "TS", "TV", "PS", "PT", "HS"]
 
 
-def plot_diag(data, diag, xunit, yunit, xlnscale=False, ylnscale=False, grid=True):
+def plot_diag(
+    data, diag, xunit, yunit, xlnscale=False, ylnscale=False, grid=True, smooth=False
+):
     if diag not in valid_diagrams:
         raise ValueError(str(diag) + " is not a valid diagram")
 
+    cp_data = data[1]
+    data = data[0]
+
+    fig, ax = plt.subplots()
+
     if diag == "PV":
         title = "Pressure vs. Molar volume"
+
         xliq = np.asarray([i.liq["V"] for i in data])
         xvap = np.asarray([i.vap["V"] for i in data])
-        yvec = np.asarray([i.Pvp for i in data])
+        yliq = np.asarray([i.Pvp for i in data])
 
         # convert units
         xliq = conv_unit(xliq, "m3/mol", xunit)
         xvap = conv_unit(xvap, "m3/mol", xunit)
-        yvec = conv_unit(yvec, "Pa", yunit)
+        yliq = conv_unit(yliq, "Pa", yunit)
+        yvap = np.copy(yliq)
+
+        xc = conv_unit(cp_data.liq["V"], "m3/mol", xunit)
+        yc = conv_unit(cp_data.Pvp, "Pa", yunit)
 
         ylabel = "Pressure [{0}]".format(yunit)
         xlabel = "Molar volume [{0}]".format(xunit)
 
     elif diag == "TS":
         title = "Temperature vs. Entropy"
+
         xliq = np.asarray([i.liq["dS"] for i in data])
         xvap = np.asarray([i.vap["dS"] for i in data])
-        yvec = np.asarray([i.T for i in data])
+        yliq = np.asarray([i.T for i in data])
 
         # convert units
-        yvec = conv_unit(yvec, "K", yunit)
+        yliq = conv_unit(yliq, "K", yunit)
+        yvap = np.copy(yliq)
+
+        xc = cp_data.liq["dS"]
+        yc = conv_unit(cp_data.T, "K", yunit)
 
         ylabel = "Temperature [{0}]".format(yunit)
         xlabel = "Entropy [{0}]".format(xunit)
 
+    elif diag == "HS":
+        title = "Enthalphy vs. Entropy"
+
+        xliq = np.asarray([i.liq["dS"] for i in data])
+        xvap = np.asarray([i.vap["dS"] for i in data])
+        yliq = np.asarray([i.liq["dH"] for i in data])
+        yvap = np.asarray([i.vap["dH"] for i in data])
+
+        # convert units
+        yliq = conv_unit(yliq, "J/mol", yunit)
+        yvap = conv_unit(yvap, "J/mol", yunit)
+
+        xc = cp_data.vap["dS"]
+        yc = conv_unit(cp_data.vap["dH"], "J/mol", yunit)
+
+        ylabel = "Enthalpy [{0}]".format(yunit)
+        xlabel = "Entropy [{0}]".format(xunit)
+
     elif diag == "PS":
         title = "Pressure vs. Entropy"
+
         xliq = np.asarray([i.liq["dS"] for i in data])
         xvap = np.asarray([i.vap["dS"] for i in data])
         yvec = np.asarray([i.Pvp for i in data])
 
         # convert units
-        yvec = conv_unit(yvec, "Pa", yunit)
+        yliq = conv_unit(yvec, "Pa", yunit)
+        yvap = np.copy(yliq)
+
+        yc = conv_unit(cp_data.Pvp, "Pa", yunit)
+        xc = cp_data.vap["dS"]
 
         ylabel = "Pressure [{0}]".format(yunit)
         xlabel = "Entropy [{0}]".format(xunit)
 
     elif diag == "TV":
         title = "Temperature vs. Molar volume"
+
         xliq = np.asarray([i.liq["V"] for i in data])
         xvap = np.asarray([i.vap["V"] for i in data])
         yvec = np.asarray([i.T for i in data])
@@ -57,57 +99,73 @@ def plot_diag(data, diag, xunit, yunit, xlnscale=False, ylnscale=False, grid=Tru
         # convert units
         xliq = conv_unit(xliq, "m3/mol", xunit)
         xvap = conv_unit(xvap, "m3/mol", xunit)
-        yvec = conv_unit(yvec, "K", yunit)
+        yliq = conv_unit(yvec, "K", yunit)
+        yvap = np.copy(yliq)
+
+        yc = conv_unit(cp_data.T, "K", yunit)
+        xc = conv_unit(cp_data.vap["V"], "m3/mol", xunit)
 
         ylabel = "Temperature [{0}]".format(yunit)
         xlabel = "Molar volume [{0}]".format(xunit)
 
     elif diag == "PT":
         title = "Pressure vs. Temperature"
-        xvec = np.asarray([i.T for i in data])
-        yvec = np.asarray([i.Pvp for i in data])
+
+        xvap = []
+        yvap = []
+
+        xliq = np.asarray([i.T for i in data])
+        yliq = np.asarray([i.Pvp for i in data])
 
         # convert units
-        xvec = conv_unit(xvec, "K", xunit)
-        yvec = conv_unit(yvec, "Pa", yunit)
+        xliq = conv_unit(xliq, "K", xunit)
+        yliq = conv_unit(yliq, "Pa", yunit)
+
+        yc = conv_unit(cp_data.P, "Pa", yunit)
+        xc = conv_unit(cp_data.T, "K", xunit)
 
         ylabel = "Pressure [{0}]".format(yunit)
         xlabel = "Temperature [{0}]".format(xunit)
 
-        if xlnscale:
-            xvec = np.log(xvec)
-            xlabel = "ln " + xlabel
-        if ylnscale:
-            yvec = np.log(yvec)
-            ylabel = "ln " + ylabel
-
-        fig, ax = plt.subplots()
-        ax.plot(xvec, yvec)
-        ax.set_xlabel(xlabel)
-        ax.set_ylabel(ylabel)
-        ax.set_title(title)
-        if grid:
-            ax.grid()
-        plt.show()
-        return
+    if grid:
+        ax.grid()
 
     if xlnscale:
         xliq = np.log(xliq)
         xvap = np.log(xvap)
+        xc = np.log(xc)
         xlabel = "ln " + xlabel
     if ylnscale:
-        yvec = np.log(yvec)
+        yvap = np.log(yvap)
+        yliq = np.log(yliq)
+        yc = np.log(yc)
         ylabel = "ln " + ylabel
 
-    fig, ax = plt.subplots()
-    ax.plot(xliq, yvec, label="Liquid")
-    ax.plot(xvap, yvec, label="Vapor")
+    if smooth:
+
+        n = 100
+
+        if len(xliq) > 0 and len(yliq) > 0:
+            tliq = interpolate.splrep(xliq, yliq)
+            xliq = np.linspace(np.min(xliq), np.max(xliq), n)
+            yliq = interpolate.splev(xliq, tliq)
+
+        if len(xvap) > 0 and len(yvap) > 0:
+            tvap = interpolate.splrep(xvap[::-1], yvap[::-1])
+            xvap = np.linspace(np.min(xvap), np.max(xvap), n)
+            yvap = interpolate.splev(xvap, tvap)
+
+    if len(xliq) > 0 and len(yliq) > 0:
+        ax.plot(xliq, yliq, label="Liquid")
+    if len(xvap) > 0 and len(yvap) > 0:
+        ax.plot(xvap, yvap, label="Vapor")
+
+    ax.plot(xc, yc, label="Critical point", marker="o")
+
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
-    ax.legend()
     ax.set_title(title)
-    if grid:
-        ax.grid()
+    ax.legend()
     plt.show()
     return
 
@@ -150,4 +208,6 @@ def gen_data(compound, Ti_f, _Pref, _Tref, points):
         ret = compound.all_calculations_at_P_T(p, t, _Pref, _Tref)
         retvec.append(ret)
 
-    return retvec
+    critical_point = compound.critical_point_calculation(_Pref, _Tref)
+
+    return (retvec, critical_point)

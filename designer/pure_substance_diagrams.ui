@@ -115,18 +115,32 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="checkBox_xlogscale">
+         <property name="text">
+          <string>X log scale</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
         <widget class="QCheckBox" name="checkBox_ylogscale">
          <property name="text">
           <string>Y log scale</string>
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_xlogscale">
+       <item row="2" column="1">
+        <widget class="QCheckBox" name="checkBox_smooth">
          <property name="text">
-          <string>X log scale</string>
+          <string>Smooth curve</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QCheckBox" name="checkBox_grid">
+         <property name="text">
+          <string>Grid</string>
          </property>
         </widget>
        </item>

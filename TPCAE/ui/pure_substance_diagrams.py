@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/pure_substance_diagrams.ui',
 # licensing of 'designer/pure_substance_diagrams.ui' applies.
 #
-# Created: Wed Feb 20 15:57:47 2019
+# Created: Wed Feb 20 19:40:59 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -78,15 +78,21 @@ class Ui_Form_PureSubstanceDiagrams(object):
         self.horizontalLayout_5.addWidget(self.comboBox_xUnits)
         self.verticalLayout_2.addLayout(self.horizontalLayout_5)
         self.horizontalLayout_7.addLayout(self.verticalLayout_2)
-        self.verticalLayout = QtWidgets.QVBoxLayout()
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.checkBox_ylogscale = QtWidgets.QCheckBox(Form_PureSubstanceDiagrams)
-        self.checkBox_ylogscale.setObjectName("checkBox_ylogscale")
-        self.verticalLayout.addWidget(self.checkBox_ylogscale)
+        self.gridLayout_2 = QtWidgets.QGridLayout()
+        self.gridLayout_2.setObjectName("gridLayout_2")
         self.checkBox_xlogscale = QtWidgets.QCheckBox(Form_PureSubstanceDiagrams)
         self.checkBox_xlogscale.setObjectName("checkBox_xlogscale")
-        self.verticalLayout.addWidget(self.checkBox_xlogscale)
-        self.horizontalLayout_7.addLayout(self.verticalLayout)
+        self.gridLayout_2.addWidget(self.checkBox_xlogscale, 4, 0, 1, 1)
+        self.checkBox_ylogscale = QtWidgets.QCheckBox(Form_PureSubstanceDiagrams)
+        self.checkBox_ylogscale.setObjectName("checkBox_ylogscale")
+        self.gridLayout_2.addWidget(self.checkBox_ylogscale, 2, 0, 1, 1)
+        self.checkBox_smooth = QtWidgets.QCheckBox(Form_PureSubstanceDiagrams)
+        self.checkBox_smooth.setObjectName("checkBox_smooth")
+        self.gridLayout_2.addWidget(self.checkBox_smooth, 2, 1, 1, 1)
+        self.checkBox_grid = QtWidgets.QCheckBox(Form_PureSubstanceDiagrams)
+        self.checkBox_grid.setObjectName("checkBox_grid")
+        self.gridLayout_2.addWidget(self.checkBox_grid, 4, 1, 1, 1)
+        self.horizontalLayout_7.addLayout(self.gridLayout_2)
         self.gridLayout.addLayout(self.horizontalLayout_7, 3, 0, 1, 1)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
@@ -142,14 +148,24 @@ class Ui_Form_PureSubstanceDiagrams(object):
                 "Form_PureSubstanceDiagrams", "X unit", None, -1
             )
         )
+        self.checkBox_xlogscale.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "X log scale", None, -1
+            )
+        )
         self.checkBox_ylogscale.setText(
             QtWidgets.QApplication.translate(
                 "Form_PureSubstanceDiagrams", "Y log scale", None, -1
             )
         )
-        self.checkBox_xlogscale.setText(
+        self.checkBox_smooth.setText(
             QtWidgets.QApplication.translate(
-                "Form_PureSubstanceDiagrams", "X log scale", None, -1
+                "Form_PureSubstanceDiagrams", "Smooth curve", None, -1
+            )
+        )
+        self.checkBox_grid.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "Grid", None, -1
             )
         )
         self.btn_gen.setText(

@@ -12,12 +12,15 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
         self.Pref = Pref
         self.Tref = Tref
         self.le_points.setText(str(10))
+        self.checkBox_smooth.setChecked(True)
+        self.checkBox_grid.setChecked(True)
 
         self.points = None
         self.data_is_gen = False
 
         # connections
         self.le_Ti.textChanged.connect(self.changed_Trange)
+        self.le_points.textChanged.connect(self.changed_Trange)
         self.btn_gen.clicked.connect(self.gen)
         self.btn_plot.clicked.connect(self.plot)
         self.comboBox_diagram.currentTextChanged.connect(self.update_axis)
@@ -33,11 +36,12 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
             "pressure-volume": "PV",
             "temperature-entropy": "TS",
             "pressure-entropy": "PS",
+            "enthalpy-entropy": "HS",
             "temperature-volume": "TV",
             "pressure-temperature": "PT",
         }
-        self.x_dict = {"PV": "V", "TS": "S", "PS": "S", "TV": "V", "PT": "T"}
-        self.y_dict = {"PV": "P", "TS": "T", "PS": "P", "TV": "T", "PT": "P"}
+        self.x_dict = {"PV": "V", "TS": "S", "PS": "S", "TV": "V", "PT": "T", "HS": "S"}
+        self.y_dict = {"PV": "P", "TS": "T", "PS": "P", "TV": "T", "PT": "P", "HS": "H"}
         self.units_options = {
             "P": units.pressure_options,
             "V": units.molar_vol_options,
@@ -45,7 +49,14 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
             "S": ["J/molK"],
             "H": units.energy_per_mol_options,
         }
-        self.logscale = {"PV": True, "TS": False, "PS": False, "TV": True, "PT": False}
+        self.logscale = {
+            "PV": True,
+            "TS": False,
+            "PS": False,
+            "TV": True,
+            "PT": False,
+            "HS": False,
+        }
 
         self.diagram_options = list(self.diagram_dict.keys())
 
@@ -96,6 +107,8 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
                 yunit,
                 xlnscale=self.checkBox_xlogscale.isChecked(),
                 ylnscale=self.checkBox_ylogscale.isChecked(),
+                grid=self.checkBox_grid.isChecked(),
+                smooth=self.checkBox_smooth.isChecked(),
             )
         else:
             QtWidgets.QMessageBox.about(

@@ -7,6 +7,8 @@ from scipy.integrate import quad
 from constants import R_IG
 from db_utils import get_compound_properties
 from polyEqSolver import solve_cubic
+import IdealGasPropertiesPureSubstance as IGPROP
+from vapor_pressure import leeKeslerVP
 from units import conv_unit
 
 eos_options = {
@@ -706,8 +708,6 @@ class EOS:
         return PvpEOS(_P, k, str(k) + " (max iterations)")
 
     def all_calculations_at_P_T(self, _P, _T, _Pref, _Tref):
-        import IdealGasPropertiesPureSubstance as IGPROP
-        from vapor_pressure import leeKeslerVP
 
         try:  # Calculate Z
             Zs = self.return_Z_numerically_given_PT(_P, _T)
@@ -717,7 +717,9 @@ class EOS:
             Zsref = self.return_Z_numerically_given_PT(_Pref, _Tref)
             Zliqref = np.min(Zsref)
             Zvapref = np.max(Zsref)
-        except:
+
+        except Exception as e:
+            print(str(e))
             raise ValueError("Error calculating Z")
 
         Vliq = Zliq * R_IG * _T / _P
@@ -850,6 +852,14 @@ class EOS:
 
         retprop = prop(_T, _P, _Tref, _Pref, ideal_dict, liq_dict, vap_dict, Pvp, state)
         return retprop
+
+    def critical_point_calculation(self, _Pref, _Tref):
+        _Tc = self.compound["Tc_K"]
+        _Pc_guess = leeKeslerVP(
+            conv_unit(self.compound["Pc_bar"], "bar", "Pa"), 1.0, self.compound["omega"]
+        )
+        _Pc = self.return_Pvp_EOS(_Tc, _Pc_guess, tol=1e-6, k=100).Pvp
+        return self.all_calculations_at_P_T(_Pc, _Tc, _Pref, _Tref)
 
     def change_eos(self, new_eos):
         """ Change and update the cubic equation of state used by this class.
