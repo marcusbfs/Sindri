@@ -8,7 +8,9 @@ def solve_quadratic(coefs):
         return np.array([])
     x1 = (-b + np.sqrt(delta)) / (2 * a)
     x2 = (-b - np.sqrt(delta)) / (2 * a)
-    return np.array([x1, x2])
+    r = np.array([x1, x2])
+    ret = r.real[abs(r.imag) < 1e-6]
+    return ret
 
 
 def solve_cubic(coefs):
@@ -26,4 +28,6 @@ def solve_cubic(coefs):
         x0 = x0l
 
     xs = solve_quadratic((a, b + a * x0, c + b * x0 + a * x0 ** 2))
-    return np.concatenate((np.atleast_1d(x0), xs))
+    r = np.concatenate((np.atleast_1d(x0), xs))
+    ret = r.real[abs(r.imag) < 1e-6]
+    return ret

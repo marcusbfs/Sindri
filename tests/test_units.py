@@ -72,10 +72,10 @@ class TestVolumesConversions(object):
         assert pytest.approx(conv_unit(1, "m3", "m3"), 1e-3) == 1
 
     def test_volumes_cm3_to_m3(self):
-        assert pytest.approx(conv_unit(1, "cm3", "m3"), 1e-3) == 100 ** 3
+        assert pytest.approx(conv_unit(1, "cm3", "m3"), 1e-3) == 1 / 100 ** 3
 
     def test_volumes_m3_to_cm3(self):
-        assert pytest.approx(conv_unit(1, "m3", "cm3"), 1e-3) == 1 / 100 ** 3
+        assert pytest.approx(conv_unit(1, "m3", "cm3"), 1e-3) == 100 ** 3
 
     def test_volumes_L_to_m3(self):
         assert pytest.approx(conv_unit(1, "L", "m3"), 1e-3) == 1 / 1000

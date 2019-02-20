@@ -1,3 +1,4 @@
+import TPCAE.IdealGasPropertiesPureSubstance as IGprop
 from TPCAE.IdealGasPropertiesPureSubstance import (
     return_fluidState,
     return_Cp,
@@ -18,11 +19,19 @@ a3 = methane["a3"]
 a4 = methane["a4"]
 
 
+def test_if_state_dict_exists():
+    assert isinstance(IGprop.state_dict, dict)
+
+
+def test_if_state_options_exists():
+    assert isinstance(IGprop.state_options, list)
+
+
 def test_return_fluidState_verified_from_internet_values():
     state = return_fluidState(
-        1.0, methane["Pc_bar"], 298.15, methane["Tc_K"], 10.1, delta=1e-8
+        1.0, methane["Pc_bar"], 100, methane["Tc_K"], 0.34815625, delta=1e-8
     )
-    assert state == "superheated steam"
+    assert state == "compressed or unsaturated liquid"
 
 
 def test_return_Cp_validation_with_methane():

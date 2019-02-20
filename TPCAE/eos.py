@@ -1,12 +1,12 @@
 from collections import namedtuple
+
 import numpy as np
 import sympy as sp
 from scipy.integrate import quad
-from polyEqSolver import solve_cubic
 
-import matplotlib.pyplot as plt
 from constants import R_IG
 from db_utils import get_compound_properties
+from polyEqSolver import solve_cubic
 from units import conv_unit
 
 eos_options = {
@@ -72,6 +72,9 @@ class EOS:
             "Z deltal Bl thetal epsilonl", real=True
         )
 
+        self.Tr = self.T / self.Tc
+        self.Pc_RTc = self.Pc / (R_IG * self.Tc)
+
         self.Z_V_T = None
         self.Z_P_T = None
         self.Z_P_T_coefs = None
@@ -101,8 +104,6 @@ class EOS:
         This equation was taken from Poling, 2002.
 
         """
-        self.Tr = self.T / self.Tc
-        self.Pc_RTc = self.Pc / (R_IG * self.Tc)
 
         if self.eos == "van_der_waals_1890":
             self.a = 0.42188 * (R_IG * self.Tc) ** 2 / self.Pc
@@ -383,10 +384,10 @@ class EOS:
             self.delta = 2 * self.b
             self.epsilon = -self.b ** 2
             alpha0 = self.Tr ** (-0.207176) * sp.exp(
-                0.092099 * (1 - self.Tr ** (1.94800))
+                0.092099 * (1 - self.Tr ** 1.94800)
             )
             alpha1 = self.Tr ** (-0.502297) * sp.exp(
-                0.603486 * (1 - self.Tr ** (2.09626))
+                0.603486 * (1 - self.Tr ** 2.09626)
             )
             self.alpha = alpha0 + self.omega * (alpha1 - alpha0)
             self.theta = self.a * self.alpha
@@ -499,7 +500,9 @@ class EOS:
             -(epsilonl * (Bl + 1.0) + thetal * Bl),
         )
 
-        return solve_cubic(coefs)
+        roots = solve_cubic(coefs)
+        positive_roots = roots[roots >= 0]
+        return positive_roots
 
     def return_V_given_PT(self, _P, _T):
         """ Return the positive roots (V) of the cubic equation.
@@ -706,52 +709,96 @@ class EOS:
         import IdealGasPropertiesPureSubstance as IGPROP
         from vapor_pressure import leeKeslerVP
 
-        # todo apply try and except here by sections
+        try:  # Calculate Z
+            Zs = self.return_Z_numerically_given_PT(_P, _T)
+            Zliq = np.min(Zs)
+            Zvap = np.max(Zs)
 
-        Zs = self.return_Z_numerically_given_PT(_P, _T)
-        Zliq = np.min(Zs)
-        Zvap = np.max(Zs)
+            Zsref = self.return_Z_numerically_given_PT(_Pref, _Tref)
+            Zliqref = np.min(Zsref)
+            Zvapref = np.max(Zsref)
+        except:
+            raise ValueError("Error calculating Z")
+
         Vliq = Zliq * R_IG * _T / _P
         Vvap = Zvap * R_IG * _T / _P
+        Vliqref = Zliqref * R_IG * _Tref / _Pref
+        Vvapref = Zvapref * R_IG * _Tref / _Pref
         rholiq = self.compound["Mol. Wt."] * 1e-3 / Vliq
         rhovap = self.compound["Mol. Wt."] * 1e-3 / Vvap
 
-        Zsref = self.return_Z_numerically_given_PT(_Pref, _Tref)
-        Zliqref = np.min(Zsref)
-        Zvapref = np.max(Zsref)
-        Vliqref = Zliqref * R_IG * _Tref / _Pref
-        Vvapref = Zvapref * R_IG * _Tref / _Pref
+        if (
+            self.compound["a0"] is not None
+            and self.compound["a1"] is not None
+            and self.compound["a2"] is not None
+            and self.compound["a3"] is not None
+            and self.compound["a4"] is not None
+        ):
+            has_cp = True
+        else:
+            has_cp = False
 
-        a0 = self.compound["a0"]
-        a1 = self.compound["a1"]
-        a2 = self.compound["a2"]
-        a3 = self.compound["a3"]
-        a4 = self.compound["a4"]
-        Tmin = self.compound["Tcpmin_K"]
-        Tmax = self.compound["Tcpmax_K"]
+        try:
+            dProp_liq = self.return_delta_ResProperties(
+                _Pref, _Tref, Vliqref, Zliqref, _P, _T, Vliq, Zliq
+            )
+            dProp_vap = self.return_delta_ResProperties(
+                _Pref, _Tref, Vvapref, Zvapref, _P, _T, Vvap, Zvap
+            )
+        except:
+            raise ValueError("Error evaluating departure functions")
 
-        IGprop = IGPROP.return_IdealGasProperties(
-            _Tref, _T, _Pref, _P, a0, a1, a2, a3, a4, Tmin, Tmax
-        )
-        dProp_liq = self.return_delta_ResProperties(
-            _Pref, _Tref, Vliqref, Zliqref, _P, _T, Vliq, Zliq
-        )
-        dProp_vap = self.return_delta_ResProperties(
-            _Pref, _Tref, Vvapref, Zvapref, _P, _T, Vvap, Zvap
-        )
+        if has_cp:
+            a0 = self.compound["a0"]
+            a1 = self.compound["a1"]
+            a2 = self.compound["a2"]
+            a3 = self.compound["a3"]
+            a4 = self.compound["a4"]
+            Tmin = self.compound["Tcpmin_K"]
+            Tmax = self.compound["Tcpmax_K"]
 
-        dH_liq = IGprop["dH_IG"] - dProp_liq["HR"]
-        dS_liq = IGprop["dS_IG"] - dProp_liq["SR"]
-        dG_liq = IGprop["dG_IG"] - dProp_liq["GR"]
-        dU_liq = IGprop["dU_IG"] - dProp_liq["UR"]
-        dA_liq = IGprop["dA_IG"] - dProp_liq["AR"]
+            try:
+                IGprop = IGPROP.return_IdealGasProperties(
+                    _Tref, _T, _Pref, _P, a0, a1, a2, a3, a4, Tmin, Tmax
+                )
+            except:
+                raise ValueError("Error calculating ideal properties")
+
+            ideal_dict = {
+                "Cp": IGprop["Cp_IG"],
+                "dH": IGprop["dH_IG"],
+                "dS": IGprop["dS_IG"],
+                "dG": IGprop["dG_IG"],
+                "dU": IGprop["dU_IG"],
+                "dA": IGprop["dA_IG"],
+            }
+
+            dH_liq = IGprop["dH_IG"] - dProp_liq["HR"]
+            dS_liq = IGprop["dS_IG"] - dProp_liq["SR"]
+            dG_liq = IGprop["dG_IG"] - dProp_liq["GR"]
+            dU_liq = IGprop["dU_IG"] - dProp_liq["UR"]
+            dA_liq = IGprop["dA_IG"] - dProp_liq["AR"]
+
+            dH_vap = IGprop["dH_IG"] - dProp_vap["HR"]
+            dS_vap = IGprop["dS_IG"] - dProp_vap["SR"]
+            dG_vap = IGprop["dG_IG"] - dProp_vap["GR"]
+            dU_vap = IGprop["dU_IG"] - dProp_vap["UR"]
+            dA_vap = IGprop["dA_IG"] - dProp_vap["AR"]
+        else:
+            ideal_dict = None
+            dH_liq = None
+            dS_liq = None
+            dG_liq = None
+            dU_liq = None
+            dA_liq = None
+
+            dH_vap = None
+            dS_vap = None
+            dG_vap = None
+            dU_vap = None
+            dA_vap = None
+
         f_liq = dProp_liq["f"]
-
-        dH_vap = IGprop["dH_IG"] - dProp_vap["HR"]
-        dS_vap = IGprop["dS_IG"] - dProp_vap["SR"]
-        dG_vap = IGprop["dG_IG"] - dProp_vap["GR"]
-        dU_vap = IGprop["dU_IG"] - dProp_vap["UR"]
-        dA_vap = IGprop["dA_IG"] - dProp_vap["AR"]
         f_vap = dProp_vap["f"]
 
         Pvp_guess = leeKeslerVP(
@@ -760,7 +807,10 @@ class EOS:
             self.compound["omega"],
         )
 
-        Pvp = self.return_Pvp_EOS(_T, Pvp_guess, tol=1e-5, k=1000).Pvp
+        try:
+            Pvp = self.return_Pvp_EOS(_T, Pvp_guess, tol=1e-5, k=1000).Pvp
+        except:
+            raise ValueError("Error calculating vapor pressure from EOS")
 
         state = IGPROP.return_fluidState(
             _P,
@@ -770,15 +820,6 @@ class EOS:
             Pvp,
             delta=1e-4,
         )
-
-        ideal_dict = {
-            "Cp": IGprop["Cp_IG"],
-            "dH": IGprop["dH_IG"],
-            "dS": IGprop["dS_IG"],
-            "dG": IGprop["dG_IG"],
-            "dU": IGprop["dU_IG"],
-            "dA": IGprop["dA_IG"],
-        }
 
         liq_dict = {
             "Z": Zliq,
@@ -803,9 +844,11 @@ class EOS:
             "dA": dA_vap,
             "f": f_vap,
         }
-        prop = namedtuple("prop", ["ideal", "liq", "vap", "Pvp", "state"])
+        prop = namedtuple(
+            "prop", ["T", "P", "Tref", "Pref", "ideal", "liq", "vap", "Pvp", "state"]
+        )
 
-        retprop = prop(ideal_dict, liq_dict, vap_dict, Pvp, state)
+        retprop = prop(_T, _P, _Tref, _Pref, ideal_dict, liq_dict, vap_dict, Pvp, state)
         return retprop
 
     def change_eos(self, new_eos):

@@ -1,24 +1,37 @@
 from collections import namedtuple
-from constants import R_IG
+
 import numpy as np
+
+from constants import R_IG
+
+state_dict = {
+    # It must have the following order:
+    #   supercritical, critical point, vapor-liquid equi., liquid, vapor.
+    "supercritical": "supercritical fluid",
+    "critical_point": "critical point",
+    "VL_equi": "vapor-liquid equilibrium",
+    "liq": "compressed or unsaturated liquid",
+    "vap": "superheated steam",
+}
+
+state_options = list(state_dict.values())
 
 
 def return_fluidState(P, Pc, T, Tc, Pvp, delta=1e-3):
     Pr = P / Pc
     Tr = T / Tc
-    # TODO confirmar se aqui é "and" ou "or"
-    if Tr > 1 and Pr > 1:
-        state = "supercritical fluid"
+    if Tr > 1 or Pr > 1:
+        state = state_dict["supercritical"]
     elif (Tr > 0.9 and Tr < 1.1) and (Pr > 0.9 and Pr < 1.1):
-        state = "critical point"
+        state = state_dict["critical_point"]
     elif abs_rel_err(P, Pvp) < delta:
-        state = "vapor–liquid equilibrium"
+        state = state_dict["VL_equi"]
     elif P >= Pvp + delta:
-        state = "compressed or unsaturated liquid"
+        state = state_dict["liq"]
     elif P <= Pvp - delta:
-        state = "superheated steam"
-    # else:
-    #     state = "vapor–liquid equilibrium"
+        state = state_dict["vap"]
+    else:
+        raise ValueError("Couldn't identify fluid state.")
 
     return state
 
@@ -35,7 +48,9 @@ def return_Cp(T, a0, a1, a2, a3, a4, Tmin, Tmax):
     """
     cp = namedtuple("Cp", ["Cp", "msg"])
     msg = None
-    if T < Tmin:
+    if Tmin is None and Tmax is None:
+        msg = "no temperature range given"
+    elif T < Tmin:
         msg = "T < Tmin"
     elif T > Tmax:
         msg = "T > Tmax"
