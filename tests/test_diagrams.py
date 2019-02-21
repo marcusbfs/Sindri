@@ -45,7 +45,6 @@ def test_gen_data():
     gen_data(c, [Tfp, Tc], Pref, Tref, points)
     s2 = time()
     print("{0:.4f} sec".format(s2 - s1))
-    assert 0
 
 
 test_gen_data()

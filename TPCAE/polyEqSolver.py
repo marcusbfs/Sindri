@@ -2,7 +2,7 @@ def solve_quadratic(coefs):
     a, b, c = coefs
     delta = b ** 2 - 4 * a * c
     if delta < 0:
-        return
+        return None
     x1 = (-b + delta ** 0.5) / (2 * a)
     x2 = -b / a - x1
     ret = [x1, x2]

@@ -91,8 +91,6 @@ class Window_PureSubstanceCalculations(
             _lt = 1e-3
             _gt = 1e4
 
-            self.plainTextEdit_results.clear()
-
             try:  # to initialize EOS
                 self.c = eos.EOS(
                     self.compound["Name"],

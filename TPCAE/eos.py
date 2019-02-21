@@ -384,14 +384,15 @@ class EOS:
             self.alpha = alpha0 + self.omega * (alpha1 - alpha0)
             self.theta = self.a * self.alpha
 
+        self.b = np.real(self.b)
+        self.delta = np.real(self.delta)
+        self.epsilon = np.real(self.epsilon)
+
         self.Z_V_T = None
-        self.Z_P_T = None
-        self.Z_P_T_coefs = None
         self.dZ_VT_dT = None
         self.numfunc_P_given_VT = None
 
         self.return_Z_V_T()
-        self.return_Z_P_T()
         self.return_diff_Z_V_T_dT()
 
         self.numf_Z_VT = sp.lambdify([self.V, self.T], self.Z_V_T, modules="numpy")
@@ -418,33 +419,33 @@ class EOS:
                 self.theta / (R_IG * self.T)
             ) * self.V / (self.V ** 2 + self.delta * self.V + self.epsilon)
 
-    def return_Z_P_T(self):
-        """
-        Creates a cubic equation in Z.
-
-        Returns
-        -------
-        self.Z_P_T : sympy symbolic expression.
-
-        """
-        if self.Z_P_T is None:
-            self.eos_eq = (
-                self.Z ** 3
-                + (self.deltal - self.Bl - 1) * self.Z ** 2
-                + self.Z * (self.thetal + self.epsilonl - self.deltal * (self.Bl + 1))
-                - (self.epsilonl * (self.Bl + 1) + self.Bl * self.thetal)
-            )
-            self.eos_eq = self.eos_eq.subs(self.Bl, self.b * self.P / (R_IG * self.T))
-            self.eos_eq = self.eos_eq.subs(
-                self.deltal, self.delta * self.P / (R_IG * self.T)
-            )
-            self.eos_eq = self.eos_eq.subs(
-                self.thetal, self.theta * self.P / (R_IG * self.T) ** 2
-            )
-            self.Z_P_T = self.eos_eq.subs(
-                self.epsilonl, self.epsilon * (self.P / (R_IG * self.T)) ** 2
-            )
-        return self.Z_P_T
+    # def return_Z_P_T(self):
+    #     """
+    #     Creates a cubic equation in Z.
+    #
+    #     Returns
+    #     -------
+    #     self.Z_P_T : sympy symbolic expression.
+    #
+    #     """
+    #     if self.Z_P_T is None:
+    #         self.eos_eq = (
+    #             self.Z ** 3
+    #             + (self.deltal - self.Bl - 1) * self.Z ** 2
+    #             + self.Z * (self.thetal + self.epsilonl - self.deltal * (self.Bl + 1))
+    #             - (self.epsilonl * (self.Bl + 1) + self.Bl * self.thetal)
+    #         )
+    #         self.eos_eq = self.eos_eq.subs(self.Bl, self.b * self.P / (R_IG * self.T))
+    #         self.eos_eq = self.eos_eq.subs(
+    #             self.deltal, self.delta * self.P / (R_IG * self.T)
+    #         )
+    #         self.eos_eq = self.eos_eq.subs(
+    #             self.thetal, self.theta * self.P / (R_IG * self.T) ** 2
+    #         )
+    #         self.Z_P_T = self.eos_eq.subs(
+    #             self.epsilonl, self.epsilon * (self.P / (R_IG * self.T)) ** 2
+    #         )
+    #     return self.Z_P_T
 
     def return_Z_given_PT(self, _P, _T):
         """ Return the positive roots (Z) of the cubic equation.
@@ -463,17 +464,6 @@ class EOS:
             corresponds to the vapor state, while the maximum value corresponds to the liquid state.
 
         """
-        # f = sp.lambdify([self.P, self.T], self.return_Z_P_T(), modules="numpy")
-        # p = sp.Poly(f(_P, _T), self.Z).coeffs()
-        # print(p)
-        #
-        # r = np.roots(p)
-        # real_valued = r.real[abs(r.imag) < 1e-8]
-        # ans = real_valued[real_valued >= 0]
-        # if ans.size == 0:
-        #     raise Exception("There are no positive real roots for Z")
-        # self.Zval = ans
-        # return ans
 
         Bl = self.b * _P / (R_IG * _T)
         deltal = self.delta * _P / (R_IG * _T)
@@ -582,7 +572,7 @@ class EOS:
         GR_RT = AR_RT + 1 - _Z
         GR = GR_RT * R_IG * _T
 
-        fugacity = _P * np.e ** (-GR_RT)
+        fugacity = _P * np.exp(-GR_RT)
 
         dict_ans = {"HR": HR, "SR": SR, "GR": GR, "UR": UR, "AR": AR, "f": fugacity}
         return dict_ans
@@ -627,11 +617,7 @@ class EOS:
         """
         _P = initialP
 
-        self.return_Z_V_T()
-        f_to_integrate = (1 - self.Z_V_T) / self.V
-        f_to_integrate = sp.lambdify(
-            self.V, f_to_integrate.subs(self.T, _T), modules="numpy"
-        )
+        f_to_integrate = lambda hv: (1 - self.numf_Z_VT(hv, _T)) / hv
 
         def _helper_f(hv, hz):
             return hz - 1.0 - np.log(hz) - quad(f_to_integrate, hv, np.inf)[0]
@@ -821,6 +807,4 @@ class EOS:
 
         """
         self.eos = new_eos.lower()
-        self.Z_V_T = None
-        self.Z_P_T = None
         self.initialize()

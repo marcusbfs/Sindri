@@ -17,6 +17,7 @@ def format_reports(prop, **units):
     ene_per_molu = units["energy_per_mol"] if "energy_per_mol" in units else "J/mol"
 
     reportret = "fluid state: {0}\n".format(state)
+    log = " --- LOG ---\n"
 
     def formatter(info, lval, vval):
         return "{0:<21}\t{1:>20}\t{2:>20}\n".format(info, lval, vval)
