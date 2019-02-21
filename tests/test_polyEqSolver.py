@@ -9,7 +9,7 @@ def test_quadratic_solver():
     np.testing.assert_almost_equal(expected, returned)
 
 
-def test_quadratic_solver():
+def test_cubic_solver():
     parameters = (2, -4, -22, 24)
     expected = np.array([1, 4, -3])
     returned = solve_cubic(parameters)

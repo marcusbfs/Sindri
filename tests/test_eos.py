@@ -37,12 +37,6 @@ def test_return_Z_given_P_T_using_peng_robinson():
     assert approx(z, 1e-4) == 0.003899
 
 
-def test_return_Z_numerically_given_P_T_using_peng_robinson():
-    # calculated using http://people.ds.cam.ac.uk/pjb10/thermo/pure.html
-    z = min(m.return_Z_numerically_given_PT(1e5, 100))  # 1 bar, 100 K (liquid methane)
-    assert approx(z, 1e-4) == 0.003899
-
-
 # def test_return_Z_numerically_given_P_T_using_peng_robinson():
 #     # calculated using http://people.ds.cam.ac.uk/pjb10/thermo/pure.html
 #     p = np.array([1e5, 2e5])
@@ -58,8 +52,10 @@ def test_return_Z_numerically_given_P_T_using_peng_robinson():
 def test_change_eos_Z_given_PT_using_soave_1972():
     # calculated using http://people.ds.cam.ac.uk/pjb10/thermo/pure.html
     m.change_eos("soave_1972")
-    z = min(m.return_Z_given_PT(1e5, 100))  # 1 bar, 100 k (liquid methane)
-    assert approx(z, 1e-4) == 0.004393
+    zs = m.return_Z_given_PT(1e5, 100)  # 1 bar, 100 k (liquid methane)
+    # print(zs)
+    z = np.min(zs)
+    np.testing.assert_allclose(z, 4.39287316e-03, 1e-5)
 
 
 def test_return_V_given_PT_using_soave_1972():

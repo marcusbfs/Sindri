@@ -15,8 +15,9 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
         self.checkBox_smooth.setChecked(True)
         self.checkBox_grid.setChecked(True)
 
-        self.points = None
+        self.points = 30
         self.data_is_gen = False
+        self.le_points.setText(str(self.points))
 
         # connections
         self.le_Ti.textChanged.connect(self.changed_Trange)
@@ -100,16 +101,20 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
         if self.data_is_gen:
             xunit = self.comboBox_xUnits.currentText()
             yunit = self.comboBox_yUnits.currentText()
-            diagrams.plot_diag(
-                self.data,
-                self.seldiag,
-                xunit,
-                yunit,
-                xlnscale=self.checkBox_xlogscale.isChecked(),
-                ylnscale=self.checkBox_ylogscale.isChecked(),
-                grid=self.checkBox_grid.isChecked(),
-                smooth=self.checkBox_smooth.isChecked(),
-            )
+            try:
+                diagrams.plot_diag(
+                    self.data,
+                    self.seldiag,
+                    xunit,
+                    yunit,
+                    xlnscale=self.checkBox_xlogscale.isChecked(),
+                    ylnscale=self.checkBox_ylogscale.isChecked(),
+                    grid=self.checkBox_grid.isChecked(),
+                    smooth=self.checkBox_smooth.isChecked(),
+                )
+            except Exception as e:
+                print(str(e))
+                QtWidgets.QMessageBox.about(self, "Error", "Error plotting curve")
         else:
             QtWidgets.QMessageBox.about(
                 self, "Attention", "Please, generate the data first"

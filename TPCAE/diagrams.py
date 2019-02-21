@@ -16,8 +16,6 @@ def plot_diag(
     cp_data = data[1]
     data = data[0]
 
-    fig, ax = plt.subplots()
-
     if diag == "PV":
         title = "Pressure vs. Molar volume"
 
@@ -127,40 +125,68 @@ def plot_diag(
         ylabel = "Pressure [{0}]".format(yunit)
         xlabel = "Temperature [{0}]".format(xunit)
 
-    if grid:
-        ax.grid()
-
-    if xlnscale:
-        xliq = np.log(xliq)
-        xvap = np.log(xvap)
-        xc = np.log(xc)
-        xlabel = "ln " + xlabel
-    if ylnscale:
-        yvap = np.log(yvap)
-        yliq = np.log(yliq)
-        yc = np.log(yc)
-        ylabel = "ln " + ylabel
+    try:
+        if xlnscale:
+            if np.all(xliq > 0.0) and np.all(xvap > 0):
+                xliq = np.log(xliq)
+                xvap = np.log(xvap)
+                xc = np.log(xc)
+                xlabel = "ln " + xlabel
+            else:
+                raise ValueError("Can't calculate log of x-axis: negative number")
+        if ylnscale:
+            if ylnscale and np.all(yliq > 0) and np.all(yvap > 0):
+                yvap = np.log(yvap)
+                yliq = np.log(yliq)
+                yc = np.log(yc)
+                ylabel = "ln " + ylabel
+            else:
+                raise ValueError("Can't calculate log of y-axis: negative number")
+    except Exception as e:
+        print("error calculating log scale")
+        print(str(e))
+        raise
 
     if smooth:
 
         n = 100
 
+        try:
+            if len(xliq) > 0 and len(yliq) > 0:
+                # must sort x vector
+                tliq = interpolate.splrep(np.sort(xliq), yliq[xliq.argsort()])
+                xliq = np.linspace(np.min(xliq), np.max(xliq), n)
+                yliq = interpolate.splev(xliq, tliq)
+
+            if len(xvap) > 0 and len(yvap) > 0:
+                tvap = interpolate.splrep(np.sort(xvap), yvap[xvap.argsort()])
+                xvap = np.linspace(np.min(xvap), np.max(xvap), n)
+                yvap = interpolate.splev(xvap, tvap)
+        except Exception as e:
+            print("error calculating spline")
+            print(str(e))
+            raise
+
+    fig, ax = plt.subplots()
+    if grid:
+        ax.grid()
+
+    try:
         if len(xliq) > 0 and len(yliq) > 0:
-            tliq = interpolate.splrep(xliq, yliq)
-            xliq = np.linspace(np.min(xliq), np.max(xliq), n)
-            yliq = interpolate.splev(xliq, tliq)
-
+            ax.plot(xliq, yliq, label="Liquid")
         if len(xvap) > 0 and len(yvap) > 0:
-            tvap = interpolate.splrep(xvap[::-1], yvap[::-1])
-            xvap = np.linspace(np.min(xvap), np.max(xvap), n)
-            yvap = interpolate.splev(xvap, tvap)
+            ax.plot(xvap, yvap, label="Vapor")
+    except Exception as e:
+        print("error plotting curve")
+        print(str(e))
+        raise
 
-    if len(xliq) > 0 and len(yliq) > 0:
-        ax.plot(xliq, yliq, label="Liquid")
-    if len(xvap) > 0 and len(yvap) > 0:
-        ax.plot(xvap, yvap, label="Vapor")
-
-    ax.plot(xc, yc, label="Critical point", marker="o")
+    try:
+        ax.plot(xc, yc, label="Critical point", marker="o")
+    except Exception as e:
+        print("error plotting critical point")
+        print(str(e))
+        raise
 
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
@@ -191,9 +217,6 @@ def gen_data(compound, Ti_f, _Pref, _Tref, points):
 
     Ti = Ti_f[0]
     Tf = Ti_f[1]
-    Pc = compound.return_Pvp_EOS(Tf, helper_P_guess(Tf)).Pvp
-    Vc = compound.return_V_given_PT(Pc, Tf)
-
     Tvec = np.linspace(Ti, Tf, points)
 
     # set first guess as antoine P, if possible

@@ -77,17 +77,7 @@ class EOS:
         self.Tr = self.T / self.Tc
         self.Pc_RTc = self.Pc / (R_IG * self.Tc)
 
-        self.Z_V_T = None
-        self.Z_P_T = None
-        self.Z_P_T_coefs = None
-        self.dZ_VT_dT = None
-        self.numfunc_P_given_VT = None
-
         self.initialize()
-
-        self.return_Z_V_T()
-        self.return_Z_P_T()
-        self.return_diff_Z_V_T_dT()
 
         self.eos_options = eos_options
 
@@ -394,6 +384,25 @@ class EOS:
             self.alpha = alpha0 + self.omega * (alpha1 - alpha0)
             self.theta = self.a * self.alpha
 
+        self.Z_V_T = None
+        self.Z_P_T = None
+        self.Z_P_T_coefs = None
+        self.dZ_VT_dT = None
+        self.numfunc_P_given_VT = None
+
+        self.return_Z_V_T()
+        self.return_Z_P_T()
+        self.return_diff_Z_V_T_dT()
+
+        self.numf_Z_VT = sp.lambdify([self.V, self.T], self.Z_V_T, modules="numpy")
+        self.numf_dZdT_VT = sp.lambdify(
+            [self.V, self.T], sp.diff(self.Z_V_T, self.T), modules="numpy"
+        )
+        self.numf_theta_T = sp.lambdify([self.T], self.theta, modules="numpy")
+        self.numf_P_VT = sp.lambdify(
+            [self.V, self.T], self.Z_V_T * self.T * R_IG / self.V, modules="numpy"
+        )
+
     def return_Z_V_T(self):
         """
         Creates the symbolic equation:
@@ -454,57 +463,31 @@ class EOS:
             corresponds to the vapor state, while the maximum value corresponds to the liquid state.
 
         """
-        f = sp.lambdify([self.P, self.T], self.return_Z_P_T(), modules="numpy")
-        p = sp.Poly(f(_P, _T), self.Z).coeffs()
+        # f = sp.lambdify([self.P, self.T], self.return_Z_P_T(), modules="numpy")
+        # p = sp.Poly(f(_P, _T), self.Z).coeffs()
+        # print(p)
+        #
+        # r = np.roots(p)
+        # real_valued = r.real[abs(r.imag) < 1e-8]
+        # ans = real_valued[real_valued >= 0]
+        # if ans.size == 0:
+        #     raise Exception("There are no positive real roots for Z")
+        # self.Zval = ans
+        # return ans
 
-        r = np.roots(p)
-        real_valued = r.real[abs(r.imag) < 1e-8]
-        ans = real_valued[real_valued >= 0]
-        if ans.size == 0:
-            raise Exception("There are no positive real roots for Z")
-        self.Zval = ans
-
-        return ans
-
-    def return_Z_numerically_given_PT(self, _P, _T):
-        # def return_Z_given_PT(self, _P, _T):
-        """ Return the positive roots (Z) of the cubic equation.
-
-        parameters
-        ----------
-        _P : float
-            pressure, pa.
-        _T : float
-            temperature, k.
-
-        Returns
-        -------
-        ans : array, float
-            Returns an array of the real roots of the cubic equation of state. The minimum value of this array
-            corresponds to the vapor state, while the maximum value corresponds to the liquid state.
-
-        """
         Bl = self.b * _P / (R_IG * _T)
         deltal = self.delta * _P / (R_IG * _T)
+        thetal = self.numf_theta_T(_T) * _P / (R_IG * _T) ** 2
         epsilonl = self.epsilon * (_P / (R_IG * _T)) ** 2
-        func_theta = sp.lambdify([self.T], self.theta, modules="numpy")
-        # thetal = (
-        #     self.theta.subs([(self.P, _P), (self.T, _T)]).evalf()
-        #     * _P
-        #     / (R_IG * _T) ** 2
-        # )
-        thetal = func_theta(_T) * _P / (R_IG * _T) ** 2
+        a = 1.0
+        b = deltal - Bl - 1.0
+        c = thetal + epsilonl - deltal * (Bl + 1.0)
+        d = -(epsilonl * (Bl + 1.0) + Bl * thetal)
 
-        coefs = (
-            1.0,
-            deltal - Bl - 1.0,
-            thetal + epsilonl - deltal * (Bl + 1.0),
-            -(epsilonl * (Bl + 1.0) + thetal * Bl),
-        )
+        coefs = (a, b, c, d)
 
-        roots = solve_cubic(coefs)
-        positive_roots = roots[roots >= 0]
-        return positive_roots
+        ans = np.asarray(solve_cubic(coefs))
+        return ans[ans > 0]
 
     def return_V_given_PT(self, _P, _T):
         """ Return the positive roots (V) of the cubic equation.
@@ -527,12 +510,6 @@ class EOS:
         self.Vval = ans
         return ans
 
-    def create_numfunc_P_given_VT(self):
-        if self.numfunc_P_given_VT is None:
-            self.numfunc_P_given_VT = sp.lambdify(
-                [self.V, self.T], self.Z_V_T, modules="numpy"
-            )
-
     def return_P_given_VT(self, _V, _T):
         """ Return the values of '_P' given '_V' and '_T' using the cubic equation of state.
 
@@ -549,43 +526,13 @@ class EOS:
             pressure at '_T' and '_V', Pascal.
 
         """
-        self.create_numfunc_P_given_VT()
-        _P = self.numfunc_P_given_VT(_V, _T) * R_IG * _T / _V
+        _P = self.numf_P_VT(_V, _T)
         return _P
-
-    # def return_T_given_VP(self, _V, _P):
-    #     """ Return the values of '_T' given '_V' and '_P' using the cubic equation of state.
-    #
-    #     Parameters
-    #     ----------
-    #     _V : float
-    #         molar volume, m3/mol.
-    #     _P : float
-    #         pressure, Pascal.
-    #
-    #     Returns
-    #     -------
-    #     _T : float
-    #         temperature at '_P' and '_V', Kelvin.
-    #
-    #     """
-    #     eq = self.Z_P_T.subs()
-    #     _func = sp.lambdify([self.V, self.P], self.Z_P_T.subs([(self.Z, )]), modules="numpy")
-    #     _P = _func(_V, _T) * R_IG * _T / _V
-    #     return _P
 
     def return_diff_Z_V_T_dT(self):
         if self.dZ_VT_dT is None:
             self.return_Z_V_T()
             self.dZ_VT_dT = sp.diff(self.Z_V_T, self.T)
-
-    def return_numfunc_dZdT_given_V_at_T(self, _T):
-        self.return_diff_Z_V_T_dT()
-        return sp.lambdify([self.V], self.dZ_VT_dT.subs(self.T, _T), modules="numpy")
-
-    def return_numfunc_Z_given_V_T_at_T(self, _T):
-        self.return_Z_V_T()
-        return sp.lambdify([self.V], self.Z_V_T.subs(self.T, _T), modules="numpy")
 
     def return_departureProperties(self, _P, _T, _V, _Z):
         """
@@ -610,8 +557,8 @@ class EOS:
             functions. The dictionary keys are: 'HR', 'SR', 'GR', 'UR', 'AR', 'f'.
 
         """
-        numfunc_dZdT = self.return_numfunc_dZdT_given_V_at_T(_T)
-        numfunc_Z = self.return_numfunc_Z_given_V_T_at_T(_T)
+        numfunc_dZdT = lambda v: self.numf_dZdT_VT(v, _T)
+        numfunc_Z = lambda v: self.numf_Z_VT(v, _T)
 
         def _func_UR(vv):
             return _T * numfunc_dZdT(vv) / vv
@@ -702,7 +649,7 @@ class EOS:
             fV = _P * np.e ** _helper_f(Vv, Zv)
             _P = _P * fL / fV
             error = fL / fV - 1.0
-            if abs(error) < tol:
+            if np.abs(error) < tol:
                 return PvpEOS(_P, i, None)
 
         return PvpEOS(_P, k, str(k) + " (max iterations)")
@@ -710,11 +657,11 @@ class EOS:
     def all_calculations_at_P_T(self, _P, _T, _Pref, _Tref):
 
         try:  # Calculate Z
-            Zs = self.return_Z_numerically_given_PT(_P, _T)
+            Zs = self.return_Z_given_PT(_P, _T)
             Zliq = np.min(Zs)
             Zvap = np.max(Zs)
 
-            Zsref = self.return_Z_numerically_given_PT(_Pref, _Tref)
+            Zsref = self.return_Z_given_PT(_Pref, _Tref)
             Zliqref = np.min(Zsref)
             Zvapref = np.max(Zsref)
 
