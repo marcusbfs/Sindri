@@ -3,6 +3,7 @@ from collections import namedtuple
 import numpy as np
 import sympy as sp
 from scipy.integrate import quad
+from scipy import LowLevelCallable
 
 from constants import R_IG
 from db_utils import get_compound_properties
@@ -10,7 +11,7 @@ from polyEqSolver import solve_cubic
 import IdealGasPropertiesPureSubstance as IGPROP
 from vapor_pressure import leeKeslerVP, antoineVP
 from units import conv_unit
-from numba import njit, jit
+from numba import njit, jit, cfunc, types, carray
 
 eos_options = {
     "van der Waals (1890)": "van_der_waals_1890",
@@ -350,10 +351,10 @@ class EOS:
             self.delta = 2 * self.b
             self.epsilon = -self.b ** 2
             self.a = (R_IG * self.Tc) ** 2 * 0.457235528921 / self.Pc
-            alpha0 = self.Tr ** (-0.171813) * sp.exp(
+            alpha0 = self.Tr ** (-0.171813) * 2.718281828459045235360 ** (
                 0.125283 * (1 - self.Tr ** 1.77634)
             )
-            alpha1 = self.Tr ** (-0.607352) * sp.exp(
+            alpha1 = self.Tr ** (-0.607352) * 2.718281828459045235360 ** (
                 0.511614 * (1 - self.Tr ** 2.20517)
             )
             self.alpha = alpha0 + self.omega * (alpha1 - alpha0)
@@ -376,10 +377,10 @@ class EOS:
             self.b = 0.07780 / self.Pc_RTc
             self.delta = 2 * self.b
             self.epsilon = -self.b ** 2
-            alpha0 = self.Tr ** (-0.207176) * sp.exp(
+            alpha0 = self.Tr ** (-0.207176) * 2.718281828459045235360 ** (
                 0.092099 * (1 - self.Tr ** 1.94800)
             )
-            alpha1 = self.Tr ** (-0.502297) * sp.exp(
+            alpha1 = self.Tr ** (-0.502297) * 2.718281828459045235360 ** (
                 0.603486 * (1 - self.Tr ** 2.09626)
             )
             self.alpha = alpha0 + self.omega * (alpha1 - alpha0)
@@ -396,7 +397,7 @@ class EOS:
         self.return_Z_V_T()
         self.return_diff_Z_V_T_dT()
 
-        # create functions
+        # create numerical functions
         self.numf_Z_VT = njit()(
             sp.lambdify([self.V, self.T], self.Z_V_T, modules="numpy")
         )
@@ -409,15 +410,48 @@ class EOS:
                 [self.V, self.T], self.Z_V_T * self.T * R_IG / self.V, modules="numpy"
             )
         )
-        self.numf_integratePvp = njit()(
-            sp.lambdify([self.V, self.T], (1 - self.Z_V_T) / self.V, modules="numpy")
+        # self.numf_integratePvp = njit()(
+        #     sp.lambdify([self.V, self.T], (1 - self.Z_V_T) / self.V, modules="numpy")
+        # )
+
+        # this ain't pretty but hey, it works fast!
+        self.tmp_cfunc = None
+        c_sig = types.double(types.intc, types.CPointer(types.double))
+        exec(
+            "self.tmp_cfunc = lambda n, data: {:s}".format(
+                str((1 - self.Z_V_T) / self.V)
+                .replace("V", "data[0]")
+                .replace("T", "data[1]")
+            )
         )
+        qf = cfunc(c_sig)(self.tmp_cfunc)
+        self.qnf = LowLevelCallable(qf.ctypes)
+
         self.helper_Pvp_f = (
             lambda hv, hz, _T: hz
             - 1.0
             - np.log(hz)
-            - quad(self.numf_integratePvp, hv, np.inf, args=(_T,))[0]
+            # - quad(self.numf_integratePvp, hv, np.inf, args=(_T,))[0]
+            - quad(self.qnf, hv, np.inf, args=(_T,))[0]
         )
+
+        exec(
+            "self.tmp_cfunc2 = lambda n, data: {:s}".format(
+                str(self.T * sp.diff(self.Z_V_T, self.T) / self.V)
+                .replace("V", "data[0]")
+                .replace("T", "data[1]")
+            )
+        )
+        tf = cfunc(c_sig)(self.tmp_cfunc2)
+        self.numf_UR = LowLevelCallable(tf.ctypes)
+
+        # self.numf_UR = njit()(
+        #     sp.lambdify(
+        #         [self.V, self.T],
+        #         self.T * sp.diff(self.Z_V_T, self.T) / self.V,
+        #         modules="numpy",
+        #     )
+        # )
 
     def return_Z_V_T(self):
         """
@@ -562,20 +596,13 @@ class EOS:
             functions. The dictionary keys are: 'HR', 'SR', 'GR', 'UR', 'AR', 'f'.
 
         """
-        numfunc_dZdT = lambda v: self.numf_dZdT_VT(v, _T)
-        numfunc_Z = lambda v: self.numf_Z_VT(v, _T)
-
-        def _func_UR(vv):
-            return _T * numfunc_dZdT(vv) / vv
-
-        def _func_AR(vv):
-            return (1.0 - numfunc_Z(vv)) / vv
 
         # calculate UR
-        UR_RT = quad(_func_UR, _V, np.inf)[0]
+        UR_RT = quad(self.numf_UR, _V, np.inf, args=(_T,))[0]
         UR = UR_RT * _T * R_IG
         # calculate AR
-        AR_RT = quad(_func_AR, _V, np.inf)[0] + np.log(_Z)
+        AR_RT = quad(self.qnf, _V, np.inf, args=(_T,))[0] + np.log(_Z)
+        # AR_RT = quad(self.numf_integratePvp, _V, np.inf, args=(_T,))[0] + np.log(_Z)
         AR = AR_RT * _T * R_IG
         # calculate HR
         HR_RT = UR_RT + 1.0 - _Z

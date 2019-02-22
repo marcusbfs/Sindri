@@ -97,6 +97,16 @@ def test_return_PvpEOS_maxiterations_given_PT_using_peng_and_robinson_1976():
 # TODO verify if returns dict correct keys
 
 
+def test_return_twu_using_exp_in_theta_function():
+    m.change_eos("twu_et_al_1995")
+    np.testing.assert_allclose(0.98446824, np.max(m.numf_Z_VT(0.01227799, 150)), 1e-5)
+
+
+def test_return_modified_twu_using_exp_in_theta_function():
+    m.change_eos("gasem_et_al_twu_2001")
+    np.testing.assert_allclose(0.98447811, np.max(m.numf_Z_VT(0.01227811, 150)), 1e-5)
+
+
 def test_return_deltaH_using_peng_and_robinson_1976():
     import TPCAE.IdealGasPropertiesPureSubstance as IGPROP
 

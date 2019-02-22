@@ -200,6 +200,7 @@ class Window_PureSubstanceCalculations(
                     )
                 )
             except Exception as e:
+                print(e)
                 err = (
                     "One or more of the following properties is not set: Tc, Pc, omega"
                 )
