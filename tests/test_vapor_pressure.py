@@ -25,12 +25,12 @@ def test_antoineVP_returns_proper_Pvp_value():
 
 def test_antoineVP_returns_proper_out_of_lower_bound_msg():
     s = antoineVP(Tmin - 1, A, B, C, Tmin, Tmax)
-    assert s.msg == "T < Tmin"
+    assert "T < Tmin" in s.msg
 
 
 def test_antoineVP_returns_proper_out_of_higher_bound_msg():
     s = antoineVP(Tmax + 1, A, B, C, Tmin, Tmax)
-    assert s.msg == "T > Tmax"
+    assert "T > Tmax" in s.msg
 
 
 def test_antoineVP_vectorized_numpy():
@@ -38,5 +38,4 @@ def test_antoineVP_vectorized_numpy():
     ans = np.array([0.344783, 0.8835505])
     fvec = np.vectorize(antoineVP)
     P = fvec(T, A, B, C, Tmin, Tmax)[0] * 1e-5  # convert to bar
-    print(P)
     np.testing.assert_almost_equal(P, ans, 1e-4)

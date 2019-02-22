@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/pure_substance_calculations_ui.ui',
 # licensing of 'designer/pure_substance_calculations_ui.ui' applies.
 #
-# Created: Sun Feb 17 12:45:23 2019
+# Created: Fri Feb 22 11:23:23 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,6 +14,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 class Ui_PureSubstanceCalculationsWindow(object):
     def setupUi(self, PureSubstanceCalculationsWindow):
         PureSubstanceCalculationsWindow.setObjectName("PureSubstanceCalculationsWindow")
+        PureSubstanceCalculationsWindow.setWindowModality(QtCore.Qt.ApplicationModal)
         PureSubstanceCalculationsWindow.resize(971, 647)
         self.gridLayout_3 = QtWidgets.QGridLayout(PureSubstanceCalculationsWindow)
         self.gridLayout_3.setObjectName("gridLayout_3")
@@ -105,9 +106,6 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.btn_diagrams = QtWidgets.QPushButton(self.frame)
         self.btn_diagrams.setObjectName("btn_diagrams")
         self.gridLayout_2.addWidget(self.btn_diagrams, 0, 1, 1, 1)
-        self.btn_tables = QtWidgets.QPushButton(self.frame)
-        self.btn_tables.setObjectName("btn_tables")
-        self.gridLayout_2.addWidget(self.btn_tables, 0, 2, 1, 1)
         self.gridLayout_3.addWidget(self.frame, 4, 0, 1, 1)
         self.groupBox_processVariables = QtWidgets.QGroupBox(
             PureSubstanceCalculationsWindow
@@ -198,9 +196,8 @@ class Ui_PureSubstanceCalculationsWindow(object):
         PureSubstanceCalculationsWindow.setTabOrder(self.le_procP, self.le_refT)
         PureSubstanceCalculationsWindow.setTabOrder(self.le_refT, self.le_refP)
         PureSubstanceCalculationsWindow.setTabOrder(self.le_refP, self.btn_calculate)
-        PureSubstanceCalculationsWindow.setTabOrder(self.btn_calculate, self.btn_tables)
         PureSubstanceCalculationsWindow.setTabOrder(
-            self.btn_tables, self.tableWidget_searchSubstance
+            self.btn_calculate, self.tableWidget_searchSubstance
         )
         PureSubstanceCalculationsWindow.setTabOrder(
             self.tableWidget_searchSubstance, self.comboBox_procTunit
@@ -276,11 +273,6 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.btn_diagrams.setText(
             QtWidgets.QApplication.translate(
                 "PureSubstanceCalculationsWindow", "Diagrams", None, -1
-            )
-        )
-        self.btn_tables.setText(
-            QtWidgets.QApplication.translate(
-                "PureSubstanceCalculationsWindow", "Tables", None, -1
             )
         )
         self.groupBox_processVariables.setTitle(

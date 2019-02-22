@@ -8,8 +8,9 @@ from constants import R_IG
 from db_utils import get_compound_properties
 from polyEqSolver import solve_cubic
 import IdealGasPropertiesPureSubstance as IGPROP
-from vapor_pressure import leeKeslerVP
+from vapor_pressure import leeKeslerVP, antoineVP
 from units import conv_unit
+from numba import njit, jit
 
 eos_options = {
     "van der Waals (1890)": "van_der_waals_1890",
@@ -395,13 +396,27 @@ class EOS:
         self.return_Z_V_T()
         self.return_diff_Z_V_T_dT()
 
-        self.numf_Z_VT = sp.lambdify([self.V, self.T], self.Z_V_T, modules="numpy")
-        self.numf_dZdT_VT = sp.lambdify(
-            [self.V, self.T], sp.diff(self.Z_V_T, self.T), modules="numpy"
+        # create functions
+        self.numf_Z_VT = njit()(
+            sp.lambdify([self.V, self.T], self.Z_V_T, modules="numpy")
         )
-        self.numf_theta_T = sp.lambdify([self.T], self.theta, modules="numpy")
-        self.numf_P_VT = sp.lambdify(
-            [self.V, self.T], self.Z_V_T * self.T * R_IG / self.V, modules="numpy"
+        self.numf_dZdT_VT = njit()(
+            sp.lambdify([self.V, self.T], sp.diff(self.Z_V_T, self.T), modules="numpy")
+        )
+        self.numf_theta_T = njit()(sp.lambdify([self.T], self.theta, modules="numpy"))
+        self.numf_P_VT = njit()(
+            sp.lambdify(
+                [self.V, self.T], self.Z_V_T * self.T * R_IG / self.V, modules="numpy"
+            )
+        )
+        self.numf_integratePvp = njit()(
+            sp.lambdify([self.V, self.T], (1 - self.Z_V_T) / self.V, modules="numpy")
+        )
+        self.helper_Pvp_f = (
+            lambda hv, hz, _T: hz
+            - 1.0
+            - np.log(hz)
+            - quad(self.numf_integratePvp, hv, np.inf, args=(_T,))[0]
         )
 
     def return_Z_V_T(self):
@@ -617,11 +632,6 @@ class EOS:
         """
         _P = initialP
 
-        f_to_integrate = lambda hv: (1 - self.numf_Z_VT(hv, _T)) / hv
-
-        def _helper_f(hv, hz):
-            return hz - 1.0 - np.log(hz) - quad(f_to_integrate, hv, np.inf)[0]
-
         PvpEOS = namedtuple("Pvp_EOS", ["Pvp", "iter", "msg"])
 
         for i in range(1, k + 1):
@@ -631,8 +641,8 @@ class EOS:
             Vl = Zl * R_IG * _T / _P
             Vv = Zv * R_IG * _T / _P
 
-            fL = _P * np.e ** _helper_f(Vl, Zl)
-            fV = _P * np.e ** _helper_f(Vv, Zv)
+            fL = _P * np.e ** self.helper_Pvp_f(Vl, Zl, _T)
+            fV = _P * np.e ** self.helper_Pvp_f(Vv, Zv, _T)
             _P = _P * fL / fV
             error = fL / fV - 1.0
             if np.abs(error) < tol:
@@ -641,6 +651,8 @@ class EOS:
         return PvpEOS(_P, k, str(k) + " (max iterations)")
 
     def all_calculations_at_P_T(self, _P, _T, _Pref, _Tref):
+
+        log = " --- LOG ---\n"
 
         try:  # Calculate Z
             Zs = self.return_Z_given_PT(_P, _T)
@@ -708,6 +720,9 @@ class EOS:
                 "dA": IGprop["dA_IG"],
             }
 
+            if IGprop["msg"] is not None:
+                log += "WARNING Cp temperature range: {0:s}\n".format(IGprop["msg"])
+
             dH_liq = IGprop["dH_IG"] - dProp_liq["HR"]
             dS_liq = IGprop["dS_IG"] - dProp_liq["SR"]
             dG_liq = IGprop["dG_IG"] - dProp_liq["GR"]
@@ -736,16 +751,48 @@ class EOS:
         f_liq = dProp_liq["f"]
         f_vap = dProp_vap["f"]
 
-        Pvp_guess = leeKeslerVP(
+        Pvp_LK = leeKeslerVP(
             conv_unit(self.compound["Pc_bar"], "bar", "Pa"),
             _T / self.compound["Tc_K"],
             self.compound["omega"],
         )
 
         try:
-            Pvp = self.return_Pvp_EOS(_T, Pvp_guess, tol=1e-5, k=1000).Pvp
+            PvpTuple = self.return_Pvp_EOS(_T, Pvp_LK, tol=1e-5, k=100)
+            Pvp = PvpTuple.Pvp
+            Pvpmsg = PvpTuple.msg
+            Pvpiter = PvpTuple.iter
+            if Pvpmsg is not None:
+                log += "Iterations for vapor pressure: {0:s}\n".format(str(Pvpmsg))
+            else:
+                log += "Iterations for vapor pressure: {0:s}\n".format(str(Pvpiter))
         except:
             raise ValueError("Error calculating vapor pressure from EOS")
+
+        log += "Pvp Lee-Kesler relative error: {0:.5f}\n".format(
+            IGPROP.abs_rel_err(Pvp, Pvp_LK)
+        )
+
+        try:
+            Pvp_Antoine = antoineVP(
+                _T,
+                self.compound["ANTOINE_A"],
+                self.compound["ANTOINE_B"],
+                self.compound["ANTOINE_C"],
+                self.compound["Tmin_K"],
+                self.compound["Tmax_K"],
+            )
+            log += "Pvp Antoine relative error: {0:.5f}\n".format(
+                IGPROP.abs_rel_err(Pvp, Pvp_Antoine.Pvp)
+            )
+            if Pvp_Antoine.msg is not None:
+                log += "WARNING Antoine's temperature range: {0:s}\n".format(
+                    Pvp_Antoine.msg
+                )
+
+        except:
+            Pvp_Antoine = None
+            log += "WARNING couldn't compute pressure vapor using Antoine's equation: missing equation parameters\n"
 
         state = IGPROP.return_fluidState(
             _P,
@@ -779,11 +826,37 @@ class EOS:
             "dA": dA_vap,
             "f": f_vap,
         }
+        Pvp_dict = {"EOS": Pvp, "LeeKesler": Pvp_LK, "Antoine": Pvp_Antoine}
         prop = namedtuple(
-            "prop", ["T", "P", "Tref", "Pref", "ideal", "liq", "vap", "Pvp", "state"]
+            "prop",
+            [
+                "T",
+                "P",
+                "Tref",
+                "Pref",
+                "ideal",
+                "liq",
+                "vap",
+                "Pvp",
+                "state",
+                "log",
+                "name",
+            ],
         )
 
-        retprop = prop(_T, _P, _Tref, _Pref, ideal_dict, liq_dict, vap_dict, Pvp, state)
+        retprop = prop(
+            _T,
+            _P,
+            _Tref,
+            _Pref,
+            ideal_dict,
+            liq_dict,
+            vap_dict,
+            Pvp_dict,
+            state,
+            log,
+            self.compound["Name"],
+        )
         return retprop
 
     def critical_point_calculation(self, _Pref, _Tref):

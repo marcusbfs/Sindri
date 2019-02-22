@@ -21,7 +21,7 @@ def plot_diag(
 
         xliq = np.asarray([i.liq["V"] for i in data])
         xvap = np.asarray([i.vap["V"] for i in data])
-        yliq = np.asarray([i.Pvp for i in data])
+        yliq = np.asarray([i.Pvp["EOS"] for i in data])
 
         # convert units
         xliq = conv_unit(xliq, "m3/mol", xunit)
@@ -30,7 +30,7 @@ def plot_diag(
         yvap = np.copy(yliq)
 
         xc = conv_unit(cp_data.liq["V"], "m3/mol", xunit)
-        yc = conv_unit(cp_data.Pvp, "Pa", yunit)
+        yc = conv_unit(cp_data.Pvp["EOS"], "Pa", yunit)
 
         ylabel = "Pressure [{0}]".format(yunit)
         xlabel = "Molar volume [{0}]".format(xunit)
@@ -75,13 +75,13 @@ def plot_diag(
 
         xliq = np.asarray([i.liq["dS"] for i in data])
         xvap = np.asarray([i.vap["dS"] for i in data])
-        yvec = np.asarray([i.Pvp for i in data])
+        yvec = np.asarray([i.Pvp["EOS"] for i in data])
 
         # convert units
         yliq = conv_unit(yvec, "Pa", yunit)
         yvap = np.copy(yliq)
 
-        yc = conv_unit(cp_data.Pvp, "Pa", yunit)
+        yc = conv_unit(cp_data.Pvp["EOS"], "Pa", yunit)
         xc = cp_data.vap["dS"]
 
         ylabel = "Pressure [{0}]".format(yunit)
@@ -113,7 +113,7 @@ def plot_diag(
         yvap = []
 
         xliq = np.asarray([i.T for i in data])
-        yliq = np.asarray([i.Pvp for i in data])
+        yliq = np.asarray([i.Pvp["EOS"] for i in data])
 
         # convert units
         xliq = conv_unit(xliq, "K", xunit)
@@ -168,6 +168,7 @@ def plot_diag(
             raise
 
     fig, ax = plt.subplots()
+    title = data[0].name + ": " + title
     if grid:
         ax.grid()
 

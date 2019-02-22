@@ -17,7 +17,6 @@ def format_reports(prop, **units):
     ene_per_molu = units["energy_per_mol"] if "energy_per_mol" in units else "J/mol"
 
     reportret = "fluid state: {0}\n".format(state)
-    log = " --- LOG ---\n"
 
     def formatter(info, lval, vval):
         return "{0:<21}\t{1:>20}\t{2:>20}\n".format(info, lval, vval)
@@ -42,10 +41,25 @@ def format_reports(prop, **units):
 
     # Vapor pressure
 
-    Pvps = "Pvp [{0}]".format(Pu)
-    Pvpl = f2str(conv_unit(prop.Pvp, "Pa", Pu), 8, lt=1e-2, gt=1e4)
-    Pvpv = f2str(conv_unit(prop.Pvp, "Pa", Pu), 8, lt=1e-2, gt=1e4)
-    reportret += formatter(Pvps, Pvpl, Pvpv)
+    Pvpeoss = "Pvp (EOS) [{0}]".format(Pu)
+    Pvpeosl = f2str(conv_unit(prop.Pvp["EOS"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
+    Pvpeosv = f2str(conv_unit(prop.Pvp["EOS"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
+    reportret += formatter(Pvpeoss, Pvpeosl, Pvpeosv)
+
+    PvpLKs = "Pvp (Lee-Kesler) [{0}]".format(Pu)
+    PvpLKl = f2str(conv_unit(prop.Pvp["LeeKesler"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
+    PvpLKv = f2str(conv_unit(prop.Pvp["LeeKesler"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
+    reportret += formatter(PvpLKs, PvpLKl, PvpLKv)
+
+    if prop.Pvp["Antoine"] is not None:
+        PvpAntoines = "Pvp (Antoine) [{0}]".format(Pu)
+        PvpAntoinel = f2str(
+            conv_unit(prop.Pvp["Antoine"].Pvp, "Pa", Pu), 8, lt=1e-2, gt=1e4
+        )
+        PvpAntoinev = f2str(
+            conv_unit(prop.Pvp["Antoine"].Pvp, "Pa", Pu), 8, lt=1e-2, gt=1e4
+        )
+        reportret += formatter(PvpAntoines, PvpAntoinel, PvpAntoinev)
 
     # ideal property (if any)
     if has_ig:
@@ -134,5 +148,8 @@ def format_reports(prop, **units):
     fliq = f2str(conv_unit(prop.liq["f"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
     fvap = f2str(conv_unit(prop.vap["f"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
     reportret += formatter(fs, fliq, fvap)
+
+    reportret += "\n"
+    reportret += prop.log
 
     return reportret

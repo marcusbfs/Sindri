@@ -1,8 +1,8 @@
 from collections import namedtuple
-
 import numpy as np
-
 from constants import R_IG
+
+# from numba import jit
 
 state_dict = {
     # It must have the following order:
@@ -51,14 +51,15 @@ def return_Cp(T, a0, a1, a2, a3, a4, Tmin, Tmax):
     if Tmin is None and Tmax is None:
         msg = "no temperature range given"
     elif T < Tmin:
-        msg = "T < Tmin"
+        msg = "T < Tmin, range = [{0:.3e}, {1:.3e}] K".format(Tmin, Tmax)
     elif T > Tmax:
-        msg = "T > Tmax"
+        msg = "T > Tmax, range = [{0:.3e}, {1:.3e}] K".format(Tmin, Tmax)
     ans = R_IG * (a0 + a1 * T + a2 * T ** 2 + a3 * T ** 3 + a4 * T ** 4)
     ans = cp(ans, msg)
     return ans
 
 
+# @jit(nopython=True, cache=True)
 def return_deltaH_IG(T1, T2, a0, a1, a2, a3, a4):
     ans = R_IG * (
         a0 * (T2 - T1)
@@ -70,6 +71,7 @@ def return_deltaH_IG(T1, T2, a0, a1, a2, a3, a4):
     return ans
 
 
+# @jit(nopython=True, cache=True)
 def return_deltaS_IG(T1, T2, P1, P2, a0, a1, a2, a3, a4):
     ans = (
         R_IG
@@ -91,18 +93,22 @@ def return_deltaS_IG(T1, T2, P1, P2, a0, a1, a2, a3, a4):
     return ans
 
 
+# @jit(nopython=True, cache=True)
 def return_deltaG_IG(dH, T, dS):
     return dH - T * dS
 
 
+# @jit(nopython=True, cache=True)
 def return_deltaU_IG(dG, T, dS):
     return dG + T * dS
 
 
+# @jit(nopython=True, cache=True)
 def return_deltaA_IG(dU, T, dS):
     return dU - T * dS
 
 
+# @jit(nopython=True, cache=True)
 def abs_rel_err(x, y):
     if x != 0:
         return np.abs((x - y) / x)
