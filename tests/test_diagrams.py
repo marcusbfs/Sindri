@@ -27,24 +27,22 @@ def test_plot_diagram_paramaters():
     ):
         gen_data(c, (1), 1, 1, points)
 
-    # with pytest.raises(TypeError, match="Compound parameter must be a EOS object"):
-    #     plot_diagram(1, (1,1), 1, 1, points)
-
-
-#
-#
 def test_gen_data():
-    from time import time
 
     c = EOS("Water", "H2O", "peng_and_robinson_1976")
     points = 30
     Tfp = c.compound["Tfp_K"]
     # Tfp = 550
     Tc = c.compound["Tc_K"]
-    s1 = time()
     gen_data(c, [Tfp, Tc], Pref, Tref, points)
-    s2 = time()
-    print("{0:.4f} sec".format(s2 - s1))
+
+def test_gen_data_with_isotherms():
+
+    c = EOS("Methane", "CH4", "peng_and_robinson_1976")
+    points = 50
+    Tfp = c.compound["Tfp_K"]
+    Tc = c.compound["Tc_K"]
+    a = gen_data(c, [Tfp, Tc], Pref, Tref, points, isotherms=[120, 150, 190])
+    plot_diag(a,"PV","m3/mol","bar", xlnscale=True, ylnscale=True)
 
 
-test_gen_data()

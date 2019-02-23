@@ -840,6 +840,8 @@ class EOS:
             "dU": dU_liq,
             "dA": dA_liq,
             "f": f_liq,
+            "P": _P,
+            "T": _T,
         }
 
         vap_dict = {
@@ -852,6 +854,8 @@ class EOS:
             "dU": dU_vap,
             "dA": dA_vap,
             "f": f_vap,
+            "P": _P,
+            "T": _T,
         }
         Pvp_dict = {"EOS": Pvp, "LeeKesler": Pvp_LK, "Antoine": Pvp_Antoine}
         prop = namedtuple(

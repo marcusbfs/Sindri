@@ -18,10 +18,12 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
         self.points = 30
         self.data_is_gen = False
         self.le_points.setText(str(self.points))
+        self.le_isotherms.setText("120 150 190")  # TODO remove this line after testing
 
         # connections
         self.le_Ti.textChanged.connect(self.changed_Trange)
         self.le_points.textChanged.connect(self.changed_Trange)
+        self.le_isotherms.textChanged.connect(self.changed_Trange)
         self.btn_gen.clicked.connect(self.gen)
         self.btn_plot.clicked.connect(self.plot)
         self.comboBox_diagram.currentTextChanged.connect(self.update_axis)
@@ -84,11 +86,28 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
         except:
             QtWidgets.QMessageBox.about(self, "Error", "Invalid number of points")
             return -1
+
+        try:
+            if self.le_isotherms.text() != "":
+                self.isotherms_range = [
+                    float(i) for i in self.le_isotherms.text().split()
+                ]
+            else:
+                self.isotherms_range = []
+        except:
+            QtWidgets.QMessageBox.about(self, "Error", "Invalid isotherms values")
+            return -1
+
         from time import time
 
         s1 = time()
         self.data = diagrams.gen_data(
-            self.c, [self.Ti, self.Tf], self.Pref, self.Tref, self.points
+            self.c,
+            [self.Ti, self.Tf],
+            self.Pref,
+            self.Tref,
+            self.points,
+            isotherms=self.isotherms_range,
         )
         s2 = time()
         QtWidgets.QMessageBox.information(
@@ -111,6 +130,7 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
                     ylnscale=self.checkBox_ylogscale.isChecked(),
                     grid=self.checkBox_grid.isChecked(),
                     smooth=self.checkBox_smooth.isChecked(),
+                    isotherms=self.checkBox_isotherms.isChecked(),
                 )
             except Exception as e:
                 print(str(e))

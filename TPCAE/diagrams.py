@@ -6,124 +6,110 @@ from scipy import interpolate
 
 valid_diagrams = ["PV", "TS", "TV", "PS", "PT", "HS"]
 
+SI_units_dict = {"P": "Pa", "V": "m3/mol", "T": "K", "dH": "J/mol"}
+
+labels_dict = {
+    "P": "Pascal",
+    "V": "Molar volume",
+    "T": "Temperature",
+    "dH": "Enthalpy",
+    "dS": "Entropy",
+}
+
+titles_dict = {
+    "PV": "Pressure vs. Molar volume",
+    "PS": "Pressure vs. Entropy",
+    "PT": "Pressure vs. Temperature",
+    "TV": "Temperature vs. Molar volume",
+    "TS": "Temperature vs. Entropy",
+    "HS": "Enthalpy vs. Entropy",
+}
+
+prop_dict = {"P": "P", "V": "V", "T": "T", "H": "dH", "S": "dS"}
+
 
 def plot_diag(
-    data, diag, xunit, yunit, xlnscale=False, ylnscale=False, grid=True, smooth=False
+    data,
+    diag,
+    xunit,
+    yunit,
+    xlnscale=False,
+    ylnscale=False,
+    grid=True,
+    smooth=False,
+    isotherms=False,
 ):
     if diag not in valid_diagrams:
         raise ValueError(str(diag) + " is not a valid diagram")
 
+    isotherms_data = data[2]
     cp_data = data[1]
     data = data[0]
+    has_isotherms = True if (len(isotherms_data) > 0 and isotherms) else False
 
-    if diag == "PV":
-        title = "Pressure vs. Molar volume"
+    ys = prop_dict[diag[0]]
+    xs = prop_dict[diag[1]]
+    points = len(data)
+    title = data[0].name + ": " + titles_dict[diag]
+    xlabel = labels_dict[xs] + " [{0}]".format(xunit)
+    ylabel = labels_dict[ys] + " [{0}]".format(yunit)
 
-        xliq = np.asarray([i.liq["V"] for i in data])
-        xvap = np.asarray([i.vap["V"] for i in data])
-        yliq = np.asarray([i.Pvp["EOS"] for i in data])
+    xliq = np.zeros(points)
+    yliq = np.zeros(points)
+    xvap = np.zeros(points)
+    yvap = np.zeros(points)
 
-        # convert units
-        xliq = conv_unit(xliq, "m3/mol", xunit)
-        xvap = conv_unit(xvap, "m3/mol", xunit)
-        yliq = conv_unit(yliq, "Pa", yunit)
-        yvap = np.copy(yliq)
+    for i in range(points):
+        xliq[i] = data[i].liq[xs]
+        yliq[i] = data[i].liq[ys]
+        xvap[i] = data[i].vap[xs]
+        yvap[i] = data[i].vap[ys]
 
-        xc = conv_unit(cp_data.liq["V"], "m3/mol", xunit)
-        yc = conv_unit(cp_data.Pvp["EOS"], "Pa", yunit)
+    xc = cp_data.liq[xs]
+    yc = cp_data.liq[ys]
 
-        ylabel = "Pressure [{0}]".format(yunit)
-        xlabel = "Molar volume [{0}]".format(xunit)
+    # isotherms
+    xliq_iso = []
+    yliq_iso = []
+    xvap_iso = []
+    yvap_iso = []
+    if has_isotherms:
+        for isotherm in isotherms_data:
+            p = len(isotherm)
+            xliq_tmp = np.zeros(p)
+            yliq_tmp = np.zeros(p)
+            xvap_tmp = np.zeros(p)
+            yvap_tmp = np.zeros(p)
 
-    elif diag == "TS":
-        title = "Temperature vs. Entropy"
+            for i in range(p):
+                xliq_tmp[i] = isotherm[i].liq[xs]
+                yliq_tmp[i] = isotherm[i].liq[ys]
+                xvap_tmp[i] = isotherm[i].vap[xs]
+                yvap_tmp[i] = isotherm[i].vap[ys]
+            xliq_iso.append(xliq_tmp)
+            yliq_iso.append(yliq_tmp)
+            xvap_iso.append(xvap_tmp)
+            yvap_iso.append(yvap_tmp)
 
-        xliq = np.asarray([i.liq["dS"] for i in data])
-        xvap = np.asarray([i.vap["dS"] for i in data])
-        yliq = np.asarray([i.T for i in data])
+    # convert units
+    if xs != "dS":
+        xliq = conv_unit(xliq, SI_units_dict[xs], xunit)
+        xliq = conv_unit(xliq, SI_units_dict[xs], xunit)
+        xvap = conv_unit(xvap, SI_units_dict[xs], xunit)
+        xc = conv_unit(xc, SI_units_dict[xs], xunit)
+        if has_isotherms:
+            for i in range(len(xliq_iso)):
+                xliq_iso[i] = conv_unit(xliq_iso[i], SI_units_dict[xs], xunit)
+                xvap_iso[i] = conv_unit(xvap_iso[i], SI_units_dict[xs], xunit)
 
-        # convert units
-        yliq = conv_unit(yliq, "K", yunit)
-        yvap = np.copy(yliq)
-
-        xc = cp_data.liq["dS"]
-        yc = conv_unit(cp_data.T, "K", yunit)
-
-        ylabel = "Temperature [{0}]".format(yunit)
-        xlabel = "Entropy [{0}]".format(xunit)
-
-    elif diag == "HS":
-        title = "Enthalphy vs. Entropy"
-
-        xliq = np.asarray([i.liq["dS"] for i in data])
-        xvap = np.asarray([i.vap["dS"] for i in data])
-        yliq = np.asarray([i.liq["dH"] for i in data])
-        yvap = np.asarray([i.vap["dH"] for i in data])
-
-        # convert units
-        yliq = conv_unit(yliq, "J/mol", yunit)
-        yvap = conv_unit(yvap, "J/mol", yunit)
-
-        xc = cp_data.vap["dS"]
-        yc = conv_unit(cp_data.vap["dH"], "J/mol", yunit)
-
-        ylabel = "Enthalpy [{0}]".format(yunit)
-        xlabel = "Entropy [{0}]".format(xunit)
-
-    elif diag == "PS":
-        title = "Pressure vs. Entropy"
-
-        xliq = np.asarray([i.liq["dS"] for i in data])
-        xvap = np.asarray([i.vap["dS"] for i in data])
-        yvec = np.asarray([i.Pvp["EOS"] for i in data])
-
-        # convert units
-        yliq = conv_unit(yvec, "Pa", yunit)
-        yvap = np.copy(yliq)
-
-        yc = conv_unit(cp_data.Pvp["EOS"], "Pa", yunit)
-        xc = cp_data.vap["dS"]
-
-        ylabel = "Pressure [{0}]".format(yunit)
-        xlabel = "Entropy [{0}]".format(xunit)
-
-    elif diag == "TV":
-        title = "Temperature vs. Molar volume"
-
-        xliq = np.asarray([i.liq["V"] for i in data])
-        xvap = np.asarray([i.vap["V"] for i in data])
-        yvec = np.asarray([i.T for i in data])
-
-        # convert units
-        xliq = conv_unit(xliq, "m3/mol", xunit)
-        xvap = conv_unit(xvap, "m3/mol", xunit)
-        yliq = conv_unit(yvec, "K", yunit)
-        yvap = np.copy(yliq)
-
-        yc = conv_unit(cp_data.T, "K", yunit)
-        xc = conv_unit(cp_data.vap["V"], "m3/mol", xunit)
-
-        ylabel = "Temperature [{0}]".format(yunit)
-        xlabel = "Molar volume [{0}]".format(xunit)
-
-    elif diag == "PT":
-        title = "Pressure vs. Temperature"
-
-        xvap = []
-        yvap = []
-
-        xliq = np.asarray([i.T for i in data])
-        yliq = np.asarray([i.Pvp["EOS"] for i in data])
-
-        # convert units
-        xliq = conv_unit(xliq, "K", xunit)
-        yliq = conv_unit(yliq, "Pa", yunit)
-
-        yc = conv_unit(cp_data.P, "Pa", yunit)
-        xc = conv_unit(cp_data.T, "K", xunit)
-
-        ylabel = "Pressure [{0}]".format(yunit)
-        xlabel = "Temperature [{0}]".format(xunit)
+    if ys != "dS":
+        yliq = conv_unit(yliq, SI_units_dict[ys], yunit)
+        yvap = conv_unit(yvap, SI_units_dict[ys], yunit)
+        yc = conv_unit(yc, SI_units_dict[ys], yunit)
+        if has_isotherms:
+            for i in range(len(yliq_iso)):
+                yliq_iso[i] = conv_unit(yliq_iso[i], SI_units_dict[ys], yunit)
+                yvap_iso[i] = conv_unit(yvap_iso[i], SI_units_dict[ys], yunit)
 
     try:
         if xlnscale:
@@ -132,6 +118,10 @@ def plot_diag(
                 xvap = np.log(xvap)
                 xc = np.log(xc)
                 xlabel = "ln " + xlabel
+                if has_isotherms:
+                    xliq_iso = np.log(xliq_iso)
+                    xvap_iso = np.log(xvap_iso)
+
             else:
                 raise ValueError("Can't calculate log of x-axis: negative number")
         if ylnscale:
@@ -140,6 +130,9 @@ def plot_diag(
                 yliq = np.log(yliq)
                 yc = np.log(yc)
                 ylabel = "ln " + ylabel
+                if has_isotherms:
+                    yliq_iso = np.log(yliq_iso)
+                    yvap_iso = np.log(yvap_iso)
             else:
                 raise ValueError("Can't calculate log of y-axis: negative number")
     except Exception as e:
@@ -168,9 +161,6 @@ def plot_diag(
             raise
 
     fig, ax = plt.subplots()
-    title = data[0].name + ": " + title
-    if grid:
-        ax.grid()
 
     try:
         if len(xliq) > 0 and len(yliq) > 0:
@@ -189,6 +179,19 @@ def plot_diag(
         print(str(e))
         raise
 
+    if has_isotherms:
+        try:
+            for t, xl, yl, xv, yv in zip(
+                isotherms_data, xliq_iso, yliq_iso, xvap_iso, yvap_iso
+            ):
+                ax.plot(xl, yl, label=str(t[0].T) + " liq", linestyle="--")
+                ax.plot(xv, yv, label=str(t[0].T) + " vap", linestyle="--")
+        except Exception as e:
+            raise
+
+    if grid:
+        ax.grid()
+
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.set_title(title)
@@ -197,7 +200,7 @@ def plot_diag(
     return
 
 
-def gen_data(compound, Ti_f, _Pref, _Tref, points):
+def gen_data(compound, Ti_f, _Pref, _Tref, points, isotherms=[]):
     if not isinstance(Ti_f, list):
         raise TypeError("Temperature parameter must be an array of len 2")
 
@@ -234,4 +237,44 @@ def gen_data(compound, Ti_f, _Pref, _Tref, points):
 
     critical_point = compound.critical_point_calculation(_Pref, _Tref)
 
-    return (retvec, critical_point)
+    isotherms = np.atleast_1d(isotherms)
+    Pmin = np.min(Pvec)
+    Pmax = np.max(Pvec)
+    isothermsvec = []
+    if len(isotherms) > 0:
+        for t in isotherms:
+            Psat = fvec_return_Pvp_EOS(t, helper_P_guess(t))[0]
+            Vsat = compound.return_V_given_PT(Psat, t)
+            tmpt = []
+            for d in retvec:
+                ret = compound.all_calculations_at_P_T(d.P, t, _Pref, _Tref)
+
+                # if (ret.liq["V"] <= d.liq["V"]) and (ret.vap["V"] >= d.vap["V"]):
+                if True:
+                    tmpt.append(ret)
+            isothermsvec.append(tmpt)
+
+    # t = 120
+    # vs = compound.return_V_given_PT(Pmin, t)
+    # v, P = gen_PV_isotherm(compound, np.min(vs), np.max(vs),t, 30)
+    # isothermsvec = (v, P)
+
+    return (retvec, critical_point, isothermsvec)
+
+
+def gen_PV_isotherm(compound, vi, vf, T, points, xlnscale=True, ylnscale=True):
+    vi = 1.1e-4
+    vf = 7.08e-4
+    T = 360
+    v = np.geomspace(vi, vf, points)
+    P = np.zeros(points)
+    for i in range(points):
+        P[i] = compound.numf_P_VT(v[i], T)
+
+    print(v)
+    print(P)
+
+    plt.plot(v, P)
+    plt.show()
+
+    return v, P
