@@ -679,7 +679,7 @@ class EOS:
 
     def all_calculations_at_P_T(self, _P, _T, _Pref, _Tref):
 
-        log = " --- LOG ---\n"
+        log = ""
 
         try:  # Calculate Z
             Zs = self.return_Z_given_PT(_P, _T)
@@ -850,6 +850,7 @@ class EOS:
                 "Antoine": Pvp_Antoine,
             }
         else:  # if state is supercritical
+            log += "Couldn't compute vapor pressure (maybe the current fluid is in supercritical state?)\n"
             Pvp = Pvp_AW
             Pvp_dict = 0
 

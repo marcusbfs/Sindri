@@ -72,12 +72,21 @@ energy_per_mol_dict = {
     "BTU/kmol": 1055.06 / 1e3,
 }
 
+energy_per_mol_temp_dict = {
+    "J/molK": 1,
+    "kJ/molK": 1000,
+    "kJ/kmolK": 1,
+    "cal/molK": 4.18401,
+    "kcal/molK": 4184.01,
+}
+
 density_dict = {"kg/m3": 1, "g/cm3": cbu(1, "g", "kg") / cbu(1, "cm3", "m3")}
 
 density_options = list(density_dict.keys())
 molar_vol_options = list(molar_vol_dict.keys())
 energy_options = list(energy_dict.keys())
 energy_per_mol_options = list(energy_per_mol_dict.keys())
+energy_per_mol_temp_options = list(energy_per_mol_temp_dict.keys())
 
 
 # conversion functions
@@ -110,6 +119,8 @@ def conv_unit(number, a, b):
         ans = number * energy_dict[a] / energy_dict[b]
     elif a in energy_per_mol_dict and b in energy_per_mol_dict:
         ans = number * energy_per_mol_dict[a] / energy_per_mol_dict[b]
+    elif a in energy_per_mol_temp_dict and b in energy_per_mol_temp_dict:
+        ans = number * energy_per_mol_temp_dict[a] / energy_per_mol_temp_dict[b]
     elif a in temperature_dict_to_K and b in temperature_dict_from_K:
         ans = temperature_dict_from_K[b](temperature_dict_to_K[a](number))
     else:

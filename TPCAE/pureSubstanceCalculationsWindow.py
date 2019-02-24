@@ -20,10 +20,10 @@ class Window_PureSubstanceCalculations(
         super(Window_PureSubstanceCalculations, self).__init__(parent)
         self.setupUi(self)
 
-        self.statusbar = QtWidgets.QStatusBar(self)
         self.btn_searchSubstance.clicked.connect(self.search_substance)
         self.btn_calculate.clicked.connect(self.calculatePureSubstance)
         self.btn_diagrams.clicked.connect(self.open_diagrams)
+        self.btn_savetxt.clicked.connect(self.save_to_txt)
 
         self.sname = " "
         self.eosname = " "
@@ -34,12 +34,28 @@ class Window_PureSubstanceCalculations(
         self.comboBox_procPunit.addItems(units.pressure_options)
         self.comboBox_refPunit.addItems(units.pressure_options)
 
+        # results header
+        self.ResultsColumnsLabels = ["Liquid", "Vapor"]
+        # self.ResultsRowsLabels = ["Z", "V", "Density", "Vap. P (EOS)", "Vap. P (Ambrose-Walton)", "Vap. P (Lee-Kesler)",
+        #                           "Vap. P (Antoine)", "Cp", "H", "S", "G", "U", "A",
+        #                            "IG H", "IG S", "IG G", "IG U", "IG A", "Fugacity"]
+        self.tableWidget_results.setColumnCount(2)
+        self.tableWidget_results.setHorizontalHeaderLabels(self.ResultsColumnsLabels)
+
         # tablewidget -> database
         self.tableWidget_searchSubstance.itemSelectionChanged.connect(
             self.substance_selected
         )
         self.dbfile = db.database_file
         # 26 colunas
+        self.units = {
+            "P": "bar",
+            "T": "K",
+            "V": "m3/mol",
+            "rho": "kg/m3",
+            "energy_per_mol": "J/mol",
+            "energy_per_mol_temp": "J/molK",
+        }
         self.col_headers = [
             "Formula",
             "Name",
@@ -72,8 +88,6 @@ class Window_PureSubstanceCalculations(
         self.tableWidget_searchSubstance.setHorizontalHeaderLabels(self.col_headers)
         header = self.tableWidget_searchSubstance.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
-        # header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
-        # header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
 
         self.load_db()
         self.le_searchSubstance.setFocus()
@@ -82,6 +96,121 @@ class Window_PureSubstanceCalculations(
         # listview -> eos options
         self.listWidget_eos_options.addItems(list(eos.eos_options.keys()))
         self.listWidget_eos_options.itemSelectionChanged.connect(self.eos_selected)
+
+    @QtCore.Slot()
+    def calculatePureSubstance(self):
+        # get process variables (T and P)
+        # get units
+        self.procTunit = self.comboBox_procTunit.currentText()
+        self.procPunit = self.comboBox_procPunit.currentText()
+        self.refTunit = self.comboBox_refTunit.currentText()
+        self.refPunit = self.comboBox_refPunit.currentText()
+        try:
+            self.T = conv_unit(
+                float(self.le_procT.text()), self.procTunit, "K"
+            )  # convert to Kelvin
+            self.P = conv_unit(
+                float(self.le_procP.text()), self.procPunit, "Pa"
+            )  # convert to pascal
+            self.Tref = conv_unit(
+                float(self.le_refT.text()), self.refTunit, "K"
+            )  # convert to Kelvin
+            self.Pref = conv_unit(
+                float(self.le_refP.text()), self.refPunit, "Pa"
+            )  # convert to pascal
+        except:
+            # TODO
+            print("error process variables")
+            msg = QtWidgets.QMessageBox.about(
+                self, "Error", "Process variables are not numbers"
+            )
+            return 1
+
+        if len(self.sname.strip()) > 1 and len(self.eosname.strip()) > 1:
+
+            _decimals = 7
+            _lt = 1e-3
+            _gt = 1e4
+
+            self.plainTextEdit_information.clear()
+            self.tableWidget_results.setRowCount(0)
+            self.plainTextEdit_log.clear()
+
+            try:  # to initialize EOS
+                self.c = eos.EOS(
+                    self.compound["Name"],
+                    self.compound["Formula"],
+                    eos.eos_options[self.eosname],
+                )
+                self.info = ""
+                self.info += "compound: {:s} ({:s})\n".format(
+                    self.c.compound["Name"], self.c.compound["Formula"]
+                )
+
+                self.info += "equation of state: {0:s}\n".format(
+                    self.listWidget_eos_options.currentItem().text()
+                )
+                self.info += "process state: {:.3f} K, {:s} bar\n".format(
+                    self.T,
+                    utils.f2str(conv_unit(self.P, "Pa", "bar"), 3, lt=1e-2, gt=1e4),
+                )
+                self.info += "reference state: {:.3f} K, {:s} bar\n".format(
+                    self.Tref,
+                    utils.f2str(conv_unit(self.Pref, "Pa", "bar"), 3, lt=1e-2, gt=1e4),
+                )
+                self.plainTextEdit_information.appendPlainText(self.info)
+            except Exception as e:
+                print(e)
+                err = (
+                    "One or more of the following properties is not set: Tc, Pc, omega"
+                )
+                msg = QtWidgets.QMessageBox.about(self, "Error", str(err))
+                return 1
+
+            try:  # calculate properties at T and P
+                self.props = self.c.all_calculations_at_P_T(
+                    self.P, self.T, self.Pref, self.Tref
+                )
+                self.plainTextEdit_information.appendPlainText(
+                    "state: " + self.props.state
+                )
+
+            except Exception as e:
+                msg = QtWidgets.QMessageBox.about(
+                    self, "Error calculating properties", str(e)
+                )
+                return 1
+
+            try:
+                rowlabels, liq, vap = reports.tablewidget_vap_liq_reports(
+                    self.props, **self.units
+                )
+                for i in range(len(rowlabels)):
+                    self.tableWidget_results.insertRow(i)
+                    self.tableWidget_results.setItem(
+                        i, 0, QtWidgets.QTableWidgetItem(liq[i])
+                    )
+                    self.tableWidget_results.setItem(
+                        i, 1, QtWidgets.QTableWidgetItem(vap[i])
+                    )
+                self.tableWidget_results.setVerticalHeaderLabels(rowlabels)
+
+            except Exception as e:
+                msg = QtWidgets.QMessageBox.about(self, "Error showing results", str(e))
+                return 1
+
+            try:
+                self.report, self.log = reports.format_reports(self.props, **self.units)
+                self.plainTextEdit_log.appendPlainText(self.log)
+            except Exception as e:
+                print("Couldn't generate report")
+                print(str(e))
+
+        else:
+            msg = QtWidgets.QMessageBox.about(
+                self, "Error", "Please, select compound and EOS"
+            )
+            return
 
     @QtCore.Slot()
     def open_diagrams(self):
@@ -133,115 +262,8 @@ class Window_PureSubstanceCalculations(
             return
 
     @QtCore.Slot()
-    def calculatePureSubstance(self):
-        # get process variables (T and P)
-        # get units
-        self.procTunit = self.comboBox_procTunit.currentText()
-        self.procPunit = self.comboBox_procPunit.currentText()
-        self.refTunit = self.comboBox_refTunit.currentText()
-        self.refPunit = self.comboBox_refPunit.currentText()
-        try:
-            self.T = conv_unit(
-                float(self.le_procT.text()), self.procTunit, "K"
-            )  # convert to Kelvin
-            self.P = conv_unit(
-                float(self.le_procP.text()), self.procPunit, "Pa"
-            )  # convert to pascal
-            self.Tref = conv_unit(
-                float(self.le_refT.text()), self.refTunit, "K"
-            )  # convert to Kelvin
-            self.Pref = conv_unit(
-                float(self.le_refP.text()), self.refPunit, "Pa"
-            )  # convert to pascal
-        except:
-            # TODO
-            print("error process variables")
-            msg = QtWidgets.QMessageBox.about(
-                self, "Error", "Process variables are not numbers"
-            )
-            return 1
-
-        if len(self.sname.strip()) > 1 and len(self.eosname.strip()) > 1:
-
-            _decimals = 7
-            _lt = 1e-3
-            _gt = 1e4
-
-            self.plainTextEdit_results.clear()
-
-            try:  # to initialize EOS
-                self.c = eos.EOS(
-                    self.compound["Name"],
-                    self.compound["Formula"],
-                    eos.eos_options[self.eosname],
-                )
-                self.plainTextEdit_results.appendPlainText(
-                    "compound: {:s} ({:s})".format(
-                        self.c.compound["Name"], self.c.compound["Formula"]
-                    )
-                )
-                self.plainTextEdit_results.appendPlainText(
-                    "equation of state: {0:s}".format(
-                        self.listWidget_eos_options.currentItem().text()
-                    )
-                )
-                self.plainTextEdit_results.appendPlainText(
-                    "process state: {:.3f} K, {:s} bar".format(
-                        self.T,
-                        utils.f2str(conv_unit(self.P, "Pa", "bar"), 3, lt=1e-2, gt=1e4),
-                    )
-                )
-                self.plainTextEdit_results.appendPlainText(
-                    "reference state: {:.3f} K, {:s} bar".format(
-                        self.Tref,
-                        utils.f2str(
-                            conv_unit(self.Pref, "Pa", "bar"), 3, lt=1e-2, gt=1e4
-                        ),
-                    )
-                )
-            except Exception as e:
-                print(e)
-                err = (
-                    "One or more of the following properties is not set: Tc, Pc, omega"
-                )
-                msg = QtWidgets.QMessageBox.about(self, "Error", str(err))
-                return 1
-
-            try:  # calculate properties at T and P
-                self.props = self.c.all_calculations_at_P_T(
-                    self.P, self.T, self.Pref, self.Tref
-                )
-            except Exception as e:
-                msg = QtWidgets.QMessageBox.about(
-                    self, "Error calculating properties", str(e)
-                )
-                return 1
-
-            try:
-                units = {
-                    "P": "bar",
-                    "T": "K",
-                    "V": "m3/mol",
-                    "rho": "kg/m3",
-                    "Cp": "J/K",
-                    "energy_per_mol": "J/mol",
-                }
-                report = reports.format_reports(self.props, **units)
-                self.plainTextEdit_results.appendPlainText(report)
-            except Exception as e:
-                print("Couldn't generate report")
-                print(str(e))
-
-        else:
-            msg = QtWidgets.QMessageBox.about(
-                self, "Error", "Please, select compound and EOS"
-            )
-            return
-
-    @QtCore.Slot()
     def eos_selected(self):
         self.eosname = self.listWidget_eos_options.currentItem().text()
-        # self.update_status_bar()
 
     @QtCore.Slot()
     def substance_selected(self):
@@ -250,7 +272,6 @@ class Window_PureSubstanceCalculations(
             r = self.get_row_values(10)
             self.compound = db_utils.get_compound_properties(r[1], r[0])
             self.sname = self.compound["Name"] + " (" + self.compound["Formula"] + ")"
-            # self.update_status_bar()
 
     @QtCore.Slot()
     def search_substance(self):
@@ -279,10 +300,36 @@ class Window_PureSubstanceCalculations(
             except:
                 self.tableWidget_searchSubstance.setRowCount(0)
 
-    # def update_status_bar(self):
-    #     return
-    #     self.statusbar.showMessage("Selected - substance: " + self.sname +
-    #                                "; EOS: " + self.eosname)
+    @QtCore.Slot()
+    def save_to_txt(self):
+        try:
+            name_suggestion = self.c.compound["Name"] + ".txt"
+            txt_file_name = QtWidgets.QFileDialog.getSaveFileName(
+                self, "Save file", name_suggestion, "Text files (*.txt)"
+            )[0]
+            file_content = self.info + self.report + "\n--- LOG ---\n" + self.log
+            try:
+                with open(txt_file_name, "w") as f:
+                    f.write(file_content)
+                til = "Successful"
+                msg = "The data has been successfully saved."
+            except Exception as e:
+                til = "Problem"
+                msg = "The data couldn't be saved.\n" + str(e)
+            QtWidgets.QMessageBox.about(self, til, msg)
+
+        except Exception as e:
+            if (
+                str(e)
+                == "'Window_PureSubstanceCalculations' object has no attribute 'report'"
+            ):
+                til = "Missing data"
+                msg = "Please, generate the data first."
+            else:
+                til = "Error"
+                msg = str(e)
+            QtWidgets.QMessageBox.about(self, til, msg)
+            return -1
 
     def load_db(self):
         # Abrir banco de dados
