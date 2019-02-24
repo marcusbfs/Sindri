@@ -9,7 +9,7 @@ from constants import R_IG
 from db_utils import get_compound_properties
 from polyEqSolver import solve_cubic
 import IdealGasPropertiesPureSubstance as IGPROP
-from vapor_pressure import leeKeslerVP, antoineVP
+from vapor_pressure import ambroseWaltonVP, antoineVP, leeKeslerVP
 from units import conv_unit
 from numba import njit, jit, cfunc, types, carray
 
@@ -694,6 +694,17 @@ class EOS:
             print(str(e))
             raise ValueError("Error calculating Z")
 
+        state = IGPROP.return_fluidState(
+            _P,
+            conv_unit(self.compound["Pc_bar"], "bar", "Pa"),
+            _T,
+            self.compound["Tc_K"],
+            1e5,
+            delta=1e-4,
+        )
+
+        supercritical = True if state == "supercritical fluid" else False
+
         Vliq = Zliq * R_IG * _T / _P
         Vvap = Zvap * R_IG * _T / _P
         Vliqref = Zliqref * R_IG * _Tref / _Pref
@@ -778,48 +789,69 @@ class EOS:
         f_liq = dProp_liq["f"]
         f_vap = dProp_vap["f"]
 
+        Pvp_AW = ambroseWaltonVP(
+            conv_unit(self.compound["Pc_bar"], "bar", "Pa"),
+            _T / self.compound["Tc_K"],
+            self.compound["omega"],
+        )
+
         Pvp_LK = leeKeslerVP(
             conv_unit(self.compound["Pc_bar"], "bar", "Pa"),
             _T / self.compound["Tc_K"],
             self.compound["omega"],
         )
 
-        try:
-            PvpTuple = self.return_Pvp_EOS(_T, Pvp_LK, tol=1e-5, k=100)
-            Pvp = PvpTuple.Pvp
-            Pvpmsg = PvpTuple.msg
-            Pvpiter = PvpTuple.iter
-            if Pvpmsg is not None:
-                log += "Iterations for vapor pressure: {0:s}\n".format(str(Pvpmsg))
-            else:
-                log += "Iterations for vapor pressure: {0:s}\n".format(str(Pvpiter))
-        except:
-            raise ValueError("Error calculating vapor pressure from EOS")
+        if not supercritical:
+            try:
+                PvpTuple = self.return_Pvp_EOS(_T, Pvp_AW, tol=1e-5, k=100)
+                Pvp = PvpTuple.Pvp
+                Pvpmsg = PvpTuple.msg
+                Pvpiter = PvpTuple.iter
+                if Pvpmsg is not None:
+                    log += "Iterations for vapor pressure: {0:s}\n".format(str(Pvpmsg))
+                else:
+                    log += "Iterations for vapor pressure: {0:s}\n".format(str(Pvpiter))
+            except:
+                # TODO como lidar quando o fluido se encontra no estado critico?
+                raise ValueError("Error calculating vapor pressure from EOS")
 
-        log += "Pvp Lee-Kesler relative error: {0:.5f}\n".format(
-            IGPROP.abs_rel_err(Pvp, Pvp_LK)
-        )
+            log += "Pvp Ambrose-Walton relative error: {0:.5f}\n".format(
+                IGPROP.abs_rel_err(Pvp, Pvp_AW)
+            )
+            log += "Pvp Lee-Kesler relative error: {0:.5f}\n".format(
+                IGPROP.abs_rel_err(Pvp, Pvp_LK)
+            )
 
-        try:
-            Pvp_Antoine = antoineVP(
-                _T,
-                self.compound["ANTOINE_A"],
-                self.compound["ANTOINE_B"],
-                self.compound["ANTOINE_C"],
-                self.compound["Tmin_K"],
-                self.compound["Tmax_K"],
-            )
-            log += "Pvp Antoine relative error: {0:.5f}\n".format(
-                IGPROP.abs_rel_err(Pvp, Pvp_Antoine.Pvp)
-            )
-            if Pvp_Antoine.msg is not None:
-                log += "WARNING Antoine's temperature range: {0:s}\n".format(
-                    Pvp_Antoine.msg
+            try:
+                Pvp_Antoine = antoineVP(
+                    _T,
+                    self.compound["ANTOINE_A"],
+                    self.compound["ANTOINE_B"],
+                    self.compound["ANTOINE_C"],
+                    self.compound["Tmin_K"],
+                    self.compound["Tmax_K"],
                 )
+                log += "Pvp Antoine relative error: {0:.5f}\n".format(
+                    IGPROP.abs_rel_err(Pvp, Pvp_Antoine.Pvp)
+                )
+                if Pvp_Antoine.msg is not None:
+                    log += "WARNING Antoine's temperature range: {0:s}\n".format(
+                        Pvp_Antoine.msg
+                    )
 
-        except:
-            Pvp_Antoine = None
-            log += "WARNING couldn't compute pressure vapor using Antoine's equation: missing equation parameters\n"
+            except:
+                Pvp_Antoine = None
+                log += "WARNING couldn't compute pressure vapor using Antoine's equation: missing equation parameters\n"
+
+            Pvp_dict = {
+                "EOS": Pvp,
+                "AmbroseWalton": Pvp_AW,
+                "LeeKesler": Pvp_LK,
+                "Antoine": Pvp_Antoine,
+            }
+        else:  # if state is supercritical
+            Pvp = Pvp_AW
+            Pvp_dict = 0
 
         state = IGPROP.return_fluidState(
             _P,
@@ -857,7 +889,6 @@ class EOS:
             "P": _P,
             "T": _T,
         }
-        Pvp_dict = {"EOS": Pvp, "LeeKesler": Pvp_LK, "Antoine": Pvp_Antoine}
         prop = namedtuple(
             "prop",
             [
@@ -892,7 +923,7 @@ class EOS:
 
     def critical_point_calculation(self, _Pref, _Tref):
         _Tc = self.compound["Tc_K"]
-        _Pc_guess = leeKeslerVP(
+        _Pc_guess = ambroseWaltonVP(
             conv_unit(self.compound["Pc_bar"], "bar", "Pa"), 1.0, self.compound["omega"]
         )
         _Pc = self.return_Pvp_EOS(_Tc, _Pc_guess, tol=1e-6, k=100).Pvp

@@ -6,6 +6,7 @@ from IdealGasPropertiesPureSubstance import state_options
 def format_reports(prop, **units):
 
     state = prop.state
+    log = prop.log
     state_index = state_options.index(state)
     has_ig = True if prop.ideal is not None else False
 
@@ -41,25 +42,37 @@ def format_reports(prop, **units):
 
     # Vapor pressure
 
-    Pvpeoss = "Pvp (EOS) [{0}]".format(Pu)
-    Pvpeosl = f2str(conv_unit(prop.Pvp["EOS"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
-    Pvpeosv = f2str(conv_unit(prop.Pvp["EOS"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
-    reportret += formatter(Pvpeoss, Pvpeosl, Pvpeosv)
+    if prop.Pvp != 0:
+        Pvpeoss = "Pvp (EOS) [{0}]".format(Pu)
+        Pvpeosl = f2str(conv_unit(prop.Pvp["EOS"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
+        Pvpeosv = f2str(conv_unit(prop.Pvp["EOS"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
+        reportret += formatter(Pvpeoss, Pvpeosl, Pvpeosv)
 
-    PvpLKs = "Pvp (Lee-Kesler) [{0}]".format(Pu)
-    PvpLKl = f2str(conv_unit(prop.Pvp["LeeKesler"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
-    PvpLKv = f2str(conv_unit(prop.Pvp["LeeKesler"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
-    reportret += formatter(PvpLKs, PvpLKl, PvpLKv)
+        PvpAWs = "Pvp (Ambrose-Walton) [{0}]".format(Pu)
+        PvpAWl = f2str(
+            conv_unit(prop.Pvp["AmbroseWalton"], "Pa", Pu), 8, lt=1e-2, gt=1e4
+        )
+        PvpAWv = f2str(
+            conv_unit(prop.Pvp["AmbroseWalton"], "Pa", Pu), 8, lt=1e-2, gt=1e4
+        )
+        reportret += formatter(PvpAWs, PvpAWl, PvpAWv)
 
-    if prop.Pvp["Antoine"] is not None:
-        PvpAntoines = "Pvp (Antoine) [{0}]".format(Pu)
-        PvpAntoinel = f2str(
-            conv_unit(prop.Pvp["Antoine"].Pvp, "Pa", Pu), 8, lt=1e-2, gt=1e4
-        )
-        PvpAntoinev = f2str(
-            conv_unit(prop.Pvp["Antoine"].Pvp, "Pa", Pu), 8, lt=1e-2, gt=1e4
-        )
-        reportret += formatter(PvpAntoines, PvpAntoinel, PvpAntoinev)
+        PvpLKs = "Pvp (Lee-Kesler) [{0}]".format(Pu)
+        PvpLKl = f2str(conv_unit(prop.Pvp["LeeKesler"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
+        PvpLKv = f2str(conv_unit(prop.Pvp["LeeKesler"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
+        reportret += formatter(PvpLKs, PvpLKl, PvpLKv)
+
+        if prop.Pvp["Antoine"] is not None:
+            PvpAntoines = "Pvp (Antoine) [{0}]".format(Pu)
+            PvpAntoinel = f2str(
+                conv_unit(prop.Pvp["Antoine"].Pvp, "Pa", Pu), 8, lt=1e-2, gt=1e4
+            )
+            PvpAntoinev = f2str(
+                conv_unit(prop.Pvp["Antoine"].Pvp, "Pa", Pu), 8, lt=1e-2, gt=1e4
+            )
+            reportret += formatter(PvpAntoines, PvpAntoinel, PvpAntoinev)
+    else:
+        log += "Couldn't compute vapor pressure (maybe the current fluid is in supercritical state?)\n"
 
     # ideal property (if any)
     if has_ig:
@@ -150,6 +163,6 @@ def format_reports(prop, **units):
     reportret += formatter(fs, fliq, fvap)
 
     reportret += "\n"
-    reportret += prop.log
+    reportret += log
 
     return reportret

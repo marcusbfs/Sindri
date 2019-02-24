@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 from tests.db_compound import methane
-from TPCAE.vapor_pressure import antoineVP, leeKeslerVP
+from TPCAE.vapor_pressure import antoineVP, ambroseWaltonVP, leeKeslerVP
 
 A = methane["ANTOINE_A"]
 B = methane["ANTOINE_B"]
@@ -9,6 +9,13 @@ C = methane["ANTOINE_C"]
 Tmin = methane["Tmin_K"]
 Tmax = methane["Tmax_K"]
 T = 300
+
+
+def test_ambrose_walton_return_values():
+    try:
+        ans = ambroseWaltonVP(1, 1, 1)
+    except:
+        assert 0
 
 
 def test_lee_kesler_return_values():

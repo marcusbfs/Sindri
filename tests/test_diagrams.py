@@ -27,6 +27,7 @@ def test_plot_diagram_paramaters():
     ):
         gen_data(c, (1), 1, 1, points)
 
+
 def test_gen_data():
 
     c = EOS("Water", "H2O", "peng_and_robinson_1976")
@@ -36,6 +37,7 @@ def test_gen_data():
     Tc = c.compound["Tc_K"]
     gen_data(c, [Tfp, Tc], Pref, Tref, points)
 
+
 def test_gen_data_with_isotherms():
 
     c = EOS("Methane", "CH4", "peng_and_robinson_1976")
@@ -43,6 +45,4 @@ def test_gen_data_with_isotherms():
     Tfp = c.compound["Tfp_K"]
     Tc = c.compound["Tc_K"]
     a = gen_data(c, [Tfp, Tc], Pref, Tref, points, isotherms=[120, 150, 190])
-    plot_diag(a,"PV","m3/mol","bar", xlnscale=True, ylnscale=True)
-
-
+    # plot_diag(a,"PV","m3/mol","bar", xlnscale=True, ylnscale=True)

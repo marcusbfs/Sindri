@@ -98,26 +98,18 @@ def return_deltaS_IG(T1, T2, P1, P2, a0, a1, a2, a3, a4):
 
 
 # @jit(nopython=True, cache=True)
-# def return_deltaG_IG(dH, T1, T2, dS):
-#     return dH - (T2 - T1) * dS
-def return_deltaG_IG(dS, T1, T2, P1, P2):
-    # return dH - T * dS
-    return -dS + R_IG * (T2 - T1) * np.log(P2 / P1)
+def return_deltaG_IG(dH, T, dS):
+    return dH - T * dS
 
 
 # @jit(nopython=True, cache=True)
-# def return_deltaU_IG(dG, T1, T2, dS):
-#     # return dG + T1 * dS
-#     # return dG + (T2 - T1) * dS
-#     return dG - R_IG*(T2-T1)
 def return_deltaU_IG(dH, T1, T2):
     return dH - (T2 - T1) * R_IG
 
 
 # @jit(nopython=True, cache=True)
-def return_deltaA_IG(dU, T1, T2, dS):
-    # return dU - T1 * dS
-    return dU - (T2 - T1) * dS
+def return_deltaA_IG(dU, T, dS):
+    return dU - T * dS
 
 
 # @jit(nopython=True, cache=True)
@@ -133,13 +125,9 @@ def return_IdealGasProperties(Tref, T, Pref, P, a0, a1, a2, a3, a4, Tmin, Tmax):
     Cp_IG = Cp_IG.Cp
     dH_IG = return_deltaH_IG(Tref, T, a0, a1, a2, a3, a4)
     dS_IG = return_deltaS_IG(Tref, T, Pref, P, a0, a1, a2, a3, a4)
-    # dG_IG = return_deltaG_IG(dH_IG, T, dS_IG)
-    # dU_IG = return_deltaU_IG(dG_IG, T, dS_IG)
-    # dA_IG = return_deltaA_IG(dU_IG, T, dS_IG)
-
-    dG_IG = return_deltaG_IG(dS_IG, Tref, T, Pref, P)
+    dG_IG = return_deltaG_IG(dH_IG, T, dS_IG)
     dU_IG = return_deltaU_IG(dH_IG, Tref, T)
-    dA_IG = return_deltaA_IG(dU_IG, Tref, T, dS_IG)
+    dA_IG = return_deltaA_IG(dU_IG, T, dS_IG)
 
     dict_ans = {
         "Cp_IG": Cp_IG,

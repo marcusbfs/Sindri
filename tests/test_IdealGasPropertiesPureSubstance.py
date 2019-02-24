@@ -11,12 +11,20 @@ from TPCAE.IdealGasPropertiesPureSubstance import (
 )
 from pytest import approx
 from tests.db_compound import methane
+from TPCAE.units import conv_unit
 
 a0 = methane["a0"]
 a1 = methane["a1"]
 a2 = methane["a2"]
 a3 = methane["a3"]
 a4 = methane["a4"]
+
+T1 = 100
+T2 = 150
+Tref = 300
+Pref = 1
+P1 = conv_unit(1, "bar", "Pa")
+P2 = conv_unit(1, "bar", "Pa")
 
 
 def test_if_state_dict_exists():
@@ -68,21 +76,18 @@ def test_return_deltaG_IG():
 
 def test_return_deltaU_IG():
     dH_IG = return_deltaH_IG(300, 340, a0, a1, a2, a3, a4)
-    dS_IG = return_deltaS_IG(300, 340, 1, 2, a0, a1, a2, a3, a4)
-    dG_IG = return_deltaG_IG(dH_IG, 340, dS_IG)
-    dU_IG = return_deltaU_IG(dG_IG, 340, dS_IG)
+    dU_IG = return_deltaU_IG(dH_IG, 300, 340)
     print(dU_IG)
-    assert approx(dU_IG, 1e-5) == 1467.8392601
+    assert approx(dU_IG, 1e-5) == 1135.26077314
 
 
 def test_return_deltaA_IG():
     dH_IG = return_deltaH_IG(300, 340, a0, a1, a2, a3, a4)
     dS_IG = return_deltaS_IG(300, 340, 1, 2, a0, a1, a2, a3, a4)
-    dG_IG = return_deltaG_IG(dH_IG, 340, dS_IG)
-    dU_IG = return_deltaU_IG(dG_IG, 340, dS_IG)
+    dU_IG = return_deltaU_IG(dH_IG, 300, 340)
     dA_IG = return_deltaA_IG(dU_IG, 340, dS_IG)
     print(dA_IG)
-    assert approx(dA_IG, 1e-5) == 1866.46441
+    assert approx(dA_IG, 1e-5) == 1533.87095535
 
 
 def test_abs_err_zero_value():

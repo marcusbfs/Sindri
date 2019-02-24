@@ -1,5 +1,5 @@
 import numpy as np
-from vapor_pressure import leeKeslerVP
+from vapor_pressure import ambroseWaltonVP
 from units import conv_unit
 import matplotlib.pyplot as plt
 from scipy import interpolate
@@ -208,7 +208,7 @@ def gen_data(compound, Ti_f, _Pref, _Tref, points, isotherms=[]):
         raise TypeError("Temperature parameter must be an array of len 2")
 
     def helper_P_guess(_T):
-        fh = lambda x: leeKeslerVP(
+        fh = lambda x: ambroseWaltonVP(
             conv_unit(compound.compound["Pc_bar"], "bar", "Pa"),
             x / compound.compound["Tc_K"],
             compound.compound["omega"],

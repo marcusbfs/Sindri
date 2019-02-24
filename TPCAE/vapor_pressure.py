@@ -7,7 +7,6 @@ from numba import jit
 def leeKeslerVP(Pc, Tr, omega):
     """ Lee-Kesler correlation for estimating the vapor pressure.
 
-
     Parameters
     ----------
     Pc : float
@@ -26,6 +25,49 @@ def leeKeslerVP(Pc, Tr, omega):
     f0 = 5.92714 - 6.09648 / Tr - 1.28862 * np.log(Tr) + 0.169347 * Tr ** 6
     f1 = 15.2518 - 15.6878 / Tr - 13.4721 * np.log(Tr) + 0.43677 * Tr ** 6
     Pvpr = np.exp(f0 + omega * f1)
+    Pvp = Pvpr * Pc
+    return Pvp
+
+
+@jit(nopython=True, cache=True)
+def ambroseWaltonVP(Pc, Tr, omega):
+    """ Ambrose-Walton (1989) correlation for estimating the vapor pressure.
+
+    Parameters
+    ----------
+    Pc : float
+        Critical pressure, in Pascal.
+    Tr : float
+        Reduced temperature, adimensional.
+    omega : float
+        Acentric factor, adimensinoal.
+
+    Returns
+    -------
+    Pvp : float
+        The estimated vapor pressure at T = Tc * Tr. The pressure is given in Pascal.
+
+    """
+    tau = 1.0 - Tr
+    f0 = (
+        -5.97616 * tau
+        + 1.29874 * tau ** 1.5
+        - 0.60394 * tau ** 2.5
+        - 1.06841 * tau ** 5
+    ) / Tr
+    f1 = (
+        -5.03365 * tau
+        + 1.11505 * tau ** 1.5
+        - 5.41217 * tau ** 2.5
+        - 7.46628 * tau ** 5
+    ) / Tr
+    f2 = (
+        -0.64771 * tau
+        + 2.41539 * tau ** 1.5
+        - 4.26979 * tau ** 2.5
+        - 3.25259 * tau ** 5
+    ) / Tr
+    Pvpr = np.exp(f0 + omega * f1 + f2 * omega ** 2)
     Pvp = Pvpr * Pc
     return Pvp
 
