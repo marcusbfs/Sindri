@@ -1,10 +1,10 @@
 import numpy as np
-from TPCAE.eos import EOS
+from TPCAE.PureSubstance import PureSubstance
 from tests.db_compound import methane
 from pytest import approx
 
 eos_name = "peng_and_robinson_1976"
-m = EOS(methane["Name"], methane["Formula"], eos_name)
+m = PureSubstance(methane["Name"], methane["Formula"], eos_name)
 
 
 def test_return_P_given_VT_large_number():

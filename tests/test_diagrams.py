@@ -1,9 +1,9 @@
 import pytest
 
 from TPCAE.diagrams import *
-from TPCAE.eos import EOS
+from TPCAE.PureSubstance import PureSubstance
 
-c = EOS("Methane", "CH4", "peng_and_robinson_1976")
+c = PureSubstance("Methane", "CH4", "peng_and_robinson_1976")
 points = 50
 Tfp = c.compound["Tfp_K"]
 Tc = c.compound["Tc_K"]
@@ -30,7 +30,7 @@ def test_plot_diagram_paramaters():
 
 def test_gen_data():
 
-    c = EOS("Water", "H2O", "peng_and_robinson_1976")
+    c = PureSubstance("Water", "H2O", "peng_and_robinson_1976")
     points = 30
     Tfp = c.compound["Tfp_K"]
     # Tfp = 550
@@ -40,7 +40,7 @@ def test_gen_data():
 
 def test_gen_data_with_isotherms():
 
-    c = EOS("Methane", "CH4", "peng_and_robinson_1976")
+    c = PureSubstance("Methane", "CH4", "peng_and_robinson_1976")
     points = 50
     Tfp = c.compound["Tfp_K"]
     Tc = c.compound["Tc_K"]

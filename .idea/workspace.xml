@@ -2,8 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="added some EOS, organized units code">
+      <change afterPath="$PROJECT_DIR$/TPCAE/PureSubstance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/eos.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/eos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/polyEqSolver.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/polyEqSolver.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/units.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/units.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_diagrams.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_diagrams.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_eos.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_PureSubstance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_polyEqSolver.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_polyEqSolver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_reports.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_reports.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,10 +22,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
+        <entry file="file://$PROJECT_DIR$/TPCAE/PureSubstance.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="541">
-              <caret line="913" column="7" selection-start-line="913" selection-start-column="7" selection-end-line="913" selection-end-column="7" />
+            <state relative-caret-position="219">
+              <caret line="43" column="31" lean-forward="true" selection-start-line="43" selection-start-column="31" selection-end-line="43" selection-end-column="31" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -25,13 +33,46 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/polyEqSolver.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-136">
+              <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="40" lean-forward="true" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2805">
-              <caret line="288" column="32" selection-start-line="288" selection-start-column="32" selection-end-line="288" selection-end-column="32" />
+            <state relative-caret-position="119">
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TPCAE/vapor_pressure.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-136">
+              <caret line="31" column="11" lean-forward="true" selection-start-line="31" selection-start-column="11" selection-end-line="31" selection-end-column="11" />
               <folding>
-                <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#0#34#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -68,7 +109,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/TPCAE/db_substanceProperties.py" />
         <option value="$PROJECT_DIR$/TPCAE/db.py" />
         <option value="$PROJECT_DIR$/TPCAE/db_addSubstanceProperties.py" />
         <option value="$PROJECT_DIR$/TPCAE/__init__.py" />
@@ -102,9 +142,7 @@
         <option value="$PROJECT_DIR$/tests/test_reports.py" />
         <option value="$PROJECT_DIR$/tests/test_units.py" />
         <option value="$PROJECT_DIR$/TPCAE/td.py" />
-        <option value="$PROJECT_DIR$/tests/test_polyEqSolver.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/TPCAE/polyEqSolver.py" />
         <option value="$PROJECT_DIR$/tests/test_eos.py" />
         <option value="$PROJECT_DIR$/TPCAE/diagrams.py" />
         <option value="$PROJECT_DIR$/TPCAE/vapor_pressure.py" />
@@ -115,10 +153,13 @@
         <option value="$PROJECT_DIR$/TPCAE/reports.py" />
         <option value="$PROJECT_DIR$/TPCAE/pureSubstanceDiagramsWindow.py" />
         <option value="$PROJECT_DIR$/TPCAE/units_options_windows.py" />
-        <option value="$PROJECT_DIR$/TPCAE/units.py" />
         <option value="$PROJECT_DIR$/TPCAE/unitsOptionsWindow.py" />
+        <option value="$PROJECT_DIR$/TPCAE/units.py" />
         <option value="$PROJECT_DIR$/TPCAE/eos.py" />
         <option value="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" />
+        <option value="$PROJECT_DIR$/tests/test_polyEqSolver.py" />
+        <option value="$PROJECT_DIR$/TPCAE/polyEqSolver.py" />
+        <option value="$PROJECT_DIR$/TPCAE/PureSubstance.py" />
       </list>
     </option>
   </component>
@@ -153,12 +194,6 @@
               <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
               <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
               <item name="TPCAE" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="TPCAE" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
@@ -203,7 +238,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest in tests">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="software" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -255,7 +290,7 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest in test_diagrams.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest in test_polyEqSolver.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="software" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -266,7 +301,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_diagrams.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_polyEqSolver.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
@@ -287,18 +322,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.main" />
-      <item itemvalue="Python tests.pytest in test_diagrams.py" />
       <item itemvalue="Python tests.pytest for test_diagrams.test_gen_data_with_isotherms" />
       <item itemvalue="Python tests.pytest in tests" />
       <item itemvalue="Python tests.pytest in test_IdealGasPropertiesPureSubstance.py" />
+      <item itemvalue="Python tests.pytest in test_polyEqSolver.py" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.pytest in tests" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python tests.pytest in tests" />
+        <item itemvalue="Python tests.pytest in test_polyEqSolver.py" />
         <item itemvalue="Python tests.pytest in test_IdealGasPropertiesPureSubstance.py" />
         <item itemvalue="Python tests.pytest for test_diagrams.test_gen_data_with_isotherms" />
-        <item itemvalue="Python tests.pytest in test_diagrams.py" />
       </list>
     </recent_temporary>
   </component>
@@ -338,34 +373,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_in_tests - 2019.02.23 at 21h 54m 15s.xml">
+    <history-entry file="pytest_in_tests - 2019.02.25 at 11h 04m 45s.xml">
       <configuration name="pytest in tests" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_IdealGasPropertiesPureSubstance_py - 2019.02.23 at 22h 20m 42s.xml">
-      <configuration name="pytest in test_IdealGasPropertiesPureSubstance.py" configurationId="tests" />
+    <history-entry file="pytest_in_test_polyEqSolver_py - 2019.02.25 at 11h 49m 36s.xml">
+      <configuration name="pytest in test_polyEqSolver.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_IdealGasPropertiesPureSubstance_py - 2019.02.23 at 22h 21m 08s.xml">
-      <configuration name="pytest in test_IdealGasPropertiesPureSubstance.py" configurationId="tests" />
+    <history-entry file="pytest_in_test_polyEqSolver_py - 2019.02.25 at 11h 50m 07s.xml">
+      <configuration name="pytest in test_polyEqSolver.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_IdealGasPropertiesPureSubstance_py - 2019.02.23 at 22h 22m 20s.xml">
-      <configuration name="pytest in test_IdealGasPropertiesPureSubstance.py" configurationId="tests" />
+    <history-entry file="pytest_in_test_polyEqSolver_py - 2019.02.25 at 11h 51m 32s.xml">
+      <configuration name="pytest in test_polyEqSolver.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_IdealGasPropertiesPureSubstance_py - 2019.02.23 at 22h 22m 49s.xml">
-      <configuration name="pytest in test_IdealGasPropertiesPureSubstance.py" configurationId="tests" />
+    <history-entry file="pytest_in_test_polyEqSolver_py - 2019.02.25 at 12h 09m 40s.xml">
+      <configuration name="pytest in test_polyEqSolver.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.23 at 22h 23m 10s.xml">
+    <history-entry file="pytest_in_test_polyEqSolver_py - 2019.02.25 at 12h 10m 03s.xml">
+      <configuration name="pytest in test_polyEqSolver.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_in_tests - 2019.02.25 at 12h 11m 00s.xml">
       <configuration name="pytest in tests" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.24 at 13h 25m 52s.xml">
+    <history-entry file="pytest_in_tests - 2019.02.25 at 12h 46m 41s.xml">
       <configuration name="pytest in tests" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.24 at 23h 25m 41s.xml">
+    <history-entry file="pytest_in_tests - 2019.02.25 at 12h 47m 10s.xml">
       <configuration name="pytest in tests" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.25 at 09h 13m 00s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.25 at 09h 13m 25s.xml">
+    <history-entry file="pytest_in_tests - 2019.02.25 at 12h 53m 27s.xml">
       <configuration name="pytest in tests" configurationId="tests" />
     </history-entry>
   </component>
@@ -380,14 +415,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.17755532" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.17755532" />
       <window_info id="Structure" order="1" sideWeight="0.1953125" side_tool="true" weight="0.17755532" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49789253" weight="0.3287234" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.45047417" visible="true" weight="0.31914893" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.45047417" weight="0.31914893" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49841937" weight="0.32553193" />
@@ -424,13 +458,6 @@
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TPCAE/ui/pure_substance_calculations_ui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/ui/mainwindow_ui.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-64" />
@@ -554,27 +581,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_polyEqSolver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="45" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/db_compound.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/polyEqSolver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-105">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
@@ -589,16 +599,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="12" selection-start-column="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/vapor_pressure.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="53" column="22" lean-forward="true" selection-start-line="53" selection-start-column="22" selection-end-line="53" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -622,7 +622,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_eos.py">
+    <entry file="file://$PROJECT_DIR$/tests/test_PureSubstance.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_IdealGasPropertiesPureSubstance.py">
@@ -685,13 +685,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/units.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="83" selection-start-line="83" selection-end-line="83" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/unitsOptionsWindow.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
@@ -702,22 +695,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
+    <entry file="file://$PROJECT_DIR$/TPCAE/PureSubstance.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="541">
-          <caret line="913" column="7" selection-start-line="913" selection-start-column="7" selection-end-line="913" selection-end-column="7" />
+        <state relative-caret-position="219">
+          <caret line="43" column="31" lean-forward="true" selection-start-line="43" selection-start-column="31" selection-end-line="43" selection-end-column="31" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="40" lean-forward="true" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_polyEqSolver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/polyEqSolver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-136">
+          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/units.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2805">
-          <caret line="288" column="32" selection-start-line="288" selection-start-column="32" selection-end-line="288" selection-end-column="32" />
+        <state relative-caret-position="119">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/vapor_pressure.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-136">
+          <caret line="31" column="11" lean-forward="true" selection-start-line="31" selection-start-column="11" selection-end-line="31" selection-end-column="11" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#34#0" expanded="true" />
           </folding>
         </state>
       </provider>

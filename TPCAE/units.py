@@ -2,6 +2,7 @@ pressure_dict = {
     "bar": 1e5,
     "Pa": 1,
     "kPa": 1000,
+    "MPa": 1e6,
     "atm": 101235.0,
     "psi": 6894.7572931783,
 }
@@ -28,8 +29,6 @@ temperature_dict_from_K = {
 }
 
 # derivative units
-
-
 def cbu(n, a, b):
     if a in pressure_dict and b in pressure_dict:
         ans = n * pressure_dict[a] / pressure_dict[b]

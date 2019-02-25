@@ -1,14 +1,17 @@
 import os
+
 from PySide2 import QtCore, QtWidgets
+
+import PureSubstance
 import db
 import db_utils
 import eos
 import reports
 import units
 import utils
+from pureSubstanceDiagramsWindow import Window_PureSubstanceDiagrams
 from ui.pure_substance_calculations_ui import Ui_PureSubstanceCalculationsWindow
 from units import conv_unit
-from pureSubstanceDiagramsWindow import Window_PureSubstanceDiagrams
 from unitsOptionsWindow import Window_UnitsOptions
 
 
@@ -137,7 +140,7 @@ class Window_PureSubstanceCalculations(
             self.plainTextEdit_log.clear()
 
             try:  # to initialize EOS
-                self.c = eos.EOS(
+                self.c = PureSubstance.PureSubstance(
                     self.compound["Name"],
                     self.compound["Formula"],
                     eos.eos_options[self.eosname],
@@ -229,7 +232,7 @@ class Window_PureSubstanceCalculations(
             _gt = 1e4
 
             try:  # to initialize EOS
-                self.c = eos.EOS(
+                self.c = PureSubstance.PureSubstance(
                     self.compound["Name"],
                     self.compound["Formula"],
                     eos.eos_options[self.eosname],

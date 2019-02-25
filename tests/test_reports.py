@@ -1,8 +1,8 @@
 from TPCAE.reports import *
 
-from TPCAE.eos import EOS
+from TPCAE.PureSubstance import PureSubstance
 
-c = EOS("Water", "H2O", "peng_and_robinson_1976")
+c = PureSubstance("Water", "H2O", "peng_and_robinson_1976")
 
 
 propvl = c.all_calculations_at_P_T(0.0300720815 * 1e5, 300, 1e5, 273.16)
