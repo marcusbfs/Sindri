@@ -4,6 +4,7 @@ import numpy as np
 import sympy as sp
 from scipy.integrate import quad
 from scipy import LowLevelCallable
+from numba import njit, jit, cfunc, types, carray
 
 from constants import R_IG
 from db_utils import get_compound_properties
@@ -11,7 +12,6 @@ from polyEqSolver import solve_cubic
 import IdealGasPropertiesPureSubstance as IGPROP
 from vapor_pressure import ambroseWaltonVP, antoineVP, leeKeslerVP
 from units import conv_unit
-from numba import njit, jit, cfunc, types, carray
 
 eos_options = {
     "van der Waals (1890)": "van_der_waals_1890",
@@ -19,12 +19,10 @@ eos_options = {
     "Wilson (1964)": "wilson_1964",
     "Soave (1972)": "soave_1972",
     "Peng and Robinson (1976)": "peng_and_robinson_1976",
-    # "Fuller (1976)": "fuller_1976",
     "Schmidt and Wenzel (1979)": "schmidt_and_wenzel_1979",
     "Péneloux, et al. (1982)": "peneloux_et_al_1982",
     "Patel and Teja (1982)": "patel_and_teja_1982",
     "Adachi, et al. (1983)": "adachi_et_al_1983",
-    # "Mathias and Copeman (1983)": "mathias_and_copeman_1983",
     "Soave (1984)": "soave_1984",
     "Adachi, et al. (1985)": "adachi_et_al_1985",
     "Twu, et al. (1995)": "twu_et_al_1995",
@@ -80,6 +78,7 @@ class EOS:
         self.Pc_RTc = self.Pc / (R_IG * self.Tc)
 
         self.initialize()
+        self.initialize_functions()
 
         self.eos_options = eos_options
 
@@ -148,20 +147,6 @@ class EOS:
                 * (1.0 - self.Tr ** 0.5)
             ) ** 2
             self.theta = self.a * self.alpha
-
-        # elif self.eos == "fuller_1976":
-        #     beta = self.b / self.V
-        #     c = (sp.sqrt(1 / beta - 3 / 4) - 3 / 2) / beta
-        #     omegab = beta * ((1 - beta) * (2 + c * beta) - (1 + c * beta)) / ((2 + c * beta) * (1 - beta) ** 2)
-        #     omegaa = omegab * (1 + c * beta) ** 2 / (beta * (1 - beta) ** 2 * (2 + c * beta))
-        #     self.b = omegab * R_IG * self.Tc / self.Pc
-        #     self.a = omegaa * R_IG ** 2 * self.Tc / self.Pc
-        #     m = .48 + 1.574 * self.omega - .176 * self.omega ** 2
-        #     q = m * (beta / .26) ** .25
-        #     self.alpha = (1 + q * (1 - self.Tr ** .5)) ** 2
-        #     self.delta = c * self.b
-        #     self.epsilon = 0
-        #     self.theta = self.a * self.alpha
 
         elif self.eos == "schmidt_and_wenzel_1979":
 
@@ -272,18 +257,6 @@ class EOS:
             ) ** 2
             self.theta = self.a * self.alpha
 
-        # elif self.eos == "mathias_and_copeman_1983":
-        #     self.a = .42748 * (R_IG * self.Tc) ** 2 / self.Pc
-        #     self.b = .08664 / self.Pc_RTc
-        #     self.delta = self.b
-        #     self.epsilon = 0.
-        #     c1 = 0.5178 + 1.6054 * self.omega - .1094 * self.omega ** 2
-        #     c2 = .3279 - .4291 * self.omega
-        #     c3 = .4866 + 1.3506 * self.omega
-        #     self.alpha = (1 + c1 * (1 - self.Tr ** .5) + c2 * (1 - self.Tr ** .5) ** 2 + c3 * (
-        #             1 - self.Tr ** 2) ** 3) ** 2
-        #     self.theta = self.a * self.alpha
-
         elif self.eos == "soave_1984":
             self.a = 0.42188 * (R_IG * self.Tc) ** 2 / self.Pc
             self.b = 0.08333 / self.Pc_RTc
@@ -386,6 +359,8 @@ class EOS:
             self.alpha = alpha0 + self.omega * (alpha1 - alpha0)
             self.theta = self.a * self.alpha
 
+    def initialize_functions(self):
+
         self.b = np.real(self.b)
         self.delta = np.real(self.delta)
         self.epsilon = np.real(self.epsilon)
@@ -410,9 +385,6 @@ class EOS:
                 [self.V, self.T], self.Z_V_T * self.T * R_IG / self.V, modules="numpy"
             )
         )
-        # self.numf_integratePvp = njit()(
-        #     sp.lambdify([self.V, self.T], (1 - self.Z_V_T) / self.V, modules="numpy")
-        # )
 
         # this ain't pretty but hey, it works fast!
         self.tmp_cfunc = None
@@ -431,7 +403,6 @@ class EOS:
             lambda hv, hz, _T: hz
             - 1.0
             - np.log(hz)
-            # - quad(self.numf_integratePvp, hv, np.inf, args=(_T,))[0]
             - quad(self.qnf, hv, np.inf, args=(_T,))[0]
         )
 
@@ -444,14 +415,6 @@ class EOS:
         )
         tf = cfunc(c_sig)(self.tmp_cfunc2)
         self.numf_UR = LowLevelCallable(tf.ctypes)
-
-        # self.numf_UR = njit()(
-        #     sp.lambdify(
-        #         [self.V, self.T],
-        #         self.T * sp.diff(self.Z_V_T, self.T) / self.V,
-        #         modules="numpy",
-        #     )
-        # )
 
     def return_Z_V_T(self):
         """
@@ -467,34 +430,6 @@ class EOS:
             self.Z_V_T = self.V / (self.V - self.b) - (
                 self.theta / (R_IG * self.T)
             ) * self.V / (self.V ** 2 + self.delta * self.V + self.epsilon)
-
-    # def return_Z_P_T(self):
-    #     """
-    #     Creates a cubic equation in Z.
-    #
-    #     Returns
-    #     -------
-    #     self.Z_P_T : sympy symbolic expression.
-    #
-    #     """
-    #     if self.Z_P_T is None:
-    #         self.eos_eq = (
-    #             self.Z ** 3
-    #             + (self.deltal - self.Bl - 1) * self.Z ** 2
-    #             + self.Z * (self.thetal + self.epsilonl - self.deltal * (self.Bl + 1))
-    #             - (self.epsilonl * (self.Bl + 1) + self.Bl * self.thetal)
-    #         )
-    #         self.eos_eq = self.eos_eq.subs(self.Bl, self.b * self.P / (R_IG * self.T))
-    #         self.eos_eq = self.eos_eq.subs(
-    #             self.deltal, self.delta * self.P / (R_IG * self.T)
-    #         )
-    #         self.eos_eq = self.eos_eq.subs(
-    #             self.thetal, self.theta * self.P / (R_IG * self.T) ** 2
-    #         )
-    #         self.Z_P_T = self.eos_eq.subs(
-    #             self.epsilonl, self.epsilon * (self.P / (R_IG * self.T)) ** 2
-    #         )
-    #     return self.Z_P_T
 
     def return_Z_given_PT(self, _P, _T):
         """ Return the positive roots (Z) of the cubic equation.
@@ -944,3 +879,4 @@ class EOS:
         """
         self.eos = new_eos.lower()
         self.initialize()
+        self.initialize_functions()

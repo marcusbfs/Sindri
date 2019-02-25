@@ -286,6 +286,8 @@ class Window_PureSubstanceCalculations(
             txt_file_name = QtWidgets.QFileDialog.getSaveFileName(
                 self, "Save file", name_suggestion, "Text files (*.txt)"
             )[0]
+            if not txt_file_name:
+                return 0
             file_content = self.info + self.report + "\n--- LOG ---\n" + self.log
             try:
                 with open(txt_file_name, "w") as f:

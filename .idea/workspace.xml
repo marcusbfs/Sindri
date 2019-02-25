@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="added some EOS, organized units code">
-      <change afterPath="$PROJECT_DIR$/TPCAE/unitsOptionsWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/eos.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/eos.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/pureSubstanceDiagramsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/pureSubstanceDiagramsWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/ui/db_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/ui/db_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/ui/pure_substance_calculations_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/ui/pure_substance_calculations_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/ui/pure_substance_diagrams.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/units.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/units.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/designer/db_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/db_ui.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/designer/pure_substance_calculations_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/pure_substance_calculations_ui.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/designer/pure_substance_diagrams.ui" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,8 +16,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="697">
-              <caret line="580" column="11" selection-start-line="580" selection-start-column="11" selection-end-line="580" selection-end-column="11" />
+            <state relative-caret-position="541">
+              <caret line="913" column="7" selection-start-line="913" selection-start-column="7" selection-end-line="913" selection-end-column="7" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -37,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="161" column="43" selection-start-line="161" selection-start-column="43" selection-end-line="161" selection-end-column="43" />
+            <state relative-caret-position="2805">
+              <caret line="288" column="32" selection-start-line="288" selection-start-column="32" selection-end-line="288" selection-end-column="32" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -121,12 +112,12 @@
         <option value="$PROJECT_DIR$/tests/test_diagrams.py" />
         <option value="$PROJECT_DIR$/tests/test_IdealGasPropertiesPureSubstance.py" />
         <option value="$PROJECT_DIR$/TPCAE/IdealGasPropertiesPureSubstance.py" />
-        <option value="$PROJECT_DIR$/TPCAE/eos.py" />
         <option value="$PROJECT_DIR$/TPCAE/reports.py" />
         <option value="$PROJECT_DIR$/TPCAE/pureSubstanceDiagramsWindow.py" />
         <option value="$PROJECT_DIR$/TPCAE/units_options_windows.py" />
         <option value="$PROJECT_DIR$/TPCAE/units.py" />
         <option value="$PROJECT_DIR$/TPCAE/unitsOptionsWindow.py" />
+        <option value="$PROJECT_DIR$/TPCAE/eos.py" />
         <option value="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" />
       </list>
     </option>
@@ -347,12 +338,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_in_tests - 2019.02.23 at 14h 32m 31s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_tests - 2019.02.23 at 21h 44m 06s.xml">
-      <configuration name="pytest in tests" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_in_tests - 2019.02.23 at 21h 54m 15s.xml">
       <configuration name="pytest in tests" configurationId="tests" />
     </history-entry>
@@ -377,6 +362,12 @@
     <history-entry file="pytest_in_tests - 2019.02.24 at 23h 25m 41s.xml">
       <configuration name="pytest in tests" configurationId="tests" />
     </history-entry>
+    <history-entry file="pytest_in_tests - 2019.02.25 at 09h 13m 00s.xml">
+      <configuration name="pytest in tests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_in_tests - 2019.02.25 at 09h 13m 25s.xml">
+      <configuration name="pytest in tests" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -389,19 +380,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.17755532" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.17755532" />
       <window_info id="Structure" order="1" sideWeight="0.1953125" side_tool="true" weight="0.17755532" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49841937" weight="0.3287234" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.45100105" weight="0.31914893" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49789253" weight="0.3287234" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.45047417" visible="true" weight="0.31914893" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49841937" weight="0.32553193" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4963119" weight="0.3287234" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4731296" weight="0.34042552" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.54899895" side_tool="true" visible="true" weight="0.31914893" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5495258" side_tool="true" visible="true" weight="0.31914893" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4915701" weight="0.32553193" />
       <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.48998946" weight="0.39787233" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -533,11 +525,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/ui/pure_substance_diagrams.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-255" />
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/ui/pure_substance_diagrams.py" />
     <entry file="file://$PROJECT_DIR$/tests/test_units.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="984">
@@ -704,16 +692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
-          <caret line="580" column="11" selection-start-line="580" selection-start-column="11" selection-end-line="580" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/unitsOptionsWindow.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
@@ -724,10 +702,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="541">
+          <caret line="913" column="7" selection-start-line="913" selection-start-column="7" selection-end-line="913" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="161" column="43" selection-start-line="161" selection-start-column="43" selection-end-line="161" selection-end-column="43" />
+        <state relative-caret-position="2805">
+          <caret line="288" column="32" selection-start-line="288" selection-start-column="32" selection-end-line="288" selection-end-column="32" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
