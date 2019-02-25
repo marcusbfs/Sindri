@@ -1,7 +1,5 @@
 import os
-
 from PySide2 import QtCore, QtWidgets
-
 import db
 import db_utils
 import eos
@@ -11,6 +9,7 @@ import utils
 from ui.pure_substance_calculations_ui import Ui_PureSubstanceCalculationsWindow
 from units import conv_unit
 from pureSubstanceDiagramsWindow import Window_PureSubstanceDiagrams
+from unitsOptionsWindow import Window_UnitsOptions
 
 
 class Window_PureSubstanceCalculations(
@@ -24,6 +23,7 @@ class Window_PureSubstanceCalculations(
         self.btn_calculate.clicked.connect(self.calculatePureSubstance)
         self.btn_diagrams.clicked.connect(self.open_diagrams)
         self.btn_savetxt.clicked.connect(self.save_to_txt)
+        self.btn_units.clicked.connect(self.open_units_options)
 
         self.sname = " "
         self.eosname = " "
@@ -36,11 +36,11 @@ class Window_PureSubstanceCalculations(
 
         # results header
         self.ResultsColumnsLabels = ["Liquid", "Vapor"]
-        # self.ResultsRowsLabels = ["Z", "V", "Density", "Vap. P (EOS)", "Vap. P (Ambrose-Walton)", "Vap. P (Lee-Kesler)",
-        #                           "Vap. P (Antoine)", "Cp", "H", "S", "G", "U", "A",
-        #                            "IG H", "IG S", "IG G", "IG U", "IG A", "Fugacity"]
         self.tableWidget_results.setColumnCount(2)
         self.tableWidget_results.setHorizontalHeaderLabels(self.ResultsColumnsLabels)
+        h_header = self.tableWidget_results.horizontalHeader()
+        h_header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+        h_header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
 
         # tablewidget -> database
         self.tableWidget_searchSubstance.itemSelectionChanged.connect(
@@ -143,20 +143,28 @@ class Window_PureSubstanceCalculations(
                     eos.eos_options[self.eosname],
                 )
                 self.info = ""
-                self.info += "compound: {:s} ({:s})\n".format(
+                self.info += "Compound: {:s} ({:s})\n".format(
                     self.c.compound["Name"], self.c.compound["Formula"]
                 )
 
-                self.info += "equation of state: {0:s}\n".format(
+                self.info += "Equation of state: {0:s}\n".format(
                     self.listWidget_eos_options.currentItem().text()
                 )
-                self.info += "process state: {:.3f} K, {:s} bar\n".format(
-                    self.T,
-                    utils.f2str(conv_unit(self.P, "Pa", "bar"), 3, lt=1e-2, gt=1e4),
+                self.info += "Process state: {0:.3f} {1:s}, {2:s} {3:s}\n".format(
+                    conv_unit(self.T, "K", self.units["T"]),
+                    self.units["T"],
+                    utils.f2str(
+                        conv_unit(self.P, "Pa", self.units["P"]), 3, lt=1e-2, gt=1e4
+                    ),
+                    self.units["P"],
                 )
-                self.info += "reference state: {:.3f} K, {:s} bar\n".format(
-                    self.Tref,
-                    utils.f2str(conv_unit(self.Pref, "Pa", "bar"), 3, lt=1e-2, gt=1e4),
+                self.info += "Reference state: {0:.3f} {1:s}, {2:s} {3:s}".format(
+                    conv_unit(self.Tref, "K", self.units["T"]),
+                    self.units["T"],
+                    utils.f2str(
+                        conv_unit(self.Pref, "Pa", self.units["P"]), 3, lt=1e-2, gt=1e4
+                    ),
+                    self.units["P"],
                 )
                 self.plainTextEdit_information.appendPlainText(self.info)
             except Exception as e:
@@ -172,7 +180,7 @@ class Window_PureSubstanceCalculations(
                     self.P, self.T, self.Pref, self.Tref
                 )
                 self.plainTextEdit_information.appendPlainText(
-                    "state: " + self.props.state
+                    "State: " + self.props.state
                 )
 
             except Exception as e:
@@ -187,12 +195,12 @@ class Window_PureSubstanceCalculations(
                 )
                 for i in range(len(rowlabels)):
                     self.tableWidget_results.insertRow(i)
-                    self.tableWidget_results.setItem(
-                        i, 0, QtWidgets.QTableWidgetItem(liq[i])
-                    )
-                    self.tableWidget_results.setItem(
-                        i, 1, QtWidgets.QTableWidgetItem(vap[i])
-                    )
+                    liqitem = QtWidgets.QTableWidgetItem(liq[i])
+                    vapitem = QtWidgets.QTableWidgetItem(vap[i])
+                    liqitem.setTextAlignment(QtCore.Qt.AlignRight)
+                    vapitem.setTextAlignment(QtCore.Qt.AlignRight)
+                    self.tableWidget_results.setItem(i, 0, liqitem)
+                    self.tableWidget_results.setItem(i, 1, vapitem)
                 self.tableWidget_results.setVerticalHeaderLabels(rowlabels)
 
             except Exception as e:
@@ -262,43 +270,14 @@ class Window_PureSubstanceCalculations(
             return
 
     @QtCore.Slot()
-    def eos_selected(self):
-        self.eosname = self.listWidget_eos_options.currentItem().text()
+    def open_units_options(self):
+        self.unitsOptionsWindow = Window_UnitsOptions()
+        self.unitsOptionsWindow.return_units_dict.connect(self.set_units_dict)
+        self.unitsOptionsWindow.show()
 
     @QtCore.Slot()
-    def substance_selected(self):
-        current_row = self.tableWidget_searchSubstance.currentRow()
-        if current_row >= 0:
-            r = self.get_row_values(10)
-            self.compound = db_utils.get_compound_properties(r[1], r[0])
-            self.sname = self.compound["Name"] + " (" + self.compound["Formula"] + ")"
-
-    @QtCore.Slot()
-    def search_substance(self):
-        substance_string_name = str(self.le_searchSubstance.text())
-        if substance_string_name == "":
-            self.show_full_db()
-        else:
-            try:
-                # query = "SELECT * FROM database WHERE Name LIKE '%" + substance_string_name + "%'" + \
-                #         " OR Formula LIKE '%" + substance_string_name + "%'" + \
-                #         " OR `CAS #` LIKE '%" + substance_string_name + "%'"
-                query = (
-                    "SELECT * FROM database WHERE Name LIKE '"
-                    + substance_string_name
-                    + "%'"
-                    + " OR Formula LIKE '"
-                    + substance_string_name
-                    + "%'"
-                    + " OR `CAS #` LIKE '"
-                    + substance_string_name
-                    + "%'"
-                )
-                db.cursor.execute(query)
-                results = db.cursor.fetchall()
-                self.update_table_db(results)
-            except:
-                self.tableWidget_searchSubstance.setRowCount(0)
+    def set_units_dict(self, dictionary):
+        self.units = dictionary
 
     @QtCore.Slot()
     def save_to_txt(self):
@@ -369,6 +348,45 @@ class Window_PureSubstanceCalculations(
             row_values.append(item)
 
         return row_values
+
+    @QtCore.Slot()
+    def eos_selected(self):
+        self.eosname = self.listWidget_eos_options.currentItem().text()
+
+    @QtCore.Slot()
+    def substance_selected(self):
+        current_row = self.tableWidget_searchSubstance.currentRow()
+        if current_row >= 0:
+            r = self.get_row_values(10)
+            self.compound = db_utils.get_compound_properties(r[1], r[0])
+            self.sname = self.compound["Name"] + " (" + self.compound["Formula"] + ")"
+
+    @QtCore.Slot()
+    def search_substance(self):
+        substance_string_name = str(self.le_searchSubstance.text())
+        if substance_string_name == "":
+            self.show_full_db()
+        else:
+            try:
+                # query = "SELECT * FROM database WHERE Name LIKE '%" + substance_string_name + "%'" + \
+                #         " OR Formula LIKE '%" + substance_string_name + "%'" + \
+                #         " OR `CAS #` LIKE '%" + substance_string_name + "%'"
+                query = (
+                    "SELECT * FROM database WHERE Name LIKE '"
+                    + substance_string_name
+                    + "%'"
+                    + " OR Formula LIKE '"
+                    + substance_string_name
+                    + "%'"
+                    + " OR `CAS #` LIKE '"
+                    + substance_string_name
+                    + "%'"
+                )
+                db.cursor.execute(query)
+                results = db.cursor.fetchall()
+                self.update_table_db(results)
+            except:
+                self.tableWidget_searchSubstance.setRowCount(0)
 
     def clear_search(self):
         self.le_searchSubstance.clear()

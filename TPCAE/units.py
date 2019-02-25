@@ -27,12 +27,6 @@ temperature_dict_from_K = {
     "ºR": lambda K: K * 9 / 5,
 }
 
-temperature_options = list(temperature_dict_to_K.keys())
-pressure_options = list(pressure_dict.keys())
-volume_options = list(volume_dict.keys())
-mass_options = list(mass_dict.keys())
-mol_options = list(mol_dict.keys())
-
 # derivative units
 
 
@@ -82,6 +76,11 @@ energy_per_mol_temp_dict = {
 
 density_dict = {"kg/m3": 1, "g/cm3": cbu(1, "g", "kg") / cbu(1, "cm3", "m3")}
 
+temperature_options = list(temperature_dict_to_K.keys())
+pressure_options = list(pressure_dict.keys())
+volume_options = list(volume_dict.keys())
+mass_options = list(mass_dict.keys())
+mol_options = list(mol_dict.keys())
 density_options = list(density_dict.keys())
 molar_vol_options = list(molar_vol_dict.keys())
 energy_options = list(energy_dict.keys())

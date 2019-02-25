@@ -1,6 +1,6 @@
 import units
 from PySide2 import QtCore, QtWidgets
-from ui.pure_substance_diagrams import Ui_Form_PureSubstanceDiagrams
+from ui.pure_substance_diagrams_ui import Ui_Form_PureSubstanceDiagrams
 import diagrams
 
 
@@ -18,7 +18,7 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
         self.points = 30
         self.data_is_gen = False
         self.le_points.setText(str(self.points))
-        self.le_isotherms.setText("120 150 190")  # TODO remove this line after testing
+        # self.le_isotherms.setText("120 150 190")  # TODO remove this line after testing
 
         # connections
         self.le_Ti.textChanged.connect(self.changed_Trange)
