@@ -48,6 +48,8 @@ molar_vol_dict = {
     "m3/kmol": 1 / cbu(1, "kmol", "mol"),
     "cm3/mol": cbu(1, "cm3", "m3"),
     "cm3/kmol": cbu(1, "cm3", "m3") / cbu(1, "kmol", "mol"),
+    "ft3/mol": cbu(1, "ft3", "m3"),
+    "ft3/kmol": cbu(1, "ft3", "m3") / cbu(1, "kmol", "mol"),
 }
 
 energy_dict = {"J": 1, "kJ": 1000, "cal": 4.18401, "kcal": 4184.01, "BTU": 1055.06}

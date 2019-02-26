@@ -274,7 +274,7 @@ class Window_PureSubstanceCalculations(
 
     @QtCore.Slot()
     def open_units_options(self):
-        self.unitsOptionsWindow = Window_UnitsOptions()
+        self.unitsOptionsWindow = Window_UnitsOptions(self.units)
         self.unitsOptionsWindow.return_units_dict.connect(self.set_units_dict)
         self.unitsOptionsWindow.show()
 
