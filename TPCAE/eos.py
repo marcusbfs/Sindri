@@ -1,8 +1,12 @@
 import numpy as np
 import sympy as sp
+from numba import njit, cfunc, types
+from scipy import LowLevelCallable
+from scipy.integrate import quad
 
+import IdealGasPropertiesPureSubstance as IGPROP
 from constants import R_IG
-from db_utils import get_compound_properties
+from polyEqSolver import solve_cubic
 from units import conv_unit
 
 eos_options = {
@@ -28,7 +32,7 @@ class EOS:
     This class is used for calculations of a pure substance properties using a Cubic Equation of State.
     """
 
-    def __init__(self, name, formula, eos):
+    def __init__(self, compounds, y, k, eos):
         """ Initialize the EOS class.
 
         Parameters
@@ -43,9 +47,26 @@ class EOS:
 
         """
         # eos : str, cubic equation of state name.
+        self.compounds = compounds
+        self.n = len(self.compounds)  # number of compounds
+
+        self.Zcs = []
+        self.Vcs = []
+        self.Pcs = []
+        self.Tcs = []
+        self.omegas = []
+        for cmpnd in self.compounds:
+            self.Zcs.append(cmpnd["Zc"])
+            self.Vcs.append(cmpnd["Vc_cm3/mol"])
+            self.Tcs.append(cmpnd["Tc_K"])
+            self.Pcs.append(conv_unit(cmpnd["Pc_bar"], "bar", "Pa"))
+            self.omegas.append(cmpnd["omega"])
+
+        self.compound = compounds[0]
+        self.y = y
+        self.k = k
         self.eos = eos.lower()
         # compound : dictionary containing the values extracted from the database.
-        self.compound = get_compound_properties(name, formula)
         # Tc : float, critical temperature of the compound in Kelvin.
         self.Tc = self.compound["Tc_K"]
         # Pc : float, critical pressure of the compound in Pascal.
@@ -70,6 +91,7 @@ class EOS:
         self.Pc_RTc = self.Pc / (R_IG * self.Tc)
 
         self.initialize()
+        self.initialize_functions()
 
         self.eos_options = eos_options
 
@@ -127,16 +149,57 @@ class EOS:
             self.theta = self.a * self.alpha
 
         elif self.eos == "peng_and_robinson_1976":
-            self.a = 0.45724 * (R_IG * self.Tc) ** 2 / self.Pc
-            self.b = 0.07780 / self.Pc_RTc
-            self.delta = 0.15559 / self.Pc_RTc
-            self.epsilon = -0.006053 / self.Pc_RTc ** 2
-            self.alpha = (
-                1.0
-                + (0.37464 + 1.54226 * self.omega - 0.2699 * self.omega ** 2)
-                * (1.0 - self.Tr ** 0.5)
-            ) ** 2
-            self.theta = self.a * self.alpha
+
+            self.bs = []
+            self.ass = []
+            self.alphas = []
+            self.thetas = []
+            self.b = 0
+            for i in range(self.n):
+                self.bs.append(0.07780 / (self.Pcs[i] / (R_IG * self.Tcs[i])))
+                self.b += self.y[i] * self.bs[i]
+                self.ass.append(0.45724 * (R_IG * self.Tcs[i]) ** 2 / self.Pcs[i])
+                self.alphas.append(
+                    (
+                        1.0
+                        + (
+                            0.37464
+                            + 1.54226 * self.omegas[i]
+                            - 0.2699 * self.omegas[i] ** 2
+                        )
+                        * (1.0 - (self.T / self.Tcs[i]) ** 0.5)
+                    )
+                    ** 2
+                )
+                self.thetas.append(self.ass[i] * self.alphas[i])
+
+            self.theta = 0
+            for i in range(self.n):
+                inner_sum = 0
+                for j in range(self.n):
+                    # inner_sum += self.y[i]*self.y[j] * (self.thetas[i]*self.thetas[j])**.5*(1-self.k[i][j])
+                    inner_sum += (
+                        self.y[i]
+                        * self.y[j]
+                        * sp.sqrt(self.thetas[i] * self.thetas[j])
+                        * (1 - self.k[i][j])
+                    )
+                self.theta += inner_sum
+
+            self.delta = 2 * self.b
+            self.epsilon = -self.b * self.b
+
+            # ============================
+            # self.a = 0.45724 * (R_IG * self.Tc) ** 2 / self.Pc
+            # self.b = 0.07780 / self.Pc_RTc
+            # self.delta = 2 * self.b
+            # self.epsilon = -self.b * self.b
+            # self.alpha = (
+            #     1.0
+            #     + (0.37464 + 1.54226 * self.omega - 0.2699 * self.omega ** 2)
+            #     * (1.0 - self.Tr ** 0.5)
+            # ) ** 2
+            # self.theta = self.a * self.alpha
 
         elif self.eos == "schmidt_and_wenzel_1979":
 
@@ -349,6 +412,335 @@ class EOS:
             self.alpha = alpha0 + self.omega * (alpha1 - alpha0)
             self.theta = self.a * self.alpha
 
+    # TODO put this function in EOS class? maybe it'll be better for mixture calculations
+    def initialize_functions(self):
+
+        self.b = np.real(self.b)
+        self.delta = np.real(self.delta)
+        self.epsilon = np.real(self.epsilon)
+
+        self.Z_V_T = None
+        self.dZ_VT_dT = None
+        self.numfunc_P_given_VT = None
+
+        self.return_Z_V_T()
+        self.return_diff_Z_V_T_dT()
+
+        # create numerical functions
+        self.numf_Z_VT = njit()(
+            sp.lambdify([self.V, self.T], self.Z_V_T, modules="numpy")
+        )
+        self.numf_dZdT_VT = njit()(
+            sp.lambdify([self.V, self.T], sp.diff(self.Z_V_T, self.T), modules="numpy")
+        )
+        self.numf_theta_T = njit()(sp.lambdify([self.T], self.theta, modules="numpy"))
+        self.numf_P_VT = njit()(
+            sp.lambdify(
+                [self.V, self.T], self.Z_V_T * self.T * R_IG / self.V, modules="numpy"
+            )
+        )
+
+        # this ain't pretty but hey, it works fast!
+        self.tmp_cfunc = None
+        c_sig = types.double(types.intc, types.CPointer(types.double))
+        exec(
+            "self.tmp_cfunc = lambda n, data: {:s}".format(
+                str((1 - self.Z_V_T) / self.V)
+                .replace("V", "data[0]")
+                .replace("T", "data[1]")
+                .replace("Abs", "np.abs")
+                .replace("sign", "np.sign")
+            )
+        )
+        qf = cfunc(c_sig)(self.tmp_cfunc)
+        self.qnf = LowLevelCallable(qf.ctypes)
+
+        # TODO send this to pure substance?
+        self.helper_Pvp_f = (
+            lambda hv, hz, _T: hz
+            - 1.0
+            - np.log(hz)
+            - quad(self.qnf, hv, np.inf, args=(_T,))[0]
+        )
+
+        exec(
+            "self.tmp_cfunc2 = lambda n, data: {:s}".format(
+                str(self.T * sp.diff(self.Z_V_T, self.T) / self.V)
+                .replace("V", "data[0]")
+                .replace("T", "data[1]")
+                .replace("Abs", "np.abs")
+                .replace("sign", "np.sign")
+            )
+        )
+        tf = cfunc(c_sig)(self.tmp_cfunc2)
+        self.numf_UR = LowLevelCallable(tf.ctypes)
+
+    def return_Z_V_T(self):
+        """
+        Creates the symbolic equation:
+            Z = V / (V - b) - ((theta / (R_IG * T)) * V) / (V**2 + delta * V + epsilon)
+
+        Returns
+        -------
+        self.Z_V_T : sympy symbolic expression.
+
+        """
+        if self.Z_V_T is None:
+            self.Z_V_T = self.V / (self.V - self.b) - (
+                self.theta / (R_IG * self.T)
+            ) * self.V / (self.V ** 2 + self.delta * self.V + self.epsilon)
+
+    def return_Z_given_PT(self, _P, _T):
+        """ Return the positive roots (Z) of the cubic equation.
+
+        parameters
+        ----------
+        _P : float
+            pressure, pa.
+        _T : float
+            temperature, k.
+
+        Returns
+        -------
+        ans : array, float
+            Returns an array of the real roots of the cubic equation of state. The minimum value of this array
+            corresponds to the vapor state, while the maximum value corresponds to the liquid state.
+
+        """
+
+        Bl = self.b * _P / (R_IG * _T)
+        deltal = self.delta * _P / (R_IG * _T)
+        thetal = self.numf_theta_T(_T) * _P / (R_IG * _T) ** 2
+        epsilonl = self.epsilon * (_P / (R_IG * _T)) ** 2
+        a = 1.0
+        b = deltal - Bl - 1.0
+        c = thetal + epsilonl - deltal * (Bl + 1.0)
+        d = -(epsilonl * (Bl + 1.0) + Bl * thetal)
+
+        coefs = (a, b, c, d)
+
+        ans = np.asarray(solve_cubic(*coefs))
+        return ans[ans > 0]
+
+    def return_V_given_PT(self, _P, _T):
+        """ Return the positive roots (V) of the cubic equation.
+
+        Parameters
+        ----------
+        _P : float
+            pressure, Pa.
+        _T : float
+            temperature, K.
+
+        Returns
+        -------
+        ans : array, float
+            Returns an array of the real roots of the cubic equation of state. The minimum value of this array
+            corresponds to the vapor state, while the maximum value corresponds to the liquid state.
+
+        """
+        ans = self.return_Z_given_PT(_P, _T) * R_IG * _T / _P
+        self.Vval = ans
+        return ans
+
+    def return_P_given_VT(self, _V, _T):
+        """ Return the values of '_P' given '_V' and '_T' using the cubic equation of state.
+
+        Parameters
+        ----------
+        _V : float
+            molar volume, m3/mol.
+        _T : float
+            temperature, Kelvin.
+
+        Returns
+        -------
+        _P : float
+            pressure at '_T' and '_V', Pascal.
+
+        """
+        _P = self.numf_P_VT(_V, _T)
+        return _P
+
+    def return_diff_Z_V_T_dT(self):
+        if self.dZ_VT_dT is None:
+            self.return_Z_V_T()
+            self.dZ_VT_dT = sp.diff(self.Z_V_T, self.T)
+
+    def return_fugacity(self, _P, _T, _V, _Z):
+        f = _P * np.e ** self.helper_Pvp_f(_V, _Z, _T)
+        return f
+
+    def return_departureProperties(self, _P, _T, _V, _Z):
+        """
+        Returns the enthalpy, entropy, Gibbs energy, internal energy, Helmholtz energy and fugacity at
+        '_P' and '_T', utilizing departure functions from Poling (2002). All values are in the S.I. units.
+
+        Parameters
+        ----------
+        _P : float
+            pressure, Pa.
+        _T : float
+            temperature, K.
+        _V : float
+            molar volume, m3/mol.
+        _Z : float
+            compressibility factor, adimensional.
+
+        Returns
+        -------
+        dict_ans : dictionary, float
+            Returns a dictionary with the values of thermodynamics properties calculated using the departure
+            functions. The dictionary keys are: 'HR', 'SR', 'GR', 'UR', 'AR', 'f'.
+
+        """
+
+        # calculate UR
+        UR_RT = quad(self.numf_UR, _V, np.inf, args=(_T,))[0]
+        UR = UR_RT * _T * R_IG
+        # calculate AR
+        AR_RT = quad(self.qnf, _V, np.inf, args=(_T,))[0] + np.log(_Z)
+        # AR_RT = quad(self.numf_integratePvp, _V, np.inf, args=(_T,))[0] + np.log(_Z)
+        AR = AR_RT * _T * R_IG
+        # calculate HR
+        HR_RT = UR_RT + 1.0 - _Z
+        HR = HR_RT * R_IG * _T
+        # calculate SR
+        SR_R = UR_RT - AR_RT
+        SR = SR_R * R_IG
+        # calculate GR
+        GR_RT = AR_RT + 1 - _Z
+        GR = GR_RT * R_IG * _T
+
+        # fugacity = _P * np.exp(-GR_RT)
+
+        dict_ans = {"HR": HR, "SR": SR, "GR": GR, "UR": UR, "AR": AR}
+        return dict_ans
+
+    def return_delta_ResProperties(self, _Pref, _Tref, _Vref, _Zref, _P, _T, _V, _Z):
+        ref = self.return_departureProperties(_Pref, _Tref, _Vref, _Zref)
+        proc = self.return_departureProperties(_P, _T, _V, _Z)
+        delta = np.array(list(proc.values())) - np.array(list(ref.values()))
+        dict_delta = dict(zip(ref.keys(), delta))
+        # dict_delta["f"] = proc["f"]
+        return dict_delta
+
+    def return_delta_prop(self, _P, _T, _Pref, _Tref):
+
+        log = ""
+
+        try:  # Calculate Z
+            Zs = self.return_Z_given_PT(_P, _T)
+            Zliq = np.min(Zs)
+            Zvap = np.max(Zs)
+
+            Zsref = self.return_Z_given_PT(_Pref, _Tref)
+            Zliqref = np.min(Zsref)
+            Zvapref = np.max(Zsref)
+
+        except Exception as e:
+            print(str(e))
+            raise ValueError("Error calculating Z\n" + str(e))
+
+        state = IGPROP.return_fluidState(
+            _P,
+            conv_unit(self.compound["Pc_bar"], "bar", "Pa"),
+            _T,
+            self.compound["Tc_K"],
+            1e5,
+            delta=1e-4,
+        )
+
+        supercritical = True if state == "supercritical fluid" else False
+
+        Vliq = Zliq * R_IG * _T / _P
+        Vvap = Zvap * R_IG * _T / _P
+        Vliqref = Zliqref * R_IG * _Tref / _Pref
+        Vvapref = Zvapref * R_IG * _Tref / _Pref
+        rholiq = self.compound["Mol. Wt."] * 1e-3 / Vliq
+        rhovap = self.compound["Mol. Wt."] * 1e-3 / Vvap
+
+        if (
+            self.compound["a0"] is not None
+            and self.compound["a1"] is not None
+            and self.compound["a2"] is not None
+            and self.compound["a3"] is not None
+            and self.compound["a4"] is not None
+        ):
+            has_cp = True
+        else:
+            has_cp = False
+
+        try:
+            dProp_liq = self.return_delta_ResProperties(
+                _Pref, _Tref, Vliqref, Zliqref, _P, _T, Vliq, Zliq
+            )
+            dProp_vap = self.return_delta_ResProperties(
+                _Pref, _Tref, Vvapref, Zvapref, _P, _T, Vvap, Zvap
+            )
+        except:
+            raise ValueError("Error evaluating departure functions")
+
+        if has_cp:
+            a0 = self.compound["a0"]
+            a1 = self.compound["a1"]
+            a2 = self.compound["a2"]
+            a3 = self.compound["a3"]
+            a4 = self.compound["a4"]
+            Tmin = self.compound["Tcpmin_K"]
+            Tmax = self.compound["Tcpmax_K"]
+
+            try:
+                IGprop = IGPROP.return_IdealGasProperties(
+                    _Tref, _T, _Pref, _P, a0, a1, a2, a3, a4, Tmin, Tmax
+                )
+            except Exception as e:
+                print(str(e))
+                raise ValueError("Error calculating ideal properties\n" + str(e))
+
+            ideal_ret = [
+                IGprop["Cp_IG"],
+                IGprop["dH_IG"],
+                IGprop["dS_IG"],
+                IGprop["dG_IG"],
+                IGprop["dU_IG"],
+                IGprop["dA_IG"],
+            ]
+
+            if IGprop["msg"] is not None:
+                log += "WARNING Cp temperature range: {0:s}\n".format(IGprop["msg"])
+
+            dH_liq = IGprop["dH_IG"] - dProp_liq["HR"]
+            dS_liq = IGprop["dS_IG"] - dProp_liq["SR"]
+            dG_liq = IGprop["dG_IG"] - dProp_liq["GR"]
+            dU_liq = IGprop["dU_IG"] - dProp_liq["UR"]
+            dA_liq = IGprop["dA_IG"] - dProp_liq["AR"]
+
+            dH_vap = IGprop["dH_IG"] - dProp_vap["HR"]
+            dS_vap = IGprop["dS_IG"] - dProp_vap["SR"]
+            dG_vap = IGprop["dG_IG"] - dProp_vap["GR"]
+            dU_vap = IGprop["dU_IG"] - dProp_vap["UR"]
+            dA_vap = IGprop["dA_IG"] - dProp_vap["AR"]
+        else:
+            ideal_dict = None
+            dH_liq = None
+            dS_liq = None
+            dG_liq = None
+            dU_liq = None
+            dA_liq = None
+
+            dH_vap = None
+            dS_vap = None
+            dG_vap = None
+            dU_vap = None
+            dA_vap = None
+
+        liq_ret = [Zliq, Vliq, rholiq, dH_liq, dS_liq, dG_liq, dU_liq, dA_liq, _P, _T]
+
+        vap_ret = [Zvap, Vvap, rhovap, dH_vap, dS_vap, dG_vap, dU_vap, dA_vap, _P, _T]
+
+        return ideal_ret, liq_ret, vap_ret, log, supercritical
+
     def show_eos_options(self):
         r = list(self.eos_options.keys())
         return r
@@ -367,3 +759,4 @@ class EOS:
         """
         self.eos = new_eos.lower()
         self.initialize()
+        self.initialize_functions()

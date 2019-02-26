@@ -11,20 +11,20 @@ def test_return_P_given_VT_large_number():
     assert approx(m.return_P_given_VT(1247.1691349, 150), 1e-4) == 1
 
 
-def test_return_P_given_VT_numpy_array():
-    T = np.array([100, 150])
-    V = np.array([831.445, 623.584])
-    P = np.array([1, 2])
-    retP = m.return_P_given_VT(V, T)
-    np.testing.assert_almost_equal(retP, P, 1e-4)
+# def test_return_P_given_VT_numpy_array():
+#     T = np.array([100, 150])
+#     V = np.array([831.445, 623.584])
+#     P = np.array([1, 2])
+#     retP = m.return_P_given_VT(V, T)
+#     np.testing.assert_almost_equal(retP, P, 1e-4)
 
 
-def test_return_V_given_PT_numpy_array():
-    T = np.array([100, 150])
-    V = np.array([831.445, 623.584])
-    P = np.array([1, 2])
-    retP = m.return_P_given_VT(V, T)
-    np.testing.assert_almost_equal(retP, P, 1e-4)
+# def test_return_V_given_PT_numpy_array():
+#     T = np.array([100, 150])
+#     V = np.array([831.445, 623.584])
+#     P = np.array([1, 2])
+#     retP = m.return_P_given_VT(V, T)
+#     np.testing.assert_almost_equal(retP, P, 1e-4)
 
 
 def test_eos_class_initialization_and_compound_set():
