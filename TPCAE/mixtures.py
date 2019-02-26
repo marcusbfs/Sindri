@@ -9,5 +9,4 @@ class Mixture(EOS):
 
         EOS.__init__(self, compounds, y, k, eos)
 
-        print(self.b)
-        print(self.theta)
+

@@ -15,7 +15,10 @@ eos = "peng_and_robinson_1976"
 m = Mixture(mix, y, k, eos)
 
 
+def test_return_delta_prop():
+    ret = m.return_delta_prop(1e5, 150, 1e5, 100)
+    print(ret)
+    # assert 0
+
 def test_check_volume_function():
     ret = m.return_Z_given_PT(1e5, 150)
-    print(ret)
-    assert 0
