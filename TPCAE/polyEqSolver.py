@@ -1,7 +1,5 @@
-import numpy as np
 from numba import jit, float64
-
-DBL_EPSILON = 10 * np.finfo(float).eps
+from constants import DBL_EPSILON
 
 
 @jit((float64, float64, float64), nopython=True, cache=True)
@@ -11,12 +9,17 @@ def solve_quadratic(a, b, c):
         return [-c / b]
 
     delta = b ** 2 - 4 * a * c
-    if delta < 0:
-        return None
-    x1 = (-b + delta ** 0.5) / (2 * a)
-    x2 = -b / a - x1
-    ret = [x1, x2]
-    return ret
+    if abs(delta) < DBL_EPSILON:
+        x1 = (-b) / (2 * a)
+        ret = [x1, x1]
+        return ret
+    elif delta > 0:
+        x1 = (-b + delta ** 0.5) / (2 * a)
+        x2 = -b / a - x1
+        ret = [x1, x2]
+        return ret
+    else:
+        return
 
 
 @jit((float64, float64, float64, float64), nopython=True, cache=True)

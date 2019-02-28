@@ -47,7 +47,7 @@ class EOS:
 
         """
         # eos : str, cubic equation of state name.
-        self.compounds = compounds
+        self.compounds = np.asarray(compounds)
         self.n = len(self.compounds)  # number of compounds
 
         self.Zcs = []
@@ -63,8 +63,8 @@ class EOS:
             self.omegas.append(cmpnd["omega"])
 
         self.compound = compounds[0]
-        self.y = y
-        self.k = k
+        self.y = np.asarray(y)
+        self.k = np.asarray(k)
         self.eos = eos.lower()
         # compound : dictionary containing the values extracted from the database.
         # Tc : float, critical temperature of the compound in Kelvin.
@@ -612,8 +612,6 @@ class EOS:
         GR_RT = AR_RT + 1 - _Z
         GR = GR_RT * R_IG * _T
 
-        # fugacity = _P * np.exp(-GR_RT)
-
         dict_ans = {"HR": HR, "SR": SR, "GR": GR, "UR": UR, "AR": AR}
         return dict_ans
 
@@ -622,7 +620,6 @@ class EOS:
         proc = self.return_departureProperties(_P, _T, _V, _Z)
         delta = np.array(list(proc.values())) - np.array(list(ref.values()))
         dict_delta = dict(zip(ref.keys(), delta))
-        # dict_delta["f"] = proc["f"]
         return dict_delta
 
     def return_delta_prop(self, _P, _T, _Pref, _Tref):
@@ -722,7 +719,7 @@ class EOS:
             dU_vap = IGprop["dU_IG"] - dProp_vap["UR"]
             dA_vap = IGprop["dA_IG"] - dProp_vap["AR"]
         else:
-            ideal_dict = None
+            ideal_ret = None
             dH_liq = None
             dS_liq = None
             dG_liq = None
