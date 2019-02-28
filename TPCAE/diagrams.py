@@ -38,6 +38,7 @@ def plot_diag(
     grid=True,
     smooth=False,
     isotherms=False,
+    eos_used=None,
 ):
     if diag not in valid_diagrams:
         raise ValueError(str(diag) + " is not a valid diagram")
@@ -51,6 +52,8 @@ def plot_diag(
     xs = prop_dict[diag[1]]
     points = len(data)
     title = data[0].name + ": " + titles_dict[diag]
+    if eos_used is not None:
+        title += "\n{:s}".format(eos_used)
     xlabel = labels_dict[xs] + " [{0}]".format(xunit)
     ylabel = labels_dict[ys] + " [{0}]".format(yunit)
 
@@ -259,7 +262,7 @@ def gen_data(compound, Ti_f, _Pref, _Tref, points, isotherms=[]):
     # v, P = gen_PV_isotherm(compound, np.min(vs), np.max(vs),t, 30)
     # isothermsvec = (v, P)
 
-    return (retvec, critical_point, isothermsvec)
+    return (retvec, critical_point, isothermsvec, compound.eos)
 
 
 def gen_PV_isotherm(compound, vi, vf, T, points, xlnscale=True, ylnscale=True):

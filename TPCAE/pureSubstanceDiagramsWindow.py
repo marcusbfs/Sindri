@@ -5,7 +5,7 @@ import diagrams
 
 
 class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams):
-    def __init__(self, eos, Pref, Tref, parent=None):
+    def __init__(self, eos, Pref, Tref, eosname, parent=None):
         super(Window_PureSubstanceDiagrams, self).__init__(parent)
         self.setupUi(self)
         self.c = eos
@@ -14,6 +14,7 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
         self.le_points.setText(str(10))
         self.checkBox_smooth.setChecked(True)
         self.checkBox_grid.setChecked(True)
+        self.eos_used = eosname
 
         self.points = 30
         self.data_is_gen = False
@@ -131,6 +132,7 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
                     grid=self.checkBox_grid.isChecked(),
                     smooth=self.checkBox_smooth.isChecked(),
                     isotherms=self.checkBox_isotherms.isChecked(),
+                    eos_used=self.eos_used,
                 )
             except Exception as e:
                 print(str(e))

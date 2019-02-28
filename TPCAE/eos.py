@@ -22,6 +22,7 @@ eos_options = {
     "Soave (1984)": "soave_1984",
     "Adachi, et al. (1985)": "adachi_et_al_1985",
     "Twu, et al. (1995)": "twu_et_al_1995",
+    "Ahlers-Gmehling (2001)": "ahlers_gmehling_2001",
     "Gasem, et al. PR modification (2001)": "gasem_et_al_pr_2001",
     "Gasem, et al. Twu modificaton (2001)": "gasem_et_al_twu_2001",
 }
@@ -225,8 +226,8 @@ class EOS:
 
         elif self.eos == "peneloux_et_al_1982":
             self.a = 0.42748 * (R_IG * self.Tc) ** 2 / self.Pc
-            self.b = 0.08664 / self.Pc_RTc
             c = 0.40768 * (R_IG * self.Tc / self.Pc) * (0.00385 + 0.08775 * self.omega)
+            self.b = 0.08664 / self.Pc_RTc - c
             self.delta = self.b + 2 * c
             self.epsilon = c * (self.b + c)
             self.alpha = (
@@ -386,6 +387,23 @@ class EOS:
             self.alpha = alpha0 + self.omega * (alpha1 - alpha0)
             self.theta = self.a * self.alpha
 
+        elif self.eos == "ahlers_gmehling_2001":
+            self.a = 0.45724 * (R_IG * self.Tc) ** 2 / self.Pc
+            self.alpha = (
+                1.0
+                + (0.37464 + 1.54226 * self.omega - 0.2699 * self.omega ** 2)
+                * (1.0 - self.Tr ** 0.5)
+            ) ** 2
+            gamma = 246.78 * self.Zc ** 2 - 107.21 * self.Zc + 12.67
+            n = -74.458 * self.Zc + 26.966
+            beta = 0.35 / (0.35 + (n * np.abs(self.Tr - self.alpha)) ** gamma)
+            cc = (0.3074 - self.Zc) * R_IG * self.Tc / self.Pc
+            c = cc * beta
+            self.b = 0.07780 / self.Pc_RTc - c
+            self.delta = 2 * self.b
+            self.epsilon = -self.b * self.b + 4 * self.b * c - 2 * c ** 2
+            self.theta = self.a * self.alpha
+
         elif self.eos == "gasem_et_al_pr_2001":
             self.a = 0.45724 * (R_IG * self.Tc) ** 2 / self.Pc
             self.b = 0.07780 / self.Pc_RTc
@@ -433,7 +451,14 @@ class EOS:
         self.numf_dZdT_VT = njit()(
             sp.lambdify([self.V, self.T], sp.diff(self.Z_V_T, self.T), modules="numpy")
         )
+
         self.numf_theta_T = njit()(sp.lambdify([self.T], self.theta, modules="numpy"))
+        self.numf_b_T = njit()(sp.lambdify([self.T], self.b, modules="numpy"))
+        self.numf_delta_T = njit()(sp.lambdify([self.T], self.delta, modules="numpy"))
+        self.numf_epsilon_T = njit()(
+            sp.lambdify([self.T], self.epsilon, modules="numpy")
+        )
+
         self.numf_P_VT = njit()(
             sp.lambdify(
                 [self.V, self.T], self.Z_V_T * self.T * R_IG / self.V, modules="numpy"
@@ -508,10 +533,14 @@ class EOS:
 
         """
 
-        Bl = self.b * _P / (R_IG * _T)
-        deltal = self.delta * _P / (R_IG * _T)
+        # Bl = self.b * _P / (R_IG * _T)
+        # deltal = self.delta * _P / (R_IG * _T)
+        # thetal = self.numf_theta_T(_T) * _P / (R_IG * _T) ** 2
+        # epsilonl = self.epsilon * (_P / (R_IG * _T)) ** 2
+        Bl = self.numf_b_T(_T) * _P / (R_IG * _T)
+        deltal = self.numf_delta_T(_T) * _P / (R_IG * _T)
         thetal = self.numf_theta_T(_T) * _P / (R_IG * _T) ** 2
-        epsilonl = self.epsilon * (_P / (R_IG * _T)) ** 2
+        epsilonl = self.numf_epsilon_T(_T) * (_P / (R_IG * _T)) ** 2
         a = 1.0
         b = deltal - Bl - 1.0
         c = thetal + epsilonl - deltal * (Bl + 1.0)

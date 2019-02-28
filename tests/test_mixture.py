@@ -52,4 +52,4 @@ def test_check_delta_mixProp_one_compound():
     print(liq_ret)
     print(vap_ret)
     print(log)
-    assert 0
+    # assert 0

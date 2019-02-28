@@ -262,7 +262,7 @@ class Window_PureSubstanceCalculations(
                 return -1
 
             self.diagramsWindow = Window_PureSubstanceDiagrams(
-                self.c, self.Pref, self.Tref
+                self.c, self.Pref, self.Tref, self.eosname
             )
             self.diagramsWindow.show()
 
