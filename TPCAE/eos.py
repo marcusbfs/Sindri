@@ -686,15 +686,14 @@ class EOS:
         rholiq = self.compound["Mol. Wt."] * 1e-3 / Vliq
         rhovap = self.compound["Mol. Wt."] * 1e-3 / Vvap
 
-        if (
-            self.compound["a0"] is not None
-            and self.compound["a1"] is not None
-            and self.compound["a2"] is not None
-            and self.compound["a3"] is not None
-            and self.compound["a4"] is not None
-        ):
+        try:
+            a = self.compound["a0"] + 1
+            a = self.compound["a1"] + 1
+            a = self.compound["a2"] + 1
+            a = self.compound["a3"] + 1
+            a = self.compound["a4"] + 1
             has_cp = True
-        else:
+        except:
             has_cp = False
 
         try:

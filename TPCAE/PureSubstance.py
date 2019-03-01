@@ -86,9 +86,13 @@ class PureSubstance(EOS):
 
     def all_calculations_at_P_T(self, _P, _T, _Pref, _Tref):
 
-        ideal_ret, liq_ret, vap_ret, log, supercritical = self.return_delta_prop(
-            _P, _T, _Pref, _Tref
-        )
+        try:
+            ideal_ret, liq_ret, vap_ret, log, supercritical = self.return_delta_prop(
+                _P, _T, _Pref, _Tref
+            )
+            has_ideal = True
+        except:
+            has_ideal = False
 
         Zliq = liq_ret[0]
         Vliq = liq_ret[1]
@@ -172,14 +176,18 @@ class PureSubstance(EOS):
             delta=1e-4,
         )
 
-        ideal_dict = {
-            "Cp": ideal_ret[0],
-            "dH": ideal_ret[1],
-            "dS": ideal_ret[2],
-            "dG": ideal_ret[3],
-            "dU": ideal_ret[4],
-            "dA": ideal_ret[5],
-        }
+        if ideal_ret is not None:
+
+            ideal_dict = {
+                "Cp": ideal_ret[0],
+                "dH": ideal_ret[1],
+                "dS": ideal_ret[2],
+                "dG": ideal_ret[3],
+                "dU": ideal_ret[4],
+                "dA": ideal_ret[5],
+            }
+        else:
+            ideal_dict = None
 
         liq_dict = {
             "Z": liq_ret[0],

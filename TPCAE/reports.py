@@ -155,6 +155,7 @@ def format_reports(prop, **units):
 
     else:
         reportret += "Compound has no Cp equation parameters\n"
+        log += "Compound has no Cp equation parameters\n"
 
     # fugacity
     fs = "fugacity [{0}]".format(Pu)
@@ -311,43 +312,59 @@ def tablewidget_vap_liq_reports(prop, **units):
         liq_values.append(dAliq)
         vap_values.append(dAvap)
 
-    # fugacity
-    fs = "Fugacity [{0}]".format(Pu)
-    fliq = f2str(conv_unit(prop.liq["f"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
-    fvap = f2str(conv_unit(prop.vap["f"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
-    labels.append(fs)
-    liq_values.append(fliq)
-    vap_values.append(fvap)
+        # fugacity
+        fs = "Fugacity [{0}]".format(Pu)
+        fliq = f2str(conv_unit(prop.liq["f"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
+        fvap = f2str(conv_unit(prop.vap["f"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
+        labels.append(fs)
+        liq_values.append(fliq)
+        vap_values.append(fvap)
 
-    # Ideal properties
-    dHIGs = "IG H [{0}]".format(ene_per_molu)
-    dHIG = f2str(conv_unit(prop.ideal["dH"], "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4)
-    labels.append(dHIGs)
-    liq_values.append(dHIG)
-    vap_values.append(dHIG)
+        # Ideal properties
+        dHIGs = "IG H [{0}]".format(ene_per_molu)
+        dHIG = f2str(
+            conv_unit(prop.ideal["dH"], "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4
+        )
+        labels.append(dHIGs)
+        liq_values.append(dHIG)
+        vap_values.append(dHIG)
 
-    dSIGs = "IG S [{0}]".format(ene_per_mol_tempu)
-    dSIG = f2str(prop.ideal["dS"], 6, lt=1e-2, gt=1e4)
-    labels.append(dSIGs)
-    liq_values.append(dSIG)
-    vap_values.append(dSIG)
+        dSIGs = "IG S [{0}]".format(ene_per_mol_tempu)
+        dSIG = f2str(prop.ideal["dS"], 6, lt=1e-2, gt=1e4)
+        labels.append(dSIGs)
+        liq_values.append(dSIG)
+        vap_values.append(dSIG)
 
-    dGIGs = "IG G [{0}]".format(ene_per_molu)
-    dGIG = f2str(conv_unit(prop.ideal["dG"], "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4)
-    labels.append(dGIGs)
-    liq_values.append(dGIG)
-    vap_values.append(dGIG)
+        dGIGs = "IG G [{0}]".format(ene_per_molu)
+        dGIG = f2str(
+            conv_unit(prop.ideal["dG"], "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4
+        )
+        labels.append(dGIGs)
+        liq_values.append(dGIG)
+        vap_values.append(dGIG)
 
-    dUIGs = "IG U [{0}]".format(ene_per_molu)
-    dUIG = f2str(conv_unit(prop.ideal["dU"], "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4)
-    labels.append(dUIGs)
-    liq_values.append(dUIG)
-    vap_values.append(dUIG)
+        dUIGs = "IG U [{0}]".format(ene_per_molu)
+        dUIG = f2str(
+            conv_unit(prop.ideal["dU"], "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4
+        )
+        labels.append(dUIGs)
+        liq_values.append(dUIG)
+        vap_values.append(dUIG)
 
-    dAIGs = "IG A [{0}]".format(ene_per_molu)
-    dAIG = f2str(conv_unit(prop.ideal["dA"], "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4)
-    labels.append(dAIGs)
-    liq_values.append(dAIG)
-    vap_values.append(dAIG)
+        dAIGs = "IG A [{0}]".format(ene_per_molu)
+        dAIG = f2str(
+            conv_unit(prop.ideal["dA"], "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4
+        )
+        labels.append(dAIGs)
+        liq_values.append(dAIG)
+        vap_values.append(dAIG)
+    else:
+        fs = "Fugacity [{0}]".format(Pu)
+        fliq = f2str(conv_unit(prop.liq["f"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
+        fvap = f2str(conv_unit(prop.vap["f"], "Pa", Pu), 8, lt=1e-2, gt=1e4)
+        labels.append(fs)
+        liq_values.append(fliq)
+        vap_values.append(fvap)
+        log += "Compound have no ideal properties (maybe it doesn't have ideal Cp parameters)\n"
 
     return labels, liq_values, vap_values
