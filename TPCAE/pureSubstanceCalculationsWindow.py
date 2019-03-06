@@ -2,13 +2,15 @@ import os
 
 from PySide2 import QtCore, QtWidgets
 
-import PureSubstance
 import db
 import db_utils
 import eos
 import reports
 import units
 import utils
+from Properties import VaporPressure
+from compounds import MixtureProp, SubstanceProp
+from eos import EOS
 from pureSubstanceDiagramsWindow import Window_PureSubstanceDiagrams
 from ui.pure_substance_calculations_ui import Ui_PureSubstanceCalculationsWindow
 from units import conv_unit
@@ -140,18 +142,18 @@ class Window_PureSubstanceCalculations(
             self.plainTextEdit_log.clear()
 
             try:  # to initialize EOS
-                self.c = PureSubstance.PureSubstance(
-                    self.compound["Name"],
-                    self.compound["Formula"],
-                    eos.eos_options[self.eosname],
-                )
+
+                self.subs = SubstanceProp(self.sname, self.sformula)
+                self.mix = MixtureProp([self.subs], [1.0])
+                self.eoseq = EOS(self.mix, [[0]], self.eosname)
+
                 self.info = ""
                 self.info += "Compound: {:s} ({:s})\n".format(
-                    self.c.compound["Name"], self.c.compound["Formula"]
+                    self.sname, self.sformula
                 )
 
                 self.info += "Equation of state: {0:s}\n".format(
-                    self.listWidget_eos_options.currentItem().text()
+                    self.eosname
                 )
                 self.info += "Process state: {0:.3f} {1:s}, {2:s} {3:s}\n".format(
                     conv_unit(self.T, "K", self.units["T"]),
@@ -161,7 +163,7 @@ class Window_PureSubstanceCalculations(
                     ),
                     self.units["P"],
                 )
-                self.info += "Reference state: {0:.3f} {1:s}, {2:s} {3:s}".format(
+                self.info += "Reference state: {0:.3f} {1:s}, {2:s} {3:s}\n".format(
                     conv_unit(self.Tref, "K", self.units["T"]),
                     self.units["T"],
                     utils.f2str(
@@ -169,6 +171,7 @@ class Window_PureSubstanceCalculations(
                     ),
                     self.units["P"],
                 )
+                self.info += "State: {0:s}".format(self.subs.getFluidState(self.P, self.T, self.eoseq))
                 self.plainTextEdit_information.appendPlainText(self.info)
             except Exception as e:
                 print(e)
@@ -179,12 +182,23 @@ class Window_PureSubstanceCalculations(
                 return 1
 
             try:  # calculate properties at T and P
-                self.props = self.c.all_calculations_at_P_T(
-                    self.P, self.T, self.Pref, self.Tref
-                )
-                self.plainTextEdit_information.appendPlainText(
-                    "State: " + self.props.state
-                )
+
+                self.propsliq, self.propsvap = self.eoseq.getAllProps(self.Tref, self.T, self.Pref, self.P)
+
+                self.PvpAW = self.subs.getPvpAW(self.T)
+                self.PvpLK = self.subs.getPvpLK(self.T)
+                self.PvpAnt = self.subs.getPvpAntoine(self.T)
+                self.AntLog = self.subs.getAntoineLog(self.T)
+                self.PvpEOS, self.PvpEOS_iter = self.eoseq.getPvp(self.T, self.PvpAW)
+
+                self.Pvp = VaporPressure()
+                self.Pvp.setEOS(self.PvpEOS)
+                self.Pvp.setAW(self.PvpAW)
+                self.Pvp.setLK(self.PvpLK)
+                self.Pvp.setAntoine(self.PvpAnt)
+                self.Pvp.AntonieLog = self.AntLog
+
+                self.log = self.propsliq.log + self.AntLog
 
             except Exception as e:
                 msg = QtWidgets.QMessageBox.about(
@@ -193,25 +207,25 @@ class Window_PureSubstanceCalculations(
                 return 1
 
             try:
-                rowlabels, liq, vap = reports.tablewidget_vap_liq_reports(
-                    self.props, **self.units
+                self.rowlabels, self.liq, self.vap = reports.tablewidget_vap_liq_reports(
+                    self.propsliq, self.propsvap, self.Pvp, **self.units
                 )
-                for i in range(len(rowlabels)):
+                for i in range(len(self.rowlabels)):
                     self.tableWidget_results.insertRow(i)
-                    liqitem = QtWidgets.QTableWidgetItem(liq[i])
-                    vapitem = QtWidgets.QTableWidgetItem(vap[i])
+                    liqitem = QtWidgets.QTableWidgetItem(self.liq[i])
+                    vapitem = QtWidgets.QTableWidgetItem(self.vap[i])
                     liqitem.setTextAlignment(QtCore.Qt.AlignRight)
                     vapitem.setTextAlignment(QtCore.Qt.AlignRight)
                     self.tableWidget_results.setItem(i, 0, liqitem)
                     self.tableWidget_results.setItem(i, 1, vapitem)
-                self.tableWidget_results.setVerticalHeaderLabels(rowlabels)
+                self.tableWidget_results.setVerticalHeaderLabels(self.rowlabels)
 
             except Exception as e:
                 msg = QtWidgets.QMessageBox.about(self, "Error showing results", str(e))
                 return 1
 
             try:
-                self.report, self.log = reports.format_reports(self.props, **self.units)
+                # self.report, self.log = reports.format_reports(self.props, **self.units)
                 self.plainTextEdit_log.appendPlainText(self.log)
             except Exception as e:
                 print("Couldn't generate report")
@@ -232,11 +246,9 @@ class Window_PureSubstanceCalculations(
             _gt = 1e4
 
             try:  # to initialize EOS
-                self.c = PureSubstance.PureSubstance(
-                    self.compound["Name"],
-                    self.compound["Formula"],
-                    eos.eos_options[self.eosname],
-                )
+                self.subs = SubstanceProp(self.sname, self.sformula)
+                self.mix = MixtureProp([self.subs], [1.0])
+                self.eoseq = EOS(self.mix, [[0]], self.eosname)
             except:
                 err = (
                     "One or more of the following properties is not set: Tc, Pc, omega"
@@ -262,7 +274,7 @@ class Window_PureSubstanceCalculations(
                 return -1
 
             self.diagramsWindow = Window_PureSubstanceDiagrams(
-                self.c, self.Pref, self.Tref, self.eosname
+                self.eoseq, self.Pref, self.Tref
             )
             self.diagramsWindow.show()
 
@@ -284,14 +296,20 @@ class Window_PureSubstanceCalculations(
 
     @QtCore.Slot()
     def save_to_txt(self):
+        if self.plainTextEdit_information.toPlainText() == "":
+            til = "No data"
+            msg = "Please, generate the data first"
+            QtWidgets.QMessageBox.about(self, til, msg)
+            return
         try:
-            name_suggestion = self.c.compound["Name"] + ".txt"
+            name_suggestion = self.compound.getName() + ".txt"
             txt_file_name = QtWidgets.QFileDialog.getSaveFileName(
                 self, "Save file", name_suggestion, "Text files (*.txt)"
             )[0]
             if not txt_file_name:
                 return 0
-            file_content = self.info + self.report + "\n--- LOG ---\n" + self.log
+            report = self.generateReport()
+            file_content = self.info + "\n\n" + report + "\n--- LOG ---\n" + self.log
             try:
                 with open(txt_file_name, "w") as f:
                     f.write(file_content)
@@ -310,10 +328,28 @@ class Window_PureSubstanceCalculations(
                 til = "Missing data"
                 msg = "Please, generate the data first."
             else:
-                til = "Error"
+                til = "Error generating txt file"
                 msg = str(e)
             QtWidgets.QMessageBox.about(self, til, msg)
             return -1
+
+    def generateReport(self):
+        report = ""
+
+        def fmt(label, liq, vap):
+            return "{:<25}\t{:>20}\t{:>20}\n".format(str(label), str(liq), str(vap))
+
+        report += fmt("Properties", "Liquid", "Vapor")
+
+        for i in range(len(self.rowlabels)):
+            lbl = self.rowlabels[i]
+            l = self.liq[i]
+            v = self.vap[i]
+            report += fmt(str(lbl), str(l), str(v))
+        return report
+
+
+
 
     def load_db(self):
         # Abrir banco de dados
@@ -364,7 +400,9 @@ class Window_PureSubstanceCalculations(
         if current_row >= 0:
             r = self.get_row_values(10)
             self.compound = db_utils.get_compound_properties(r[1], r[0])
-            self.sname = self.compound["Name"] + " (" + self.compound["Formula"] + ")"
+            self.sname = self.compound.getName()
+            self.sformula = self.compound.getFormula()
+
 
     @QtCore.Slot()
     def search_substance(self):

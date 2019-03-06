@@ -2,19 +2,22 @@ import units
 from PySide2 import QtCore, QtWidgets
 from ui.pure_substance_diagrams_ui import Ui_Form_PureSubstanceDiagrams
 import diagrams
+from eos import EOS
 
 
 class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams):
-    def __init__(self, eos, Pref, Tref, eosname, parent=None):
+    def __init__(self, eoseq: EOS, Pref: float, Tref: float , parent=None):
         super(Window_PureSubstanceDiagrams, self).__init__(parent)
         self.setupUi(self)
-        self.c = eos
+
+        self.eoseq = eoseq
         self.Pref = Pref
         self.Tref = Tref
-        self.le_points.setText(str(10))
+
         self.checkBox_smooth.setChecked(True)
         self.checkBox_grid.setChecked(True)
-        self.eos_used = eosname
+        self.subsname = self.eoseq.mix.substances[0].Name
+        self.eos_used = self.eoseq.getEOSDisplayName()
 
         self.points = 30
         self.data_is_gen = False
@@ -30,10 +33,10 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
         self.comboBox_diagram.currentTextChanged.connect(self.update_axis)
 
         # set initial and final temperatures to freezing and critical point
-        if self.c.compound["Tfp_K"] is not None:
-            self.le_Ti.setText(str(self.c.compound["Tfp_K"]))
-        if self.c.compound["Tc_K"] is not None:
-            self.le_Tf.setText(str(self.c.compound["Tc_K"]))
+        if self.eoseq.mix.substances[0].Tfp:
+            self.le_Ti.setText(str(self.eoseq.mix.substances[0].Tfp))
+        if self.eoseq.mix.substances[0].Tc:
+            self.le_Tf.setText(str(self.eoseq.mix.substances[0].Tc))
 
         # dictionaries
         self.diagram_dict = {
@@ -101,19 +104,26 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
 
         from time import time
 
-        s1 = time()
-        self.data = diagrams.gen_data(
-            self.c,
-            [self.Ti, self.Tf],
-            self.Pref,
-            self.Tref,
-            self.points,
-            isotherms=self.isotherms_range,
-        )
-        s2 = time()
-        QtWidgets.QMessageBox.information(
-            self, "Data generated", "Computation time: {:.3f} sec".format(s2 - s1)
-        )
+        try:
+            s1 = time()
+            self.rl, self. rv, self.cp = diagrams.gen_data(
+                self.eoseq,
+                [self.Ti, self.Tf],
+                self.Pref,
+                self.Tref,
+                self.points,
+                #isotherms=self.isotherms_range,
+            )
+            s2 = time()
+            QtWidgets.QMessageBox.information(
+                self, "Data generated", "Computation time: {:.3f} sec".format(s2 - s1)
+            )
+            self.diag = diagrams.PlotPureSubstanceDiagrams(self.rl, self.rv, self.cp, self.subsname, self.eos_used)
+
+        except Exception as e:
+            QtWidgets.QMessageBox.about(self, "Error generating data", str(e))
+            return
+
         self.data_is_gen = True
 
     @QtCore.Slot()
@@ -121,19 +131,28 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
         if self.data_is_gen:
             xunit = self.comboBox_xUnits.currentText()
             yunit = self.comboBox_yUnits.currentText()
+            self.choice = self.seldiag
             try:
-                diagrams.plot_diag(
-                    self.data,
-                    self.seldiag,
-                    xunit,
-                    yunit,
-                    xlnscale=self.checkBox_xlogscale.isChecked(),
-                    ylnscale=self.checkBox_ylogscale.isChecked(),
-                    grid=self.checkBox_grid.isChecked(),
-                    smooth=self.checkBox_smooth.isChecked(),
-                    isotherms=self.checkBox_isotherms.isChecked(),
-                    eos_used=self.eos_used,
-                )
+                if self.choice == "PV":
+                    self.diag.plotPV(xunit, yunit, lnscale=self.checkBox_logscale.isChecked(),
+                                     grid=self.checkBox_grid.isChecked(), smooth= self.checkBox_smooth.isChecked())
+                elif self.choice == "TS":
+                    self.diag.plotTS(xunit, yunit, lnscale=self.checkBox_logscale.isChecked(),
+                                     grid=self.checkBox_grid.isChecked(), smooth= self.checkBox_smooth.isChecked())
+                elif self.choice == "PS":
+                    self.diag.plotPS(xunit, yunit, lnscale=self.checkBox_logscale.isChecked(),
+                                     grid=self.checkBox_grid.isChecked(), smooth= self.checkBox_smooth.isChecked())
+                elif self.choice == "HS":
+                    self.diag.plotHS(xunit, yunit, lnscale=self.checkBox_logscale.isChecked(),
+                                     grid=self.checkBox_grid.isChecked(), smooth= self.checkBox_smooth.isChecked())
+                elif self.choice == "PT":
+                    self.diag.plotPT(xunit, yunit, lnscale=self.checkBox_logscale.isChecked(),
+                                     grid=self.checkBox_grid.isChecked(), smooth= self.checkBox_smooth.isChecked())
+                elif self.choice == "TV":
+                    self.diag.plotTV(xunit, yunit, lnscale=self.checkBox_logscale.isChecked(),
+                                     grid=self.checkBox_grid.isChecked(), smooth= self.checkBox_smooth.isChecked())
+                self.diag._plot()
+
             except Exception as e:
                 print(str(e))
                 QtWidgets.QMessageBox.about(self, "Error", "Error plotting curve")
@@ -150,8 +169,7 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
         self.seldiag = self.diagram_dict[self.seldiag_name]
         self.xaxis = self.x_dict[self.seldiag]
         self.yaxis = self.y_dict[self.seldiag]
-        self.checkBox_ylogscale.setChecked(self.logscale[self.seldiag])
-        self.checkBox_xlogscale.setChecked(self.logscale[self.seldiag])
+        self.checkBox_logscale.setChecked(self.logscale[self.seldiag])
         self.label_xUnits.setText(self.xaxis + " unit")
         self.label_yUnits.setText(self.yaxis + " unit")
 
@@ -159,8 +177,6 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
         self.comboBox_xUnits.clear()
         self.comboBox_xUnits.addItems(self.units_options[self.xaxis])
         self.comboBox_yUnits.addItems(self.units_options[self.yaxis])
-        self.checkBox_ylogscale.setText(self.yaxis + " log scale")
-        self.checkBox_xlogscale.setText(self.xaxis + " log scale")
 
     @QtCore.Slot()
     def changed_Trange(self):

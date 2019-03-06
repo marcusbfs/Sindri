@@ -1,209 +1,230 @@
 import numpy as np
-from vapor_pressure import ambroseWaltonVP
 from units import conv_unit
 import matplotlib.pyplot as plt
 from scipy import interpolate
+from eos import EOS
+from Properties import Props
+from typing import List
 
-valid_diagrams = ["PV", "TS", "TV", "PS", "PT", "HS"]
+# valid_diagrams = ["PV", "TS", "TV", "PS", "PT", "HS"]
 
-SI_units_dict = {"P": "Pa", "V": "m3/mol", "T": "K", "dH": "J/mol"}
+SI_dict = {"P": "Pa", "V": "m3/mol", "T": "K", "H": "J/mol", "S": "J/molK"}
 
 labels_dict = {
-    "P": "Pascal",
+    "P": "Pressure",
     "V": "Molar volume",
     "T": "Temperature",
-    "dH": "Enthalpy",
-    "dS": "Entropy",
+    "H": "Enthalpy",
+    "S": "Entropy",
 }
 
-titles_dict = {
-    "PV": "Pressure vs. Molar volume",
-    "PS": "Pressure vs. Entropy",
-    "PT": "Pressure vs. Temperature",
-    "TV": "Temperature vs. Molar volume",
-    "TS": "Temperature vs. Entropy",
-    "HS": "Enthalpy vs. Entropy",
-}
+class PlotPureSubstanceDiagrams(object):
+    def __init__(
+        self,
+        allpropsliq: List[Props],
+        allpropsvap: List[Props],
+        cp: Props,
+        compound: str,
+        eosname: str,
+    ):
 
-prop_dict = {"P": "P", "V": "V", "T": "T", "H": "dH", "S": "dS"}
+        self.propsliq = allpropsliq
+        self.propsvap = allpropsvap
+        assert len(self.propsliq) == len(self.propsvap)
+        self.n = len(self.propsliq)
+        self.cpoint = cp
+        self.compound = compound
+        self.eosname = eosname
+
+        self.Tliq, self.Tvap = np.zeros(self.n), np.zeros(self.n)
+        self.Pliq, self.Pvap = np.zeros(self.n), np.zeros(self.n)
+        self.Vliq, self.Vvap = np.zeros(self.n), np.zeros(self.n)
+        self.Hliq, self.Hvap = np.zeros(self.n), np.zeros(self.n)
+        self.Sliq, self.Svap = np.zeros(self.n), np.zeros(self.n)
+        self.Gliq, self.Gvap = np.zeros(self.n), np.zeros(self.n)
+        self.Uliq, self.Uvap = np.zeros(self.n), np.zeros(self.n)
+        self.Aliq, self.Avap = np.zeros(self.n), np.zeros(self.n)
+
+        self.xliq, self.xvap = None, None
+        self.yliq, self.yvap = None, None
+        self.x_letter, self.y_letter = None, None
+        self.xunit, self.yunit = None, None
+        self.xcp, self.ycp = None, None
+        self.title = None
+        self.xlabel, self.ylabel = "", ""
+        self.lnscale = False
+        self.grid = True
+        self.smooth = True
+
+        for i in range(self.n):
+            self.Tliq[i], self.Tvap[i] = self.propsliq[i].T, self.propsvap[i].T
+            self.Pliq[i], self.Pvap[i] = self.propsliq[i].P, self.propsvap[i].P
+            self.Vliq[i], self.Vvap[i] = self.propsliq[i].V, self.propsvap[i].V
+            self.Hliq[i], self.Hvap[i] = (
+                self.propsliq[i].Props.H,
+                self.propsvap[i].Props.H,
+            )
+            self.Sliq[i], self.Svap[i] = (
+                self.propsliq[i].Props.S,
+                self.propsvap[i].Props.S,
+            )
+            self.Gliq[i], self.Gvap[i] = (
+                self.propsliq[i].Props.G,
+                self.propsvap[i].Props.G,
+            )
+            self.Uliq[i], self.Uvap[i] = (
+                self.propsliq[i].Props.U,
+                self.propsvap[i].Props.U,
+            )
+            self.Aliq[i], self.Avap[i] = (
+                self.propsliq[i].Props.A,
+                self.propsvap[i].Props.A,
+            )
+
+    def plotPV(self, xunit: str, yunit: str, lnscale=True, smooth=True, grid=True):
+        self.x_letter, self.y_letter = "V", "P"
+        self.xliq, self.yliq = self.Vliq, self.Pliq
+        self.xvap, self.yvap = self.Vvap, self.Pvap
+        self.xcp, self.ycp = self.cpoint.V, self.cpoint.P
+        self.xunit, self.yunit = xunit, yunit
+
+        self.lnscale = lnscale
+        self.grid = grid
+        self.smooth = smooth
+
+    def plotTS(self, xunit: str, yunit: str, lnscale=False, smooth=True, grid=True):
+        self.x_letter, self.y_letter = "S", "T"
+        self.xliq, self.yliq = self.Sliq, self.Tliq
+        self.xvap, self.yvap = self.Svap, self.Tvap
+        self.xcp, self.ycp = self.cpoint.Props.S, self.cpoint.T
+        self.xunit, self.yunit = xunit, yunit
+
+        self.lnscale = lnscale
+        self.grid = grid
+        self.smooth = smooth
+
+    def plotPS(self, xunit: str, yunit: str, lnscale=False, smooth=True, grid=True):
+        self.x_letter, self.y_letter = "S", "P"
+        self.xliq, self.yliq = self.Sliq, self.Pliq
+        self.xvap, self.yvap = self.Svap, self.Pvap
+        self.xcp, self.ycp = self.cpoint.Props.S, self.cpoint.P
+        self.xunit, self.yunit = xunit, yunit
+
+        self.lnscale = lnscale
+        self.grid = grid
+        self.smooth = smooth
+
+    def plotHS(self, xunit: str, yunit: str, lnscale=False, smooth=True, grid=True):
+        self.x_letter, self.y_letter = "S", "H"
+        self.xliq, self.yliq = self.Sliq, self.Hliq
+        self.xvap, self.yvap = self.Svap, self.Hvap
+        self.xcp, self.ycp = self.cpoint.Props.S, self.cpoint.Props.H
+        self.xunit, self.yunit = xunit, yunit
+
+        self.lnscale = lnscale
+        self.grid = grid
+        self.smooth = smooth
+
+    def plotTV(self, xunit: str, yunit: str, lnscale=True, smooth=True, grid=True):
+        self.x_letter, self.y_letter = "V", "T"
+        self.xliq, self.yliq = self.Vliq, self.Tliq
+        self.xvap, self.yvap = self.Vvap, self.Tvap
+        self.xcp, self.ycp = self.cpoint.V, self.cpoint.T
+        self.xunit, self.yunit = xunit, yunit
+
+        self.lnscale = lnscale
+        self.grid = grid
+        self.smooth = smooth
+
+    def plotPT(self, xunit: str, yunit: str, lnscale=False, smooth=True, grid=True):
+        self.x_letter, self.y_letter = "T", "P"
+        self.xliq, self.yliq = self.Tliq, self.Pliq
+        self.xvap, self.yvap = self.Tvap, self.Pvap
+        self.xcp, self.ycp = self.cpoint.T, self.cpoint.P
+        self.xunit, self.yunit = xunit, yunit
+
+        self.lnscale = lnscale
+        self.grid = grid
+        self.smooth = smooth
+
+    def _plot(self):
+        self.title = "{}: {}\n{}".format(
+            self.compound,
+            "{} vs {}".format(labels_dict[self.y_letter], labels_dict[self.x_letter]),
+            self.eosname,
+        )
+        self.xlabel = "{} [{}]".format(labels_dict[self.x_letter], self.xunit)
+        self.ylabel = "{} [{}]".format(labels_dict[self.y_letter], self.yunit)
+
+        try:
+            self.xliq = conv_unit(self.xliq, SI_dict[self.x_letter], self.xunit)
+            self.xvap = conv_unit(self.xvap, SI_dict[self.x_letter], self.xunit)
+
+            self.yliq = conv_unit(self.yliq, SI_dict[self.y_letter], self.yunit)
+            self.yvap = conv_unit(self.yvap, SI_dict[self.y_letter], self.yunit)
+
+            self.xcp = conv_unit(self.xcp, SI_dict[self.x_letter], self.xunit)
+            self.ycp = conv_unit(self.ycp, SI_dict[self.y_letter], self.yunit)
+        except Exception as e:
+            print("Error converting units in diagram\n{}".format(str(e)))
+            raise
+
+        if self.lnscale:
+            try:
+                self.xliq, self.xvap = np.log(self.xliq), np.log(self.xvap)
+                self.yliq, self.yvap = np.log(self.yliq), np.log(self.yvap)
+                self.xcp, self.ycp = np.log(self.xcp), np.log(self.ycp)
+                self.xlabel = "ln " + self.xlabel
+                self.ylabel = "ln " + self.ylabel
+            except Exception as e:
+                print("Error changing to log scale")
+                print(str(e))
+                raise
+
+        if self.smooth:
+            try:
+                n = 100
+                tliq = interpolate.splrep(
+                    np.sort(self.xliq), self.yliq[self.xliq.argsort()]
+                )
+                self.xliq = np.linspace(np.min(self.xliq), np.max(self.xliq), n)
+                self.yliq = interpolate.splev(self.xliq, tliq)
+
+                tvap = interpolate.splrep(
+                    np.sort(self.xvap), self.yvap[self.xvap.argsort()]
+                )
+                self.xvap = np.linspace(np.min(self.xvap), np.max(self.xvap), n)
+                self.yvap = interpolate.splev(self.xvap, tvap)
+            except Exception as e:
+                print("Error calculating spline")
+                print(str(e))
+                raise
+
+        fig, ax = plt.subplots()
+        if self.grid:
+            ax.grid()
+        try:
+            ax.plot(self.xliq, self.yliq, label="Liquid")
+            ax.plot(self.xvap, self.yvap, label="Vapor")
+        except Exception as e:
+            print("Error plotting liquid and vapor lines\n{}".format(str(e)))
+            raise
+        try:
+            ax.plot(self.xcp, self.ycp, label="Critical point", marker="o")
+        except Exception as e:
+            print("Error plotting critical point\n{}".format(str(e)))
+            raise
+        ax.set_xlabel(self.xlabel)
+        ax.set_ylabel(self.ylabel)
+        ax.set_title(self.title)
+        ax.legend()
+        plt.show()
+        return
 
 
-def plot_diag(
-    data,
-    diag,
-    xunit,
-    yunit,
-    xlnscale=False,
-    ylnscale=False,
-    grid=True,
-    smooth=False,
-    isotherms=False,
-    eos_used=None,
+def gen_data(
+    eoseq: EOS, Ti_f: float, _Pref: float, _Tref: float, points: int, isotherms=[]
 ):
-    if diag not in valid_diagrams:
-        raise ValueError(str(diag) + " is not a valid diagram")
-
-    isotherms_data = data[2]
-    cp_data = data[1]
-    data = data[0]
-    has_isotherms = True if (len(isotherms_data) > 0 and isotherms) else False
-
-    ys = prop_dict[diag[0]]
-    xs = prop_dict[diag[1]]
-    points = len(data)
-    title = data[0].name + ": " + titles_dict[diag]
-    if eos_used is not None:
-        title += "\n{:s}".format(eos_used)
-    xlabel = labels_dict[xs] + " [{0}]".format(xunit)
-    ylabel = labels_dict[ys] + " [{0}]".format(yunit)
-
-    xliq = np.zeros(points)
-    yliq = np.zeros(points)
-    xvap = np.zeros(points)
-    yvap = np.zeros(points)
-
-    for i in range(points):
-        xliq[i] = data[i].liq[xs]
-        yliq[i] = data[i].liq[ys]
-        xvap[i] = data[i].vap[xs]
-        yvap[i] = data[i].vap[ys]
-
-    xc = cp_data.liq[xs]
-    yc = cp_data.liq[ys]
-
-    # isotherms
-    xliq_iso = []
-    yliq_iso = []
-    xvap_iso = []
-    yvap_iso = []
-    if has_isotherms:
-        for isotherm in isotherms_data:
-            p = len(isotherm)
-            xliq_tmp = np.zeros(p)
-            yliq_tmp = np.zeros(p)
-            xvap_tmp = np.zeros(p)
-            yvap_tmp = np.zeros(p)
-
-            for i in range(p):
-                xliq_tmp[i] = isotherm[i].liq[xs]
-                yliq_tmp[i] = isotherm[i].liq[ys]
-                xvap_tmp[i] = isotherm[i].vap[xs]
-                yvap_tmp[i] = isotherm[i].vap[ys]
-            xliq_iso.append(xliq_tmp)
-            yliq_iso.append(yliq_tmp)
-            xvap_iso.append(xvap_tmp)
-            yvap_iso.append(yvap_tmp)
-
-    # convert units
-    if xs != "dS":
-        xliq = conv_unit(xliq, SI_units_dict[xs], xunit)
-        xliq = conv_unit(xliq, SI_units_dict[xs], xunit)
-        xvap = conv_unit(xvap, SI_units_dict[xs], xunit)
-        xc = conv_unit(xc, SI_units_dict[xs], xunit)
-        if has_isotherms:
-            for i in range(len(xliq_iso)):
-                xliq_iso[i] = conv_unit(xliq_iso[i], SI_units_dict[xs], xunit)
-                xvap_iso[i] = conv_unit(xvap_iso[i], SI_units_dict[xs], xunit)
-
-    if ys != "dS":
-        yliq = conv_unit(yliq, SI_units_dict[ys], yunit)
-        yvap = conv_unit(yvap, SI_units_dict[ys], yunit)
-        yc = conv_unit(yc, SI_units_dict[ys], yunit)
-        if has_isotherms:
-            for i in range(len(yliq_iso)):
-                yliq_iso[i] = conv_unit(yliq_iso[i], SI_units_dict[ys], yunit)
-                yvap_iso[i] = conv_unit(yvap_iso[i], SI_units_dict[ys], yunit)
-
-    try:
-        if xlnscale:
-            if np.all(xliq > 0.0) and np.all(xvap > 0):
-                xliq = np.log(xliq)
-                xvap = np.log(xvap)
-                xc = np.log(xc)
-                xlabel = "ln " + xlabel
-                if has_isotherms:
-                    xliq_iso = np.log(xliq_iso)
-                    xvap_iso = np.log(xvap_iso)
-
-            else:
-                raise ValueError("Can't calculate log of x-axis: negative number")
-        if ylnscale:
-            if ylnscale and np.all(yliq > 0) and np.all(yvap > 0):
-                yvap = np.log(yvap)
-                yliq = np.log(yliq)
-                yc = np.log(yc)
-                ylabel = "ln " + ylabel
-                if has_isotherms:
-                    yliq_iso = np.log(yliq_iso)
-                    yvap_iso = np.log(yvap_iso)
-            else:
-                raise ValueError("Can't calculate log of y-axis: negative number")
-    except Exception as e:
-        print("error calculating log scale")
-        print(str(e))
-        raise
-
-    if smooth:
-
-        n = 100
-
-        try:
-            if len(xliq) > 0 and len(yliq) > 0:
-                # must sort x vector
-                tliq = interpolate.splrep(np.sort(xliq), yliq[xliq.argsort()])
-                xliq = np.linspace(np.min(xliq), np.max(xliq), n)
-                yliq = interpolate.splev(xliq, tliq)
-
-            if len(xvap) > 0 and len(yvap) > 0:
-                tvap = interpolate.splrep(np.sort(xvap), yvap[xvap.argsort()])
-                xvap = np.linspace(np.min(xvap), np.max(xvap), n)
-                yvap = interpolate.splev(xvap, tvap)
-        except Exception as e:
-            print("error calculating spline")
-            print(str(e))
-            raise
-
-    fig, ax = plt.subplots()
-
-    try:
-        if len(xliq) > 0 and len(yliq) > 0:
-            ax.plot(xliq, yliq, label="Liquid")
-        if len(xvap) > 0 and len(yvap) > 0:
-            ax.plot(xvap, yvap, label="Vapor")
-    except Exception as e:
-        print("error plotting curve")
-        print(str(e))
-        raise
-
-    try:
-        ax.plot(xc, yc, label="Critical point", marker="o")
-    except Exception as e:
-        print("error plotting critical point")
-        print(str(e))
-        raise
-
-    if has_isotherms:
-        try:
-            for t, xl, yl, xv, yv in zip(
-                isotherms_data, xliq_iso, yliq_iso, xvap_iso, yvap_iso
-            ):
-                ax.plot(xl, yl, label=str(t[0].T) + " liq", linestyle="--")
-                ax.plot(xv, yv, label=str(t[0].T) + " vap", linestyle="--")
-        except Exception as e:
-            raise
-
-    if grid:
-        ax.grid()
-
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
-    ax.set_title(title)
-    ax.legend()
-    plt.show()
-    return
-
-
-def gen_data(compound, Ti_f, _Pref, _Tref, points, isotherms=[]):
     if not isinstance(Ti_f, list):
         raise TypeError("Temperature parameter must be an array of len 2")
 
@@ -211,16 +232,9 @@ def gen_data(compound, Ti_f, _Pref, _Tref, points, isotherms=[]):
         raise TypeError("Temperature parameter must be an array of len 2")
 
     def helper_P_guess(_T):
-        fh = lambda x: ambroseWaltonVP(
-            conv_unit(compound.compound["Pc_bar"], "bar", "Pa"),
-            x / compound.compound["Tc_K"],
-            compound.compound["omega"],
-        )
+        fh = lambda x: eoseq.mix.substances[0].getPvpAW(x)
         fvec = np.vectorize(fh)
         return fvec(_T)
-
-    tol = 1e-5
-    kmax = 20
 
     Ti = Ti_f[0]
     Tf = Ti_f[1]
@@ -229,55 +243,18 @@ def gen_data(compound, Ti_f, _Pref, _Tref, points, isotherms=[]):
     # set first guess as antoine P, if possible
     P_guess = helper_P_guess(Tvec)
 
-    fvec_return_Pvp_EOS = np.vectorize(compound.return_Pvp_EOS)
-    Pvec = fvec_return_Pvp_EOS(Tvec, P_guess, tol=tol, k=kmax)[0]
+    fvec_return_Pvp_EOS = np.vectorize(eoseq.getPvp)
+    Pvec = fvec_return_Pvp_EOS(Tvec, P_guess)[0]
 
-    retvec = []
+    retliq = []
+    retvap = []
 
     for t, p in zip(Tvec, Pvec):
-        ret = compound.all_calculations_at_P_T(p, t, _Pref, _Tref)
-        retvec.append(ret)
+        rl, rv = eoseq.getAllProps(_Tref, t, _Pref, p)
+        retliq.append(rl)
+        retvap.append(rv)
 
-    critical_point = compound.critical_point_calculation(_Pref, _Tref)
+    Tc, Pc = eoseq.mix.substances[0].Tc, eoseq.mix.substances[0].Pc
+    critical_point = eoseq.getAllProps(_Tref, Tc, _Pref, Pc)[0]
 
-    isotherms = np.atleast_1d(isotherms)
-    Pmin = np.min(Pvec)
-    Pmax = np.max(Pvec)
-    isothermsvec = []
-    if len(isotherms) > 0:
-        for t in isotherms:
-            Psat = fvec_return_Pvp_EOS(t, helper_P_guess(t))[0]
-            Vsat = compound.return_V_given_PT(Psat, t)
-            tmpt = []
-            for d in retvec:
-                ret = compound.all_calculations_at_P_T(d.P, t, _Pref, _Tref)
-
-                # if (ret.liq["V"] <= d.liq["V"]) and (ret.vap["V"] >= d.vap["V"]):
-                if True:
-                    tmpt.append(ret)
-            isothermsvec.append(tmpt)
-
-    # t = 120
-    # vs = compound.return_V_given_PT(Pmin, t)
-    # v, P = gen_PV_isotherm(compound, np.min(vs), np.max(vs),t, 30)
-    # isothermsvec = (v, P)
-
-    return (retvec, critical_point, isothermsvec, compound.eos)
-
-
-def gen_PV_isotherm(compound, vi, vf, T, points, xlnscale=True, ylnscale=True):
-    vi = 1.1e-4
-    vf = 7.08e-4
-    T = 360
-    v = np.geomspace(vi, vf, points)
-    P = np.zeros(points)
-    for i in range(points):
-        P[i] = compound.numf_P_VT(v[i], T)
-
-    print(v)
-    print(P)
-
-    plt.plot(v, P)
-    plt.show()
-
-    return v, P
+    return (retliq, retvap, critical_point)

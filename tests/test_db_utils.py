@@ -6,4 +6,7 @@ formula = methane["Formula"]
 
 
 def test_get_compound_properties_return_correct_dictionary():
-    assert methane == get_compound_properties(name, formula)
+    methane = get_compound_properties(name, formula)
+    print(methane.getName())
+    print(methane.getFormula())
+    print(methane.getCpCoeffs())
