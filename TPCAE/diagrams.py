@@ -18,6 +18,7 @@ labels_dict = {
     "S": "Entropy",
 }
 
+
 class PlotPureSubstanceDiagrams(object):
     def __init__(
         self,

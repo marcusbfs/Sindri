@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_Form_PureSubstanceDiagrams(object):
     def setupUi(self, Form_PureSubstanceDiagrams):
         Form_PureSubstanceDiagrams.setObjectName("Form_PureSubstanceDiagrams")
@@ -72,9 +73,13 @@ class Ui_Form_PureSubstanceDiagrams(object):
         self.checkBox_logscale = QtWidgets.QCheckBox(Form_PureSubstanceDiagrams)
         self.checkBox_logscale.setObjectName("checkBox_logscale")
         self.gridLayout_2.addWidget(self.checkBox_logscale, 2, 1, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout_2.addItem(spacerItem, 2, 0, 1, 1)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout_2.addItem(spacerItem1, 4, 0, 1, 1)
         self.horizontalLayout_7.addLayout(self.gridLayout_2)
         self.gridLayout.addLayout(self.horizontalLayout_7, 3, 0, 1, 6)
@@ -110,35 +115,96 @@ class Ui_Form_PureSubstanceDiagrams(object):
         self.comboBox_diagram.setObjectName("comboBox_diagram")
         self.horizontalLayout.addWidget(self.comboBox_diagram)
         self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 6)
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout.addItem(spacerItem2, 2, 2, 1, 1)
 
         self.retranslateUi(Form_PureSubstanceDiagrams)
         QtCore.QMetaObject.connectSlotsByName(Form_PureSubstanceDiagrams)
 
     def retranslateUi(self, Form_PureSubstanceDiagrams):
-        Form_PureSubstanceDiagrams.setWindowTitle(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "Pure Substance Diagrams", None, -1))
-        self.checkBox_smooth.setText(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "smooth curve", None, -1))
-        self.label_4.setText(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "Number of points", None, -1))
-        self.label_2.setText(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "Temperature range", None, -1))
-        self.label_3.setText(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "-", None, -1))
-        self.label_yUnits.setText(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "Y unit", None, -1))
-        self.label_xUnits.setText(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "X unit", None, -1))
-        self.checkBox_grid.setText(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "Grid", None, -1))
-        self.checkBox_logscale.setText(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "Log scale", None, -1))
-        self.checkBox_isotherms.setToolTip(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "<html><head/><body><p>If checked, plots the isotherms of the temperatures given. The temperatures must be given in the same units of &quot;Temperature range&quot;. If more than one isotherm is desired, the temperature values must be separated by a space.</p></body></html>", None, -1))
-        self.checkBox_isotherms.setText(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "Isotherms", None, -1))
-        self.btn_gen.setText(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "Generate data", None, -1))
-        self.btn_plot.setText(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "Plot", None, -1))
-        self.label.setText(QtWidgets.QApplication.translate("Form_PureSubstanceDiagrams", "Diagram: ", None, -1))
+        Form_PureSubstanceDiagrams.setWindowTitle(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "Pure Substance Diagrams", None, -1
+            )
+        )
+        self.checkBox_smooth.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "smooth curve", None, -1
+            )
+        )
+        self.label_4.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "Number of points", None, -1
+            )
+        )
+        self.label_2.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "Temperature range", None, -1
+            )
+        )
+        self.label_3.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "-", None, -1
+            )
+        )
+        self.label_yUnits.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "Y unit", None, -1
+            )
+        )
+        self.label_xUnits.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "X unit", None, -1
+            )
+        )
+        self.checkBox_grid.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "Grid", None, -1
+            )
+        )
+        self.checkBox_logscale.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "Log scale", None, -1
+            )
+        )
+        self.checkBox_isotherms.setToolTip(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams",
+                "<html><head/><body><p>If checked, plots the isotherms of the temperatures given. The temperatures must be given in the same units of &quot;Temperature range&quot;. If more than one isotherm is desired, the temperature values must be separated by a space.</p></body></html>",
+                None,
+                -1,
+            )
+        )
+        self.checkBox_isotherms.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "Isotherms", None, -1
+            )
+        )
+        self.btn_gen.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "Generate data", None, -1
+            )
+        )
+        self.btn_plot.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "Plot", None, -1
+            )
+        )
+        self.label.setText(
+            QtWidgets.QApplication.translate(
+                "Form_PureSubstanceDiagrams", "Diagram: ", None, -1
+            )
+        )
 
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     Form_PureSubstanceDiagrams = QtWidgets.QWidget()
     ui = Ui_Form_PureSubstanceDiagrams()
     ui.setupUi(Form_PureSubstanceDiagrams)
     Form_PureSubstanceDiagrams.show()
     sys.exit(app.exec_())
-

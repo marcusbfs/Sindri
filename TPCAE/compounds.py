@@ -241,6 +241,7 @@ class MixtureProp(object):
         assert np.sum(self.y) == 1.0
         self.n = len(mix)
 
+
     def getIGProps(self, Tref: float, T: float, Pref: float, P: float) -> DeltaProp:
         if self.hasCp():
             cp = self.getCp(T)
@@ -337,7 +338,6 @@ class MixtureProp(object):
 # ============ helper functions (for performance) =================
 
 
-
 @njit(
     float64(float64, float64, float64, float64, float64, float64, float64), cache=True
 )
@@ -349,7 +349,6 @@ def _getH_helper(Tref: float, T: float, a0, a1, a2, a3, a4) -> float:
         + (T ** 4 - Tref ** 4) * a3 / 4
         + (T ** 5 - Tref ** 5) * a4 / 5
     )
-
 
 
 @njit(float64(float64, float64, float64, float64), cache=True)

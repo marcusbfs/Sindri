@@ -28,4 +28,4 @@ def test_gen_data_and_plot():
         rl, rv, cp, methane.Name, eos.getEOSDisplayName()
     )
     diagrams.plotPS("J/molK", "Pa")
-    diagrams._plot()
+    # diagrams._plot()

@@ -1,6 +1,7 @@
 import sympy as sp
 import numpy as np
 
+from scipy.integrate import quad
 from CubicEOS import CubicEOS
 from constants import R_IG
 from compounds import MixtureProp
@@ -34,6 +35,17 @@ class EOS(CubicEOS):
         self.y = np.atleast_1d(self.mix.y)
         self.k = k
         self.n = self.mix.n
+
+        self.symb_N = sp.symbols("N", real=True, positive=True)
+        self.symb_Ns = sp.symbols("N:{}".format(self.n), real=True, positive=True)
+
+        self.symb_y = sp.symbols("y", real=True, positive=True)
+        self.symb_ys = sp.symbols("y:{}".format(self.n), real=True, positive=True)
+
+        self.symb_thetam = 0
+        self.symb_bm = 0
+        self.symb_epsilonm = 0
+        self.symb_deltam = 0
 
         self.eosDisplayName = eos
         self.eosValue = eos_options[self.eosDisplayName]
@@ -121,6 +133,9 @@ class EOS(CubicEOS):
             self.b = 0
             for i in range(self.n):
                 self.b += self.y[i] * (0.07780 / (self.Pcs[i] / (R_IG * self.Tcs[i])))
+                self.symb_bm += (self.symb_ys[i]) * (
+                    0.07780 / (self.Pcs[i] / (R_IG * self.Tcs[i]))
+                )
                 _tmpthetas = (
                     (
                         1.0
@@ -136,8 +151,11 @@ class EOS(CubicEOS):
                 thetas.append(_tmpthetas)
 
             self._calculate_theta_mixture(thetas)
+            self._symb_calculate_theta_mixture(thetas)
             self.delta = 2 * self.b
+            self.symb_deltam = 2 * self.symb_bm
             self.epsilon = -self.b * self.b
+            self.symb_epsilonm = -self.symb_bm ** 2
 
         elif self.eosValue == "peneloux_et_al_1982":
             thetas = []
@@ -185,8 +203,8 @@ class EOS(CubicEOS):
                     + 1
                     - 3 * zeta_c
                 )
-                c += self.y[i]*omega_c * R_IG * self.Tcs[i] / self.Pcs[i]
-                self.b += self.y[i]*omega_b * R_IG * self.Tcs[i] / self.Pcs[i]
+                c += self.y[i] * omega_c * R_IG * self.Tcs[i] / self.Pcs[i]
+                self.b += self.y[i] * omega_b * R_IG * self.Tcs[i] / self.Pcs[i]
                 alpha = (1 + F * (1 - (self.T / self.Tcs[i]) ** 0.5)) ** 2
                 a = omega_a * (R_IG * self.Tcs[i]) ** 2 / self.Pcs[i]
                 thetas.append(a * alpha)
@@ -200,7 +218,7 @@ class EOS(CubicEOS):
             c = 0
             b1, b2, b3 = 0, 0, 0
             for i in range(self.n):
-                b1 += self.y[i]*(
+                b1 += self.y[i] * (
                     R_IG
                     * self.Tcs[i]
                     * (
@@ -210,7 +228,7 @@ class EOS(CubicEOS):
                     )
                     / self.Pcs[i]
                 )
-                b2 += self.y[i]*(
+                b2 += self.y[i] * (
                     R_IG
                     * self.Tcs[i]
                     * (
@@ -221,7 +239,7 @@ class EOS(CubicEOS):
                     )
                     / self.Pcs[i]
                 )
-                b3 += self.y[i]*(
+                b3 += self.y[i] * (
                     R_IG
                     * self.Tcs[i]
                     * (
@@ -335,7 +353,9 @@ class EOS(CubicEOS):
             thetas = []
             self.b = 0
             for i in range(self.n):
-                self.b += self.y[i]*(R_IG * self.Tcs[i]) * 0.0777960739039 / self.Pcs[i]
+                self.b += (
+                    self.y[i] * (R_IG * self.Tcs[i]) * 0.0777960739039 / self.Pcs[i]
+                )
                 a = (R_IG * self.Tcs[i]) ** 2 * 0.457235528921 / self.Pcs[i]
                 alpha0 = (self.T / self.Tcs[i]) ** (
                     -0.171813
@@ -448,6 +468,18 @@ class EOS(CubicEOS):
                 )
             self.theta += inner_sum
 
+    def _symb_calculate_theta_mixture(self, thetas):
+        for i in range(self.n):
+            inner_sum = 0
+            for j in range(self.n):
+                inner_sum += (
+                    (self.symb_ys[i])
+                    * (self.symb_ys[j])
+                    * sp.sqrt(thetas[i] * thetas[j])
+                    * (1 - self.k[i][j])
+                )
+            self.symb_thetam += inner_sum
+
     def getAllProps(
         self, Tref: float, T: float, Pref: float, P: float
     ) -> (Props, Props):
@@ -511,3 +543,81 @@ class EOS(CubicEOS):
         pvap = igprop.subtract(ddp_vap)
 
         return pliq, pvap
+
+    # lazy code, it can be improved a lot
+    def getPhi_i(self, i: int, _P: float, _T: float, _V: float, _Z: float) -> float:
+
+        symb_Z = self.V / (self.V - self.symb_bm) - self.V * (
+            self.symb_thetam / (R_IG * self.T)
+        ) / (
+            (self.V - self.symb_bm)
+            * (self.V ** 2 + self.symb_deltam * self.V + self.symb_epsilonm)
+        )
+        integrand = (sp.diff(symb_Z, self.symb_ys[i]) - 1) / self.V
+
+        for j in range(self.n):
+            integrand = integrand.subs(self.symb_ys[j], self.y[j])
+
+        integrand_num = sp.lambdify(
+            [self.V, self.P, self.T], integrand, modules="numpy"
+        )
+
+        res = quad(integrand_num, _V, np.inf, args=(_P, _T))[0] - np.log(_Z)
+        a = np.exp(res)
+
+        return np.exp(res)
+
+    def _getPb_initial_guess(self, _T: float, _x) -> float:
+        _x = np.atleast_1d(_x)
+        pb = float(
+            np.sum(
+                _x
+                * self.Pcs
+                * np.exp(5.373 * (1 + self.omegas) * (1.0 - self.Tcs / _T))
+            )
+        )
+        return pb
+
+    def getBubblePointPressure(self, _T: float, x) -> float:
+        assert np.sum(x) == 1
+
+        x = np.atleast_1d(x)
+        Pb = self._getPb_initial_guess(_T, x)
+        k = np.log(self.Pcs / Pb) + 5.373 * (1.0 + self.omegas) * (1.0 - self.Tcs / _T)
+
+        y = x * k / np.sum(x * k)
+
+        tol = 1e-8
+        err = 1000
+        ite = 0
+        kmax = 10000
+
+        y = np.full(self.n, 1.0 / self.n)
+        phivap = np.empty(self.n, dtype=float)
+        philiq = np.empty(self.n, dtype=float)
+
+        while err > tol and ite < kmax:
+            ite += 1
+
+            vapmix = MixtureProp([s for s in self.mix.substances], y)
+            liqmix = MixtureProp([s for s in self.mix.substances], x)
+
+            vapeos = EOS(vapmix, self.k, self.eosDisplayName)
+            liqeos = EOS(liqmix, self.k, self.eosDisplayName)
+
+            zvap = np.max(vapeos.getZfromPT(Pb, _T))
+            zliq = np.min(liqeos.getZfromPT(Pb, _T))
+
+            vvap, vliq = R_IG * _T * zvap / Pb, R_IG * _T * zliq / Pb
+
+            for i in range(self.n):
+                phivap[i] = vapeos.getPhi_i(i, Pb, _T, vvap, zvap)
+                philiq[i] = liqeos.getPhi_i(i, Pb, _T, vliq, zliq)
+
+            k = philiq / phivap
+            y = x * k
+            yt = np.sum(y)
+            err = np.abs(yt - 1.0)
+
+        print(Pb)
+        print(y)

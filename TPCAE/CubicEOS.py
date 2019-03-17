@@ -98,13 +98,6 @@ class CubicEOS(object):
         qf = cfunc(c_sig)(self.tmp_cfunc)
         self._qnf = LowLevelCallable(qf.ctypes)
 
-        # TODO send this to pure substance?
-        self.helper_Pvp_f = (
-            lambda hv, hz, _T: hz
-            - 1.0
-            - np.log(hz)
-            - quad(self._qnf, hv, np.inf, args=(_T,))[0]
-        )
         exec(
             "self.tmp_cfunc2 = lambda n, data: {:s}".format(
                 str(self.T * self._dZdTsymbolicFromVT / self.V)
@@ -178,9 +171,13 @@ class CubicEOS(object):
         delta = state.subtract(ref)
         return delta
 
+    def getCoefFugacity(self, _P: float, _T: float, _V: float, _Z: float) -> float:
+        lnphi = _Z - 1.0 - (quad(self._qnf, _V, np.inf, args=(_T,))[0] + np.log(_Z))
+        return np.e ** lnphi
+
     def getFugacity(self, _P: float, _T: float, _V: float, _Z: float) -> float:
-        GDRT = _Z - 1.0 - (quad(self._qnf, _V, np.inf, args=(_T,))[0] + np.log(_Z))
-        f = _P * np.e ** GDRT
+        phi = self.getCoefFugacity(_P, _T, _V, _Z)
+        f = _P * phi
         return f
 
     def getPvp(self, _T: float, _P: float, tol=DBL_EPSILON, kmax=100):

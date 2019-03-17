@@ -34,14 +34,16 @@ def solve_cubic(a, b, c, d):
     k = 0
     kmax = 5000
     while err > DBL_EPSILON and k < kmax:  # newton method
-        x0l = x0 - (a * x0 ** 3 + b * x0 ** 2 + c * x0 + d) / (
-            3 * a * x0 ** 2 + 2 * b * x0 + c
-        )
+        # x0l = x0 - (a * x0 ** 3 + b * x0 ** 2 + c * x0 + d) / (
+        #     3 * a * x0 ** 2 + 2 * b * x0 + c
+        # )
+        x0l = (x0 * x0 * (2.0 * a * x0 + b) - d) / (x0 * (3.0 * a * x0 + 2.0 * b) + c)
         err = abs(x0l - x0)
         x0 = x0l
         k += 1
 
-    xs = solve_quadratic(a, b + a * x0, c + b * x0 + a * x0 ** 2)
+    # xs = solve_quadratic(a, b + a * x0, c + b * x0 + a * x0 ** 2)
+    xs = solve_quadratic(a, b + a * x0, c + x0 * (b + a * x0))
     if xs is not None:
         ret = [x0] + xs
     else:

@@ -6,7 +6,7 @@ from eos import EOS
 
 
 class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams):
-    def __init__(self, eoseq: EOS, Pref: float, Tref: float , parent=None):
+    def __init__(self, eoseq: EOS, Pref: float, Tref: float, parent=None):
         super(Window_PureSubstanceDiagrams, self).__init__(parent)
         self.setupUi(self)
 
@@ -106,19 +106,21 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
 
         try:
             s1 = time()
-            self.rl, self. rv, self.cp = diagrams.gen_data(
+            self.rl, self.rv, self.cp = diagrams.gen_data(
                 self.eoseq,
                 [self.Ti, self.Tf],
                 self.Pref,
                 self.Tref,
                 self.points,
-                #isotherms=self.isotherms_range,
+                # isotherms=self.isotherms_range,
             )
             s2 = time()
             QtWidgets.QMessageBox.information(
                 self, "Data generated", "Computation time: {:.3f} sec".format(s2 - s1)
             )
-            self.diag = diagrams.PlotPureSubstanceDiagrams(self.rl, self.rv, self.cp, self.subsname, self.eos_used)
+            self.diag = diagrams.PlotPureSubstanceDiagrams(
+                self.rl, self.rv, self.cp, self.subsname, self.eos_used
+            )
 
         except Exception as e:
             QtWidgets.QMessageBox.about(self, "Error generating data", str(e))
@@ -134,23 +136,53 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
             self.choice = self.seldiag
             try:
                 if self.choice == "PV":
-                    self.diag.plotPV(xunit, yunit, lnscale=self.checkBox_logscale.isChecked(),
-                                     grid=self.checkBox_grid.isChecked(), smooth= self.checkBox_smooth.isChecked())
+                    self.diag.plotPV(
+                        xunit,
+                        yunit,
+                        lnscale=self.checkBox_logscale.isChecked(),
+                        grid=self.checkBox_grid.isChecked(),
+                        smooth=self.checkBox_smooth.isChecked(),
+                    )
                 elif self.choice == "TS":
-                    self.diag.plotTS(xunit, yunit, lnscale=self.checkBox_logscale.isChecked(),
-                                     grid=self.checkBox_grid.isChecked(), smooth= self.checkBox_smooth.isChecked())
+                    self.diag.plotTS(
+                        xunit,
+                        yunit,
+                        lnscale=self.checkBox_logscale.isChecked(),
+                        grid=self.checkBox_grid.isChecked(),
+                        smooth=self.checkBox_smooth.isChecked(),
+                    )
                 elif self.choice == "PS":
-                    self.diag.plotPS(xunit, yunit, lnscale=self.checkBox_logscale.isChecked(),
-                                     grid=self.checkBox_grid.isChecked(), smooth= self.checkBox_smooth.isChecked())
+                    self.diag.plotPS(
+                        xunit,
+                        yunit,
+                        lnscale=self.checkBox_logscale.isChecked(),
+                        grid=self.checkBox_grid.isChecked(),
+                        smooth=self.checkBox_smooth.isChecked(),
+                    )
                 elif self.choice == "HS":
-                    self.diag.plotHS(xunit, yunit, lnscale=self.checkBox_logscale.isChecked(),
-                                     grid=self.checkBox_grid.isChecked(), smooth= self.checkBox_smooth.isChecked())
+                    self.diag.plotHS(
+                        xunit,
+                        yunit,
+                        lnscale=self.checkBox_logscale.isChecked(),
+                        grid=self.checkBox_grid.isChecked(),
+                        smooth=self.checkBox_smooth.isChecked(),
+                    )
                 elif self.choice == "PT":
-                    self.diag.plotPT(xunit, yunit, lnscale=self.checkBox_logscale.isChecked(),
-                                     grid=self.checkBox_grid.isChecked(), smooth= self.checkBox_smooth.isChecked())
+                    self.diag.plotPT(
+                        xunit,
+                        yunit,
+                        lnscale=self.checkBox_logscale.isChecked(),
+                        grid=self.checkBox_grid.isChecked(),
+                        smooth=self.checkBox_smooth.isChecked(),
+                    )
                 elif self.choice == "TV":
-                    self.diag.plotTV(xunit, yunit, lnscale=self.checkBox_logscale.isChecked(),
-                                     grid=self.checkBox_grid.isChecked(), smooth= self.checkBox_smooth.isChecked())
+                    self.diag.plotTV(
+                        xunit,
+                        yunit,
+                        lnscale=self.checkBox_logscale.isChecked(),
+                        grid=self.checkBox_grid.isChecked(),
+                        smooth=self.checkBox_smooth.isChecked(),
+                    )
                 self.diag._plot()
 
             except Exception as e:

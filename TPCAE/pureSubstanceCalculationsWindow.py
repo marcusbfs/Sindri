@@ -148,13 +148,9 @@ class Window_PureSubstanceCalculations(
                 self.eoseq = EOS(self.mix, [[0]], self.eosname)
 
                 self.info = ""
-                self.info += "Compound: {:s} ({:s})\n".format(
-                    self.sname, self.sformula
-                )
+                self.info += "Compound: {:s} ({:s})\n".format(self.sname, self.sformula)
 
-                self.info += "Equation of state: {0:s}\n".format(
-                    self.eosname
-                )
+                self.info += "Equation of state: {0:s}\n".format(self.eosname)
                 self.info += "Process state: {0:.3f} {1:s}, {2:s} {3:s}\n".format(
                     conv_unit(self.T, "K", self.units["T"]),
                     self.units["T"],
@@ -171,7 +167,9 @@ class Window_PureSubstanceCalculations(
                     ),
                     self.units["P"],
                 )
-                self.info += "State: {0:s}".format(self.subs.getFluidState(self.P, self.T, self.eoseq))
+                self.info += "State: {0:s}".format(
+                    self.subs.getFluidState(self.P, self.T, self.eoseq)
+                )
                 self.plainTextEdit_information.appendPlainText(self.info)
             except Exception as e:
                 print(e)
@@ -183,7 +181,9 @@ class Window_PureSubstanceCalculations(
 
             try:  # calculate properties at T and P
 
-                self.propsliq, self.propsvap = self.eoseq.getAllProps(self.Tref, self.T, self.Pref, self.P)
+                self.propsliq, self.propsvap = self.eoseq.getAllProps(
+                    self.Tref, self.T, self.Pref, self.P
+                )
 
                 self.PvpAW = self.subs.getPvpAW(self.T)
                 self.PvpLK = self.subs.getPvpLK(self.T)
@@ -348,9 +348,6 @@ class Window_PureSubstanceCalculations(
             report += fmt(str(lbl), str(l), str(v))
         return report
 
-
-
-
     def load_db(self):
         # Abrir banco de dados
         if os.path.isfile(self.dbfile):
@@ -402,7 +399,6 @@ class Window_PureSubstanceCalculations(
             self.compound = db_utils.get_compound_properties(r[1], r[0])
             self.sname = self.compound.getName()
             self.sformula = self.compound.getFormula()
-
 
     @QtCore.Slot()
     def search_substance(self):
