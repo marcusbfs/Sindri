@@ -1,6 +1,6 @@
 import sympy as sp
 import numpy as np
-from numba import njit, float64
+from numba import njit, float64, int64
 
 from polyEqSolver import solve_cubic
 from constants import R_IG, DBL_EPSILON
@@ -131,16 +131,10 @@ class VLE(object):
         return self.eoseq.phi_i(i, y, P, T, Z)
 
     def _getPb_guess(self, x, T):
-        x = np.atleast_1d(x)
-        return np.sum(
-            x * self.Pcs * np.exp(5.373 * (1 + self.omegas) * (1 - self.Tcs / T))
-        )
+        return _helper_getPb_guess(x, T, self.Pcs, self.Tcs, self.omegas)
 
     def _getPd_guess(self, y, T):
-        y = np.atleast_1d(y)
-        return np.sum(
-            y / (self.Pcs * np.exp(5.373 * (1 + self.omegas) * (1 - self.Tcs / T)))
-        )
+        return _helper_getPd_guess(y, T, self.Pcs, self.Tcs, self.omegas)
 
     def getBubblePointPressure(self, x, T, tol=1e3 * DBL_EPSILON, kmax=10000):
 
@@ -178,8 +172,153 @@ class VLE(object):
             yt = np.sum(y)
             pb = pb * yt
             err = np.abs(1.0 - yt)
+            y = y / yt
 
         return y, pb, ite
+
+    def getDewPointPressure(self, y, T, tol=1e3 * DBL_EPSILON, kmax=10000):
+        assert len(y) == self.n
+        assert np.sum(y) == 1.0
+
+        y = np.atleast_1d(y)
+        pd = self._getPd_guess(y, T)
+
+        k = np.log(self.Pcs / pd) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / T)
+        x = (y / k) / np.sum(y / k)
+        # x = np.full(self.n, 1.0/self.n)
+
+        err = 100
+        ite = 0
+
+        phivap = np.empty(self.n, dtype=np.float64)
+        philiq = np.empty(self.n, dtype=np.float64)
+
+        while err > tol and ite < kmax:
+            ite += 1
+
+            zsvap = self.getZ(pd, T, y)
+            zsliq = self.getZ(pd, T, x)
+
+            zvap = np.max(zsvap)
+            zliq = np.min(zsliq)
+
+            for i in range(self.n):
+                phivap[i] = self.getPhi_i(i, y, pd, T, zvap)
+                philiq[i] = self.getPhi_i(i, x, pd, T, zliq)
+
+            k = philiq / phivap
+            x = y / k
+            xt = np.sum(x)
+            pd = pd / xt
+            err = np.abs(1.0 - xt)
+            x = x / xt
+
+        return x, pd, ite
+
+    def _getdiffPhi_i_respT(self, i, x, p, t, z, h=1e-4):
+        return (self.getPhi_i(i, x, p, t + h, z) - self.getPhi_i(i, x, p, t - h, z)) / (
+            2.0 * h
+        )
+
+    def getBubblePointTemperature(self, x, P, tol=1e3 * DBL_EPSILON, kmax=10000):
+
+        assert len(x) == self.n
+        x = np.atleast_1d(x)
+        assert np.sum(x) == 1.0
+
+        Tbi = np.empty(self.n)
+        for i in range(self.n):
+            if self.mix[i].Tb > 0:
+                Tbi[i] = self.mix[i].Tb
+            else:
+                Tbi[i] = 100.0
+
+        tb = np.sum(x * Tbi)
+
+        y = np.full(self.n, 1.0 / self.n)
+
+        err = 100
+        ite = 0
+
+        phivap = np.empty(self.n, dtype=np.float64)
+        philiq = np.empty(self.n, dtype=np.float64)
+        diffk = np.empty(self.n, dtype=np.float64)
+
+        while err > tol and ite < kmax:
+            ite += 1
+
+            zsvap = self.getZ(P, tb, y)
+            zsliq = self.getZ(P, tb, x)
+
+            zvap = np.max(zsvap)
+            zliq = np.min(zsliq)
+
+            for i in range(self.n):
+                dphiv = self._getdiffPhi_i_respT(i, y, P, tb, zvap)
+                dphil = self._getdiffPhi_i_respT(i, x, P, tb, zliq)
+                phivap[i] = self.getPhi_i(i, y, P, tb, zvap)
+                philiq[i] = self.getPhi_i(i, x, P, tb, zliq)
+                diffk[i] = (dphil * phivap[i] - philiq[i] * dphiv) / phivap[i] ** 2
+
+            k = philiq / phivap
+            tb = tb - (np.sum(x * k) - 1.0) / (np.sum(x * diffk))
+
+            y = x * k
+            yt = np.sum(y)
+            err = np.abs(1.0 - yt)
+            y = y / yt
+
+        return y, tb, ite
+
+    def getDewPointTemperature(self, y, P, tol=1e3 * DBL_EPSILON, kmax=10000):
+        assert len(y) == self.n
+        y = np.atleast_1d(y)
+        assert np.sum(y) == 1.0
+
+        Tdi = np.empty(self.n)
+
+        for i in range(self.n):
+            if self.mix[i].Tb > 0:
+                Tdi[i] = self.mix[i].Tb
+            else:
+                Tdi[i] = 100.0
+
+        td = np.sum(y * Tdi)
+
+        x = np.full(self.n, 1.0 / self.n)
+
+        err = 100
+        ite = 0
+
+        phivap = np.empty(self.n, dtype=np.float64)
+        philiq = np.empty(self.n, dtype=np.float64)
+        diffkl = np.empty(self.n, dtype=np.float64)
+
+        while err > tol and ite < kmax:
+            ite += 1
+
+            zsvap = self.getZ(P, td, y)
+            zsliq = self.getZ(P, td, x)
+
+            zvap = np.max(zsvap)
+            zliq = np.min(zsliq)
+
+            for i in range(self.n):
+                dphiv = self._getdiffPhi_i_respT(i, y, P, td, zvap)
+                dphil = self._getdiffPhi_i_respT(i, x, P, td, zliq)
+                phivap[i] = self.getPhi_i(i, y, P, td, zvap)
+                philiq[i] = self.getPhi_i(i, x, P, td, zliq)
+                diffkl[i] = (-dphil * phivap[i] + philiq[i] * dphiv) / philiq[i] ** 2
+
+            k = philiq / phivap
+            td = td - (np.sum(y / k) - 1.0) / (np.sum(y * diffkl))
+
+            x = y / k
+            xt = np.sum(x)
+            err = np.abs(1.0 - xt)
+            x = x / xt
+
+        return x, td, ite
 
     def getFlash(self, z, P, T, tol=DBL_EPSILON, kmax=10000):
 
@@ -187,9 +326,8 @@ class VLE(object):
         z = np.atleast_1d(z)
         assert np.sum(z) == 1.0
 
-        pb = self._getPb_guess(z, T)
-        pd = self._getPd_guess(z, T)
-
+        # pb = self._getPb_guess(z, T)
+        # pd = self._getPd_guess(z, T)
         # v = - (pb - P)/(pb - pd)
         v = 0.5
 
@@ -220,26 +358,38 @@ class VLE(object):
 
             vold = v
             v = _RachfordRice(v, k, z)
-            x = z / (1 + v * (k - 1))
+            x = z / (1.0 + v * (k - 1.0))
             y = k * x
             err = np.abs(v - vold)
 
         return x, y, v
 
 
-@njit(cache=True)
-def _RachfordRice(v, k, z, tol=DBL_EPSILON, kmax=10000):
+@njit(float64(float64, float64[:], float64[:], float64, int64), cache=True)
+def _RachfordRice(v, k, z, tol=10.0 * DBL_EPSILON, kmax=10000):
 
     v0 = v
-    v1 = 999
-    err = 1000
+    v1 = 999.0
+    err = 1000.0
 
     iter = 0
     while err > tol or iter > kmax:
         iter += 1
-        f = np.sum(z * (k - 1) / (1 + v0 * (k - 1)))
-        dfdv = -np.sum(z * (k - 1) ** 2 / (1 + v0 * (k - 1) ** 2))
+        f = np.sum(z * (k - 1.0) / (1.0 + v0 * (k - 1)))
+        dfdv = -np.sum(z * (k - 1.0) ** 2 / (1.0 + v0 * (k - 1.0) ** 2))
         v1 = v0 - f / dfdv
         err = np.abs(v0 - v1)
         v0 = v1
     return v1
+
+
+@njit(float64(float64[:], float64, float64[:], float64[:], float64[:]), cache=True)
+def _helper_getPb_guess(x, T, Pcs, Tcs, omegas):
+    x = np.atleast_1d(x)
+    return np.sum(x * Pcs * np.exp(5.373 * (1.0 + omegas) * (1.0 - Tcs / T)))
+
+
+@njit(float64(float64[:], float64, float64[:], float64[:], float64[:]), cache=True)
+def _helper_getPd_guess(y, T, Pcs, Tcs, omegas):
+    y = np.atleast_1d(y)
+    return np.sum(y / (Pcs * np.exp(5.373 * (1.0 + omegas) * (1.0 - Tcs / T))))

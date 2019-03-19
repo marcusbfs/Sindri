@@ -40,29 +40,6 @@ def test_pr1976():
     np.testing.assert_allclose(0.003341, zmin, 1e-2)
 
 
-def test_pr1976_get_pb_guess():
-    eq = VLE([methane, water], eosname)
-    x = [0.2, 0.8]
-    p = 1e5
-    t = 300
-
-    pb = eq._getPb_guess(x, t)
-    print(pb)
-
-
-def test_bubble_point_pressure():
-    eq = VLE([methane, ethane], eosname)
-    x = [0.3, 0.7]
-    p = 1e5
-    t = 300
-
-    pb, y, k = eq.getBubblePointPressure(x, t)
-    print(pb)
-    print(y)
-    print(k)
-    # assert 0
-
-
 # def test_flash_three_subs():
 #     eq = VLE([pentane, hexane, heptane], eosname)
 #     z = [0.2, 0.3, 0.5]
@@ -75,17 +52,74 @@ def test_bubble_point_pressure():
 #     print(x)
 #     # assert 0
 
-def test_bubblepoint2():
+
+def test_bubblepoint_pressure_validate_from_youtube():
     # https://www.youtube.com/watch?v=0QFLng0fz68
     eq = VLE([pentane, hexane, heptane], eosname)
     x = [0.2, 0.3, 0.5]
     t = 315
 
     y, pb, ite = eq.getBubblePointPressure(x, t)
-    ymin ,ymax = np.min(y), np.max(y)
+    ymin, ymax = np.min(y), np.max(y)
     ymed = 1.0 - ymin - ymax
-    np.testing.assert_allclose(pb, .043e6, 1e-2)
-    np.testing.assert_allclose(ymin, .163, 1e-2)
-    np.testing.assert_allclose(ymax, .559, 1e-2)
-    np.testing.assert_allclose(ymed, .28, 1e-2)
+    print(pb)
 
+    assert abs(np.sum(y) - 1) < 1e-8
+    np.testing.assert_allclose(pb, 0.043e6, 1e-2)
+    np.testing.assert_allclose(ymin, 0.163, 1e-2)
+    np.testing.assert_allclose(ymax, 0.559, 1e-2)
+    np.testing.assert_allclose(ymed, 0.28, 1e-2)
+
+
+def test_dewpoint_pressure_validate_from_youtube():
+    # https://www.youtube.com/watch?v=0QFLng0fz68
+    eq = VLE([pentane, hexane, heptane], eosname)
+    y = [0.55543853, 0.28222737, 0.1623341]
+    t = 315
+
+    x, pd, ite = eq.getDewPointPressure(y, t)
+    xmin, xmax = np.min(x), np.max(x)
+    xmed = 1.0 - xmin - xmax
+    print(pd)
+
+    assert abs(np.sum(x) - 1) < 1e-8
+    np.testing.assert_allclose(pd, 0.043e6, 1e-2)
+    np.testing.assert_allclose(xmin, 0.2, 1e-8)
+    np.testing.assert_allclose(xmax, 0.5, 1e-8)
+    np.testing.assert_allclose(xmed, 0.3, 1e-8)
+
+
+def test_bubblepoint_temperature_validate_from_youtube():
+    # https://www.youtube.com/watch?v=0QFLng0fz68
+    eq = VLE([pentane, hexane, heptane], eosname)
+    x = [0.2, 0.3, 0.5]
+    p = 42803.8018747439
+
+    y, tb, ite = eq.getBubblePointTemperature(x, p)
+    ymin, ymax = np.min(y), np.max(y)
+    ymed = 1.0 - ymin - ymax
+    print(tb)
+
+    assert abs(np.sum(y) - 1) < 1e-8
+    np.testing.assert_allclose(tb, 315, 1e-8)
+    np.testing.assert_allclose(ymin, 0.163, 1e-2)
+    np.testing.assert_allclose(ymax, 0.559, 1e-2)
+    np.testing.assert_allclose(ymed, 0.28, 1e-2)
+
+
+def test_dewpoint_temperature_validate_from_youtube():
+    # https://www.youtube.com/watch?v=0QFLng0fz68
+    eq = VLE([pentane, hexane, heptane], eosname)
+    y = [0.55543853, 0.28222737, 0.1623341]
+    p = 42803.8018747439
+
+    x, td, ite = eq.getDewPointTemperature(y, p)
+    xmin, xmax = np.min(x), np.max(x)
+    xmed = 1.0 - xmin - xmax
+    print(td)
+
+    assert abs(np.sum(x) - 1) < 1e-8
+    np.testing.assert_allclose(td, 315, 1e-8)
+    np.testing.assert_allclose(xmin, 0.2, 1e-8)
+    np.testing.assert_allclose(xmax, 0.5, 1e-8)
+    np.testing.assert_allclose(xmed, 0.3, 1e-8)
