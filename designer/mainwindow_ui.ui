@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>229</width>
-    <height>233</height>
+    <width>227</width>
+    <height>232</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -160,9 +160,9 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="btn_VLE">
+          <widget class="QPushButton" name="btn_about">
            <property name="text">
-            <string>Vapor-liquid equilibrium</string>
+            <string>About</string>
            </property>
           </widget>
          </item>
@@ -191,7 +191,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>229</width>
+     <width>227</width>
      <height>21</height>
     </rect>
    </property>

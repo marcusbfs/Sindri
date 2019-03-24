@@ -241,7 +241,6 @@ class MixtureProp(object):
         assert np.sum(self.y) == 1.0
         self.n = len(mix)
 
-
     def getIGProps(self, Tref: float, T: float, Pref: float, P: float) -> DeltaProp:
         if self.hasCp():
             cp = self.getCp(T)
