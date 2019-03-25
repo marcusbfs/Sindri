@@ -4,8 +4,17 @@ from numba import njit, float64, int64
 
 from polyEqSolver import solve_cubic
 from constants import R_IG, DBL_EPSILON
+from units import conv_unit
+import os
 
 vle_options = {"Peng and Robinson (1976)": "peng_and_robinson_1976"}
+calc_options = {
+    "Bubble-point Pressure": "bubbleP",
+    "Dew-point Pressure": "dewP",
+    "Bubble-point Temperature": "bubbleT",
+    "Dew-point Temperature": "dewT",
+    "Flash": "flash",
+}
 
 
 class InterfaceEosVLE(object):
@@ -145,8 +154,8 @@ class VLE(object):
         pb = self._getPb_guess(x, T)
 
         k = np.log(self.Pcs / pb) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / T)
-        y = x * k / np.sum(x * k)
-        # y = np.full(self.n, 1.0/self.n)
+        # y = x * k / np.sum(x * k)
+        y = np.full(self.n, 1.0 / self.n)
 
         err = 100
         ite = 0
@@ -172,11 +181,10 @@ class VLE(object):
             yt = np.sum(y)
             pb = pb * yt
             err = np.abs(1.0 - yt)
-            y = y / yt
 
-        return y, pb, ite
+        return y, pb, phivap, philiq, k, ite
 
-    def getDewPointPressure(self, y, T, tol=1e3 * DBL_EPSILON, kmax=10000):
+    def getDewPointPressure(self, y, T, tol=1e3 * DBL_EPSILON, kmax=1000):
         assert len(y) == self.n
         assert np.sum(y) == 1.0
 
@@ -213,14 +221,14 @@ class VLE(object):
             err = np.abs(1.0 - xt)
             x = x / xt
 
-        return x, pd, ite
+        return x, pd, phivap, philiq, k, ite
 
     def _getdiffPhi_i_respT(self, i, x, p, t, z, h=1e-4):
         return (self.getPhi_i(i, x, p, t + h, z) - self.getPhi_i(i, x, p, t - h, z)) / (
             2.0 * h
         )
 
-    def getBubblePointTemperature(self, x, P, tol=1e3 * DBL_EPSILON, kmax=10000):
+    def getBubblePointTemperature(self, x, P, tol=1e3 * DBL_EPSILON, kmax=100):
 
         assert len(x) == self.n
         x = np.atleast_1d(x)
@@ -268,9 +276,9 @@ class VLE(object):
             err = np.abs(1.0 - yt)
             y = y / yt
 
-        return y, tb, ite
+        return y, tb, phivap, philiq, k, ite
 
-    def getDewPointTemperature(self, y, P, tol=1e3 * DBL_EPSILON, kmax=10000):
+    def getDewPointTemperature(self, y, P, tol=1e3 * DBL_EPSILON, kmax=1000):
         assert len(y) == self.n
         y = np.atleast_1d(y)
         assert np.sum(y) == 1.0
@@ -318,18 +326,26 @@ class VLE(object):
             err = np.abs(1.0 - xt)
             x = x / xt
 
-        return x, td, ite
+        return x, td, phivap, philiq, k, ite
 
-    def getFlash(self, z, P, T, tol=DBL_EPSILON, kmax=10000):
+    def getFlash(self, z, P, T, tol=1e5 * DBL_EPSILON, kmax=1000):
 
         assert self.n == len(z)
         z = np.atleast_1d(z)
         assert np.sum(z) == 1.0
 
+        # check if is flash problem
+        y, pd, pv, pl, k, ite = self.getDewPointPressure(z, T)
+        x, pb, pv, pl, k, ite = self.getBubblePointPressure(z, T)
+
+        if not (pd <= P <= pb):
+            raise ValueError("P is not bewteen Pdew and Pbubble")
+            return -1
+
         # pb = self._getPb_guess(z, T)
         # pd = self._getPd_guess(z, T)
-        # v = - (pb - P)/(pb - pd)
-        v = 0.5
+        v = (pb - P) / (pb - pd)
+        # v = 0.5
 
         err = 100
         ite = 0
@@ -341,9 +357,7 @@ class VLE(object):
         x = np.full(self.n, 1.0 / self.n)
 
         while err > tol and ite < kmax:
-
             ite += 1
-
             zsvap = self.getZ(P, T, y)
             zsliq = self.getZ(P, T, x)
 
@@ -357,16 +371,308 @@ class VLE(object):
             k = philiq / phivap
 
             vold = v
-            v = _RachfordRice(v, k, z)
+            v = _RachfordRice(v, k, z, tol=1e-8, kmax=500)
             x = z / (1.0 + v * (k - 1.0))
             y = k * x
             err = np.abs(v - vold)
 
-        return x, y, v
+        return x, y, v, phivap, philiq, k, ite
+
+    def isobaricBinaryMixtureGenData(self, P, x=None, Punit="Pa", Tunit="K"):
+
+        assert self.n == 2
+
+        if x is None:
+            x = [
+                0,
+                0.01,
+                0.02,
+                0.03,
+                0.04,
+                0.06,
+                0.08,
+                0.1,
+                0.15,
+                0.2,
+                0.25,
+                0.3,
+                0.35,
+                0.4,
+                0.45,
+                0.5,
+                0.55,
+                0.6,
+                0.65,
+                0.7,
+                0.75,
+                0.8,
+                0.85,
+                0.9,
+                0.92,
+                0.94,
+                0.96,
+                0.97,
+                0.98,
+                0.99,
+                1,
+            ]
+
+        x = np.atleast_1d(x)
+
+        xmix = np.empty(2, dtype=np.float64)
+        y = np.empty(len(x), dtype=np.float64)
+        T = np.empty(len(x), dtype=np.float64)
+
+        for i in range(len(x)):
+            xmix[0] = x[i]
+            xmix[1] = 1.0 - x[i]
+
+            yres, T[i], pv, pl, k, ite = self.getBubblePointTemperature(xmix, P)
+            T[i] = conv_unit(T[i], "K", Tunit)
+            y[i] = yres[0]
+
+        return x, y, T
+
+    def isothermalBinaryMixtureGenData(self, T, x=None, Punit="Pa", Tunit="K"):
+
+        assert self.n == 2
+
+        if x is None:
+            x = [
+                0,
+                0.01,
+                0.02,
+                0.03,
+                0.04,
+                0.06,
+                0.08,
+                0.1,
+                0.15,
+                0.2,
+                0.25,
+                0.3,
+                0.35,
+                0.4,
+                0.45,
+                0.5,
+                0.55,
+                0.6,
+                0.65,
+                0.7,
+                0.75,
+                0.8,
+                0.85,
+                0.9,
+                0.92,
+                0.94,
+                0.96,
+                0.97,
+                0.98,
+                0.99,
+                1,
+            ]
+
+        x = np.atleast_1d(x)
+
+        xmix = np.empty(2, dtype=np.float64)
+        y = np.empty(len(x), dtype=np.float64)
+        P = np.empty(len(x), dtype=np.float64)
+
+        for i in range(len(x)):
+            xmix[0] = x[i]
+            xmix[1] = 1.0 - x[i]
+
+            yres, P[i], pv, pl, k, ite = self.getBubblePointPressure(
+                xmix, T, tol=1e-5, kmax=100
+            )
+            P[i] = conv_unit(P[i], "Pa", Punit)
+            y[i] = yres[0]
+
+        return x, y, P
+
+    def isobaricBinaryMixturePlot(
+        self, P, x=None, Punit="Pa", Tunit="K", expfilename=""
+    ):
+
+        assert self.n == 2
+
+        if x is None:
+            x = [
+                0.0,
+                0.01,
+                0.02,
+                0.03,
+                0.04,
+                0.06,
+                0.08,
+                0.1,
+                0.15,
+                0.2,
+                0.25,
+                0.3,
+                0.35,
+                0.4,
+                0.45,
+                0.5,
+                0.55,
+                0.6,
+                0.65,
+                0.7,
+                0.75,
+                0.8,
+                0.85,
+                0.9,
+                0.92,
+                0.94,
+                0.96,
+                0.97,
+                0.98,
+                0.99,
+                1.0,
+            ]
+
+        x, y, T = self.isobaricBinaryMixtureGenData(P, x, Punit=Punit, Tunit=Tunit)
+
+        import matplotlib.pyplot as plt
+
+        fig, ax = plt.subplots()
+        ax.plot(x, T, label="Bubble temperature (x)")
+        ax.plot(y, T, label="Dew temperature (y)")
+
+        # check if file exists
+        if os.path.exists(expfilename):
+            import shlex
+
+            with open(expfilename, "r") as file:
+                try:
+                    content = [line.rstrip("\n") for line in file if line != "\n"]
+                    n_exp = len(content) - 1
+                    var_exp = np.empty(n_exp, dtype=np.float64)
+                    x_exp = np.empty(n_exp, dtype=np.float64)
+                    y_exp = np.empty(n_exp, dtype=np.float64)
+                    var_exp_unit = shlex.split(content[0])[0]
+
+                    for i in range(n_exp):
+                        ret3 = shlex.split(content[1 + i])
+                        var_exp[i] = conv_unit(float(ret3[0]), var_exp_unit, Tunit)
+                        x_exp[i] = float(ret3[1])
+                        y_exp[i] = float(ret3[2])
+
+                    ax.scatter(
+                        x_exp, var_exp, label="Exp. data", color="k", linewidths=2.5, zorder=1,
+                    )
+                    ax.scatter(
+                        y_exp, var_exp, label="Exp. data", color="k", linewidths=2.5, zorder=1,
+                    )
+
+                except Exception as e:
+                    raise ValueError("Error in experimental data\n" + str(e))
+
+        ax.grid()
+        ax.set_ylabel("T [{}]".format(Tunit))
+        ax.set_xlabel("x1, y1")
+        var = 0
+        ax.set_xlim([-var, 1 + var])
+        title = "{} (1) / {} (2) at {:0.3f} {}".format(
+            self.mix[0].Name, self.mix[1].Name, conv_unit(P, "Pa", Punit), Punit
+        )
+        ax.set_title(title)
+        ax.legend()
+        plt.show()
+
+    def isothermalBinaryMixturePlot(
+        self, T, x=None, Punit="Pa", Tunit="K", expfilename=""
+    ):
+
+        assert self.n == 2
+
+        if x is None:
+            x = [
+                0,
+                0.01,
+                0.02,
+                0.03,
+                0.04,
+                0.06,
+                0.08,
+                0.1,
+                0.15,
+                0.2,
+                0.25,
+                0.3,
+                0.35,
+                0.4,
+                0.45,
+                0.5,
+                0.55,
+                0.6,
+                0.65,
+                0.7,
+                0.75,
+                0.8,
+                0.85,
+                0.9,
+                0.92,
+                0.94,
+                0.96,
+                0.97,
+                0.98,
+                0.99,
+                1,
+            ]
+
+        x, y, P = self.isothermalBinaryMixtureGenData(T, x, Punit=Punit, Tunit=Tunit)
+
+        import matplotlib.pyplot as plt
+
+        fig, ax = plt.subplots()
+
+        # check if file exists
+        if os.path.exists(expfilename):
+            import shlex
+
+            with open(expfilename, "r") as file:
+                try:
+                    content = [line.rstrip("\n") for line in file if line != "\n"]
+                    n_exp = len(content) - 1
+                    var_exp = np.empty(n_exp, dtype=np.float64)
+                    x_exp = np.empty(n_exp, dtype=np.float64)
+                    y_exp = np.empty(n_exp, dtype=np.float64)
+                    var_exp_unit = shlex.split(content[0])[0]
+
+                    for i in range(n_exp):
+                        ret3 = shlex.split(content[1 + i])
+                        var_exp[i] = conv_unit(float(ret3[0]), var_exp_unit, Punit)
+                        x_exp[i] = float(ret3[1])
+                        y_exp[i] = float(ret3[2])
+
+                    ax.scatter(
+                        x_exp, var_exp, label="Exp. data", color="k", linewidths=2.5, zorder=1,
+                    )
+                    ax.scatter(
+                        y_exp, var_exp, label="Exp. data", color="k", linewidths=2.5, zorder=1,
+                    )
+
+                except Exception as e:
+                    raise ValueError("Error in experimental data\n" + str(e))
+
+        ax.plot(x, P, label="Bubble pressure (x)")
+        ax.plot(y, P, label="Dew pressure (y)")
+        ax.grid()
+        ax.set_ylabel("P [{}]".format(Punit))
+        ax.set_xlabel("x1, y1")
+        var = 0
+        ax.set_xlim([-var, 1 + var])
+        ax.legend()
+        title = "{} (1) / {} (2) at {:0.3f} {}".format(
+            self.mix[0].Name, self.mix[1].Name, conv_unit(T, "K", Tunit), Tunit
+        )
+        ax.set_title(title)
+        plt.show()
 
 
 @njit(float64(float64, float64[:], float64[:], float64, int64), cache=True)
-def _RachfordRice(v, k, z, tol=10.0 * DBL_EPSILON, kmax=10000):
+def _RachfordRice(v, k, z, tol, kmax):
 
     v0 = v
     v1 = 999.0
@@ -375,8 +681,8 @@ def _RachfordRice(v, k, z, tol=10.0 * DBL_EPSILON, kmax=10000):
     iter = 0
     while err > tol or iter > kmax:
         iter += 1
-        f = np.sum(z * (k - 1.0) / (1.0 + v0 * (k - 1)))
-        dfdv = -np.sum(z * (k - 1.0) ** 2 / (1.0 + v0 * (k - 1.0) ** 2))
+        f = np.sum(z * (k - 1.0) / (1.0 + v0 * (k - 1.0)))
+        dfdv = -np.sum(z * (k - 1.0) ** 2 / (1.0 + v0 * (k - 1.0)) ** 2)
         v1 = v0 - f / dfdv
         err = np.abs(v0 - v1)
         v0 = v1

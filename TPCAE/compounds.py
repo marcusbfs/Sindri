@@ -217,6 +217,7 @@ class SubstanceProp(object):
 
     def hasCp(self) -> bool:
         if self.a0 != 0:
+
             return True
         return False
 
@@ -224,6 +225,8 @@ class SubstanceProp(object):
         if isinstance(s, str) and len(s) > 0:
             return s
         return ret
+
+
 
     def _ifNumber(self, n, ret=0) -> float:
         try:

@@ -16,6 +16,7 @@ from eos import EOS
 from ui.mixture_calculations_ui import Ui_MixtureCalculationWindow
 from units import conv_unit
 from unitsOptionsWindow import Window_UnitsOptions
+from VLEWindow import Window_VLE
 
 
 class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow):
@@ -37,6 +38,7 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
         self.btn_savetxt.clicked.connect(self.save_to_txt)
         self.btn_SaveSystem.clicked.connect(self.saveSystem)
         self.btn_LoadSystem.clicked.connect(self.loadSystem)
+        self.btn_VLE.clicked.connect(self.openVLEWindow)
         # self.tableWidget_MixtureSystem.itemChanged.connect(
         #     self._autoCompleteLastMolarFraction
         # )
@@ -529,7 +531,6 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
                     file.readline()
                 content = [line.rstrip("\n") for line in file if line != "\n"]
 
-            print(content)
 
             self.n = int(content[0])
             self.y = np.empty(self.n, dtype=np.float64)
@@ -557,6 +558,24 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
             title = "Error loading system"
             msg = 'Error reading from file "' + filename + '"\n' + str(e)
             QtWidgets.QMessageBox.about(self, title, msg)
+
+
+    def openVLEWindow(self):
+        if self.n < 2:
+            msg = QtWidgets.QMessageBox.about(
+                self,
+                "Mixture error",
+                "Please, select a system with two or more substances",
+            )
+            return -1
+
+        self._getVectorOfSubstancesInSystem()
+        self._getSystemMolarFraction()
+
+        self.vlewindow = Window_VLE(self.subs_in_system,self.y, self.k, self.le_procT.text(),
+                                    self.comboBox_procTunit.currentText(), self.le_procP.text(),
+                                    self.comboBox_procPunit.currentText())
+        self.vlewindow.show()
 
     # ================== DB HANDLER ===========================
     def load_db(self):
