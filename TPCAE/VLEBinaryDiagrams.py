@@ -12,7 +12,7 @@ class VLEBinaryMixturePlot:
         self.y = y
         self.varunit = varunit
         self.title = title
-        self.plottype=plottype
+        self.plottype = plottype
 
         self.fig, self.ax = plt.subplots()
 
@@ -27,7 +27,7 @@ class VLEBinaryMixturePlot:
 
         self.setGrid()
         self.setTitle(self.title)
-        self.ax.set_axisbelow(True)
+        # self.ax.set_axisbelow(True)
         err = 0
         self.ax.set_xlim([-err, 1 + err])
         self.ax.set_ylabel("{} [{}]".format(self.var_paramater, self.varunit))
@@ -58,9 +58,11 @@ class VLEBinaryMixturePlot:
             self.ax.plot(self.x, self.var, label=self.x_var_label, zorder=0)
             self.ax.plot(self.y, self.var, label=self.y_var_label, zorder=0)
             self.ax.set_xlabel("x1, y1")
+        self.setLegends()
 
     def expPlot(self, expfilename):
         import os
+
         type = self.plottype
 
         if os.path.exists(expfilename):
@@ -137,5 +139,6 @@ class VLEBinaryMixturePlot:
                     facecolors=fc,
                     edgecolors=color,
                 )
+            self.setLegends()
         else:
             raise ValueError("Invalid file")

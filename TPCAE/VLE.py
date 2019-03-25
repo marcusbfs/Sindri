@@ -1,17 +1,27 @@
-import sympy as sp
+import os
+
 import numpy as np
 from numba import njit, float64, int64
 
-from polyEqSolver import solve_cubic
-from constants import R_IG, DBL_EPSILON
-from units import conv_unit
-import os
 import VLEBinaryDiagrams
+from constants import R_IG, DBL_EPSILON
+from polyEqSolver import solve_cubic
+from units import conv_unit
 
+from VLEEOSIterfaces import *
 
 vle_options = {
+    # "van der Waals (1890)": "van_der_waals_1890",
+    # "Redlich and Kwong (1949)": "redlich_and_kwong_1949",
+    "Soave (1972)": "soave_1972",
     "Peng and Robinson (1976)": "peng_and_robinson_1976",
-    "Péneloux, et al. (1982)": "peneloux_et_al_1982",
+    # "Péneloux, et al. (1982)": "peneloux_et_al_1982",
+    # "Patel and Teja (1982)": "patel_and_teja_1982",
+    "Stryjek and Vera (1986)": "stryjek_and_vera_1986",
+    "Twu, et al. (1995)": "twu_et_al_1995",
+    "Gasem, et al. PR modification (2001)": "gasem_et_al_pr_2001",
+    "Gasem, et al. Twu modificaton (2001)": "gasem_et_al_twu_2001",
+    "Gasem, et al.(2001)": "gasem_et_al_2001",
 }
 
 calc_options = {
@@ -21,170 +31,6 @@ calc_options = {
     "Dew-point Temperature": "dewT",
     "Flash": "flash",
 }
-
-
-class InterfaceEosVLE(object):
-    def __init__(self):
-        self.k = None
-
-    def bm(self, y):
-        s = 0
-        for i in range(len(y)):
-            s += y[i] * self.bi(i)
-        return s
-
-    def thetam(self, y, T):
-        s1 = 0
-        for i in range(len(y)):
-            s2 = 0
-            for j in range(len(y)):
-                s2 += (
-                    y[i]
-                    * y[j]
-                    * np.sqrt(self.thetai(i, T) * self.thetai(j, T))
-                    * (1 - self.k[i][j])
-                )
-            s1 += s2
-        return s1
-
-    def thetaij(self, i, j, T):
-        return np.sqrt(self.thetai(i, T) * self.thetai(j, T)) * (1 - self.k[i][j])
-
-
-class VLE_PR1976(InterfaceEosVLE):
-    def __init__(self, mix, k):
-        super().__init__()
-        self.mix = np.atleast_1d(mix)
-        self.k = k
-
-    def bi(self, i):
-        return 0.07780 / (self.mix[i].Pc / (R_IG * self.mix[i].Tc))
-
-    def thetai(self, i, T):
-        alpha = (
-            1.0
-            + (0.37464 + 1.54226 * self.mix[i].omega - 0.2699 * self.mix[i].omega ** 2)
-            * (1.0 - (T / self.mix[i].Tc) ** 0.5)
-        ) ** 2
-        return alpha * 0.45724 * (R_IG * self.mix[i].Tc) ** 2 / self.mix[i].Pc
-
-    def getZfromPT(self, P, T, y):
-        A = self.thetam(y, T) * P / (R_IG * T) ** 2
-        B = self.bm(y) * P / (R_IG * T)
-
-        roots = np.asarray(
-            solve_cubic(
-                1.0, -(1.0 - B), (A - 3 * B * B - 2.0 * B), -(A * B - B * B - B ** 3)
-            )
-        )
-        real_values = roots[roots > 0]
-        return real_values
-
-    def phi_i(self, i, y, P, T, Z):
-        b = self.bm(y)
-        a = self.thetam(y, T)
-
-        bi = self.bi(i)
-        A = a * P / (R_IG * T) ** 2
-        B = b * P / (R_IG * T)
-
-        aji = 0
-        for j in range(len(y)):
-            aji += y[j] * self.thetaij(j, i, T)
-
-        lnphi = (
-            bi * (Z - 1) / b
-            - np.log(Z - B)
-            - A
-            / (2 * B * np.sqrt(2))
-            * (2 * aji / a - bi / b)
-            * np.log((Z + 2.414 * B) / (Z - 0.414 * B))
-        )
-        return np.exp(lnphi)
-
-
-class VLE_Peneloux1982(InterfaceEosVLE):
-    def __init__(self, mix, k):
-        # interface: bm, thetam, thetaij
-        super().__init__()
-        self.mix = np.atleast_1d(mix)
-        self.k = k
-
-    def ci(self, i):
-        return (
-            0.40768
-            * (R_IG * self.mix[i].Tc / self.mix[i].Pc)
-            * (0.00385 + 0.08775 * self.mix[i].omega)
-        )
-
-    def bi(self, i):
-        return 0.08664 / (self.mix[i].Pc / (R_IG * self.mix[i].Tc))
-
-    def cm(self, y):
-        c = 0
-        for i in range(len(y)):
-            c += y[i] * self.ci(i)
-        return c
-
-    def bm(self, y):
-        b = 0
-        for i in range(len(y)):
-            b += y[i] * self.bi(i)
-        return b - self.cm(y)
-
-    def thetai(self, i, T):
-        a = 0.42748 * (R_IG * self.mix[i].Tc) ** 2 / self.mix[i].Pc
-        alpha = (
-            1.0
-            + (0.48 + 1.574 * self.mix[i].omega - 0.176 * self.mix[i].omega ** 2)
-            * (1.0 - (T / self.mix[i].Tc) ** 0.5)
-        ) ** 2
-        return a * alpha
-
-    def getZfromPT(self, P, T, y):
-        A = self.thetam(y, T) * P / (R_IG * T) ** 2
-        B = self.bm(y) * P / (R_IG * T)
-
-        c = self.cm(y)
-        b = self.bm(y)
-
-        delta = b + 2 * c
-        epsilon = c * (b + c)
-        theta = self.thetam(y, T)
-
-        _Bl = b * P / (R_IG * T)
-        _deltal = delta * P / (R_IG * T)
-        _thetal = theta * P / (R_IG * T) ** 2
-        _epsilonl = epsilon * (P / (R_IG * T)) ** 2
-
-        a = 1.0
-        b = _deltal - _Bl - 1
-        c = _thetal + _epsilonl - _deltal * (_Bl + 1)
-        d = -(_epsilonl * (_Bl + 1) + _thetal * _Bl)
-
-        roots = np.asarray(solve_cubic(a, b, c, d))
-        real_values = roots[roots > 0]
-        return real_values
-
-    def phi_i(self, i, y, P, T, Z):
-
-        cm = self.cm(y)
-        ci = self.ci(i)
-        bm = self.bm(y) + cm
-        bi = self.bi(i)
-        thetam = self.thetam(y, T)
-        thetai = self.thetai(i, T)
-
-        A = thetam * P / (R_IG * T) ** 2
-        B = bm * P / (R_IG * T)
-
-        lnphi_soave1972 = (
-            bi * (Z - 1) / bm
-            - np.log(Z - B)
-            - A / B * (2.0 * np.sqrt(thetai / thetam) - bi / bm) * np.log(1 + B / Z)
-        )
-        lnphi = lnphi_soave1972 - ci * P / (T * R_IG)
-        return np.exp(lnphi)
 
 
 class VLE(object):
@@ -224,6 +70,24 @@ class VLE(object):
             self.eoseq = VLE_PR1976(self.mix, self.k)
         elif self.eosval == "peneloux_et_al_1982":
             self.eoseq = VLE_Peneloux1982(self.mix, self.k)
+        elif self.eosval == "van_der_waals_1890":
+            self.eoseq = VLE_VanDerWalls(self.mix, self.k)
+        elif self.eosval == "redlich_and_kwong_1949":
+            self.eoseq = VLE_RK1949(self.mix, self.k)
+        elif self.eosval == "soave_1972":
+            self.eoseq = VLE_Soave1972(self.mix, self.k)
+        elif self.eosval == "patel_and_teja_1982":
+            self.eoseq = VLE_PatelTeja1982(self.mix, self.k)
+        elif self.eosval == "twu_et_al_1995":
+            self.eoseq = VLE_TwuEtAl1995(self.mix, self.k)
+        elif self.eosval == "stryjek_and_vera_1986":
+            self.eoseq = VLE_Stryjek1986(self.mix, self.k)
+        elif self.eosval == "gasem_et_al_pr_2001":
+            self.eoseq = VLE_Gasem_et_al_PR_2001(self.mix, self.k)
+        elif self.eosval == "gasem_et_al_twu_2001":
+            self.eoseq = VLE_Gasem_et_al_Twu_2001(self.mix, self.k)
+        elif self.eosval == "gasem_et_al_2001":
+            self.eoseq = VLE_Gasem_et_al_2001(self.mix, self.k)
 
     def getZ(self, P, T, y):
         return self.eoseq.getZfromPT(P, T, y)
@@ -627,10 +491,17 @@ class VLE(object):
 
         x, y, T = self.isobaricBinaryMixtureGenData(P, x, Punit=Punit, Tunit=Tunit)
 
-        title = "{} (1) / {} (2) at {:0.3f} {}".format(
-            self.mix[0].Name, self.mix[1].Name, conv_unit(P, "Pa", Punit), Tunit
+        title = "{} (1) / {} (2) at {:0.3f} {}\nEquation of state: {}".format(
+            self.mix[0].Name,
+            self.mix[1].Name,
+            conv_unit(P, "Pa", Punit),
+            Punit,
+            self.eos,
         )
-        vleplot = VLEBinaryDiagrams.VLEBinaryMixturePlot("isobaric", T, x, y, Tunit, title, plottype)
+
+        vleplot = VLEBinaryDiagrams.VLEBinaryMixturePlot(
+            "isobaric", T, x, y, Tunit, title, plottype
+        )
         if os.path.exists(expfilename):
             vleplot.expPlot(expfilename)
         vleplot.plot()
@@ -677,14 +548,21 @@ class VLE(object):
             ]
 
         x, y, P = self.isothermalBinaryMixtureGenData(T, x, Punit=Punit, Tunit=Tunit)
-        title = "{} (1) / {} (2) at {:0.3f} {}".format(
-            self.mix[0].Name, self.mix[1].Name, conv_unit(T, "K", Tunit), Tunit
+
+        title = "{} (1) / {} (2) at {:0.3f} {}\nEquation of state: {}".format(
+            self.mix[0].Name,
+            self.mix[1].Name,
+            conv_unit(T, "K", Tunit),
+            Tunit,
+            self.eos,
         )
-        vleplot = VLEBinaryDiagrams.VLEBinaryMixturePlot("isothermal", P, x, y, Punit, title, plottype)
+
+        vleplot = VLEBinaryDiagrams.VLEBinaryMixturePlot(
+            "isothermal", P, x, y, Punit, title, plottype
+        )
         if os.path.exists(expfilename):
             vleplot.expPlot(expfilename)
         vleplot.plot()
-
 
 
 @njit(float64(float64, float64[:], float64[:], float64, int64), cache=True)

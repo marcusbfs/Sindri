@@ -20,10 +20,12 @@ eos_options = {
     "Adachi, et al. (1983)": "adachi_et_al_1983",
     "Soave (1984)": "soave_1984",
     "Adachi, et al. (1985)": "adachi_et_al_1985",
+    "Stryjek and Vera (1986)": "stryjek_and_vera_1986",
     "Twu, et al. (1995)": "twu_et_al_1995",
     "Ahlers-Gmehling (2001)": "ahlers_gmehling_2001",
     "Gasem, et al. PR modification (2001)": "gasem_et_al_pr_2001",
     "Gasem, et al. Twu modificaton (2001)": "gasem_et_al_twu_2001",
+    "Gasem, et al.(2001)": "gasem_et_al_2001",
 }
 
 
@@ -349,6 +351,33 @@ class EOS(CubicEOS):
             self.delta = 2 * c
             self.epsilon = -c ** 2
 
+        elif self.eosValue == "stryjek_and_vera_1986":
+
+            thetas = []
+            self.b = 0
+            for i in range(self.n):
+                self.b += self.y[i] * (0.07780 / (self.Pcs[i] / (R_IG * self.Tcs[i])))
+                self.symb_bm += (self.symb_ys[i]) * (
+                    0.07780 / (self.Pcs[i] / (R_IG * self.Tcs[i]))
+                )
+                m = (
+                    0.378893
+                    + 1.48971530 * self.omegas[i]
+                    - 0.17131848 * self.omegas[i] ** 2
+                    + 0.0196554 * self.omegas[i] ** 3
+                )
+                _tmpthetas = (
+                    (1.0 + (m) * (1.0 - (self.T / self.Tcs[i]) ** 0.5)) ** 2
+                ) * (0.45724 * (R_IG * self.Tcs[i]) ** 2 / self.Pcs[i])
+                thetas.append(_tmpthetas)
+
+            self._calculate_theta_mixture(thetas)
+            self._symb_calculate_theta_mixture(thetas)
+            self.delta = 2 * self.b
+            self.symb_deltam = 2 * self.symb_bm
+            self.epsilon = -self.b * self.b
+            self.symb_epsilonm = -self.symb_bm ** 2
+
         elif self.eosValue == "twu_et_al_1995":
             thetas = []
             self.b = 0
@@ -444,6 +473,28 @@ class EOS(CubicEOS):
                     0.603486 * (1 - (self.T / self.Tcs[i]) ** 2.09626)
                 )
                 alpha = alpha0 + self.omegas[i] * (alpha1 - alpha0)
+                thetas.append(a * alpha)
+
+            self._calculate_theta_mixture(thetas)
+            self.delta = 2 * self.b
+            self.epsilon = -self.b ** 2
+
+        elif self.eosValue == "gasem_et_al_2001":
+            thetas = []
+            self.b = 0
+            for i in range(self.n):
+                a = 0.45724 * (R_IG * self.Tcs[i]) ** 2 / self.Pcs[i]
+                self.b += self.y[i] * 0.07780 / (self.Pcs[i] / (R_IG * self.Tcs[i]))
+                A = 2.0
+                B = 0.836
+                C = 0.134
+                D = 0.508
+                E = -0.0467
+
+                Tr = self.T / self.Tcs[i]
+                w = self.omegas[i]
+                alpha = 2.718281828459045235360**((A + B * Tr) * (1.0 - Tr ** (C + w * (D + E * w))))
+
                 thetas.append(a * alpha)
 
             self._calculate_theta_mixture(thetas)

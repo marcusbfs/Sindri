@@ -34,15 +34,18 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
         self.diagtype = diagram_types[0]
         self.expfilename = ""
 
-
         # connections
         self.comboBox_EOS.currentTextChanged.connect(self._setEOSname)
         self.comboBox_CalcType.currentTextChanged.connect(self._setCalculationChanges)
+        self.comboBox_Punit.currentTextChanged.connect(self._setCalculationChanges)
+        self.comboBox_Tunit.currentTextChanged.connect(self._setCalculationChanges)
         self.btn_calculate.clicked.connect(self.calculate)
         self.comboBox_diagramType.currentTextChanged.connect(self._setDiagType)
         self.btn_openExpData.clicked.connect(self._openExpDataFile)
         self.btn_plot.clicked.connect(self._plot)
-        self.btn_saveToTxtBinaryMixData.clicked.connect(self._saveToTxtBinaryMixtureData)
+        self.btn_saveToTxtBinaryMixData.clicked.connect(
+            self._saveToTxtBinaryMixtureData
+        )
         self._connectPlotCheckBox()
 
         self._initialSetup()
@@ -91,8 +94,6 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
             self.tabWidget_VLE.setTabEnabled(1, False)
         else:
             self.comboBox_diagramType.addItems(diagram_types)
-
-
 
     def calculate(self):
 
@@ -242,7 +243,6 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
 
         gendata_header = ["{} [{}]", "x1", "y1"]
 
-
         try:
             self.VLEeq = VLE(self.subsInSystem, self.eosname, self.k)
             if self.diagtype == diagram_types[0]:  # isothermal
@@ -256,7 +256,9 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
                     Tunit=self.comboBox_varUnit.currentText(),
                     Punit=self.comboBox_Punit.currentText(),
                 )
-                gendata_header[0] = "{} [{}]".format("P", self.comboBox_Punit.currentText())
+                gendata_header[0] = "{} [{}]".format(
+                    "P", self.comboBox_Punit.currentText()
+                )
             else:
                 _v = conv_unit(
                     float(self.le_varValue.text()),
@@ -268,7 +270,9 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
                     Tunit=self.comboBox_Tunit.currentText(),
                     Punit=self.comboBox_varUnit.currentText(),
                 )
-                gendata_header[0] = "{} [{}]".format("T", self.comboBox_Tunit.currentText())
+                gendata_header[0] = "{} [{}]".format(
+                    "T", self.comboBox_Tunit.currentText()
+                )
         except Exception as e:
             title = "Error generating data to plot"
             msg = str(e)
@@ -285,9 +289,9 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
             item_var = QtWidgets.QTableWidgetItem("{:3.5e}".format(var[i]))
             item_x = QtWidgets.QTableWidgetItem("{:0.5f}".format(x[i]))
             item_y = QtWidgets.QTableWidgetItem("{:0.5f}".format(y[i]))
-            self.tableWidget_DataResult.setItem(i,0,item_var)
-            self.tableWidget_DataResult.setItem(i,1,item_x)
-            self.tableWidget_DataResult.setItem(i,2,item_y)
+            self.tableWidget_DataResult.setItem(i, 0, item_var)
+            self.tableWidget_DataResult.setItem(i, 1, item_x)
+            self.tableWidget_DataResult.setItem(i, 2, item_y)
 
         if self.checkBox_plotExpData.isChecked():
             expfilename = self.expfilename
@@ -309,7 +313,7 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
                     Tunit=self.comboBox_varUnit.currentText(),
                     Punit=self.comboBox_Punit.currentText(),
                     expfilename=expfilename,
-                    plottype=plottype
+                    plottype=plottype,
                 )
             else:
                 self.VLEeq.isobaricBinaryMixturePlot(
@@ -317,7 +321,7 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
                     Tunit=self.comboBox_Tunit.currentText(),
                     Punit=self.comboBox_varUnit.currentText(),
                     expfilename=expfilename,
-                    plottype=plottype
+                    plottype=plottype,
                 )
         except Exception as e:
             title = "Error plotting"
@@ -333,9 +337,14 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
             subs2 = self.subsInSystem[1].Name
             var = float(self.le_varValue.text())
             varunit = self.comboBox_varUnit.currentText()
-            name_suggestion = "{}-{}_at_{:.5f}_{}{}".format(subs1, subs2, var, varunit, extension)
+            name_suggestion = "{}-{}_at_{:.5f}_{}{}".format(
+                subs1, subs2, var, varunit, extension
+            )
             txt_file_name = QtWidgets.QFileDialog.getSaveFileName(
-                self, "Save binary mixture data", name_suggestion, "Files (*{})".format(extension)
+                self,
+                "Save binary mixture data",
+                name_suggestion,
+                "Files (*{})".format(extension),
             )[0]
             if not txt_file_name:
                 return 0
@@ -345,7 +354,6 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
             msg = str(e)
             QtWidgets.QMessageBox.about(self, title, msg)
             return -1
-
 
         try:
             i_n = self.tableWidget_DataResult.rowCount()
@@ -365,7 +373,8 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
                 content += "{}\t{}\t{}\n".format(
                     self.tableWidget_DataResult.item(i, 0).text(),
                     self.tableWidget_DataResult.item(i, 1).text(),
-                    self.tableWidget_DataResult.item(i, 2).text())
+                    self.tableWidget_DataResult.item(i, 2).text(),
+                )
 
             with open(txt_file_name, "w") as file:
                 file.write(content)
@@ -379,7 +388,6 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
             msg = str(e)
             QtWidgets.QMessageBox.about(self, title, msg)
             return -1
-
 
     def _uncheckX_and_Y(self):
         self._disconnectPlotCheckBox()
@@ -398,8 +406,6 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
         self.checkBox_plotxy.setChecked(False)
         self.checkBox_ploty.setChecked(False)
         self._connectPlotCheckBox()
-
-
 
     def _isGenDataVarValid(self):
         try:
@@ -475,7 +481,6 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
             return True
         except:
             return False
-
 
     def _connectPlotCheckBox(self):
         self.checkBox_plotx.stateChanged.connect(self._uncheckY_and_XY)
