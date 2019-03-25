@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>882</width>
-    <height>589</height>
+    <width>856</width>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,12 +27,25 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>862</width>
-        <height>569</height>
+        <width>836</width>
+        <height>592</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
+       <item row="1" column="2">
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="0" colspan="3">
         <widget class="QTabWidget" name="tabWidget">
          <property name="tabPosition">
           <enum>QTabWidget::North</enum>
@@ -562,13 +575,6 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="0">
-                  <widget class="QPushButton" name="btn_VLE">
-                   <property name="text">
-                    <string>Vapor-liquid Equilibrium</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="3" column="1">
                   <widget class="QPushButton" name="btn_savetxt">
                    <property name="text">
@@ -737,6 +743,13 @@
            </item>
           </layout>
          </widget>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="btn_VLE">
+         <property name="text">
+          <string>Vapor-liquid Equilibrium</string>
+         </property>
         </widget>
        </item>
       </layout>

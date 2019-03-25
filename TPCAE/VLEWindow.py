@@ -42,6 +42,7 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
         self.comboBox_diagramType.currentTextChanged.connect(self._setDiagType)
         self.btn_openExpData.clicked.connect(self._openExpDataFile)
         self.btn_plot.clicked.connect(self._plot)
+        self.btn_saveToTxtBinaryMixData.clicked.connect(self._saveToTxtBinaryMixtureData)
 
         self._initialSetup()
         self.label_VarAnswerUnits.setText("[bar]")
@@ -310,6 +311,61 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
                 )
         except Exception as e:
             title = "Error plotting"
+            msg = str(e)
+            QtWidgets.QMessageBox.about(self, title, msg)
+            return -1
+
+    def _saveToTxtBinaryMixtureData(self):
+
+        try:
+            extension = ".txt"
+            subs1 = self.subsInSystem[0].Name
+            subs2 = self.subsInSystem[1].Name
+            var = float(self.le_varValue.text())
+            varunit = self.comboBox_varUnit.currentText()
+            name_suggestion = "{}-{}_at_{:.5f}_{}{}".format(subs1, subs2, var, varunit, extension)
+            txt_file_name = QtWidgets.QFileDialog.getSaveFileName(
+                self, "Save binary mixture data", name_suggestion, "Files (*{})".format(extension)
+            )[0]
+            if not txt_file_name:
+                return 0
+
+        except Exception as e:
+            title = "Error getting filename"
+            msg = str(e)
+            QtWidgets.QMessageBox.about(self, title, msg)
+            return -1
+
+
+        try:
+            i_n = self.tableWidget_DataResult.rowCount()
+            j_n = self.tableWidget_DataResult.columnCount()
+
+            content = ""
+
+            # header
+            if self.diagtype == diagram_types[0]:
+                content += "{}\t".format(self.comboBox_Punit.currentText())
+            else:
+                content += "{}\t".format(self.comboBox_Tunit.currentText())
+            content += "{}\t{}\n".format("x1", "y1")
+
+            # data
+            for i in range(i_n):
+                content += "{}\t{}\t{}\n".format(
+                    self.tableWidget_DataResult.item(i, 0).text(),
+                    self.tableWidget_DataResult.item(i, 1).text(),
+                    self.tableWidget_DataResult.item(i, 2).text())
+
+            with open(txt_file_name, "w") as file:
+                file.write(content)
+
+            title = "Successfully"
+            msg = "The file has been saved"
+            QtWidgets.QMessageBox.about(self, title, msg)
+
+        except Exception as e:
+            title = "Error saving data to file"
             msg = str(e)
             QtWidgets.QMessageBox.about(self, title, msg)
             return -1

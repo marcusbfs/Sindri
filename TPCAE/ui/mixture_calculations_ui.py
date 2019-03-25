@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/mixture_calculations_ui.ui',
 # licensing of 'designer/mixture_calculations_ui.ui' applies.
 #
-# Created: Sat Mar 23 22:02:36 2019
+# Created: Mon Mar 25 08:52:49 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,17 +14,19 @@ class Ui_MixtureCalculationWindow(object):
     def setupUi(self, MixtureCalculationWindow):
         MixtureCalculationWindow.setObjectName("MixtureCalculationWindow")
         MixtureCalculationWindow.setWindowModality(QtCore.Qt.ApplicationModal)
-        MixtureCalculationWindow.resize(845, 599)
+        MixtureCalculationWindow.resize(856, 612)
         self.gridLayout = QtWidgets.QGridLayout(MixtureCalculationWindow)
         self.gridLayout.setObjectName("gridLayout")
         self.scrollArea = QtWidgets.QScrollArea(MixtureCalculationWindow)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 825, 579))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 836, 592))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem, 1, 2, 1, 1)
         self.tabWidget = QtWidgets.QTabWidget(self.scrollAreaWidgetContents)
         self.tabWidget.setTabPosition(QtWidgets.QTabWidget.North)
         self.tabWidget.setTabShape(QtWidgets.QTabWidget.Rounded)
@@ -63,8 +65,8 @@ class Ui_MixtureCalculationWindow(object):
         self.btn_EditBIParameters = QtWidgets.QPushButton(self.frame)
         self.btn_EditBIParameters.setObjectName("btn_EditBIParameters")
         self.gridLayout_4.addWidget(self.btn_EditBIParameters, 1, 0, 1, 3)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_4.addItem(spacerItem, 1, 3, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_4.addItem(spacerItem1, 1, 3, 1, 1)
         self.btn_LoadSystem = QtWidgets.QPushButton(self.frame)
         self.btn_LoadSystem.setMaximumSize(QtCore.QSize(80, 16777215))
         self.btn_LoadSystem.setObjectName("btn_LoadSystem")
@@ -73,8 +75,8 @@ class Ui_MixtureCalculationWindow(object):
         self.btn_SaveSystem.setMaximumSize(QtCore.QSize(80, 16777215))
         self.btn_SaveSystem.setObjectName("btn_SaveSystem")
         self.gridLayout_4.addWidget(self.btn_SaveSystem, 2, 1, 1, 1)
-        spacerItem1 = QtWidgets.QSpacerItem(510, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_4.addItem(spacerItem1, 2, 2, 1, 2)
+        spacerItem2 = QtWidgets.QSpacerItem(510, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_4.addItem(spacerItem2, 2, 2, 1, 2)
         self.gridLayout_5.addWidget(self.frame, 1, 0, 1, 1)
         self.groupBox_searchSubstance = QtWidgets.QGroupBox(self.tabSystem)
         self.groupBox_searchSubstance.setMinimumSize(QtCore.QSize(0, 100))
@@ -92,8 +94,8 @@ class Ui_MixtureCalculationWindow(object):
         self.le_searchSubstance.setText("")
         self.le_searchSubstance.setObjectName("le_searchSubstance")
         self.gridLayout_3.addWidget(self.le_searchSubstance, 0, 1, 1, 4)
-        spacerItem2 = QtWidgets.QSpacerItem(406, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_3.addItem(spacerItem2, 2, 4, 1, 1)
+        spacerItem3 = QtWidgets.QSpacerItem(406, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_3.addItem(spacerItem3, 2, 4, 1, 1)
         self.label = QtWidgets.QLabel(self.groupBox_searchSubstance)
         self.label.setObjectName("label")
         self.gridLayout_3.addWidget(self.label, 2, 0, 1, 2)
@@ -242,9 +244,6 @@ class Ui_MixtureCalculationWindow(object):
         self.btn_calculate.setFont(font)
         self.btn_calculate.setObjectName("btn_calculate")
         self.gridLayout_10.addWidget(self.btn_calculate, 2, 0, 1, 1)
-        self.btn_VLE = QtWidgets.QPushButton(self.frame_2)
-        self.btn_VLE.setObjectName("btn_VLE")
-        self.gridLayout_10.addWidget(self.btn_VLE, 3, 0, 1, 1)
         self.btn_savetxt = QtWidgets.QPushButton(self.frame_2)
         self.btn_savetxt.setObjectName("btn_savetxt")
         self.gridLayout_10.addWidget(self.btn_savetxt, 3, 1, 1, 1)
@@ -309,7 +308,10 @@ class Ui_MixtureCalculationWindow(object):
         self.verticalLayout.addWidget(self.groupBox__log)
         self.gridLayout_11.addWidget(self.frame_results, 0, 1, 1, 1)
         self.tabWidget.addTab(self.tabCalculations, "")
-        self.gridLayout_2.addWidget(self.tabWidget, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.tabWidget, 0, 0, 1, 3)
+        self.btn_VLE = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.btn_VLE.setObjectName("btn_VLE")
+        self.gridLayout_2.addWidget(self.btn_VLE, 1, 1, 1, 1)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
 
@@ -346,12 +348,12 @@ class Ui_MixtureCalculationWindow(object):
         self.le_refP.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "1", None, -1))
         self.btn_units.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Units", None, -1))
         self.btn_calculate.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Calculate", None, -1))
-        self.btn_VLE.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Vapor-liquid Equilibrium", None, -1))
         self.btn_savetxt.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Save to txt", None, -1))
         self.groupBox_information.setTitle(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Information", None, -1))
         self.groupBox_results.setTitle(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Results", None, -1))
         self.groupBox__log.setTitle(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Log", None, -1))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabCalculations), QtWidgets.QApplication.translate("MixtureCalculationWindow", "Calculations", None, -1))
+        self.btn_VLE.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Vapor-liquid Equilibrium", None, -1))
 
 
 if __name__ == "__main__":

@@ -315,6 +315,7 @@ class MixtureProp(object):
     def checkCpRange(self, T: float) -> bool:
         if self.hasCp():
             for subs in self.substances:
+
                 if not subs.checkCpRange(T):
                     return False
             return True
