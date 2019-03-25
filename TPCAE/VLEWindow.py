@@ -43,6 +43,7 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
         self.btn_openExpData.clicked.connect(self._openExpDataFile)
         self.btn_plot.clicked.connect(self._plot)
         self.btn_saveToTxtBinaryMixData.clicked.connect(self._saveToTxtBinaryMixtureData)
+        self._connectPlotCheckBox()
 
         self._initialSetup()
         self.label_VarAnswerUnits.setText("[bar]")
@@ -293,6 +294,13 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
         else:
             expfilename = ""
 
+        if self.checkBox_plotx.isChecked():
+            plottype = "x"
+        elif self.checkBox_ploty.isChecked():
+            plottype = "y"
+        else:
+            plottype = "both"
+
         try:
 
             if self.diagtype == diagram_types[0]:  # isothermal
@@ -300,14 +308,16 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
                     _v,
                     Tunit=self.comboBox_varUnit.currentText(),
                     Punit=self.comboBox_Punit.currentText(),
-                    expfilename=expfilename
+                    expfilename=expfilename,
+                    plottype=plottype
                 )
             else:
                 self.VLEeq.isobaricBinaryMixturePlot(
                     _v,
                     Tunit=self.comboBox_Tunit.currentText(),
                     Punit=self.comboBox_varUnit.currentText(),
-                    expfilename=expfilename
+                    expfilename=expfilename,
+                    plottype=plottype
                 )
         except Exception as e:
             title = "Error plotting"
@@ -369,6 +379,26 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
             msg = str(e)
             QtWidgets.QMessageBox.about(self, title, msg)
             return -1
+
+
+    def _uncheckX_and_Y(self):
+        self._disconnectPlotCheckBox()
+        self.checkBox_plotx.setChecked(False)
+        self.checkBox_ploty.setChecked(False)
+        self._connectPlotCheckBox()
+
+    def _uncheckX_and_XY(self):
+        self._disconnectPlotCheckBox()
+        self.checkBox_plotx.setChecked(False)
+        self.checkBox_plotxy.setChecked(False)
+        self._connectPlotCheckBox()
+
+    def _uncheckY_and_XY(self):
+        self._disconnectPlotCheckBox()
+        self.checkBox_plotxy.setChecked(False)
+        self.checkBox_ploty.setChecked(False)
+        self._connectPlotCheckBox()
+
 
 
     def _isGenDataVarValid(self):
@@ -445,3 +475,14 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
             return True
         except:
             return False
+
+
+    def _connectPlotCheckBox(self):
+        self.checkBox_plotx.stateChanged.connect(self._uncheckY_and_XY)
+        self.checkBox_ploty.stateChanged.connect(self._uncheckX_and_XY)
+        self.checkBox_plotxy.stateChanged.connect(self._uncheckX_and_Y)
+
+    def _disconnectPlotCheckBox(self):
+        self.checkBox_plotx.stateChanged.disconnect(self._uncheckY_and_XY)
+        self.checkBox_ploty.stateChanged.disconnect(self._uncheckX_and_XY)
+        self.checkBox_plotxy.stateChanged.disconnect(self._uncheckX_and_Y)

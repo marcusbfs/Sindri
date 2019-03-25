@@ -6,7 +6,7 @@ from polyEqSolver import solve_cubic
 from constants import R_IG, DBL_EPSILON
 from units import conv_unit
 import os
-
+import VLEBinaryDiagrams
 
 
 vle_options = {
@@ -175,8 +175,8 @@ class VLE_Peneloux1982(InterfaceEosVLE):
         thetam = self.thetam(y, T)
         thetai = self.thetai(i, T)
 
-        A = thetam*P/(R_IG*T)**2
-        B = bm*P/(R_IG*T)
+        A = thetam * P / (R_IG * T) ** 2
+        B = bm * P / (R_IG * T)
 
         lnphi_soave1972 = (
             bi * (Z - 1) / bm
@@ -245,10 +245,10 @@ class VLE(object):
         x = np.atleast_1d(x)
         pb = self._getPb_guess(x, T)
 
-        # k = np.log(self.Pcs / pb) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / T)
-        # y = x * k / np.sum(x * k)
-        y = np.full(self.n, 1.0 / self.n)
-        k = y/x
+        k = np.exp(
+            np.log(self.Pcs / pb) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / T)
+        )
+        y = x * k / np.sum(x * k)
 
         err = 100
         ite = 0
@@ -284,9 +284,10 @@ class VLE(object):
         y = np.atleast_1d(y)
         pd = self._getPd_guess(y, T)
 
-        k = np.log(self.Pcs / pd) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / T)
-        x = (y / k) / np.sum(y / k)
-        # x = np.full(self.n, 1.0/self.n)
+        k = np.exp(
+            np.log(self.Pcs / pd) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / T)
+        )
+        x = y / k
 
         err = 100
         ite = 0
@@ -584,7 +585,7 @@ class VLE(object):
         return x, y, P
 
     def isobaricBinaryMixturePlot(
-        self, P, x=None, Punit="Pa", Tunit="K", expfilename=""
+        self, P, x=None, Punit="Pa", Tunit="K", expfilename="", plottype="both"
     ):
 
         assert self.n == 2
@@ -626,74 +627,16 @@ class VLE(object):
 
         x, y, T = self.isobaricBinaryMixtureGenData(P, x, Punit=Punit, Tunit=Tunit)
 
-        import matplotlib.pyplot as plt
-
-        fig, ax = plt.subplots()
-        ax.plot(x, T, label="Bubble temperature (x)", zorder=0)
-        ax.plot(y, T, label="Dew temperature (y)", zorder=0)
-
-        # check if file exists
-        if os.path.exists(expfilename):
-            import shlex
-
-            with open(expfilename, "r") as file:
-                try:
-                    content = [line.rstrip("\n") for line in file if line != "\n"]
-                    n_exp = len(content) - 1
-                    var_exp = np.empty(n_exp, dtype=np.float64)
-                    x_exp = np.empty(n_exp, dtype=np.float64)
-                    y_exp = np.empty(n_exp, dtype=np.float64)
-                    var_exp_unit = shlex.split(content[0])[0]
-
-                    for i in range(n_exp):
-                        ret3 = shlex.split(content[1 + i])
-                        var_exp[i] = conv_unit(float(ret3[0]), var_exp_unit, Tunit)
-                        x_exp[i] = float(ret3[1])
-                        y_exp[i] = float(ret3[2])
-
-                    color = "k"
-                    lw = 1.0
-                    zorder = 1
-                    fc = "none"
-                    ax.scatter(
-                        x_exp,
-                        var_exp,
-                        label="Exp. data",
-                        color=color,
-                        linewidths=lw,
-                        zorder=zorder,
-                        facecolors=fc,
-                        edgecolors=color,
-                    )
-                    ax.scatter(
-                        y_exp,
-                        var_exp,
-                        label="Exp. data",
-                        color=color,
-                        linewidths=lw,
-                        zorder=zorder,
-                        facecolors=fc,
-                        edgecolors=color,
-                    )
-
-                except Exception as e:
-                    raise ValueError("Error in experimental data\n" + str(e))
-
-        ax.set_axisbelow(True)
-        ax.grid()
-        ax.set_ylabel("T [{}]".format(Tunit))
-        ax.set_xlabel("x1, y1")
-        var = 0
-        ax.set_xlim([-var, 1 + var])
         title = "{} (1) / {} (2) at {:0.3f} {}".format(
-            self.mix[0].Name, self.mix[1].Name, conv_unit(P, "Pa", Punit), Punit
+            self.mix[0].Name, self.mix[1].Name, conv_unit(P, "Pa", Punit), Tunit
         )
-        ax.set_title(title)
-        ax.legend()
-        plt.show()
+        vleplot = VLEBinaryDiagrams.VLEBinaryMixturePlot("isobaric", T, x, y, Tunit, title, plottype)
+        if os.path.exists(expfilename):
+            vleplot.expPlot(expfilename)
+        vleplot.plot()
 
     def isothermalBinaryMixturePlot(
-        self, T, x=None, Punit="Pa", Tunit="K", expfilename=""
+        self, T, x=None, Punit="Pa", Tunit="K", expfilename="", plottype="both"
     ):
 
         assert self.n == 2
@@ -734,73 +677,14 @@ class VLE(object):
             ]
 
         x, y, P = self.isothermalBinaryMixtureGenData(T, x, Punit=Punit, Tunit=Tunit)
-
-        import matplotlib.pyplot as plt
-
-        fig, ax = plt.subplots()
-
-        ax.plot(x, P, label="Bubble pressure (x)", zorder=0)
-        ax.plot(y, P, label="Dew pressure (y)", zorder=0)
-
-        # check if file exists
-        if os.path.exists(expfilename):
-            import shlex
-
-            with open(expfilename, "r") as file:
-                try:
-                    content = [line.rstrip("\n") for line in file if line != "\n"]
-                    n_exp = len(content) - 1
-                    var_exp = np.empty(n_exp, dtype=np.float64)
-                    x_exp = np.empty(n_exp, dtype=np.float64)
-                    y_exp = np.empty(n_exp, dtype=np.float64)
-                    var_exp_unit = shlex.split(content[0])[0]
-
-                    for i in range(n_exp):
-                        ret3 = shlex.split(content[1 + i])
-                        var_exp[i] = conv_unit(float(ret3[0]), var_exp_unit, Punit)
-                        x_exp[i] = float(ret3[1])
-                        y_exp[i] = float(ret3[2])
-
-                    color = "k"
-                    lw = 1.0
-                    zorder = 1
-                    fc = "none"
-                    ax.scatter(
-                        x_exp,
-                        var_exp,
-                        label="Exp. data",
-                        color=color,
-                        linewidths=lw,
-                        zorder=zorder,
-                        facecolors=fc,
-                        edgecolors=color,
-                    )
-                    ax.scatter(
-                        y_exp,
-                        var_exp,
-                        label="Exp. data",
-                        color=color,
-                        linewidths=lw,
-                        zorder=zorder,
-                        facecolors=fc,
-                        edgecolors=color,
-                    )
-
-                except Exception as e:
-                    raise ValueError("Error in experimental data\n" + str(e))
-
-        ax.set_axisbelow(True)
-        ax.grid()
-        ax.set_ylabel("P [{}]".format(Punit))
-        ax.set_xlabel("x1, y1")
-        var = 0
-        ax.set_xlim([-var, 1 + var])
-        ax.legend()
         title = "{} (1) / {} (2) at {:0.3f} {}".format(
             self.mix[0].Name, self.mix[1].Name, conv_unit(T, "K", Tunit), Tunit
         )
-        ax.set_title(title)
-        plt.show()
+        vleplot = VLEBinaryDiagrams.VLEBinaryMixturePlot("isothermal", P, x, y, Punit, title, plottype)
+        if os.path.exists(expfilename):
+            vleplot.expPlot(expfilename)
+        vleplot.plot()
+
 
 
 @njit(float64(float64, float64[:], float64[:], float64, int64), cache=True)
