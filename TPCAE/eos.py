@@ -360,14 +360,31 @@ class EOS(CubicEOS):
                 self.symb_bm += (self.symb_ys[i]) * (
                     0.07780 / (self.Pcs[i] / (R_IG * self.Tcs[i]))
                 )
-                m = (
+                k0 = (
                     0.378893
                     + 1.48971530 * self.omegas[i]
                     - 0.17131848 * self.omegas[i] ** 2
                     + 0.0196554 * self.omegas[i] ** 3
                 )
+                k1 = 0
+
+                name = self.mix.substances[i].Name
+                if name == "hexadecane":
+                    k1 = 0.02665
+                elif name == "hexane":
+                    k1 = 0.05104
+                elif name == "cyclohexane":
+                    k1 = 0.07023
+                elif name == "methane":
+                    k1 = -0.00159
+                elif name == "benzene":
+                    k1 = 0.07019
+
+                Tr = self.T / self.Tcs[i]
+                k = k0 + k1 * (1 + Tr) * (0.7 - Tr)
+
                 _tmpthetas = (
-                    (1.0 + (m) * (1.0 - (self.T / self.Tcs[i]) ** 0.5)) ** 2
+                    (1.0 + (k) * (1.0 - (self.T / self.Tcs[i]) ** 0.5)) ** 2
                 ) * (0.45724 * (R_IG * self.Tcs[i]) ** 2 / self.Pcs[i])
                 thetas.append(_tmpthetas)
 
@@ -493,7 +510,9 @@ class EOS(CubicEOS):
 
                 Tr = self.T / self.Tcs[i]
                 w = self.omegas[i]
-                alpha = 2.718281828459045235360**((A + B * Tr) * (1.0 - Tr ** (C + w * (D + E * w))))
+                alpha = 2.718281828459045235360 ** (
+                    (A + B * Tr) * (1.0 - Tr ** (C + w * (D + E * w)))
+                )
 
                 thetas.append(a * alpha)
 

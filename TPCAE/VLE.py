@@ -19,6 +19,7 @@ vle_options = {
     # "Patel and Teja (1982)": "patel_and_teja_1982",
     "Stryjek and Vera (1986)": "stryjek_and_vera_1986",
     "Twu, et al. (1995)": "twu_et_al_1995",
+    # "Tsai and Chen (1998)": "tsai_and_chen_1998",
     "Gasem, et al. PR modification (2001)": "gasem_et_al_pr_2001",
     "Gasem, et al. Twu modificaton (2001)": "gasem_et_al_twu_2001",
     "Gasem, et al.(2001)": "gasem_et_al_2001",
@@ -88,6 +89,8 @@ class VLE(object):
             self.eoseq = VLE_Gasem_et_al_Twu_2001(self.mix, self.k)
         elif self.eosval == "gasem_et_al_2001":
             self.eoseq = VLE_Gasem_et_al_2001(self.mix, self.k)
+        elif self.eosval == "tsai_and_chen_1998":
+            self.eoseq = VLE_Tsai1998(self.mix, self.k)
 
     def getZ(self, P, T, y):
         return self.eoseq.getZfromPT(P, T, y)

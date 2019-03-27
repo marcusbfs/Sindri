@@ -132,7 +132,6 @@ class VLEBinaryMixturePlot:
                 self.ax.scatter(
                     y_exp,
                     var_exp,
-                    label=y_exp_var_label,
                     color=color,
                     linewidths=lw,
                     zorder=zorder,

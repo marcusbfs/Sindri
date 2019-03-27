@@ -187,28 +187,35 @@ class VLE_VanDerWalls(InterfaceEosVLE):
         self.k = k
 
     def bi(self, i):
-        return 0.125 / (self.mix[i].Pc / (R_IG * self.mix[i].Tc))
+        return 0.125 * R_IG * self.mix[i].Tc / self.mix[i].Pc
 
     def thetai(self, i, T):
         return 0.42188 * (R_IG * self.mix[i].Tc) ** 2 / self.mix[i].Pc
 
+    def thetam(self, y, T):
+        s = 0
+        for i in range(len(y)):
+            s += y[i] * self.thetai(i, T) ** 0.5
+        return s ** 2
+
     def getZfromPT(self, P, T, y):
 
         b = self.bm(y)
-
         theta = self.thetam(y, T)
+        delta = 0
+        epsilon = 0
 
         _Bl = b * P / (R_IG * T)
-        _deltal = 0
+        _deltal = delta * P / (R_IG * T)
         _thetal = theta * P / (R_IG * T) ** 2
-        _epsilonl = 0
+        _epsilonl = epsilon * (P / (R_IG * T)) ** 2
 
-        a = 1.0
-        b = _deltal - _Bl - 1
-        c = _thetal + _epsilonl - _deltal * (_Bl + 1)
-        d = -(_epsilonl * (_Bl + 1) + _thetal * _Bl)
+        # coefficients Z**3 + a0*Z**2 + a1*Z + a2 = 0
+        _a0 = _deltal - _Bl - 1
+        _a1 = _thetal + _epsilonl - _deltal * (_Bl + 1)
+        _a2 = -(_epsilonl * (_Bl + 1) + _thetal * _Bl)
 
-        roots = np.asarray(solve_cubic(a, b, c, d))
+        roots = np.asarray(solve_cubic(1.0, _a0, _a1, _a2))
         real_values = roots[roots > 0]
         return real_values
 
@@ -219,13 +226,14 @@ class VLE_VanDerWalls(InterfaceEosVLE):
         thetai = self.thetai(i, T)
         v = Z * R_IG * T / P
 
-        lnphi = (
-            -np.log((v - b) / v)
-            + bi / (v - b)
-            - 2 * thetai ** 0.5 / (R_IG * T * v) * theta
-            - np.log(Z)
+        RT = R_IG * T
+        rtlnphi = (
+            RT * np.log(v / (v - b))
+            - RT * np.log(Z)
+            - (RT * bi / (v - b) + 2.0 * (theta * thetai) ** 0.5 / v)
         )
-        return np.exp(lnphi)
+
+        return np.exp(rtlnphi / RT)
 
 
 class VLE_RK1949(InterfaceEosVLE):
@@ -470,13 +478,28 @@ class VLE_Stryjek1986(VLE_PR1976):
         # interface: bi, thetai, getZfromPT, phi_i
         super().__init__(mix, k)
 
-    def mOfAlphaFunction(self, i, t):
-        return (
+    def mOfAlphaFunction(self, i, T):
+        k0 = (
             0.378893
             + 1.48971530 * self.mix[i].omega
             - 0.17131848 * self.mix[i].omega ** 2
             + 0.0196554 * self.mix[i].omega ** 3
         )
+
+        k1 = 0
+        name = self.mix[i].Name
+        if name == "hexadecane":
+            k1 = 0.02665
+        elif name == "hexane":
+            k1 = 0.05104
+        elif name == "cyclohexane":
+            k1 = 0.07023
+        elif name == "methane":
+            k1 = -0.00159
+
+        Tr = T / self.mix[i].Tc
+        k = k0 + k1 * (1 + Tr) * (0.7 - Tr)
+        return k
 
 
 class VLE_Gasem_et_al_PR_2001(VLE_PR1976):
@@ -520,4 +543,149 @@ class VLE_Gasem_et_al_2001(VLE_PR1976):
 
         Tr = T / self.mix[i].Tc
         w = self.mix[i].omega
-        return np.exp((A + B * Tr) * (1. - Tr ** (C + w * (D + E * w))))
+        return np.exp((A + B * Tr) * (1.0 - Tr ** (C + w * (D + E * w))))
+
+
+class VLE_Tsai1998(InterfaceEosVLE):
+    def __init__(self, mix, k):
+        # interface: bi, thetai, getZfromPT, phi_i
+        super().__init__()
+        self.mix = np.atleast_1d(mix)
+        self.k = k
+
+    def ti(self, i, T):
+        k1 = self.k1(i)
+        k3 = self.k3(i)
+        k2 = self.k2(k3)
+        Tr = T / self.mix[i].Tc
+
+        return (R_IG * self.mix[i].Tc / self.mix[i].Pc) * (
+            k1 + k2 * (1 - Tr ** (2 / 3)) + k3 * (1 - Tr ** (2 / 3)) ** 2
+        )
+
+    def k1(self, i):
+        w = self.mix[i].omega
+        return (
+            0.00185
+            + 0.00438 * w
+            + 0.36322 * w ** 2
+            - 0.90831 * w ** 3
+            + 0.5588 * w ** 4
+        )
+
+    def k2(self, k3):
+        return (
+            -0.00542
+            - 0.51112 * k3
+            + 0.04533 * k3 ** 2
+            + 0.07447 * k3 ** 3
+            - 0.03831 * k3 ** 4
+        )
+
+    def tm(self, y, T):
+        s = 0
+        for i in range(len(y)):
+            s += y[i] * self.ti(i, T)
+        return s
+
+    def bi(self, i):
+        return 0.0778 * R_IG * self.mix[i].Tc / self.mix[i].Pc
+
+    def thetai(self, i, T):
+        return (
+            0.45724 * (R_IG * self.mix[i].Tc) ** 2 / self.mix[i].Pc * self.alpha(i, T)
+        )
+
+    def alpha(self, i, T):
+        Tr = T / self.mix[i].Tc
+        w = self.mix[i].omega
+
+        M = (
+            0.20473
+            + 0.83548 * w
+            - 0.18470 * w ** 2
+            + 0.16675 * w ** 3
+            - 0.09881 * w ** 4
+        )
+        N = 0
+
+        name = self.mix[i].Name
+
+        if name == "water":
+            N = 0.11560
+        elif name == "methanol":
+            N = 0.03221
+
+        alp = (1 + M * (1 - Tr) + N * (1 - Tr) * (0.7 - Tr)) ** 2
+        return alp
+
+    def k3(self, i):
+        k = 0
+        name = self.mix[i].Name
+
+        if name == "water":
+            print("water")
+            k = 0.01471
+        elif name == "methanol":
+            print("methanol")
+            k = -0.04426
+
+        return k
+
+    def phi_i(self, i, y, P, T, Z):
+        bi = self.bi(i)
+        tm = self.tm(y, T)
+        tbar = P * tm / (R_IG * T)
+
+        a = self.thetam(y, T)
+        b = self.bm(y)
+
+        A = P * a / (R_IG * T) ** 2
+        B = P * b / (R_IG * T)
+
+        xjaij = 0
+
+        for j in range(len(y)):
+            xjaij += y[j] * self.thetaij(i, j, T)
+
+        termo1 = (Z + tbar - 1) * bi / B
+        termo2 = -np.log(Z + tbar - B)
+        # termo2 = -np.log(Z + tbar - 1)
+        termo3 = -(A / (2 * (2 * B) ** 0.5))
+        termo4 = 2 * xjaij / A - bi / B
+        termo5 = np.log(
+            (Z + tbar + B * (1 + 2 ** 0.5)) / (Z + tbar + B * (1 - 2 ** 0.5))
+        )
+
+        lnphi = termo1 + termo2 + termo3 * termo4*termo5
+
+        # (Z + tbar - 1) * bi / B
+        # - np.log(Z + tbar - 1)
+        # - (A / (2 * (2 * B) ** 0.5))
+        # * (2 * xjaij / A - bi / B)
+        # * np.log((Z + tbar + B * (1 + 2 ** 0.5)) / (Z + tbar + B * (1 - 2 ** 0.5)))
+        return np.exp(lnphi)
+
+    def getZfromPT(self, P, T, y):
+
+        bb = self.bm(y)
+        tm = self.tm(y, T)
+        theta = self.thetam(y, T)
+        b = bb - tm
+
+        delta = 2 * b
+        epsilon = -b ** 2 + 4 * b * tm - 2 * tm ** 2
+
+        _Bl = b * P / (R_IG * T)
+        _deltal = delta * P / (R_IG * T)
+        _thetal = theta * P / (R_IG * T) ** 2
+        _epsilonl = epsilon * (P / (R_IG * T)) ** 2
+
+        # coefficients Z**3 + a0*Z**2 + a1*Z + a2 = 0
+        _a0 = _deltal - _Bl - 1
+        _a1 = _thetal + _epsilonl - _deltal * (_Bl + 1)
+        _a2 = -(_epsilonl * (_Bl + 1) + _thetal * _Bl)
+
+        roots = np.asarray(solve_cubic(1, _a0, _a1, _a2))
+        real_values = roots[roots > 0]
+        return real_values

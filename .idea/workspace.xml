@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/TPCAE/VLE.py" line="363" />
-    <bookmark url="file://$PROJECT_DIR$/TPCAE/VLE.py" line="356" />
+    <bookmark url="file://$PROJECT_DIR$/TPCAE/VLE.py" line="366" />
+    <bookmark url="file://$PROJECT_DIR$/TPCAE/VLE.py" line="359" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change afterPath="$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/VLE.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/VLE.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/VLEWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/VLEWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/eos.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/eos.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/ui/vle_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/ui/vle_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/designer/vle_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/vle_ui.ui" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,11 +22,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/TPCAE/VLE.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="8891">
-                  <caret line="550" lean-forward="true" selection-start-line="550" selection-end-line="550" />
+                <state relative-caret-position="374">
+                  <caret line="22" column="19" lean-forward="true" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -40,11 +37,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="183">
-                  <caret line="504" column="19" selection-start-line="504" selection-start-column="19" selection-end-line="504" selection-end-column="19" />
-                  <folding>
-                    <element signature="e#0#9#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="17">
+                  <caret line="1" selection-start-line="1" selection-end-line="1" />
                 </state>
               </provider>
             </entry>
@@ -52,8 +46,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tests/test_vle_EOS_implementations.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="578">
-                  <caret line="42" column="4" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
+                <state relative-caret-position="187">
+                  <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -61,11 +55,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="465">
-                  <caret line="617" lean-forward="true" selection-start-line="617" selection-end-line="617" />
+                <state relative-caret-position="125">
+                  <caret line="398" column="22" selection-start-line="398" selection-start-column="22" selection-end-line="398" selection-end-column="22" />
                   <folding>
                     <element signature="e#0#18#0" expanded="true" />
                   </folding>
@@ -74,10 +68,22 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/TPCAE/CubicEOS.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="236">
+                  <caret line="70" selection-start-line="70" selection-end-line="70" />
+                  <folding>
+                    <element signature="e#0#10#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/TPCAE/VLEWindow.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="271">
-                  <caret line="194" column="11" selection-start-line="194" selection-start-column="11" selection-end-line="194" selection-end-column="11" />
+                <state relative-caret-position="302">
+                  <caret line="178" column="24" selection-start-line="178" selection-start-column="24" selection-end-line="178" selection-end-column="24" />
                   <folding>
                     <element signature="e#0#37#0" expanded="true" />
                   </folding>
@@ -88,11 +94,11 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/TPCAE/VLE.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-391">
+                <state relative-caret-position="102">
                   <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
@@ -104,8 +110,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="340">
-                  <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+                <state relative-caret-position="183">
+                  <caret line="124" column="41" selection-start-line="124" selection-start-column="41" selection-end-line="124" selection-end-column="41" />
                   <folding>
                     <element signature="e#0#18#0" expanded="true" />
                   </folding>
@@ -198,10 +204,10 @@
         <option value="$PROJECT_DIR$/TPCAE/compounds.py" />
         <option value="$PROJECT_DIR$/tests/VLEEOSIterfaces.py" />
         <option value="$PROJECT_DIR$/TPCAE/VLEWindow.py" />
-        <option value="$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py" />
-        <option value="$PROJECT_DIR$/TPCAE/VLE.py" />
         <option value="$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py" />
         <option value="$PROJECT_DIR$/TPCAE/eos.py" />
+        <option value="$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py" />
+        <option value="$PROJECT_DIR$/TPCAE/VLE.py" />
       </list>
     </option>
   </component>
@@ -219,7 +225,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -246,6 +251,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -468,15 +474,15 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4947313" weight="0.3287234" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6269758" weight="0.30212766" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6248683" weight="0.30212766" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49683878" weight="0.32553193" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49578503" weight="0.3287234" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.46875" weight="0.33917198" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.37302423" side_tool="true" visible="true" weight="0.30212766" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.43361434" side_tool="true" visible="true" weight="0.3180851" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4873551" weight="0.32553193" />
-      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5679663" weight="0.3180851" />
+      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5663857" weight="0.3180851" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -506,6 +512,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py</url>
+          <line>659</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -617,16 +630,6 @@
           <caret line="33" column="11" lean-forward="true" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
           <folding>
             <element signature="e#0#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/polyEqSolver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="27" column="23" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -840,40 +843,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_vle_EOS_implementations.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="42" column="4" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="504" column="19" selection-start-line="504" selection-start-column="19" selection-end-line="504" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/VLE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8891">
-          <caret line="550" lean-forward="true" selection-start-line="550" selection-end-line="550" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="183">
+          <caret line="124" column="41" selection-start-line="124" selection-start-column="41" selection-end-line="124" selection-end-column="41" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -882,10 +855,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/VLEWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="194" column="11" selection-start-line="194" selection-start-column="11" selection-end-line="194" selection-end-column="11" />
+        <state relative-caret-position="302">
+          <caret line="178" column="24" selection-start-line="178" selection-start-column="24" selection-end-line="178" selection-end-column="24" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="398" column="22" selection-start-line="398" selection-start-column="22" selection-end-line="398" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_vle_EOS_implementations.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -900,12 +893,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/eos.py">
+    <entry file="file://$PROJECT_DIR$/TPCAE/polyEqSolver.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="617" lean-forward="true" selection-start-line="617" selection-end-line="617" />
+        <state relative-caret-position="136">
+          <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/VLE.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="19" lean-forward="true" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
