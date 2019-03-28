@@ -6,9 +6,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/VLE.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/VLE.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/db/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/db/database.db" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,8 +21,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/TPCAE/VLE.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="357">
-                  <caret line="254" column="49" selection-start-line="254" selection-start-column="49" selection-end-line="254" selection-end-column="49" />
+                <state relative-caret-position="34">
+                  <caret line="232" lean-forward="true" selection-start-line="232" selection-end-line="232" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -121,8 +118,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="183">
-                  <caret line="124" column="41" selection-start-line="124" selection-start-column="41" selection-end-line="124" selection-end-column="41" />
+                <state relative-caret-position="13">
+                  <caret line="114" column="29" lean-forward="true" selection-start-line="114" selection-start-column="29" selection-end-line="114" selection-end-column="29" />
                   <folding>
                     <element signature="e#0#18#0" expanded="true" />
                   </folding>
@@ -485,15 +482,15 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4947313" weight="0.3287234" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6222339" weight="0.30212766" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6217071" visible="true" weight="0.30212766" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49683878" weight="0.32553193" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49578503" weight="0.3287234" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.46875" weight="0.33917198" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.43677557" side_tool="true" visible="true" weight="0.3180851" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.37829295" side_tool="true" visible="true" weight="0.30212766" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4873551" weight="0.32553193" />
-      <window_info active="true" anchor="bottom" id="Debug" order="10" sideWeight="0.56322443" visible="true" weight="0.3180851" />
+      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.56322443" weight="0.3180851" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -528,11 +525,6 @@
           <url>file://$PROJECT_DIR$/TPCAE/VLE.py</url>
           <line>650</line>
           <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TPCAE/VLE.py</url>
-          <line>259</line>
-          <option name="timeStamp" value="54" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -898,16 +890,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="124" column="41" selection-start-line="124" selection-start-column="41" selection-end-line="124" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_vle_EOS_implementations.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-38">
@@ -937,10 +919,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/VLE.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="254" column="49" selection-start-line="254" selection-start-column="49" selection-end-line="254" selection-end-column="49" />
+        <state relative-caret-position="102">
+          <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13">
+          <caret line="114" column="29" lean-forward="true" selection-start-line="114" selection-start-column="29" selection-end-line="114" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
