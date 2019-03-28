@@ -557,10 +557,10 @@ class VLE_Tsai1998(InterfaceEosVLE):
         k1 = self.k1(i)
         k3 = self.k3(i)
         k2 = self.k2(k3)
-        Tr = T / self.mix[i].Tc
+        Tr_pow_two_thirds = (T / self.mix[i].Tc) ** (2.0 / 3.0)
 
         return (R_IG * self.mix[i].Tc / self.mix[i].Pc) * (
-            k1 + k2 * (1 - Tr ** (2 / 3)) + k3 * (1 - Tr ** (2 / 3)) ** 2
+            k1 + k2 * (1.0 - Tr_pow_two_thirds) + k3 * (1.0 - Tr_pow_two_thirds) ** 2
         )
 
     def k1(self, i):
@@ -622,21 +622,44 @@ class VLE_Tsai1998(InterfaceEosVLE):
     def k3(self, i):
         k = 0
         name = self.mix[i].Name
-
         if name == "water":
-            print("water")
             k = 0.01471
         elif name == "methanol":
-            print("methanol")
             k = -0.04426
-
         return k
+
+    def thetam(self, y, T):
+        n = len(y)
+        _thetam = 0
+        for i in range(n):
+            s = 0
+            for j in range(n):
+                s += (
+                    y[i]
+                    * y[j]
+                    * (1 - self.k[i][j])
+                    * (self.thetai(i, T) * self.thetai(j, T)) ** 0.5
+                )
+            _thetam += s
+        return _thetam
+
+    def bm(self, y):
+        s = 0
+        for i in range(len(y)):
+            s += y[i] * self.bi(i)
+        return s
 
     def phi_i(self, i, y, P, T, Z):
         bi = self.bi(i)
         tm = self.tm(y, T)
-        tbar = P * tm / (R_IG * T)
 
+        while P < (1.0 - Z) * R_IG * T / tm:
+            print(P)
+            P = 1.1 * (1.0 - Z) * R_IG * T / tm
+            print(P)
+            tm = self.tm(y, T)
+
+        tbar = P * tm / (R_IG * T)
         a = self.thetam(y, T)
         b = self.bm(y)
 
@@ -646,18 +669,31 @@ class VLE_Tsai1998(InterfaceEosVLE):
         xjaij = 0
 
         for j in range(len(y)):
-            xjaij += y[j] * self.thetaij(i, j, T)
+            xjaij += (
+                y[j]
+                * (1 - self.k[i][j])
+                * (self.thetai(i, T) * self.thetai(j, T)) ** 0.5
+            )
 
-        termo1 = (Z + tbar - 1) * bi / B
-        termo2 = -np.log(Z + tbar - B)
-        # termo2 = -np.log(Z + tbar - 1)
+        Z_plus_tbar_minus_1 = Z + tbar - 1.0
+        termo1 = Z_plus_tbar_minus_1 * bi / B
+        # if Z_plus_tbar_minus_1 > 0:
+        #     termo2 = -np.log(Z_plus_tbar_minus_1)
+        # else:
+        #     termo2 = 0.0
+        termo2 = -np.log(Z_plus_tbar_minus_1)
+        if Z_plus_tbar_minus_1 < 0:
+            print("Z + tbar -1 = ", Z_plus_tbar_minus_1)
+        else:
+            print("Z ok T = {}, P = {}".format(str(T), str(P)))
+
         termo3 = -(A / (2 * (2 * B) ** 0.5))
         termo4 = 2 * xjaij / A - bi / B
         termo5 = np.log(
             (Z + tbar + B * (1 + 2 ** 0.5)) / (Z + tbar + B * (1 - 2 ** 0.5))
         )
 
-        lnphi = termo1 + termo2 + termo3 * termo4*termo5
+        lnphi = termo1 + termo2 + termo3 * termo4 * termo5
 
         # (Z + tbar - 1) * bi / B
         # - np.log(Z + tbar - 1)
@@ -689,3 +725,83 @@ class VLE_Tsai1998(InterfaceEosVLE):
         roots = np.asarray(solve_cubic(1, _a0, _a1, _a2))
         real_values = roots[roots > 0]
         return real_values
+
+
+class VLE_Mathias_Copeman1983(VLE_PR1976):
+    def __init__(self, mix, k):
+        # interface: bi, thetai, getZfromPT, phi_i
+        super().__init__(mix, k)
+        self.subset = ["water", "methanol", "ethanol"]
+
+    def alphafunction(self, i, T):
+        c1 = self.c1(i)
+        c2 = self.c2(i)
+        c3 = self.c3(i)
+        tr = T / self.mix[i].Tc
+
+        return (
+            np.exp(c1 * (1 - tr))
+            * (1 + c2 * (1 - tr ** 0.5) ** 2 + c3 * (1 - tr ** 0.5) ** 3) ** 2
+        )
+
+    def c1(self, i):
+        w = self.mix[i].omega
+        name = self.mix[i].Name
+        if name in self.subset:
+            _c1 = 1.0113 * w * w + 1.1538 * w + 0.4021
+        else:
+            _c1 = 0.3906 + 1.4031 * w + 0.1316 * w * w
+
+        return _c1
+
+    def c2(self, i):
+        w = self.mix[i].omega
+        name = self.mix[i].Name
+        if name in self.subset:
+            _c2 = -7.7867 * w * w + 2.2590 * w - 0.2011
+        else:
+            _c2 = -1.3127 * w * w + 0.3015 * w - 0.1213
+        return _c2
+
+    def c3(self, i):
+        w = self.mix[i].omega
+        name = self.mix[i].Name
+        if name in self.subset:
+            _c3 = w * w * 2.8127 - 1.0040 * w + 0.3964
+        else:
+            _c3 = 0.7661 * w + 0.3041
+        return _c3
+
+
+class VLE_Coquelet_2004(VLE_Mathias_Copeman1983):
+    def __init__(self, mix, k):
+        # interface: bi, thetai, getZfromPT, phi_i
+        super().__init__(mix, k)
+
+    def c1(self, i):
+        w = self.mix[i].omega
+        name = self.mix[i].Name
+        if name in self.subset:
+            _c1 = 1.3569 * w * w + 0.9957 * w + 0.4077
+        else:
+            _c1 = 0.1441 * w * w + 1.3838 * w + 0.387
+
+        return _c1
+
+    def c2(self, i):
+        w = self.mix[i].omega
+        name = self.mix[i].Name
+        if name in self.subset:
+            _c2 = -11.2986 * w * w + 3.5590 * w - 0.1146
+        else:
+            _c2 = -2.5214 * w * w + 0.6939 * w + 0.0325
+        return _c2
+
+    def c3(self, i):
+        w = self.mix[i].omega
+        name = self.mix[i].Name
+        if name in self.subset:
+            _c3 = w * w * 11.7802 - 3.890 * w + 0.5033
+        else:
+            _c3 = 0.6225 * w + 0.2236
+        return _c3

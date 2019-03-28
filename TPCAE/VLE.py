@@ -17,12 +17,14 @@ vle_options = {
     "Peng and Robinson (1976)": "peng_and_robinson_1976",
     # "Péneloux, et al. (1982)": "peneloux_et_al_1982",
     # "Patel and Teja (1982)": "patel_and_teja_1982",
+    "Mathias and Copeman (1983)": "mathias_and_copeman_1983",
     "Stryjek and Vera (1986)": "stryjek_and_vera_1986",
     "Twu, et al. (1995)": "twu_et_al_1995",
     # "Tsai and Chen (1998)": "tsai_and_chen_1998",
     "Gasem, et al. PR modification (2001)": "gasem_et_al_pr_2001",
     "Gasem, et al. Twu modificaton (2001)": "gasem_et_al_twu_2001",
     "Gasem, et al.(2001)": "gasem_et_al_2001",
+    "Coquelet, et al. (2004)": "coquelet_et_al_2004",
 }
 
 calc_options = {
@@ -91,6 +93,10 @@ class VLE(object):
             self.eoseq = VLE_Gasem_et_al_2001(self.mix, self.k)
         elif self.eosval == "tsai_and_chen_1998":
             self.eoseq = VLE_Tsai1998(self.mix, self.k)
+        elif self.eosval == "mathias_and_copeman_1983":
+            self.eoseq = VLE_Mathias_Copeman1983(self.mix, self.k)
+        elif self.eosval == "coquelet_et_al_2004":
+            self.eoseq = VLE_Coquelet_2004(self.mix, self.k)
 
     def getZ(self, P, T, y):
         return self.eoseq.getZfromPT(P, T, y)
@@ -189,6 +195,7 @@ class VLE(object):
             2.0 * h
         )
 
+    # TODO optimize this!
     def getBubblePointTemperature(self, x, P, tol=1e3 * DBL_EPSILON, kmax=100):
 
         assert len(x) == self.n
@@ -202,9 +209,16 @@ class VLE(object):
             else:
                 Tbi[i] = 100.0
 
-        tb = np.sum(x * Tbi)
+        # tb = np.sum(x * Tbi)
+        tb = _helper_bubble_T_guess_from_wilson(
+            x, P, np.sum(x * Tbi), self.Pcs, self.Tcs, self.omegas
+        )
 
-        y = np.full(self.n, 1.0 / self.n)
+        k = np.exp(
+            np.log(self.Pcs / P) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / tb)
+        )
+        # y = np.full(self.n, 1.0 / self.n)
+        y = x * k / np.sum(x * k)
 
         err = 100
         ite = 0
@@ -212,6 +226,7 @@ class VLE(object):
         phivap = np.empty(self.n, dtype=np.float64)
         philiq = np.empty(self.n, dtype=np.float64)
         diffk = np.empty(self.n, dtype=np.float64)
+        h = 1e-3
 
         while err > tol and ite < kmax:
             ite += 1
@@ -223,14 +238,21 @@ class VLE(object):
             zliq = np.min(zsliq)
 
             for i in range(self.n):
-                dphiv = self._getdiffPhi_i_respT(i, y, P, tb, zvap)
-                dphil = self._getdiffPhi_i_respT(i, x, P, tb, zliq)
                 phivap[i] = self.getPhi_i(i, y, P, tb, zvap)
                 philiq[i] = self.getPhi_i(i, x, P, tb, zliq)
-                diffk[i] = (dphil * phivap[i] - philiq[i] * dphiv) / phivap[i] ** 2
+                dphiv = self._getdiffPhi_i_respT(i, y, P, tb, zvap)
+                dphil = self._getdiffPhi_i_respT(i, x, P, tb, zliq)
+                diffk[i] = (-dphil * phivap[i] + philiq[i] * dphiv) / philiq[i] ** 2
+
+                # dphiv = self._getdiffPhi_i_respT(i, y, P, tb, zvap)
+                # dphil = self._getdiffPhi_i_respT(i, x, P, tb, zliq)
+                # diffk[i] = (dphil * phivap[i] - philiq[i] * dphiv) / phivap[i] ** 2
 
             k = philiq / phivap
-            tb = tb - (np.sum(x * k) - 1.0) / (np.sum(x * diffk))
+            tb = tb - (np.sum(y / k) - 1.0) / (np.sum(y * diffk))
+
+            # k = philiq / phivap
+            # tb = tb - (np.sum(x * k) - 1.0) / (np.sum(x * diffk))
 
             y = x * k
             yt = np.sum(y)
@@ -595,4 +617,46 @@ def _helper_getPb_guess(x, T, Pcs, Tcs, omegas):
 @njit(float64(float64[:], float64, float64[:], float64[:], float64[:]), cache=True)
 def _helper_getPd_guess(y, T, Pcs, Tcs, omegas):
     y = np.atleast_1d(y)
-    return np.sum(y / (Pcs * np.exp(5.373 * (1.0 + omegas) * (1.0 - Tcs / T))))
+    return 1.0 / np.sum(y / (Pcs * np.exp(5.373 * (1.0 + omegas) * (1.0 - Tcs / T))))
+
+
+@njit(
+    float64(float64[:], float64, float64, float64[:], float64[:], float64[:]),
+    cache=True,
+)
+def _helper_f_for_temperature_bubble_point_guess(x, P, T, Pcs, Tcs, omegas):
+    return -P + np.sum(Pcs * x * np.exp(5.373 * (1.0 + omegas) * (1.0 - Tcs / T)))
+
+
+@njit(
+    float64(float64[:], float64, float64, float64[:], float64[:], float64[:]),
+    cache=True,
+)
+def _helper_diff_f_for_temperature_bubble_point_guess(x, P, T, Pcs, Tcs, omegas):
+    h = 1e-3
+    f1 = _helper_f_for_temperature_bubble_point_guess(x, P, T + h, Pcs, Tcs, omegas)
+    f2 = _helper_f_for_temperature_bubble_point_guess(x, P, T - h, Pcs, Tcs, omegas)
+    return (f1 - f2) / (2.0 * h)
+
+
+@njit(
+    float64(float64[:], float64, float64, float64[:], float64[:], float64[:]),
+    cache=True,
+)
+def _helper_bubble_T_guess_from_wilson(x, P, T, Pcs, Tcs, omegas):
+
+    tol = 1e-8
+    kmax = 1000
+    k = 0
+    err = 999
+
+    while k < kmax and err < tol:
+
+        k += 1
+        told = T - _helper_f_for_temperature_bubble_point_guess(
+            x, P, T, Pcs, Tcs, omegas
+        ) / _helper_diff_f_for_temperature_bubble_point_guess(x, P, T, Pcs, Tcs, omegas)
+        err = T - told
+        T = told
+
+    return T
