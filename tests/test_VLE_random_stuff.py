@@ -9,9 +9,32 @@ water = SubstanceProp("water", "H2O")
 heptane = SubstanceProp("heptane", "C7H16")
 pentane = SubstanceProp("pentane", "C5H12")
 hexane = SubstanceProp("hexane", "C6H14")
+benzene = SubstanceProp("benzene", "C6H6")
+isobutanol = SubstanceProp("2-methyl-1-propanol (isobutanol)", "C4H10O")
+cyclopentane = SubstanceProp("cyclopentane", "C5H10")
 
 eosname = "Peng and Robinson (1976)"
 k2 = [[0, 0], [0, 0]]
+
+
+def test_phi_i_vrau():
+    eosname = "Peng and Robinson (1976)"
+    eq = VLE([benzene, isobutanol, cyclopentane], eosname)
+    x = [.2, .3, .5]
+    t = 315
+    p = .5e6
+    zs = eq.getZ(p, t, x)
+    zvap = np.max(zs)
+    zliq = np.min(zs)
+    phi_vap = eq.getPhi_i(0, x, p, t, zvap)
+    phi_liq = eq.getPhi_i(0, x, p, t, zliq)
+    print(zvap, zliq)
+    print(phi_vap, phi_liq)
+    y, pb, phivap, philiq, k, ite = eq.getBubblePointPressure(x, t)
+    print("Pb: ", pb)
+    print("y: ", y)
+    print("Ite: ", ite)
+    assert 0
 
 def test_inconsistency():
     k = [[0, 0], [0, 0]]

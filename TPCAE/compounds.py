@@ -27,6 +27,7 @@ class SubstanceProp(object):
             + " AND Name LIKE '%"
             + name
             + "%'"
+
         )
         db.cursor.execute(query)
         results = db.cursor.fetchall()[0]

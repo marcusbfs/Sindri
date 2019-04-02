@@ -5,6 +5,7 @@ from numba import njit, float64, int64
 
 import VLEBinaryDiagrams
 from constants import R_IG, DBL_EPSILON
+
 from polyEqSolver import solve_cubic
 from units import conv_unit
 
@@ -656,7 +657,7 @@ def _helper_bubble_T_guess_from_wilson(x, P, T, Pcs, Tcs, omegas):
         told = T - _helper_f_for_temperature_bubble_point_guess(
             x, P, T, Pcs, Tcs, omegas
         ) / _helper_diff_f_for_temperature_bubble_point_guess(x, P, T, Pcs, Tcs, omegas)
-        err = T - told
+        err = np.abs(T - told)
         T = told
 
     return T

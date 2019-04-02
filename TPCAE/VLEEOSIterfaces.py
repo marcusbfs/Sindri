@@ -23,11 +23,19 @@ class InterfaceEosVLE(object):
         s1 = 0
         for i in range(len(y)):
             s2 = 0
+            thetai = self.thetai(i, T)
             for j in range(len(y)):
+                # s2 += (
+                #     y[i]
+                #     * y[j]
+                #     * np.sqrt(self.thetai(i, T) * self.thetai(j, T))
+                #     * (1 - self.k[i][j])
+                # )
+                thetaj = self.thetai(j, T)
                 s2 += (
                     y[i]
                     * y[j]
-                    * np.sqrt(self.thetai(i, T) * self.thetai(j, T))
+                    * np.sqrt(thetai*thetaj)
                     * (1 - self.k[i][j])
                 )
             s1 += s2
@@ -47,7 +55,9 @@ class VLE_PR1976(InterfaceEosVLE):
         return 0.07780 / (self.mix[i].Pc / (R_IG * self.mix[i].Tc))
 
     def mOfAlphaFunction(self, i, t):
-        return 0.37464 + 1.54226 * self.mix[i].omega - 0.26992 * self.mix[i].omega ** 2
+        w = self.mix[i].omega
+        m= 0.37464 + 1.54226 * w - 0.26992 * w ** 2
+        return m
 
     def alphafunction(self, i, T):
         alpha = (
@@ -58,15 +68,20 @@ class VLE_PR1976(InterfaceEosVLE):
 
     def thetai(self, i, T):
         alpha = self.alphafunction(i, T)
-        return alpha * 0.45724 * (R_IG * self.mix[i].Tc) ** 2 / self.mix[i].Pc
+        ret = alpha * 0.45724 * (R_IG * self.mix[i].Tc) ** 2 / self.mix[i].Pc
+        return ret
 
     def getZfromPT(self, P, T, y):
         A = self.thetam(y, T) * P / (R_IG * T) ** 2
         B = self.bm(y) * P / (R_IG * T)
+        _a = 1.0
+        _b = -(1.0 - B)
+        _c = (A - 3 * B * B - 2.0 * B)
+        _d = -(A * B - B * B - B ** 3)
 
         roots = np.asarray(
             solve_cubic(
-                1.0, -(1.0 - B), (A - 3 * B * B - 2.0 * B), -(A * B - B * B - B ** 3)
+                _a, _b, _c,_d
             )
         )
         real_values = roots[roots > 0]
