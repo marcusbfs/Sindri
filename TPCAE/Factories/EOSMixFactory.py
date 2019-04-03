@@ -10,12 +10,14 @@ from CubicEquationsOfState.Soave1984 import Soave1984
 from CubicEquationsOfState.Wilson1964 import Wilson1964
 from CubicEquationsOfState.vanderWaals1890 import vanderWaals1890
 from EOSMixture import EOSMixture
+from compounds import SubstanceProp
+from typing import List
 
 _subs = []
 _k = []
 
 
-def createEOSMix(substances, eostype: str, k=None) -> EOSMixture:
+def createEOSMix(substances : List[SubstanceProp], eostype: str, k=None) -> EOSMixture:
 
     if k is None:
         n = len(substances)

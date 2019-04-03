@@ -16,10 +16,12 @@ from Properties import DeltaProp, Props
 from compounds import MixtureProp
 from constants import R_IG, DBL_EPSILON
 from polyEqSolver import solve_cubic
+from typing import List
+from compounds import SubstanceProp
 
 
 class EOSMixture:
-    def __init__(self, _subs, _k):
+    def __init__(self, _subs : List[SubstanceProp], _k):
         self.substances = _subs
         self.k = _k
         self.eosname = ""

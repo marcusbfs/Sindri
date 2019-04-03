@@ -175,6 +175,7 @@ class SubstanceProp(object):
             return _leeKeslerVP_helper(self.Pc, T / self.Tc, self.omega)
         return 0.0
 
+    # will this function work for mixtures? (applying the necessaries
     def getFluidState(self, P: float, T: float, eq, delta=1e-3):
         pvpaw = self.getPvpAW(T)
         Pvp = eq.getPvp(T, pvpaw)[0]
