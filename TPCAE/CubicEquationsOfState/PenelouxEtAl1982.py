@@ -104,7 +104,7 @@ class epsilonMixPeneloux1982(EpsilonMixtureRuleBehavior):
 class PenelouxEtAl1982(Soave1972):
     def __init__(self, _subs, _k):
         super().__init__(_subs, _k)
-        self.eosname = "Peneloux et. al (1982)"
+        self.eosname = "Péneloux, et al. (1982)"
         self.mixRuleBehavior = ClassicMixtureRuleVolumeTranslated()
         self.deltaMixBehavior = deltaMixPeneloux1982()
         self.epsilonMixBehavior = epsilonMixPeneloux1982()

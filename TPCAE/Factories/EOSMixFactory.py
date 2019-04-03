@@ -1,6 +1,6 @@
 import numpy as np
 from EOSMixture import EOSMixture
-from CubicEquationsOfState.PengAndRobinson1976 import PengAndRobinson1976
+from CubicEquationsOfState.PengAndRobinson1976 import PR1976
 from CubicEquationsOfState.vanderWaals1890 import vanderWaals1890
 from CubicEquationsOfState.RedlichAndKwong1949 import RedlichAndKwong1949
 from CubicEquationsOfState.Wilson1964 import Wilson1964
@@ -8,6 +8,7 @@ from CubicEquationsOfState.Soave1972 import Soave1972
 from CubicEquationsOfState.Soave1984 import Soave1984
 from CubicEquationsOfState.PenelouxEtAl1982 import PenelouxEtAl1982
 from CubicEquationsOfState.PatelAndTeja1982 import PT1982
+from CubicEquationsOfState.AdachiEtAl1983 import Adachi1983
 
 _subs = []
 _k = []
@@ -28,11 +29,13 @@ def createEOSMix(substances, eostype: str, k=None) -> EOSMixture:
     elif eostype == "Soave (1972)":
         return Soave1972(substances, k)
     elif eostype == "Peng and Robinson (1976)":
-        return PengAndRobinson1976(substances, k)
+        return PR1976(substances, k)
     elif eostype == "Patel and Teja (1982)":
         return PT1982(substances, k)
-    elif eostype == "Peneloux et. al (1982)":
+    elif eostype == "Péneloux, et al. (1982)":
         return PenelouxEtAl1982(substances, k)
+    elif eostype == "Adachi, et al. (1983)":
+        return Adachi1983(substances, k)
     elif eostype == "Soave (1984)":
         return Soave1984(substances, k)
     else:
@@ -48,7 +51,8 @@ def getEOSMixOptions():
         "Peng and Robinson (1976)",
         # "Schmidt and Wenzel (1979)",
         "Patel and Teja (1982)",
-        "Peneloux et. al (1982)",
+        "Péneloux, et al. (1982)",
+        "Adachi, et al. (1983)",
         "Soave (1984)",
     ]
     return options

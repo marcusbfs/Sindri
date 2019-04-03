@@ -36,24 +36,7 @@ class thetaiPR1976(ThetaiBehavior):
         )
 
 
-class epsiloniPR1976(EpsiloniBehavior):
-    # def getEpsiloni(self, b: float) -> float:
-    #     return -b * b
-    def getEpsiloni(self, i, T, bib: BiBehavior, substances) -> float:
-        return -(bib.getBi(i, T, substances)) ** 2
-
-
-class deltaiPR1976(DeltaiBehavior):
-    def getDeltai(self, i: int, T: float, bib: BiBehavior, substances) -> float:
-        return 2.0 * bib.getBi(i, T, substances)
-
-
 class deltaMixPR1976(DeltaMixtureRuleBehavior):
-    # def deltam(
-    #     self, y, T: float, bib: BiBehavior, bmb: BMixtureRuleBehavior, substances
-    # ) -> float:
-    #     return 2.0 * bmb.bm(y, T, bib, substances)
-
     def deltam(
         self, y, T: float, bib: BiBehavior, bmb: MixtureRuleBehavior, substances
     ) -> float:
@@ -79,14 +62,12 @@ class epsilonMixPR1976(EpsilonMixtureRuleBehavior):
         )
 
 
-class PengAndRobinson1976(EOSMixture):
+class PR1976(EOSMixture):
     def __init__(self, _subs, _k):
         super().__init__(_subs, _k)
         self.eosname = "Peng and Robinson (1976)"
         self.mixRuleBehavior = ClassicMixtureRule()
         self.biBehavior = biPR1976()
         self.thetaiBehavior = thetaiPR1976()
-        self.deltaiBehavior = deltaiPR1976()
-        self.epsiloniBehavior = epsiloniPR1976()
         self.deltaMixBehavior = deltaMixPR1976()
         self.epsilonMixBehavior = epsilonMixPR1976()
