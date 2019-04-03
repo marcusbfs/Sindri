@@ -11,9 +11,7 @@ pentane = SubstanceProp("pentane", "C5H12")
 hexane = SubstanceProp("hexane", "C6H14")
 
 
-
 def test_isobaricPlot():
-
 
     k = [[0, 0], [0, 0]]
     eosname = "Peng and Robinson (1976)"
@@ -22,8 +20,8 @@ def test_isobaricPlot():
 
     eq.isobaricBinaryMixturePlot(p, Tunit="ºC", Punit="bar")
 
-def test_isothermalPlot():
 
+def test_isothermalPlot():
 
     k = [[0, 0], [0, 0]]
     eosname = "Peng and Robinson (1976)"

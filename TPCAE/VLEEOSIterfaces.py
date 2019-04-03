@@ -50,6 +50,7 @@ class VLE_PR1976(InterfaceEosVLE):
         return 0.07780 / (self.mix[i].Pc / (R_IG * self.mix[i].Tc))
 
     def mOfAlphaFunction(self, i, t):
+
         w = self.mix[i].omega
         m = 0.37464 + 1.54226 * w - 0.26992 * w ** 2
         return m

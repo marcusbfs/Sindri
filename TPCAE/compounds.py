@@ -20,6 +20,7 @@ class SubstanceProp(object):
     def __init__(self, name: str, formula: str):
 
         db.init()
+
         query = (
             "SELECT * FROM database WHERE Formula LIKE '%"
             + formula

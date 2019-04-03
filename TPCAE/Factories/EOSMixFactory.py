@@ -1,5 +1,11 @@
 import numpy as np
 from EOSMixture import EOSMixture
+from scipy.integrate import quad
+from CubicEOS import CubicEOS
+from constants import R_IG
+from compounds import MixtureProp
+from Properties import DeltaProp, VaporPressure, Props
+from polyEqSolver import solve_cubic
 from CubicEquationsOfState.PengAndRobinson1976 import PR1976
 from CubicEquationsOfState.vanderWaals1890 import vanderWaals1890
 from CubicEquationsOfState.RedlichAndKwong1949 import RedlichAndKwong1949

@@ -20,9 +20,9 @@ k2 = [[0, 0], [0, 0]]
 def test_phi_i_vrau():
     eosname = "Peng and Robinson (1976)"
     eq = VLE([benzene, isobutanol, cyclopentane], eosname)
-    x = [.2, .3, .5]
+    x = [0.2, 0.3, 0.5]
     t = 315
-    p = .5e6
+    p = 0.5e6
     zs = eq.getZ(p, t, x)
     zvap = np.max(zs)
     zliq = np.min(zs)
@@ -36,17 +36,19 @@ def test_phi_i_vrau():
     print("Ite: ", ite)
     assert 0
 
+
 def test_inconsistency():
     k = [[0, 0], [0, 0]]
     eosname = "Peng and Robinson (1976)"
     eq = VLE([pentane, hexane], eosname)
-    x = [0.01, .99]
+    x = [0.01, 0.99]
     t = 298.7
 
     y, p, i = eq.getBubblePointPressure(x, t)
     print(y)
     print(p)
     assert 0
+
 
 def test_pr1976():
     eq = VLE([methane], eosname)
@@ -158,10 +160,11 @@ def test_dewpoint_temperature_validate_from_youtube():
     np.testing.assert_allclose(xmax, 0.5, 1e-8)
     np.testing.assert_allclose(xmed, 0.3, 1e-8)
 
+
 def test_flash_temperature_validate_from_youtube():
     # https://www.youtube.com/watch?v=0QFLng0fz68
     eq = VLE([pentane, hexane, heptane], eosname)
-    z = [.5, .3, .2]
+    z = [0.5, 0.3, 0.2]
     t = 315
     p = 42803.8018747439
     ret = eq.getFlash(z, p, t)
