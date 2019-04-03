@@ -16,9 +16,6 @@ state_dict = {
 }
 
 
-
-
-
 class SubstanceProp(object):
     def __init__(self, name: str, formula: str):
 
@@ -30,8 +27,6 @@ class SubstanceProp(object):
             + " AND Name LIKE '%"
             + name
             + "%'"
-
-
         )
         db.cursor.execute(query)
         results = db.cursor.fetchall()[0]
@@ -230,8 +225,6 @@ class SubstanceProp(object):
         if isinstance(s, str) and len(s) > 0:
             return s
         return ret
-
-
 
     def _ifNumber(self, n, ret=0) -> float:
         try:

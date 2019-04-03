@@ -22,14 +22,14 @@ def solve_quadratic(a, b, c):
         return
 
 
-@jit((float64, float64, float64, float64), nopython=True, cache=True)
-def solve_cubic(a, b, c, d):
+# @jit((float64, float64, float64, float64, Omitted(float64)), nopython=True, cache=True)
+@jit(nopython=True, cache=True)
+def solve_cubic(a, b, c, d, x0=1.0):
 
     if abs(a) < DBL_EPSILON:  # quadratic
         ret = solve_quadratic(b, c, d)
         return ret
 
-    x0 = 1.0
     err = 1
     k = 0
     kmax = 5000

@@ -24,9 +24,9 @@ class thetaiWilson1964(ThetaiBehavior):
         return 0.42748 * (R_IG * substances[i].Tc) ** 2 / substances[i].Pc
 
     def alpha(self, i: int, T: float, substances):
-        tr = T/substances[i].Tc
+        tr = T / substances[i].Tc
         w = substances[i].omega
-        return (1. + (1.57 +1.62*w)*(1./tr - 1.))*tr
+        return (1.0 + (1.57 + 1.62 * w) * (1.0 / tr - 1.0)) * tr
 
     def getThetai(self, i: int, T: float, substances) -> float:
         _alpha = self.alpha(i, T, substances)
@@ -45,36 +45,36 @@ class deltaiWilson1964(DeltaiBehavior):
 
 class deltaMixWilson1964(DeltaMixtureRuleBehavior):
     def deltam(
-            self, y, T: float, bib: BiBehavior, bmb: BMixtureRuleBehavior, substances
+        self, y, T: float, bib: BiBehavior, bmb: BMixtureRuleBehavior, substances
     ) -> float:
         return bmb.bm(y, T, bib, substances)
 
     def diffDeltam(
-            self,
-            i: int,
-            y,
-            T: float,
-            bib: BiBehavior,
-            bmb: BMixtureRuleBehavior,
-            substances,
+        self,
+        i: int,
+        y,
+        T: float,
+        bib: BiBehavior,
+        bmb: BMixtureRuleBehavior,
+        substances,
     ) -> float:
         return bmb.diffBm(i, y, T, bib, substances)
 
 
 class epsilonMixWilson1964(EpsilonMixtureRuleBehavior):
     def epsilonm(
-            self, y, T: float, bib: BiBehavior, bmb: BMixtureRuleBehavior, substances
+        self, y, T: float, bib: BiBehavior, bmb: BMixtureRuleBehavior, substances
     ) -> float:
         return 0.0
 
     def diffEpsilonm(
-            self,
-            i: int,
-            y,
-            T: float,
-            bib: BiBehavior,
-            bmb: BMixtureRuleBehavior,
-            substances,
+        self,
+        i: int,
+        y,
+        T: float,
+        bib: BiBehavior,
+        bmb: BMixtureRuleBehavior,
+        substances,
     ) -> float:
         return 0.0
 

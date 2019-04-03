@@ -7,6 +7,6 @@ def createMix(names, formulas):
     subs = []
 
     for i in range(n):
-        subs.append( SubstanceProp(names[i], formulas[i]))
+        subs.append(SubstanceProp(names[i], formulas[i]))
 
     return subs

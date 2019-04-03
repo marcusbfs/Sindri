@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_FormVLE(object):
     def setupUi(self, FormVLE):
         FormVLE.setObjectName("FormVLE")
@@ -25,7 +26,9 @@ class Ui_FormVLE(object):
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout_2.addItem(spacerItem, 1, 2, 1, 1)
         self.comboBox_EOS = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
         self.comboBox_EOS.setObjectName("comboBox_EOS")
@@ -54,16 +57,22 @@ class Ui_FormVLE(object):
         self.le_scalarAnswer.setObjectName("le_scalarAnswer")
         self.gridLayout_5.addWidget(self.le_scalarAnswer, 0, 1, 1, 1)
         self.tableWidget_Results = QtWidgets.QTableWidget(self.groupBox)
-        self.tableWidget_Results.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget_Results.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers
+        )
         self.tableWidget_Results.setObjectName("tableWidget_Results")
         self.tableWidget_Results.setColumnCount(0)
         self.tableWidget_Results.setRowCount(0)
         self.gridLayout_5.addWidget(self.tableWidget_Results, 1, 0, 1, 4)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout_5.addItem(spacerItem1, 0, 3, 1, 1)
         self.gridLayout_6.addWidget(self.groupBox, 0, 1, 1, 1)
         self.frame = QtWidgets.QFrame(self.tab_VLEcalc)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
@@ -188,36 +197,84 @@ class Ui_FormVLE(object):
         QtCore.QMetaObject.connectSlotsByName(FormVLE)
 
     def retranslateUi(self, FormVLE):
-        FormVLE.setWindowTitle(QtWidgets.QApplication.translate("FormVLE", "Vapor-liquid equilibrium", None, -1))
-        self.label_2.setText(QtWidgets.QApplication.translate("FormVLE", "Equation of state", None, -1))
-        self.groupBox.setTitle(QtWidgets.QApplication.translate("FormVLE", "Results", None, -1))
-        self.label_VarAnswer.setText(QtWidgets.QApplication.translate("FormVLE", "Var", None, -1))
-        self.label_VarAnswerUnits.setText(QtWidgets.QApplication.translate("FormVLE", "VarUnits", None, -1))
-        self.label_3.setText(QtWidgets.QApplication.translate("FormVLE", "Calculation type:", None, -1))
+        FormVLE.setWindowTitle(
+            QtWidgets.QApplication.translate(
+                "FormVLE", "Vapor-liquid equilibrium", None, -1
+            )
+        )
+        self.label_2.setText(
+            QtWidgets.QApplication.translate("FormVLE", "Equation of state", None, -1)
+        )
+        self.groupBox.setTitle(
+            QtWidgets.QApplication.translate("FormVLE", "Results", None, -1)
+        )
+        self.label_VarAnswer.setText(
+            QtWidgets.QApplication.translate("FormVLE", "Var", None, -1)
+        )
+        self.label_VarAnswerUnits.setText(
+            QtWidgets.QApplication.translate("FormVLE", "VarUnits", None, -1)
+        )
+        self.label_3.setText(
+            QtWidgets.QApplication.translate("FormVLE", "Calculation type:", None, -1)
+        )
         self.label_4.setText(QtWidgets.QApplication.translate("FormVLE", "T", None, -1))
         self.label_5.setText(QtWidgets.QApplication.translate("FormVLE", "P", None, -1))
-        self.groupBox_2.setTitle(QtWidgets.QApplication.translate("FormVLE", "Molar fractions", None, -1))
-        self.btn_calculate.setText(QtWidgets.QApplication.translate("FormVLE", "Calculate", None, -1))
-        self.tabWidget_VLE.setTabText(self.tabWidget_VLE.indexOf(self.tab_VLEcalc), QtWidgets.QApplication.translate("FormVLE", "VLE calculations", None, -1))
-        self.btn_saveToTxtBinaryMixData.setText(QtWidgets.QApplication.translate("FormVLE", "Save to txt", None, -1))
-        self.label.setText(QtWidgets.QApplication.translate("FormVLE", "Type:", None, -1))
-        self.label_var.setText(QtWidgets.QApplication.translate("FormVLE", "Var", None, -1))
-        self.btn_openExpData.setText(QtWidgets.QApplication.translate("FormVLE", "Open exp. data", None, -1))
-        self.btn_plot.setText(QtWidgets.QApplication.translate("FormVLE", "Plot", None, -1))
-        self.checkBox_plotExpData.setText(QtWidgets.QApplication.translate("FormVLE", "plot experimental data", None, -1))
-        self.checkBox_plotx.setText(QtWidgets.QApplication.translate("FormVLE", "plot x", None, -1))
-        self.checkBox_ploty.setText(QtWidgets.QApplication.translate("FormVLE", "plot y", None, -1))
-        self.checkBox_plotxy.setText(QtWidgets.QApplication.translate("FormVLE", "plot xy", None, -1))
-        self.groupBox_3.setTitle(QtWidgets.QApplication.translate("FormVLE", "Results", None, -1))
-        self.tabWidget_VLE.setTabText(self.tabWidget_VLE.indexOf(self.tab_Diagrams), QtWidgets.QApplication.translate("FormVLE", "Binary mixture diagrams", None, -1))
+        self.groupBox_2.setTitle(
+            QtWidgets.QApplication.translate("FormVLE", "Molar fractions", None, -1)
+        )
+        self.btn_calculate.setText(
+            QtWidgets.QApplication.translate("FormVLE", "Calculate", None, -1)
+        )
+        self.tabWidget_VLE.setTabText(
+            self.tabWidget_VLE.indexOf(self.tab_VLEcalc),
+            QtWidgets.QApplication.translate("FormVLE", "VLE calculations", None, -1),
+        )
+        self.btn_saveToTxtBinaryMixData.setText(
+            QtWidgets.QApplication.translate("FormVLE", "Save to txt", None, -1)
+        )
+        self.label.setText(
+            QtWidgets.QApplication.translate("FormVLE", "Type:", None, -1)
+        )
+        self.label_var.setText(
+            QtWidgets.QApplication.translate("FormVLE", "Var", None, -1)
+        )
+        self.btn_openExpData.setText(
+            QtWidgets.QApplication.translate("FormVLE", "Open exp. data", None, -1)
+        )
+        self.btn_plot.setText(
+            QtWidgets.QApplication.translate("FormVLE", "Plot", None, -1)
+        )
+        self.checkBox_plotExpData.setText(
+            QtWidgets.QApplication.translate(
+                "FormVLE", "plot experimental data", None, -1
+            )
+        )
+        self.checkBox_plotx.setText(
+            QtWidgets.QApplication.translate("FormVLE", "plot x", None, -1)
+        )
+        self.checkBox_ploty.setText(
+            QtWidgets.QApplication.translate("FormVLE", "plot y", None, -1)
+        )
+        self.checkBox_plotxy.setText(
+            QtWidgets.QApplication.translate("FormVLE", "plot xy", None, -1)
+        )
+        self.groupBox_3.setTitle(
+            QtWidgets.QApplication.translate("FormVLE", "Results", None, -1)
+        )
+        self.tabWidget_VLE.setTabText(
+            self.tabWidget_VLE.indexOf(self.tab_Diagrams),
+            QtWidgets.QApplication.translate(
+                "FormVLE", "Binary mixture diagrams", None, -1
+            ),
+        )
 
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     FormVLE = QtWidgets.QWidget()
     ui = Ui_FormVLE()
     ui.setupUi(FormVLE)
     FormVLE.show()
     sys.exit(app.exec_())
-

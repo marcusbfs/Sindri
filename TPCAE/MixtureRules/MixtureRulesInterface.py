@@ -71,13 +71,7 @@ class DeltaMixtureRuleBehavior:
 
     @abc.abstractmethod
     def diffDeltam(
-        self,
-        i: int,
-        y,
-        T: float,
-        bib: BiBehavior,
-        bmb: MixtureRuleBehavior,
-        substances,
+        self, i: int, y, T: float, bib: BiBehavior, bmb: MixtureRuleBehavior, substances
     ) -> float:
         pass
 
@@ -94,12 +88,6 @@ class EpsilonMixtureRuleBehavior:
 
     @abc.abstractmethod
     def diffEpsilonm(
-        self,
-        i: int,
-        y,
-        T: float,
-        bib: BiBehavior,
-        bmb: MixtureRuleBehavior,
-        substances,
+        self, i: int, y, T: float, bib: BiBehavior, bmb: MixtureRuleBehavior, substances
     ) -> float:
         pass

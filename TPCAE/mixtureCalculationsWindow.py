@@ -531,7 +531,6 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
                     file.readline()
                 content = [line.rstrip("\n") for line in file if line != "\n"]
 
-
             self.n = int(content[0])
             self.y = np.empty(self.n, dtype=np.float64)
             self.k = np.empty([self.n, self.n], dtype=np.float64)
@@ -559,7 +558,6 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
             msg = 'Error reading from file "' + filename + '"\n' + str(e)
             QtWidgets.QMessageBox.about(self, title, msg)
 
-
     def openVLEWindow(self):
         if self.n < 2:
             msg = QtWidgets.QMessageBox.about(
@@ -572,9 +570,15 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
         self._getVectorOfSubstancesInSystem()
         self._getSystemMolarFraction()
 
-        self.vlewindow = Window_VLE(self.subs_in_system,self.y, self.k, self.le_procT.text(),
-                                    self.comboBox_procTunit.currentText(), self.le_procP.text(),
-                                    self.comboBox_procPunit.currentText())
+        self.vlewindow = Window_VLE(
+            self.subs_in_system,
+            self.y,
+            self.k,
+            self.le_procT.text(),
+            self.comboBox_procTunit.currentText(),
+            self.le_procP.text(),
+            self.comboBox_procPunit.currentText(),
+        )
         self.vlewindow.show()
 
     # ================== DB HANDLER ===========================

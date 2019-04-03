@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_MixtureCalculationWindow(object):
     def setupUi(self, MixtureCalculationWindow):
         MixtureCalculationWindow.setObjectName("MixtureCalculationWindow")
@@ -25,7 +26,9 @@ class Ui_MixtureCalculationWindow(object):
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout_2.addItem(spacerItem, 1, 2, 1, 1)
         self.tabWidget = QtWidgets.QTabWidget(self.scrollAreaWidgetContents)
         self.tabWidget.setTabPosition(QtWidgets.QTabWidget.North)
@@ -47,8 +50,12 @@ class Ui_MixtureCalculationWindow(object):
         self.tableWidget_MixtureSystem.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tableWidget_MixtureSystem.setFrameShadow(QtWidgets.QFrame.Plain)
         self.tableWidget_MixtureSystem.setAlternatingRowColors(True)
-        self.tableWidget_MixtureSystem.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
-        self.tableWidget_MixtureSystem.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectItems)
+        self.tableWidget_MixtureSystem.setSelectionMode(
+            QtWidgets.QAbstractItemView.SingleSelection
+        )
+        self.tableWidget_MixtureSystem.setSelectionBehavior(
+            QtWidgets.QAbstractItemView.SelectItems
+        )
         self.tableWidget_MixtureSystem.setShowGrid(False)
         self.tableWidget_MixtureSystem.setRowCount(0)
         self.tableWidget_MixtureSystem.setColumnCount(3)
@@ -65,7 +72,9 @@ class Ui_MixtureCalculationWindow(object):
         self.btn_EditBIParameters = QtWidgets.QPushButton(self.frame)
         self.btn_EditBIParameters.setObjectName("btn_EditBIParameters")
         self.gridLayout_4.addWidget(self.btn_EditBIParameters, 1, 0, 1, 3)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout_4.addItem(spacerItem1, 1, 3, 1, 1)
         self.btn_LoadSystem = QtWidgets.QPushButton(self.frame)
         self.btn_LoadSystem.setMaximumSize(QtCore.QSize(80, 16777215))
@@ -75,7 +84,9 @@ class Ui_MixtureCalculationWindow(object):
         self.btn_SaveSystem.setMaximumSize(QtCore.QSize(80, 16777215))
         self.btn_SaveSystem.setObjectName("btn_SaveSystem")
         self.gridLayout_4.addWidget(self.btn_SaveSystem, 2, 1, 1, 1)
-        spacerItem2 = QtWidgets.QSpacerItem(510, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            510, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout_4.addItem(spacerItem2, 2, 2, 1, 2)
         self.gridLayout_5.addWidget(self.frame, 1, 0, 1, 1)
         self.groupBox_searchSubstance = QtWidgets.QGroupBox(self.tabSystem)
@@ -85,25 +96,35 @@ class Ui_MixtureCalculationWindow(object):
         self.gridLayout_3 = QtWidgets.QGridLayout(self.groupBox_searchSubstance)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.le_searchSubstance = QtWidgets.QLineEdit(self.groupBox_searchSubstance)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Expanding
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.le_searchSubstance.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.le_searchSubstance.sizePolicy().hasHeightForWidth()
+        )
         self.le_searchSubstance.setSizePolicy(sizePolicy)
         self.le_searchSubstance.setMaximumSize(QtCore.QSize(160000, 23))
         self.le_searchSubstance.setText("")
         self.le_searchSubstance.setObjectName("le_searchSubstance")
         self.gridLayout_3.addWidget(self.le_searchSubstance, 0, 1, 1, 4)
-        spacerItem3 = QtWidgets.QSpacerItem(406, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem3 = QtWidgets.QSpacerItem(
+            406, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout_3.addItem(spacerItem3, 2, 4, 1, 1)
         self.label = QtWidgets.QLabel(self.groupBox_searchSubstance)
         self.label.setObjectName("label")
         self.gridLayout_3.addWidget(self.label, 2, 0, 1, 2)
         self.btn_searchSubstance = QtWidgets.QPushButton(self.groupBox_searchSubstance)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btn_searchSubstance.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.btn_searchSubstance.sizePolicy().hasHeightForWidth()
+        )
         self.btn_searchSubstance.setSizePolicy(sizePolicy)
         self.btn_searchSubstance.setObjectName("btn_searchSubstance")
         self.gridLayout_3.addWidget(self.btn_searchSubstance, 0, 0, 1, 1)
@@ -113,14 +134,22 @@ class Ui_MixtureCalculationWindow(object):
         self.btn_Remove = QtWidgets.QPushButton(self.groupBox_searchSubstance)
         self.btn_Remove.setObjectName("btn_Remove")
         self.gridLayout_3.addWidget(self.btn_Remove, 2, 3, 1, 1)
-        self.tableWidget_searchSubstance = QtWidgets.QTableWidget(self.groupBox_searchSubstance)
+        self.tableWidget_searchSubstance = QtWidgets.QTableWidget(
+            self.groupBox_searchSubstance
+        )
         self.tableWidget_searchSubstance.setMinimumSize(QtCore.QSize(400, 150))
         self.tableWidget_searchSubstance.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tableWidget_searchSubstance.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.tableWidget_searchSubstance.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget_searchSubstance.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers
+        )
         self.tableWidget_searchSubstance.setAlternatingRowColors(True)
-        self.tableWidget_searchSubstance.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
-        self.tableWidget_searchSubstance.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.tableWidget_searchSubstance.setSelectionMode(
+            QtWidgets.QAbstractItemView.SingleSelection
+        )
+        self.tableWidget_searchSubstance.setSelectionBehavior(
+            QtWidgets.QAbstractItemView.SelectRows
+        )
         self.tableWidget_searchSubstance.setShowGrid(False)
         self.tableWidget_searchSubstance.setRowCount(0)
         self.tableWidget_searchSubstance.setColumnCount(26)
@@ -148,9 +177,13 @@ class Ui_MixtureCalculationWindow(object):
         self.gridLayout_7 = QtWidgets.QGridLayout(self.groupBox_EOS)
         self.gridLayout_7.setObjectName("gridLayout_7")
         self.listWidget_eos_options = QtWidgets.QListWidget(self.groupBox_EOS)
-        self.listWidget_eos_options.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.listWidget_eos_options.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers
+        )
         self.listWidget_eos_options.setAlternatingRowColors(True)
-        self.listWidget_eos_options.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.listWidget_eos_options.setSelectionBehavior(
+            QtWidgets.QAbstractItemView.SelectRows
+        )
         self.listWidget_eos_options.setViewMode(QtWidgets.QListView.ListMode)
         self.listWidget_eos_options.setObjectName("listWidget_eos_options")
         self.gridLayout_7.addWidget(self.listWidget_eos_options, 0, 0, 1, 1)
@@ -167,7 +200,9 @@ class Ui_MixtureCalculationWindow(object):
         self.label_2.setObjectName("label_2")
         self.horizontalLayout.addWidget(self.label_2)
         self.le_procT = QtWidgets.QLineEdit(self.groupBox_processVariables)
-        self.le_procT.setInputMethodHints(QtCore.Qt.ImhDigitsOnly|QtCore.Qt.ImhPreferNumbers)
+        self.le_procT.setInputMethodHints(
+            QtCore.Qt.ImhDigitsOnly | QtCore.Qt.ImhPreferNumbers
+        )
         self.le_procT.setObjectName("le_procT")
         self.horizontalLayout.addWidget(self.le_procT)
         self.comboBox_procTunit = QtWidgets.QComboBox(self.groupBox_processVariables)
@@ -199,7 +234,9 @@ class Ui_MixtureCalculationWindow(object):
         self.label_4.setObjectName("label_4")
         self.horizontalLayout_3.addWidget(self.label_4)
         self.le_refT = QtWidgets.QLineEdit(self.groupBox_refVariables)
-        self.le_refT.setInputMethodHints(QtCore.Qt.ImhDigitsOnly|QtCore.Qt.ImhPreferNumbers)
+        self.le_refT.setInputMethodHints(
+            QtCore.Qt.ImhDigitsOnly | QtCore.Qt.ImhPreferNumbers
+        )
         self.le_refT.setObjectName("le_refT")
         self.horizontalLayout_3.addWidget(self.le_refT)
         self.comboBox_refTunit = QtWidgets.QComboBox(self.groupBox_refVariables)
@@ -231,10 +268,14 @@ class Ui_MixtureCalculationWindow(object):
         self.btn_units.setObjectName("btn_units")
         self.gridLayout_10.addWidget(self.btn_units, 2, 1, 1, 1)
         self.btn_calculate = QtWidgets.QPushButton(self.frame_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btn_calculate.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.btn_calculate.sizePolicy().hasHeightForWidth()
+        )
         self.btn_calculate.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -262,7 +303,9 @@ class Ui_MixtureCalculationWindow(object):
         self.groupBox_information.setObjectName("groupBox_information")
         self.gridLayout_12 = QtWidgets.QGridLayout(self.groupBox_information)
         self.gridLayout_12.setObjectName("gridLayout_12")
-        self.plainTextEdit_information = QtWidgets.QPlainTextEdit(self.groupBox_information)
+        self.plainTextEdit_information = QtWidgets.QPlainTextEdit(
+            self.groupBox_information
+        )
         self.plainTextEdit_information.setMinimumSize(QtCore.QSize(0, 0))
         self.plainTextEdit_information.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.plainTextEdit_information.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -276,9 +319,15 @@ class Ui_MixtureCalculationWindow(object):
         self.gridLayout_13 = QtWidgets.QGridLayout(self.groupBox_results)
         self.gridLayout_13.setObjectName("gridLayout_13")
         self.tableWidget_results = QtWidgets.QTableWidget(self.groupBox_results)
-        self.tableWidget_results.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
-        self.tableWidget_results.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
-        self.tableWidget_results.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget_results.setHorizontalScrollBarPolicy(
+            QtCore.Qt.ScrollBarAsNeeded
+        )
+        self.tableWidget_results.setSizeAdjustPolicy(
+            QtWidgets.QAbstractScrollArea.AdjustToContents
+        )
+        self.tableWidget_results.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers
+        )
         self.tableWidget_results.setAlternatingRowColors(False)
         self.tableWidget_results.setTextElideMode(QtCore.Qt.ElideLeft)
         self.tableWidget_results.setRowCount(0)
@@ -317,51 +366,180 @@ class Ui_MixtureCalculationWindow(object):
 
         self.retranslateUi(MixtureCalculationWindow)
         self.tabWidget.setCurrentIndex(0)
-        QtCore.QObject.connect(self.le_searchSubstance, QtCore.SIGNAL("returnPressed()"), self.btn_searchSubstance.click)
-        QtCore.QObject.connect(self.tableWidget_searchSubstance, QtCore.SIGNAL("itemDoubleClicked(QTableWidgetItem*)"), self.btn_Add.click)
+        QtCore.QObject.connect(
+            self.le_searchSubstance,
+            QtCore.SIGNAL("returnPressed()"),
+            self.btn_searchSubstance.click,
+        )
+        QtCore.QObject.connect(
+            self.tableWidget_searchSubstance,
+            QtCore.SIGNAL("itemDoubleClicked(QTableWidgetItem*)"),
+            self.btn_Add.click,
+        )
         QtCore.QMetaObject.connectSlotsByName(MixtureCalculationWindow)
 
     def retranslateUi(self, MixtureCalculationWindow):
-        MixtureCalculationWindow.setWindowTitle(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Mixture properties calculation", None, -1))
-        self.tableWidget_MixtureSystem.horizontalHeaderItem(0).setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Name", None, -1))
-        self.tableWidget_MixtureSystem.horizontalHeaderItem(1).setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Formula", None, -1))
-        self.tableWidget_MixtureSystem.horizontalHeaderItem(2).setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Molar fraction", None, -1))
-        self.btn_EditBIParameters.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Edit binary interactions parameters", None, -1))
-        self.btn_LoadSystem.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Load system", None, -1))
-        self.btn_SaveSystem.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Save system", None, -1))
-        self.groupBox_searchSubstance.setTitle(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Search substance", None, -1))
-        self.label.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Selected substances", None, -1))
-        self.btn_searchSubstance.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Search", None, -1))
-        self.btn_Add.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Add", None, -1))
-        self.btn_Remove.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Remove", None, -1))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabSystem), QtWidgets.QApplication.translate("MixtureCalculationWindow", "System", None, -1))
-        self.groupBox_EOS.setTitle(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Equation of state", None, -1))
-        self.groupBox_processVariables.setTitle(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Process variables", None, -1))
-        self.label_2.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "T", None, -1))
-        self.le_procT.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "150", None, -1))
-        self.label_3.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "P", None, -1))
-        self.le_procP.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "1", None, -1))
-        self.groupBox_refVariables.setTitle(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Reference variables", None, -1))
-        self.label_4.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "T", None, -1))
-        self.le_refT.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "300", None, -1))
-        self.label_5.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "P", None, -1))
-        self.le_refP.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "1", None, -1))
-        self.btn_units.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Units", None, -1))
-        self.btn_calculate.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Calculate", None, -1))
-        self.btn_savetxt.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Save to txt", None, -1))
-        self.groupBox_information.setTitle(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Information", None, -1))
-        self.groupBox_results.setTitle(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Results", None, -1))
-        self.groupBox__log.setTitle(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Log", None, -1))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabCalculations), QtWidgets.QApplication.translate("MixtureCalculationWindow", "Calculations", None, -1))
-        self.btn_VLE.setText(QtWidgets.QApplication.translate("MixtureCalculationWindow", "Vapor-liquid Equilibrium", None, -1))
+        MixtureCalculationWindow.setWindowTitle(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Mixture properties calculation", None, -1
+            )
+        )
+        self.tableWidget_MixtureSystem.horizontalHeaderItem(0).setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Name", None, -1
+            )
+        )
+        self.tableWidget_MixtureSystem.horizontalHeaderItem(1).setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Formula", None, -1
+            )
+        )
+        self.tableWidget_MixtureSystem.horizontalHeaderItem(2).setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Molar fraction", None, -1
+            )
+        )
+        self.btn_EditBIParameters.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow",
+                "Edit binary interactions parameters",
+                None,
+                -1,
+            )
+        )
+        self.btn_LoadSystem.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Load system", None, -1
+            )
+        )
+        self.btn_SaveSystem.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Save system", None, -1
+            )
+        )
+        self.groupBox_searchSubstance.setTitle(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Search substance", None, -1
+            )
+        )
+        self.label.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Selected substances", None, -1
+            )
+        )
+        self.btn_searchSubstance.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Search", None, -1
+            )
+        )
+        self.btn_Add.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Add", None, -1
+            )
+        )
+        self.btn_Remove.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Remove", None, -1
+            )
+        )
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tabSystem),
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "System", None, -1
+            ),
+        )
+        self.groupBox_EOS.setTitle(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Equation of state", None, -1
+            )
+        )
+        self.groupBox_processVariables.setTitle(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Process variables", None, -1
+            )
+        )
+        self.label_2.setText(
+            QtWidgets.QApplication.translate("MixtureCalculationWindow", "T", None, -1)
+        )
+        self.le_procT.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "150", None, -1
+            )
+        )
+        self.label_3.setText(
+            QtWidgets.QApplication.translate("MixtureCalculationWindow", "P", None, -1)
+        )
+        self.le_procP.setText(
+            QtWidgets.QApplication.translate("MixtureCalculationWindow", "1", None, -1)
+        )
+        self.groupBox_refVariables.setTitle(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Reference variables", None, -1
+            )
+        )
+        self.label_4.setText(
+            QtWidgets.QApplication.translate("MixtureCalculationWindow", "T", None, -1)
+        )
+        self.le_refT.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "300", None, -1
+            )
+        )
+        self.label_5.setText(
+            QtWidgets.QApplication.translate("MixtureCalculationWindow", "P", None, -1)
+        )
+        self.le_refP.setText(
+            QtWidgets.QApplication.translate("MixtureCalculationWindow", "1", None, -1)
+        )
+        self.btn_units.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Units", None, -1
+            )
+        )
+        self.btn_calculate.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Calculate", None, -1
+            )
+        )
+        self.btn_savetxt.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Save to txt", None, -1
+            )
+        )
+        self.groupBox_information.setTitle(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Information", None, -1
+            )
+        )
+        self.groupBox_results.setTitle(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Results", None, -1
+            )
+        )
+        self.groupBox__log.setTitle(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Log", None, -1
+            )
+        )
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tabCalculations),
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Calculations", None, -1
+            ),
+        )
+        self.btn_VLE.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Vapor-liquid Equilibrium", None, -1
+            )
+        )
 
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MixtureCalculationWindow = QtWidgets.QWidget()
     ui = Ui_MixtureCalculationWindow()
     ui.setupUi(MixtureCalculationWindow)
     MixtureCalculationWindow.show()
     sys.exit(app.exec_())
-

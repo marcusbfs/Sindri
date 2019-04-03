@@ -14,6 +14,7 @@ class thetaiSoave1972(thetaiWilson1964):
         m = self.m(i, T, substances)
         return (1.0 + m * (1.0 - np.sqrt(tr))) ** 2
 
+
 class Soave1972(Wilson1964):
     def __init__(self, _subs, _k):
         super().__init__(_subs, _k)

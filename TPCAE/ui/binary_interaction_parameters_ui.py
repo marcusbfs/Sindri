@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_FormBinaryParameters(object):
     def setupUi(self, FormBinaryParameters):
         FormBinaryParameters.setObjectName("FormBinaryParameters")
@@ -25,13 +26,19 @@ class Ui_FormBinaryParameters(object):
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.tableWidget_BinaryParameters = QtWidgets.QTableWidget(self.scrollAreaWidgetContents)
+        self.tableWidget_BinaryParameters = QtWidgets.QTableWidget(
+            self.scrollAreaWidgetContents
+        )
         self.tableWidget_BinaryParameters.setMinimumSize(QtCore.QSize(400, 150))
         self.tableWidget_BinaryParameters.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tableWidget_BinaryParameters.setFrameShadow(QtWidgets.QFrame.Plain)
         self.tableWidget_BinaryParameters.setAlternatingRowColors(True)
-        self.tableWidget_BinaryParameters.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
-        self.tableWidget_BinaryParameters.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectItems)
+        self.tableWidget_BinaryParameters.setSelectionMode(
+            QtWidgets.QAbstractItemView.SingleSelection
+        )
+        self.tableWidget_BinaryParameters.setSelectionBehavior(
+            QtWidgets.QAbstractItemView.SelectItems
+        )
         self.tableWidget_BinaryParameters.setShowGrid(True)
         self.tableWidget_BinaryParameters.setRowCount(0)
         self.tableWidget_BinaryParameters.setColumnCount(0)
@@ -39,7 +46,9 @@ class Ui_FormBinaryParameters(object):
         self.tableWidget_BinaryParameters.setColumnCount(0)
         self.tableWidget_BinaryParameters.setRowCount(0)
         self.gridLayout_2.addWidget(self.tableWidget_BinaryParameters, 0, 0, 1, 3)
-        spacerItem = QtWidgets.QSpacerItem(352, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(
+            352, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout_2.addItem(spacerItem, 1, 0, 1, 1)
         self.btn_ok = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.btn_ok.setObjectName("btn_ok")
@@ -54,17 +63,25 @@ class Ui_FormBinaryParameters(object):
         QtCore.QMetaObject.connectSlotsByName(FormBinaryParameters)
 
     def retranslateUi(self, FormBinaryParameters):
-        FormBinaryParameters.setWindowTitle(QtWidgets.QApplication.translate("FormBinaryParameters", "Binary interaction parameters", None, -1))
-        self.btn_ok.setText(QtWidgets.QApplication.translate("FormBinaryParameters", "Ok", None, -1))
-        self.btn_cancel.setText(QtWidgets.QApplication.translate("FormBinaryParameters", "Cancel", None, -1))
+        FormBinaryParameters.setWindowTitle(
+            QtWidgets.QApplication.translate(
+                "FormBinaryParameters", "Binary interaction parameters", None, -1
+            )
+        )
+        self.btn_ok.setText(
+            QtWidgets.QApplication.translate("FormBinaryParameters", "Ok", None, -1)
+        )
+        self.btn_cancel.setText(
+            QtWidgets.QApplication.translate("FormBinaryParameters", "Cancel", None, -1)
+        )
 
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     FormBinaryParameters = QtWidgets.QWidget()
     ui = Ui_FormBinaryParameters()
     ui.setupUi(FormBinaryParameters)
     FormBinaryParameters.show()
     sys.exit(app.exec_())
-
