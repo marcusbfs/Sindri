@@ -15,6 +15,8 @@ from CubicEquationsOfState.Twu1995 import Twu1995
 from CubicEquationsOfState.GasemEtAlPRmod2001 import GasemPRmod2001
 from CubicEquationsOfState.GasemEtAlTwuMod2001 import GasemTwuMod2001
 from CubicEquationsOfState.GasemEtAl2001 import Gasem2001
+from CubicEquationsOfState.MathiasAndCopeman1983 import MathiasCopeman1983
+from CubicEquationsOfState.Coquelet2004 import Coquelet2004
 from EOSMixture import EOSMixture
 from compounds import SubstanceProp
 from typing import List
@@ -45,6 +47,8 @@ def createEOSMix(substances: List[SubstanceProp], eostype: str, k=None) -> EOSMi
         return PenelouxEtAl1982(substances, k)
     elif eostype == "Adachi, et al. (1983)":
         return Adachi1983(substances, k)
+    elif eostype == "Mathias and Copeman (1983)":
+        return MathiasCopeman1983(substances, k)
     elif eostype == "Soave (1984)":
         return Soave1984(substances, k)
     elif eostype == "Adachi, et al. (1985)":
@@ -61,6 +65,8 @@ def createEOSMix(substances: List[SubstanceProp], eostype: str, k=None) -> EOSMi
         return GasemTwuMod2001(substances, k)
     elif eostype == "Gasem, et al. (2001)":
         return Gasem2001(substances, k)
+    elif eostype == "Coquelet, et al. (2004)":
+        return Coquelet2004(substances, k)
     else:
         return None
 
@@ -76,6 +82,7 @@ def getEOSMixOptions():
         "Patel and Teja (1982)",
         "Péneloux, et al. (1982)",
         "Adachi, et al. (1983)",
+        "Mathias and Copeman (1983)",
         "Soave (1984)",
         "Adachi, et al. (1985)",
         "Stryjek and Vera (1986)",
@@ -84,5 +91,6 @@ def getEOSMixOptions():
         "Gasem, et al. PR modification (2001)",
         "Gasem, et al. Twu modification (2001)",
         "Gasem, et al. (2001)",
+        "Coquelet, et al. (2004)",
     ]
     return options
