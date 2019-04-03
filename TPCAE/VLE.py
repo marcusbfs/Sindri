@@ -1,4 +1,10 @@
+from numba import njit, float64, int64
+
+import VLEBinaryDiagrams
 from VLEEOSIterfaces import *
+from constants import DBL_EPSILON
+from units import conv_unit
+import os
 
 vle_options = {
     # "van der Waals (1890)": "van_der_waals_1890",
