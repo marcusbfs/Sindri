@@ -16,6 +16,9 @@ state_dict = {
 }
 
 
+
+
+
 class SubstanceProp(object):
     def __init__(self, name: str, formula: str):
 
@@ -27,6 +30,7 @@ class SubstanceProp(object):
             + " AND Name LIKE '%"
             + name
             + "%'"
+
 
         )
         db.cursor.execute(query)

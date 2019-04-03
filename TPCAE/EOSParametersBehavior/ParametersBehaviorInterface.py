@@ -23,7 +23,7 @@ class DeltaiBehavior:
     __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
-    def getDeltai(self, b: float) -> float:
+    def getDeltai(self, i:int, T:float, bib: BiBehavior, substances) -> float:
         pass
 
 
@@ -31,5 +31,5 @@ class EpsiloniBehavior:
     __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
-    def getEpsiloni(self, b: float) -> float:
+    def getEpsiloni(self, i:int, T:float, bib: BiBehavior, substances) -> float:
         pass

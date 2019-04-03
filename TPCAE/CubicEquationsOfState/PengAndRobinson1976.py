@@ -7,6 +7,7 @@ from MixtureRules.MixtureRulesInterface import (
     EpsilonMixtureRuleBehavior,
     BMixtureRuleBehavior,
     ThetaMixtureRuleBehavior,
+MixtureRuleBehavior
 )
 import numpy as np
 from constants import R_IG
@@ -36,20 +37,28 @@ class thetaiPR1976(ThetaiBehavior):
 
 
 class epsiloniPR1976(EpsiloniBehavior):
-    def getEpsiloni(self, b: float) -> float:
-        return -b * b
+    # def getEpsiloni(self, b: float) -> float:
+    #     return -b * b
+    def getEpsiloni(self,i, T, bib: BiBehavior, substances) -> float:
+        return - (bib.getBi(i,T,substances))**2
 
 
 class deltaiPR1976(DeltaiBehavior):
-    def getDeltai(self, b: float) -> float:
-        return 2.0 * b
+
+    def getDeltai(self, i:int, T:float, bib: BiBehavior, substances) -> float:
+        return 2.0*bib.getBi(i, T, substances)
 
 
 class deltaMixPR1976(DeltaMixtureRuleBehavior):
+    # def deltam(
+    #     self, y, T: float, bib: BiBehavior, bmb: BMixtureRuleBehavior, substances
+    # ) -> float:
+    #     return 2.0 * bmb.bm(y, T, bib, substances)
+
     def deltam(
-        self, y, T: float, bib: BiBehavior, bmb: BMixtureRuleBehavior, substances
+        self, y, T: float, bib: BiBehavior, bmb: MixtureRuleBehavior, substances
     ) -> float:
-        return 2.0 * bmb.bm(y, T, bib, substances)
+         return 2.0 * bmb.bm(y, T, bib, substances)
 
     def diffDeltam(
         self,
@@ -57,7 +66,7 @@ class deltaMixPR1976(DeltaMixtureRuleBehavior):
         y,
         T: float,
         bib: BiBehavior,
-        bmb: BMixtureRuleBehavior,
+        bmb: MixtureRuleBehavior,
         substances,
     ) -> float:
         return 2.0 * bmb.diffBm(i, y, T, bib, substances)
@@ -65,9 +74,9 @@ class deltaMixPR1976(DeltaMixtureRuleBehavior):
 
 class epsilonMixPR1976(EpsilonMixtureRuleBehavior):
     def epsilonm(
-        self, y, T: float, bib: BiBehavior, bmb: BMixtureRuleBehavior, substances
+        self, y, T: float, bib: BiBehavior, bmb: MixtureRuleBehavior, substances
     ) -> float:
-        return -2.0 * (bmb.bm(y, T, bib, substances)) ** 2
+        return - (bmb.bm(y, T, bib, substances)) ** 2
 
     def diffEpsilonm(
         self,
@@ -75,7 +84,7 @@ class epsilonMixPR1976(EpsilonMixtureRuleBehavior):
         y,
         T: float,
         bib: BiBehavior,
-        bmb: BMixtureRuleBehavior,
+        bmb: MixtureRuleBehavior,
         substances,
     ) -> float:
         return (

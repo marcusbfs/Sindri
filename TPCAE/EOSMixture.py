@@ -15,7 +15,7 @@ from MixtureRules.MixtureRulesInterface import (
     EpsilonMixtureRuleBehavior,
     MixtureRuleBehavior,
 )
-from constants import R_IG
+from constants import R_IG, DBL_EPSILON
 
 
 class EOSMixture:
@@ -26,6 +26,7 @@ class EOSMixture:
         self.mixRuleBehavior = MixtureRuleBehavior()
         self.thetaiBehavior = ThetaiBehavior()
         self.biBehavior = BiBehavior()
+        # TODO remove deltai and epsiloni?
         self.deltaiBehavior = DeltaiBehavior()
         self.epsiloniBehavior = EpsiloniBehavior()
         self.deltaMixBehavior = DeltaMixtureRuleBehavior()
@@ -37,8 +38,12 @@ class EOSMixture:
         theta = self.mixRuleBehavior.thetam(
             y, T, self.thetaiBehavior, self.substances, self.k
         )
-        delta = self.deltaiBehavior.getDeltai(b)
-        epsilon = self.epsiloniBehavior.getEpsiloni(b)
+        delta = self.deltaMixBehavior.deltam(
+            y, T, self.biBehavior, self.mixRuleBehavior, self.substances
+        )
+        epsilon = self.epsilonMixBehavior.epsilonm(
+            y, T, self.biBehavior, self.mixRuleBehavior, self.substances
+        )
 
         Bl = b * P / (R_IG * T)
         deltal = delta * P / (R_IG * T)
@@ -67,14 +72,15 @@ class EOSMixture:
             y, T, self.thetaiBehavior, self.substances, self.k
         )
 
-        deltam = self.deltaiBehavior.getDeltai(bm)
+        deltam = self.deltaMixBehavior.deltam(
+            y, T, self.biBehavior, self.mixRuleBehavior, self.substances
+        )
 
-        epsilonm = self.epsiloniBehavior.getEpsiloni(bm)
+        epsilonm = self.epsilonMixBehavior.epsilonm(
+            y, T, self.biBehavior, self.mixRuleBehavior, self.substances
+        )
 
         deltam2_minus_4epislonm = deltam * deltam - 4.0 * epsilonm
-        sqrt_d2_minus_4eps = np.sqrt(deltam2_minus_4epislonm)
-        twoV_plus_deltam_minus_sqrtd24eps = 2.0 * V + deltam - sqrt_d2_minus_4eps
-        twoV_plus_deltam_plus_sqrtd24eps = 2.0 * V + deltam + sqrt_d2_minus_4eps
 
         # derivatives
         diffthetam = self.mixRuleBehavior.diffThetam(
@@ -88,6 +94,16 @@ class EOSMixture:
             i, y, T, self.biBehavior, self.mixRuleBehavior, self.substances
         )
         deltaN = deltam * diffdeltam * 2.0 - 4.0 * diffepsilonm
+
+        if abs(deltam2_minus_4epislonm) < 100 * DBL_EPSILON:
+            substitute_term = -1.0 / (V + deltam / 2.0)
+            first_term = substitute_term * diffthetam / RT
+            last_term = diffbm / (V - bm) - np.log((V - bm) / V) - np.log(Z)
+            return np.exp(first_term + last_term)
+
+        sqrt_d2_minus_4eps = np.sqrt(deltam2_minus_4epislonm)
+        twoV_plus_deltam_minus_sqrtd24eps = 2.0 * V + deltam - sqrt_d2_minus_4eps
+        twoV_plus_deltam_plus_sqrtd24eps = 2.0 * V + deltam + sqrt_d2_minus_4eps
 
         # Equation(Poling, 2001)
 

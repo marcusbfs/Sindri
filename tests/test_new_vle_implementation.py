@@ -22,42 +22,217 @@ k2 = [[0, 0], [0, 0]]
 from CubicEquationsOfState.PengAndRobinson1976 import PengAndRobinson1976
 
 
-def test_first_test():
+def test_first_pure_substance_PR1976():
 
     eosname = "Peng and Robinson (1976)"
-    eosname = "Redlich and Kwong (1949)"
+    subs = [benzene]
+    # subs = [benzene, isobutanol, cyclopentane]
+    eos = createEOSMix(subs, eosname)
 
-    subs = [benzene, isobutanol, cyclopentane]
-    eospr1976 = createEOSMix(subs, eosname)
-
-    p = .5e6
+    p = 0.5e6
     t = 315
-    y = [0.2, .3, 0.5]
-
-    z = eospr1976.getZfromPT(p, t, y)
+    y = [1.0]
+    # y = [.2, .3, .5]
+    z = eos.getZfromPT(p, t, y)
     zvap = np.max(z)
     zliq = np.min(z)
 
-    phi_vap = np.zeros(len(eospr1976.substances))
-    phi_liq = np.zeros(len(eospr1976.substances))
+    phi_vap = np.zeros(len(eos.substances))
+    phi_liq = np.zeros(len(eos.substances))
 
     for i in range(len(phi_liq)):
-        phi_vap[i] = eospr1976.getPhi_i(i, y, p, t, zvap)
-        phi_liq[i] = eospr1976.getPhi_i(i, y, p, t, zliq)
+        phi_vap[i] = eos.getPhi_i(i, y, p, t, zvap)
+        phi_liq[i] = eos.getPhi_i(i, y, p, t, zliq)
 
-    print(z)
-    print(phi_vap)
-    print(phi_liq)
+    fvap = phi_vap[0] * p
+    fliq = phi_liq[0] * p
 
-    np.testing.assert_allclose(zvap, .75689381, 1e-5)
-    np.testing.assert_allclose(zliq, .01747042, 1e-5)
+    print("Z: ", z)
+    print("Phi_vap: ", phi_vap)
+    print("Phi_liq: ", phi_liq)
+    print("f_vap: ", phi_vap * p)
+    print("f_liq: ", phi_liq * p)
 
-    np.testing.assert_allclose(.0553975, phi_liq[0], 1e-5)
-    np.testing.assert_allclose(.809883, phi_vap[0], 1e-5)
+    np.testing.assert_allclose(zvap, 0.759411, 1e-4)
+    np.testing.assert_allclose(fvap, 4.04938217e05, 1e-5)
+    np.testing.assert_allclose(fliq, 2.76022341e04, 1e-5)
 
-    np.testing.assert_allclose(.0129818, phi_liq[1], 1e-5)
-    np.testing.assert_allclose(.752854, phi_vap[1], 1e-5)
 
-    np.testing.assert_allclose(.16218, phi_liq[2], 1e-5)
-    np.testing.assert_allclose(.84289, phi_vap[2], 1e-5)
+def test_first_pure_substance_vdW1890():
 
+    eosname = "van der Waals (1890)"
+    subs = [benzene]
+    # subs = [benzene, isobutanol, cyclopentane]
+    eos = createEOSMix(subs, eosname)
+
+    p = 0.5e6
+    t = 315
+    y = [1.0]
+    # y = [.2, .3, .5]
+    z = eos.getZfromPT(p, t, y)
+    zvap = np.max(z)
+    zliq = np.min(z)
+
+    phi_vap = np.zeros(len(eos.substances))
+    phi_liq = np.zeros(len(eos.substances))
+
+    for i in range(len(phi_liq)):
+        phi_vap[i] = eos.getPhi_i(i, y, p, t, zvap)
+        phi_liq[i] = eos.getPhi_i(i, y, p, t, zliq)
+
+    fvap = phi_vap[0] * p
+    fliq = phi_liq[0] * p
+
+    print("Z: ", z)
+    print("Phi_vap: ", phi_vap)
+    print("Phi_liq: ", phi_liq)
+    print("f_vap: ", phi_vap * p)
+    print("f_liq: ", phi_liq * p)
+
+    np.testing.assert_allclose(zvap, 0.869055, 1e-4)
+    np.testing.assert_allclose(fvap, 4.42619581e05, 1e-5)
+    np.testing.assert_allclose(fliq, 2.68466414e05, 1e-5)
+
+
+def test_first_pure_substance_RK1949():
+
+    eosname = "Redlich and Kwong (1949)"
+    subs = [benzene]
+    # subs = [benzene, isobutanol, cyclopentane]
+    eos = createEOSMix(subs, eosname)
+
+    p = 0.5e6
+    t = 315
+    y = [1.0]
+    # y = [.2, .3, .5]
+    z = eos.getZfromPT(p, t, y)
+    zvap = np.max(z)
+    zliq = np.min(z)
+
+    phi_vap = np.zeros(len(eos.substances))
+    phi_liq = np.zeros(len(eos.substances))
+
+    for i in range(len(phi_liq)):
+        phi_vap[i] = eos.getPhi_i(i, y, p, t, zvap)
+        phi_liq[i] = eos.getPhi_i(i, y, p, t, zliq)
+
+    fvap = phi_vap[0] * p
+    fliq = phi_liq[0] * p
+
+    print("Z: ", z)
+    print("Phi_vap: ", phi_vap)
+    print("Phi_liq: ", phi_liq)
+    print("f_vap: ", phi_vap * p)
+    print("f_liq: ", phi_liq * p)
+
+    np.testing.assert_allclose(zvap, 0.789930, 1e-4)
+    np.testing.assert_allclose(fvap, 4.14795536e05, 1e-5)
+    np.testing.assert_allclose(fliq, 4.72348414e04, 1e-5)
+
+
+def test_first_pure_substance_Soave1972():
+
+    eosname = "Soave (1972)"
+    subs = [benzene]
+    # subs = [benzene, isobutanol, cyclopentane]
+    eos = createEOSMix(subs, eosname)
+
+    p = 0.5e6
+    t = 315
+    y = [1.0]
+    # y = [.2, .3, .5]
+    z = eos.getZfromPT(p, t, y)
+    zvap = np.max(z)
+    zliq = np.min(z)
+
+    phi_vap = np.zeros(len(eos.substances))
+    phi_liq = np.zeros(len(eos.substances))
+
+    for i in range(len(phi_liq)):
+        phi_vap[i] = eos.getPhi_i(i, y, p, t, zvap)
+        phi_liq[i] = eos.getPhi_i(i, y, p, t, zliq)
+
+    fvap = phi_vap[0] * p
+    fliq = phi_liq[0] * p
+
+    print("Z: ", z)
+    print("Phi_vap: ", phi_vap)
+    print("Phi_liq: ", phi_liq)
+    print("f_vap: ", phi_vap * p)
+    print("f_liq: ", phi_liq * p)
+
+    np.testing.assert_allclose(zvap, 0.763462, 1e-4)
+    np.testing.assert_allclose(fvap, 4.06896003e05, 1e-5)
+    np.testing.assert_allclose(fliq, 2.66674564e04, 1e-5)
+
+
+def test_first_pure_substance_Wilson1964():
+
+    eosname = "Wilson (1964)"
+    subs = [benzene]
+    # subs = [benzene, isobutanol, cyclopentane]
+    eos = createEOSMix(subs, eosname)
+
+    p = 0.5e6
+    t = 315
+    y = [1.0]
+    # y = [.2, .3, .5]
+    z = eos.getZfromPT(p, t, y)
+    zvap = np.max(z)
+    zliq = np.min(z)
+
+    phi_vap = np.zeros(len(eos.substances))
+    phi_liq = np.zeros(len(eos.substances))
+
+    for i in range(len(phi_liq)):
+        phi_vap[i] = eos.getPhi_i(i, y, p, t, zvap)
+        phi_liq[i] = eos.getPhi_i(i, y, p, t, zliq)
+
+    fvap = phi_vap[0] * p
+    fliq = phi_liq[0] * p
+
+    print("Z: ", z)
+    print("Phi_vap: ", phi_vap)
+    print("Phi_liq: ", phi_liq)
+    print("f_vap: ", phi_vap * p)
+    print("f_liq: ", phi_liq * p)
+
+    np.testing.assert_allclose(zvap, 0.774546, 1e-4)
+    np.testing.assert_allclose(fvap, 4.10128953e05, 1e-5)
+    np.testing.assert_allclose(fliq, 3.36971456e04, 1e-5)
+
+
+def test_first_pure_substance_Penelou82():
+
+    eosname = "Peneloux et. al (1982)"
+    subs = [benzene]
+    # subs = [benzene, isobutanol, cyclopentane]
+    eos = createEOSMix(subs, eosname)
+
+    p = 0.5e6
+    t = 315
+    y = [1.0]
+    # y = [.2, .3, .5]
+    z = eos.getZfromPT(p, t, y)
+    zvap = np.max(z)
+    zliq = np.min(z)
+
+    phi_vap = np.zeros(len(eos.substances))
+    phi_liq = np.zeros(len(eos.substances))
+
+    for i in range(len(phi_liq)):
+        phi_vap[i] = eos.getPhi_i(i, y, p, t, zvap)
+        phi_liq[i] = eos.getPhi_i(i, y, p, t, zliq)
+
+    fvap = phi_vap[0] * p
+    fliq = phi_liq[0] * p
+
+    print("Z: ", z)
+    print("Phi_vap: ", phi_vap)
+    print("Phi_liq: ", phi_liq)
+    print("f_vap: ", phi_vap * p)
+    print("f_liq: ", phi_liq * p)
+
+    np.testing.assert_allclose(zvap, 0.76180662, 1e-4)
+    np.testing.assert_allclose(fvap, 406223.03952859, 1e-5)
+    np.testing.assert_allclose(fliq, 26623.35123666, 1e-5)

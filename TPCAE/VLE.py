@@ -189,6 +189,9 @@ class VLE(object):
             err = np.abs(1.0 - xt)
             x = x / xt
 
+
+
+
         return x, pd, phivap, philiq, k, ite
 
     def _getdiffPhi_i_respT(self, i, x, p, t, z, h=1e-4):
@@ -244,6 +247,7 @@ class VLE(object):
                 dphiv = self._getdiffPhi_i_respT(i, y, P, tb, zvap)
                 dphil = self._getdiffPhi_i_respT(i, x, P, tb, zliq)
                 diffk[i] = (-dphil * phivap[i] + philiq[i] * dphiv) / philiq[i] ** 2
+
 
                 # dphiv = self._getdiffPhi_i_respT(i, y, P, tb, zvap)
                 # dphil = self._getdiffPhi_i_respT(i, x, P, tb, zliq)
