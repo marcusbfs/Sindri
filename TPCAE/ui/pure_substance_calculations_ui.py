@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/pure_substance_calculations_ui.ui',
 # licensing of 'designer/pure_substance_calculations_ui.ui' applies.
 #
-# Created: Sun Feb 24 21:17:56 2019
+# Created: Wed Apr  3 19:29:05 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,7 +15,7 @@ class Ui_PureSubstanceCalculationsWindow(object):
     def setupUi(self, PureSubstanceCalculationsWindow):
         PureSubstanceCalculationsWindow.setObjectName("PureSubstanceCalculationsWindow")
         PureSubstanceCalculationsWindow.setWindowModality(QtCore.Qt.ApplicationModal)
-        PureSubstanceCalculationsWindow.resize(885, 761)
+        PureSubstanceCalculationsWindow.resize(919, 741)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
         )
@@ -36,7 +36,7 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 867, 743))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 901, 723))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_10 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_10.setObjectName("gridLayout_10")
@@ -86,10 +86,10 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.tableWidget_results.setColumnCount(0)
         self.tableWidget_results.setRowCount(0)
         self.tableWidget_results.horizontalHeader().setCascadingSectionResizes(True)
-        self.tableWidget_results.horizontalHeader().setDefaultSectionSize(30)
+        self.tableWidget_results.horizontalHeader().setDefaultSectionSize(35)
         self.tableWidget_results.horizontalHeader().setMinimumSectionSize(0)
         self.tableWidget_results.verticalHeader().setCascadingSectionResizes(True)
-        self.tableWidget_results.verticalHeader().setDefaultSectionSize(0)
+        self.tableWidget_results.verticalHeader().setDefaultSectionSize(21)
         self.tableWidget_results.verticalHeader().setMinimumSectionSize(0)
         self.gridLayout_8.addWidget(self.tableWidget_results, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.groupBox_results)

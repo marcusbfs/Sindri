@@ -9,6 +9,12 @@ from CubicEquationsOfState.Soave1972 import Soave1972
 from CubicEquationsOfState.Soave1984 import Soave1984
 from CubicEquationsOfState.Wilson1964 import Wilson1964
 from CubicEquationsOfState.vanderWaals1890 import vanderWaals1890
+from CubicEquationsOfState.AdachiEtAl1985 import Adachi1985
+from CubicEquationsOfState.StryjekAndVera1986 import SV1986
+from CubicEquationsOfState.Twu1995 import Twu1995
+from CubicEquationsOfState.GasemEtAlPRmod2001 import GasemPRmod2001
+from CubicEquationsOfState.GasemEtAlTwuMod2001 import GasemTwuMod2001
+from CubicEquationsOfState.GasemEtAl2001 import Gasem2001
 from EOSMixture import EOSMixture
 from compounds import SubstanceProp
 from typing import List
@@ -17,7 +23,7 @@ _subs = []
 _k = []
 
 
-def createEOSMix(substances : List[SubstanceProp], eostype: str, k=None) -> EOSMixture:
+def createEOSMix(substances: List[SubstanceProp], eostype: str, k=None) -> EOSMixture:
 
     if k is None:
         n = len(substances)
@@ -41,6 +47,20 @@ def createEOSMix(substances : List[SubstanceProp], eostype: str, k=None) -> EOSM
         return Adachi1983(substances, k)
     elif eostype == "Soave (1984)":
         return Soave1984(substances, k)
+    elif eostype == "Adachi, et al. (1985)":
+        return Adachi1985(substances, k)
+    elif eostype == "Stryjek and Vera (1986)":
+        return SV1986(substances, k)
+    elif eostype == "Twu, et al. (1995)":
+        return Twu1995(substances, k)
+    # elif eostype == "Ahlers-Gmehling (2001)":
+    #     return Twu1995(substances, k)
+    elif eostype == "Gasem, et al. PR modification (2001)":
+        return GasemPRmod2001(substances, k)
+    elif eostype == "Gasem, et al. Twu modification (2001)":
+        return GasemTwuMod2001(substances, k)
+    elif eostype == "Gasem, et al. (2001)":
+        return Gasem2001(substances, k)
     else:
         return None
 
@@ -57,5 +77,12 @@ def getEOSMixOptions():
         "Péneloux, et al. (1982)",
         "Adachi, et al. (1983)",
         "Soave (1984)",
+        "Adachi, et al. (1985)",
+        "Stryjek and Vera (1986)",
+        "Twu, et al. (1995)",
+        # "Ahlers-Gmehling (2001)",
+        "Gasem, et al. PR modification (2001)",
+        "Gasem, et al. Twu modification (2001)",
+        "Gasem, et al. (2001)",
     ]
     return options

@@ -179,6 +179,7 @@ class SubstanceProp(object):
     def getFluidState(self, P: float, T: float, eq, delta=1e-3):
         pvpaw = self.getPvpAW(T)
         Pvp = eq.getPvp(T, pvpaw)[0]
+
         Pr = P / self.Pc
         Tr = T / self.Tc
 

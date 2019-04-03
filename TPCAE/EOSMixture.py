@@ -21,7 +21,7 @@ from compounds import SubstanceProp
 
 
 class EOSMixture:
-    def __init__(self, _subs : List[SubstanceProp], _k):
+    def __init__(self, _subs: List[SubstanceProp], _k):
         self.substances = _subs
         self.k = _k
         self.eosname = ""
@@ -190,6 +190,7 @@ class EOSMixture:
         zs = (z_plus_h - z_minus_h) / (2.0 * h)
         return np.min(zs), np.max(zs)
 
+    # TODO speed up this part with numba
     def getDepartureProps(self, y, P, T, V, Z):
         def _Zfunc(v, t):
             bm = self.mixRuleBehavior.bm(y, t, self.biBehavior, self.substances)

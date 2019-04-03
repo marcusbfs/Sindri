@@ -27,7 +27,6 @@ def test_EOSPuresubstancesInterface_PR1976():
     p = 1e5
     t = 150
 
-
     # test Z
     eos_PSI = EOSPureSubstanceInterface(subs, eosname)
     eos_old = EOS(MixtureProp(subs, [1.0]), k, eosname)

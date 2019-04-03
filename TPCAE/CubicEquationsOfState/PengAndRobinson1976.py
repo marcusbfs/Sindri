@@ -18,6 +18,9 @@ class biPR1976(BiBehavior):
 
 
 class thetaiPR1976(ThetaiBehavior):
+    def a(self, i: int, T: float, substances):
+        return 0.45724 * np.power(R_IG * substances[i].Tc, 2) / substances[i].Pc
+
     def m(self, i: int, T: float, substances):
         w = substances[i].omega
         return 0.37464 + 1.54226 * w - 0.26992 * w * w
@@ -27,10 +30,7 @@ class thetaiPR1976(ThetaiBehavior):
         return np.power(1.0 + _m * (1.0 - np.sqrt(T / substances[i].Tc)), 2)
 
     def getThetai(self, i: int, T: float, substances) -> float:
-        _alpha = self.alpha(i, T, substances)
-        return (
-            _alpha * 0.45724 * np.power(R_IG * substances[i].Tc, 2) / substances[i].Pc
-        )
+        return self.alpha(i, T, substances) * self.a(i, T, substances)
 
 
 class deltaMixPR1976(DeltaMixtureRuleBehavior):

@@ -10,7 +10,10 @@ import units
 import utils
 from Properties import VaporPressure
 from compounds import MixtureProp, SubstanceProp
-from eos import EOS
+
+# from eos import EOS
+from EOSPureSubstanceInterface import EOSPureSubstanceInterface as EOS
+from Factories.EOSMixFactory import getEOSMixOptions
 from pureSubstanceDiagramsWindow import Window_PureSubstanceDiagrams
 from ui.pure_substance_calculations_ui import Ui_PureSubstanceCalculationsWindow
 from units import conv_unit
@@ -99,7 +102,12 @@ class Window_PureSubstanceCalculations(
         self.database_changed = False
 
         # listview -> eos options
-        self.listWidget_eos_options.addItems(list(eos.eos_options.keys()))
+        # self.listWidget_eos_options.addItems(list(eos.eos_options.keys()))
+        eosmixoptions = getEOSMixOptions()
+        self.groupBox_EOS.setTitle(
+            "Equation of state ({:d})".format(int(len(eosmixoptions)))
+        )
+        self.listWidget_eos_options.addItems(eosmixoptions)
         self.listWidget_eos_options.itemSelectionChanged.connect(self.eos_selected)
 
     @QtCore.Slot()
@@ -145,7 +153,8 @@ class Window_PureSubstanceCalculations(
 
                 self.subs = SubstanceProp(self.sname, self.sformula)
                 self.mix = MixtureProp([self.subs], [1.0])
-                self.eoseq = EOS(self.mix, [[0]], self.eosname)
+                # self.eoseq = EOS(self.mix, [[0]], self.eosname)
+                self.eoseq = EOS([self.subs], self.eosname)
 
                 self.info = ""
                 self.info += "Compound: {:s} ({:s})\n".format(self.sname, self.sformula)
@@ -247,7 +256,8 @@ class Window_PureSubstanceCalculations(
             try:  # to initialize EOS
                 self.subs = SubstanceProp(self.sname, self.sformula)
                 self.mix = MixtureProp([self.subs], [1.0])
-                self.eoseq = EOS(self.mix, [[0]], self.eosname)
+                # self.eoseq = EOS(self.mix, [[0]], self.eosname)
+                self.eoseq = EOS([self.subs], self.eosname)
             except:
                 err = (
                     "One or more of the following properties is not set: Tc, Pc, omega"

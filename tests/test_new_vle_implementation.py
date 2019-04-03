@@ -303,3 +303,219 @@ def test_first_pure_substance_Adachi1983():
     np.testing.assert_allclose(zvap, 0.760526, 1e-4)
     np.testing.assert_allclose(fvap, 4.05358883e05, 1e-5)
     np.testing.assert_allclose(fliq, 2.77327856e04, 1e-5)
+
+
+def test_first_pure_substance_Adachi1985():
+
+    eosname = "Adachi, et al. (1985)"
+    subs = [benzene]
+    # subs = [benzene, isobutanol, cyclopentane]
+    eos = createEOSMix(subs, eosname)
+
+    p = 0.5e6
+    t = 315
+    y = [1.0]
+    # y = [.2, .3, .5]
+    z = eos.getZfromPT(p, t, y)
+    zvap = np.max(z)
+    zliq = np.min(z)
+
+    phi_vap = np.zeros(len(eos.substances))
+    phi_liq = np.zeros(len(eos.substances))
+
+    for i in range(len(phi_liq)):
+        phi_vap[i] = eos.getPhi_i(i, y, p, t, zvap)
+        phi_liq[i] = eos.getPhi_i(i, y, p, t, zliq)
+
+    fvap = phi_vap[0] * p
+    fliq = phi_liq[0] * p
+
+    print("Z: ", z)
+    print("Phi_vap: ", phi_vap)
+    print("Phi_liq: ", phi_liq)
+    print("f_vap: ", phi_vap * p)
+    print("f_liq: ", phi_liq * p)
+
+    np.testing.assert_allclose(zvap, 0.759439, 1e-4)
+    np.testing.assert_allclose(fvap, 4.05212335e05, 1e-5)
+    np.testing.assert_allclose(fliq, 2.65283163e04, 1e-5)
+
+
+def test_first_pure_substance_SV1986():
+
+    eosname = "Stryjek and Vera (1986)"
+    subs = [benzene]
+    # subs = [benzene, isobutanol, cyclopentane]
+    eos = createEOSMix(subs, eosname)
+
+    p = 0.5e6
+    t = 315
+    y = [1.0]
+    # y = [.2, .3, .5]
+    z = eos.getZfromPT(p, t, y)
+    zvap = np.max(z)
+    zliq = np.min(z)
+
+    phi_vap = np.zeros(len(eos.substances))
+    phi_liq = np.zeros(len(eos.substances))
+
+    for i in range(len(phi_liq)):
+        phi_vap[i] = eos.getPhi_i(i, y, p, t, zvap)
+        phi_liq[i] = eos.getPhi_i(i, y, p, t, zliq)
+
+    fvap = phi_vap[0] * p
+    fliq = phi_liq[0] * p
+
+    print("Z: ", z)
+    print("Phi_vap: ", phi_vap)
+    print("Phi_liq: ", phi_liq)
+    print("f_vap: ", phi_vap * p)
+    print("f_liq: ", phi_liq * p)
+
+    np.testing.assert_allclose(zvap, 0.757315, 1e-4)
+    np.testing.assert_allclose(fvap, 4.04338885e05, 1e-5)
+    np.testing.assert_allclose(fliq, 2.64221045e04, 1e-5)
+
+
+def test_first_pure_substance_Twu1995():
+
+    eosname = "Twu, et al. (1995)"
+    subs = [benzene]
+    # subs = [benzene, isobutanol, cyclopentane]
+    eos = createEOSMix(subs, eosname)
+
+    p = 0.5e6
+    t = 315
+    y = [1.0]
+    # y = [.2, .3, .5]
+    z = eos.getZfromPT(p, t, y)
+    zvap = np.max(z)
+    zliq = np.min(z)
+
+    phi_vap = np.zeros(len(eos.substances))
+    phi_liq = np.zeros(len(eos.substances))
+
+    for i in range(len(phi_liq)):
+        phi_vap[i] = eos.getPhi_i(i, y, p, t, zvap)
+        phi_liq[i] = eos.getPhi_i(i, y, p, t, zliq)
+
+    fvap = phi_vap[0] * p
+    fliq = phi_liq[0] * p
+
+    print("Z: ", z)
+    print("Phi_vap: ", phi_vap)
+    print("Phi_liq: ", phi_liq)
+    print("f_vap: ", phi_vap * p)
+    print("f_liq: ", phi_liq * p)
+
+    np.testing.assert_allclose(zvap, 0.758737, 1e-4)
+    np.testing.assert_allclose(fvap, 4.04745305e05, 1e-5)
+    np.testing.assert_allclose(fliq, 2.72155891e04, 1e-5)
+
+
+def test_first_pure_substance_GasemPR2001():
+
+    eosname = "Gasem, et al. PR modification (2001)"
+    subs = [benzene]
+    # subs = [benzene, isobutanol, cyclopentane]
+    eos = createEOSMix(subs, eosname)
+
+    p = 0.5e6
+    t = 315
+    y = [1.0]
+    # y = [.2, .3, .5]
+    z = eos.getZfromPT(p, t, y)
+    zvap = np.max(z)
+    zliq = np.min(z)
+
+    phi_vap = np.zeros(len(eos.substances))
+    phi_liq = np.zeros(len(eos.substances))
+
+    for i in range(len(phi_liq)):
+        phi_vap[i] = eos.getPhi_i(i, y, p, t, zvap)
+        phi_liq[i] = eos.getPhi_i(i, y, p, t, zliq)
+
+    fvap = phi_vap[0] * p
+    fliq = phi_liq[0] * p
+
+    print("Z: ", z)
+    print("Phi_vap: ", phi_vap)
+    print("Phi_liq: ", phi_liq)
+    print("f_vap: ", phi_vap * p)
+    print("f_liq: ", phi_liq * p)
+
+    np.testing.assert_allclose(zvap, 0.758125, 1e-4)
+    np.testing.assert_allclose(fvap, 4.04570019e05, 1e-5)
+    np.testing.assert_allclose(fliq, 2.68710963e04, 1e-5)
+
+
+def test_first_pure_substance_GasemTwu2001():
+
+    eosname = "Gasem, et al. Twu modification (2001)"
+    subs = [benzene]
+    # subs = [benzene, isobutanol, cyclopentane]
+    eos = createEOSMix(subs, eosname)
+
+    p = 0.5e6
+    t = 315
+    y = [1.0]
+    # y = [.2, .3, .5]
+    z = eos.getZfromPT(p, t, y)
+    zvap = np.max(z)
+    zliq = np.min(z)
+
+    phi_vap = np.zeros(len(eos.substances))
+    phi_liq = np.zeros(len(eos.substances))
+
+    for i in range(len(phi_liq)):
+        phi_vap[i] = eos.getPhi_i(i, y, p, t, zvap)
+        phi_liq[i] = eos.getPhi_i(i, y, p, t, zliq)
+
+    fvap = phi_vap[0] * p
+    fliq = phi_liq[0] * p
+
+    print("Z: ", z)
+    print("Phi_vap: ", phi_vap)
+    print("Phi_liq: ", phi_liq)
+    print("f_vap: ", phi_vap * p)
+    print("f_liq: ", phi_liq * p)
+
+    np.testing.assert_allclose(zvap, 0.758799, 1e-4)
+    np.testing.assert_allclose(fvap, 4.04762905e05, 1e-5)
+    np.testing.assert_allclose(fliq, 2.72516524e04, 1e-5)
+
+
+def test_first_pure_substance_Gasem2001():
+
+    eosname = "Gasem, et al. (2001)"
+    subs = [benzene]
+    # subs = [benzene, isobutanol, cyclopentane]
+    eos = createEOSMix(subs, eosname)
+
+    p = 0.5e6
+    t = 315
+    y = [1.0]
+    # y = [.2, .3, .5]
+    z = eos.getZfromPT(p, t, y)
+    zvap = np.max(z)
+    zliq = np.min(z)
+
+    phi_vap = np.zeros(len(eos.substances))
+    phi_liq = np.zeros(len(eos.substances))
+
+    for i in range(len(phi_liq)):
+        phi_vap[i] = eos.getPhi_i(i, y, p, t, zvap)
+        phi_liq[i] = eos.getPhi_i(i, y, p, t, zliq)
+
+    fvap = phi_vap[0] * p
+    fliq = phi_liq[0] * p
+
+    print("Z: ", z)
+    print("Phi_vap: ", phi_vap)
+    print("Phi_liq: ", phi_liq)
+    print("f_vap: ", phi_vap * p)
+    print("f_liq: ", phi_liq * p)
+
+    np.testing.assert_allclose(zvap, 0.759367, 1e-4)
+    np.testing.assert_allclose(fvap, 4.04925537e05, 1e-5)
+    np.testing.assert_allclose(fliq, 2.75767263e04, 1e-5)

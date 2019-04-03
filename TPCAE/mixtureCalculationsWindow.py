@@ -196,6 +196,7 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
 
             try:
                 self.eoseq = EOS(self.mix, self.k, self.eosname)
+                self.eoseq = EOS(self.mix, self.k, self.eosname)
 
                 self.info = ""
                 tab = "    "

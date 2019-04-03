@@ -2,7 +2,9 @@ from PySide2 import QtCore, QtWidgets
 
 import diagrams
 import units
-from eos import EOS
+
+# from eos import EOS
+from EOSPureSubstanceInterface import EOSPureSubstanceInterface as EOS
 from ui.pure_substance_diagrams_ui import Ui_Form_PureSubstanceDiagrams
 
 
@@ -112,7 +114,7 @@ class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagr
                 [self.Ti, self.Tf],
                 self.Pref,
                 self.Tref,
-                self.points,
+                int(self.points),
                 # isotherms=self.isotherms_range,
             )
             s2 = time()

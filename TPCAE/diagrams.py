@@ -5,7 +5,9 @@ import numpy as np
 from scipy import interpolate
 
 from Properties import Props
-from eos import EOS
+
+# from eos import EOS
+from EOSPureSubstanceInterface import EOSPureSubstanceInterface as EOS
 from units import conv_unit
 
 # valid_diagrams = ["PV", "TS", "TV", "PS", "PT", "HS"]
@@ -226,7 +228,7 @@ class PlotPureSubstanceDiagrams(object):
 
 
 def gen_data(
-    eoseq: EOS, Ti_f: float, _Pref: float, _Tref: float, points: int, isotherms=[]
+    eoseq: EOS, Ti_f: List[float], _Pref: float, _Tref: float, points: int, isotherms=[]
 ):
     if not isinstance(Ti_f, list):
         raise TypeError("Temperature parameter must be an array of len 2")

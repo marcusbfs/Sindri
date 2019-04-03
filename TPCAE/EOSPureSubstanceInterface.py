@@ -3,8 +3,9 @@ from typing import List
 import numpy as np
 
 from Factories.EOSMixFactory import createEOSMix
-from compounds import SubstanceProp
+from compounds import SubstanceProp, MixtureProp
 from constants import DBL_EPSILON, R_IG
+from Properties import Props
 
 
 class EOSPureSubstanceInterface:
@@ -15,8 +16,11 @@ class EOSPureSubstanceInterface:
         assert self.n == 1
         self.eosmix = createEOSMix(self.substances, self.eosname)
         self.y = np.ones(self.n, dtype=np.float64)
+        self.mix = MixtureProp(self.substances, self.y)
 
-    def getPvp(self, _T: float, _P: float, tol=10.0 * DBL_EPSILON, kmax=100):
+    def getPvp(
+        self, _T: float, _P: float, tol: float = 10.0 * DBL_EPSILON, kmax: int = 100
+    ):
         for i in range(1, kmax + 1):
             Zs = self.eosmix.getZfromPT(_P, _T, self.y)
             Zl, Zv = np.min(Zs), np.max(Zs)
@@ -32,3 +36,11 @@ class EOSPureSubstanceInterface:
 
     def getZfromPT(self, _P: float, _T: float):
         return self.eosmix.getZfromPT(_P, _T, self.y)
+
+    def getAllProps(
+        self, Tref: float, T: float, Pref: float, P: float
+    ) -> (Props, Props):
+        return self.eosmix.getAllProps(self.y, Tref, T, Pref, P)
+
+    def getEOSDisplayName(self):
+        return self.eosname

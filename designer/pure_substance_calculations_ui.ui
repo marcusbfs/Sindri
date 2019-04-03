@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>885</width>
-    <height>761</height>
+    <width>919</width>
+    <height>741</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -48,8 +48,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>867</width>
-        <height>743</height>
+        <width>901</width>
+        <height>723</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_10">
@@ -150,7 +150,7 @@
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
-                <number>30</number>
+                <number>35</number>
                </attribute>
                <attribute name="horizontalHeaderMinimumSectionSize">
                 <number>0</number>
@@ -159,7 +159,7 @@
                 <bool>true</bool>
                </attribute>
                <attribute name="verticalHeaderDefaultSectionSize">
-                <number>0</number>
+                <number>21</number>
                </attribute>
                <attribute name="verticalHeaderMinimumSectionSize">
                 <number>0</number>
