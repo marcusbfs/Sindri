@@ -1,17 +1,9 @@
-import abc
-import compounds
-from EOSParametersBehavior.ParametersBehaviorInterface import (
-    BiBehavior,
-    DeltaiBehavior,
-    ThetaiBehavior,
-    EpsiloniBehavior,
-)
 import numpy as np
+
+from EOSParametersBehavior.ParametersBehaviorInterface import BiBehavior, ThetaiBehavior
 from MixtureRules.MixtureRulesInterface import (
     ThetaMixtureRuleBehavior,
     BMixtureRuleBehavior,
-    DeltaMixtureRuleBehavior,
-    EpsilonMixtureRuleBehavior,
     MixtureRuleBehavior,
 )
 

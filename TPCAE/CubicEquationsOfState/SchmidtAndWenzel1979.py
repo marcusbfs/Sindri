@@ -1,3 +1,7 @@
+import numpy as np
+
+from EOSMixture import EOSMixture
+from MixtureRules.ClassicMixtureRule import ClassicMixtureRule
 from MixtureRules.MixtureRulesInterface import (
     BiBehavior,
     ThetaiBehavior,
@@ -5,15 +9,11 @@ from MixtureRules.MixtureRulesInterface import (
     DeltaMixtureRuleBehavior,
     EpsiloniBehavior,
     EpsilonMixtureRuleBehavior,
-    BMixtureRuleBehavior,
-    ThetaMixtureRuleBehavior,
     MixtureRuleBehavior,
 )
-import numpy as np
 from constants import R_IG
-from EOSMixture import EOSMixture
-from MixtureRules.ClassicMixtureRule import ClassicMixtureRule
 from polyEqSolver import solve_cubic
+
 
 # TODO
 

@@ -1,11 +1,11 @@
 from CubicEquationsOfState.Soave1972 import Soave1972, thetaiSoave1972
-from constants import R_IG
+from EOSParametersBehavior.ParametersBehaviorInterface import EpsiloniBehavior
 from MixtureRules.MixtureRulesInterface import (
     BiBehavior,
-    EpsiloniBehavior,
     EpsilonMixtureRuleBehavior,
     BMixtureRuleBehavior,
 )
+from constants import R_IG
 
 
 class thetaiSoave1984(thetaiSoave1972):

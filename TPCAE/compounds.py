@@ -1,9 +1,11 @@
-import db
-from constants import R_IG, DBL_EPSILON
-from Properties import DeltaProp, VaporPressure
+from typing import List
+
 import numpy as np
 from numba import njit, float64
-from typing import List
+
+import db
+from Properties import DeltaProp, VaporPressure
+from constants import R_IG, DBL_EPSILON
 
 state_dict = {
     # It must have the following order:

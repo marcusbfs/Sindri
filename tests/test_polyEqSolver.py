@@ -1,5 +1,6 @@
-from polyEqSolver import *
 import numpy as np
+
+from polyEqSolver import *
 
 
 class TestCubicSolver:

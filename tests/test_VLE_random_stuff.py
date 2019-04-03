@@ -1,7 +1,7 @@
-from TPCAE.VLE import *
-
-from TPCAE.compounds import MixtureProp, SubstanceProp
 import numpy as np
+
+from TPCAE.VLE import *
+from TPCAE.compounds import SubstanceProp
 
 methane = SubstanceProp("methane", "CH4")
 ethane = SubstanceProp("ethane", "C2H4")

@@ -1,8 +1,7 @@
-from PySide2 import QtCore, QtWidgets, QtGui
-
+import numpy as np
+from PySide2 import QtCore, QtWidgets
 
 from ui.binary_interaction_parameters_ui import Ui_FormBinaryParameters
-import numpy as np
 
 
 class Window_BinaryInteractionParameters(QtWidgets.QWidget, Ui_FormBinaryParameters):

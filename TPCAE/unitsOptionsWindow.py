@@ -1,6 +1,7 @@
 from PySide2 import QtCore, QtWidgets
-from ui.units_options_ui import Ui_Form_UnitsOptions
+
 import units
+from ui.units_options_ui import Ui_Form_UnitsOptions
 
 
 class Window_UnitsOptions(QtWidgets.QWidget, Ui_Form_UnitsOptions):

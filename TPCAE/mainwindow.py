@@ -1,11 +1,12 @@
 from PySide2 import QtWidgets
 from PySide2.QtCore import Slot
-import db
-from ui.mainwindow_ui import Ui_MainWindow
-from databaseWindow import databaseWindow
-from pureSubstanceCalculationsWindow import Window_PureSubstanceCalculations
-from mixtureCalculationsWindow import Window_MixtureCalculations
+
 import _devinfo
+import db
+from databaseWindow import databaseWindow
+from mixtureCalculationsWindow import Window_MixtureCalculations
+from pureSubstanceCalculationsWindow import Window_PureSubstanceCalculations
+from ui.mainwindow_ui import Ui_MainWindow
 
 
 class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):

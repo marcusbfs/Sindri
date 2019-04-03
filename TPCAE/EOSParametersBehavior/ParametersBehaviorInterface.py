@@ -1,6 +1,4 @@
 import abc
-import compounds
-import numpy as np
 
 
 class BiBehavior:

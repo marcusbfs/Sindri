@@ -1,6 +1,6 @@
+from Properties import VaporPressure, Props
 from units import conv_unit
 from utils import f2str
-from Properties import VaporPressure, Props, DeltaProp
 
 
 def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **units):

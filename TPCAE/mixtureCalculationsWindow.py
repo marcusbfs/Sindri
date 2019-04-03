@@ -10,13 +10,13 @@ import reports
 import units
 import utils
 from Properties import VaporPressure
+from VLEWindow import Window_VLE
 from compounds import MixtureProp, SubstanceProp
 from editBinaryInteractionsParametersWin import Window_BinaryInteractionParameters
 from eos import EOS
 from ui.mixture_calculations_ui import Ui_MixtureCalculationWindow
 from units import conv_unit
 from unitsOptionsWindow import Window_UnitsOptions
-from VLEWindow import Window_VLE
 
 
 class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow):

@@ -1,15 +1,12 @@
 from CubicEquationsOfState.Soave1972 import Soave1972
-from CubicEquationsOfState.Wilson1964 import biWilson1964
+from MixtureRules.ClassicMixtureRule import ClassicMixtureRule, ClassicBMixture
 from MixtureRules.MixtureRulesInterface import (
     BMixtureRuleBehavior,
     BiBehavior,
-    DeltaiBehavior,
     DeltaMixtureRuleBehavior,
     EpsilonMixtureRuleBehavior,
-    EpsiloniBehavior,
     MixtureRuleBehavior,
 )
-from MixtureRules.ClassicMixtureRule import ClassicMixtureRule, ClassicBMixture
 from constants import R_IG
 
 

@@ -1,4 +1,5 @@
 from numba import jit, float64
+
 from constants import DBL_EPSILON
 
 

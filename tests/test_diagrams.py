@@ -1,10 +1,6 @@
-import pytest
-
-from TPCAE.diagrams import *
-
 from TPCAE.compounds import MixtureProp, SubstanceProp
+from TPCAE.diagrams import *
 from TPCAE.eos import EOS
-import numpy as np
 
 methane = SubstanceProp("methane", "CH4")
 water = SubstanceProp("water", "H2O")

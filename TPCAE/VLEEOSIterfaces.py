@@ -1,12 +1,7 @@
-import os
-
 import numpy as np
-from numba import njit, float64, int64
 
-import VLEBinaryDiagrams
-from constants import R_IG, DBL_EPSILON
+from constants import R_IG
 from polyEqSolver import solve_cubic
-from units import conv_unit
 
 
 class InterfaceEosVLE(object):

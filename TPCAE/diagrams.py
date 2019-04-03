@@ -1,10 +1,12 @@
-import numpy as np
-from units import conv_unit
-import matplotlib.pyplot as plt
-from scipy import interpolate
-from eos import EOS
-from Properties import Props
 from typing import List
+
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy import interpolate
+
+from Properties import Props
+from eos import EOS
+from units import conv_unit
 
 # valid_diagrams = ["PV", "TS", "TV", "PS", "PT", "HS"]
 

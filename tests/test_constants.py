@@ -1,4 +1,3 @@
-import pytest
 from TPCAE.constants import R_IG
 
 

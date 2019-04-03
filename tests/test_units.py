@@ -1,6 +1,6 @@
-from TPCAE.units import conv_unit, convert_to_SI
-
 import pytest
+
+from TPCAE.units import conv_unit
 
 
 # temperatures conversions

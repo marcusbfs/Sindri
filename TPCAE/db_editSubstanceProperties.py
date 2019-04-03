@@ -1,6 +1,7 @@
 from PySide2 import QtCore, QtWidgets
-from ui.db_substanceProperties_ui import Ui_Form_db_substanceProperties
+
 import db
+from ui.db_substanceProperties_ui import Ui_Form_db_substanceProperties
 
 
 class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProperties):

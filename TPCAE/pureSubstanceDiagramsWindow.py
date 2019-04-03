@@ -1,8 +1,9 @@
-import units
 from PySide2 import QtCore, QtWidgets
-from ui.pure_substance_diagrams_ui import Ui_Form_PureSubstanceDiagrams
+
 import diagrams
+import units
 from eos import EOS
+from ui.pure_substance_diagrams_ui import Ui_Form_PureSubstanceDiagrams
 
 
 class Window_PureSubstanceDiagrams(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams):

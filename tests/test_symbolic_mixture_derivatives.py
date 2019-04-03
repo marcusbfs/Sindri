@@ -1,5 +1,3 @@
-import numpy as np
-
 from TPCAE.compounds import MixtureProp, SubstanceProp
 from TPCAE.eos import EOS
 

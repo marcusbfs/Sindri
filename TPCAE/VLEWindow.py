@@ -1,12 +1,9 @@
-from PySide2 import QtCore, QtWidgets
-
-from ui.vle_ui import Ui_FormVLE
-
 import numpy as np
+from PySide2 import QtWidgets
 
 from VLE import VLE, vle_options, calc_options
+from ui.vle_ui import Ui_FormVLE
 from units import conv_unit, temperature_options, pressure_options
-
 
 diagram_types = ["isothermal", "isobaric"]
 

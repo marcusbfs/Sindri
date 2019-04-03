@@ -1,17 +1,17 @@
+from EOSMixture import EOSMixture
+from EOSParametersBehavior.ParametersBehaviorInterface import (
+    DeltaiBehavior,
+    EpsiloniBehavior,
+)
+from MixtureRules.ClassicMixtureRule import ClassicMixtureRule
 from MixtureRules.MixtureRulesInterface import (
     BiBehavior,
     ThetaiBehavior,
-    DeltaiBehavior,
     DeltaMixtureRuleBehavior,
-    EpsiloniBehavior,
     EpsilonMixtureRuleBehavior,
     BMixtureRuleBehavior,
-    ThetaMixtureRuleBehavior,
 )
-import numpy as np
 from constants import R_IG
-from EOSMixture import EOSMixture
-from MixtureRules.ClassicMixtureRule import ClassicMixtureRule
 
 
 class bivanderWaals1890(BiBehavior):
