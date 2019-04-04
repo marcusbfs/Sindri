@@ -7,6 +7,7 @@ from databaseWindow import databaseWindow
 from mixtureCalculationsWindow import Window_MixtureCalculations
 from pureSubstanceCalculationsWindow import Window_PureSubstanceCalculations
 from ui.mainwindow_ui import Ui_MainWindow
+from aboutWindow import Window_About
 
 
 class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -18,6 +19,7 @@ class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.open_PureSubstanceCalculations
         )
         self.btn_MixtureCalculations.clicked.connect(self.open_MixtureCalculations)
+        self.btn_about.clicked.connect(self.open_AboutWindow)
         self.setWindowTitle(_devinfo.__SOFTWARE_NAME__)
 
     def open_db_window(self):
@@ -32,6 +34,11 @@ class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def open_MixtureCalculations(self):
         self.MixCalcWin = Window_MixtureCalculations()
         self.MixCalcWin.show()
+
+    @Slot()
+    def open_AboutWindow(self):
+        self.aboutWin = Window_About()
+        self.aboutWin.show()
 
     def closeEvent(self, *args, **kwargs):
         db.db.close()

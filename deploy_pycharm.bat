@@ -1,5 +1,5 @@
 set current_dir=%cd%
-set desktop_dir=C:\Users\Marcus\Desktop
+set desktop_dir=D:\Desktop
 
 set app_name=TPCAE
 set work_folder=%desktop_dir%\%app_name%_build
