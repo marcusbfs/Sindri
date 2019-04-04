@@ -13,7 +13,8 @@ from Properties import VaporPressure
 from VLEWindow import Window_VLE
 from compounds import MixtureProp, SubstanceProp
 from editBinaryInteractionsParametersWin import Window_BinaryInteractionParameters
-from eos import EOS
+#from eos import EOS
+from Factories.EOSMixFactory import createEOSMix, getEOSMixOptions
 from ui.mixture_calculations_ui import Ui_MixtureCalculationWindow
 from units import conv_unit
 from unitsOptionsWindow import Window_UnitsOptions
@@ -121,7 +122,12 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
         self.database_changed = False
 
         # listview -> eos options
-        self.listWidget_eos_options.addItems(list(eos.eos_options.keys()))
+        # self.listWidget_eos_options.addItems(list(eos.eos_options.keys()))
+        mixeosoptions = getEOSMixOptions()
+        self.groupBox_EOS.setTitle(
+            "Equation of state ({:d})".format(int(len(mixeosoptions)))
+        )
+        self.listWidget_eos_options.addItems(mixeosoptions)
         self.listWidget_eos_options.itemSelectionChanged.connect(self.eos_selected)
 
     @QtCore.Slot()
@@ -195,8 +201,8 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
             self.plainTextEdit_log.clear()
 
             try:
-                self.eoseq = EOS(self.mix, self.k, self.eosname)
-                self.eoseq = EOS(self.mix, self.k, self.eosname)
+                # self.eoseq = EOS(self.mix, self.k, self.eosname)
+                self.eoseq = createEOSMix(self.subs_in_system, self.eosname, self.k)
 
                 self.info = ""
                 tab = "    "
@@ -236,7 +242,7 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
 
             try:  # calculate properties at T and P
 
-                self.propsliq, self.propsvap = self.eoseq.getAllProps(
+                self.propsliq, self.propsvap = self.eoseq.getAllProps(self.y,
                     self.Tref, self.T, self.Pref, self.P
                 )
                 self.Pvp = VaporPressure()

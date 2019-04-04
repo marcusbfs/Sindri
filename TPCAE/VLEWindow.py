@@ -1,7 +1,8 @@
 import numpy as np
 from PySide2 import QtWidgets
 
-from VLE import VLE, vle_options, calc_options
+from Factories.EOSMixFactory import createEOSMix, getEOSMixOptions
+from EOSMixture import calc_options
 from ui.vle_ui import Ui_FormVLE
 from units import conv_unit, temperature_options, pressure_options
 
@@ -77,7 +78,9 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
                 i, 1, QtWidgets.QTableWidgetItem(self.subsInSystem[i].Formula)
             )
 
-        self.comboBox_EOS.addItems(list(vle_options.keys()))
+        mixeosoptions = getEOSMixOptions()
+        # self.comboBox_EOS.addItems(list(vle_options.keys()))
+        self.comboBox_EOS.addItems(mixeosoptions)
         self.comboBox_CalcType.addItems(list(calc_options.keys()))
         self.comboBox_Tunit.addItems(temperature_options)
         self.comboBox_Punit.addItems(pressure_options)
@@ -94,7 +97,8 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
 
     def calculate(self):
 
-        self.VLEeq = VLE(self.subsInSystem, self.eosname, self.k)
+        # self.VLEeq = VLE(self.subsInSystem, self.eosname, self.k)
+        self.VLEeq = createEOSMix(self.subsInSystem, self.eosname, self.k)
 
         # check if P and T are numbers
         if not self._PandTareValidNumbers():
@@ -241,7 +245,8 @@ class Window_VLE(QtWidgets.QWidget, Ui_FormVLE):
         gendata_header = ["{} [{}]", "x1", "y1"]
 
         try:
-            self.VLEeq = VLE(self.subsInSystem, self.eosname, self.k)
+            # self.VLEeq = VLE(self.subsInSystem, self.eosname, self.k)
+            self.VLEeq = createEOSMix(self.subsInSystem, self.eosname, self.k)
             if self.diagtype == diagram_types[0]:  # isothermal
                 _v = conv_unit(
                     float(self.le_varValue.text()),
