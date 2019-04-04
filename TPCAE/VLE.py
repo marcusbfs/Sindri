@@ -187,9 +187,14 @@ class VLE(object):
         return x, pd, phivap, philiq, k, ite
 
     def _getdiffPhi_i_respT(self, i, x, p, t, z, h=1e-4):
-        return (self.getPhi_i(i, x, p, t + h, z) - self.getPhi_i(i, x, p, t - h, z)) / (
-            2.0 * h
-        )
+
+        # return (self.getPhi_i(i, x, p, t + h, z) - self.getPhi_i(i, x, p, t - h, z)) / (
+        #     2.0 * h
+        # )
+        _a = self.getPhi_i(i, x, p, t + h, z)
+        _b = self.getPhi_i(i, x, p, t - h, z)
+        _c = (_a - _b) / (2.0 * h)
+        return _c
 
     # TODO optimize this!
     def getBubblePointTemperature(self, x, P, tol=1e3 * DBL_EPSILON, kmax=100):
@@ -288,6 +293,7 @@ class VLE(object):
             zsliq = self.getZ(P, td, x)
 
             zvap = np.max(zsvap)
+
             zliq = np.min(zsliq)
 
             for i in range(self.n):

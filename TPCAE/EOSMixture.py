@@ -24,6 +24,40 @@ from constants import R_IG, DBL_EPSILON
 from polyEqSolver import solve_cubic
 from units import conv_unit
 
+x_vec_for_plot = [
+    0,
+    0.01,
+    0.02,
+    0.03,
+    0.04,
+    0.06,
+    0.08,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4,
+    0.45,
+    0.50,
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9,
+    0.92,
+    0.94,
+    0.96,
+    0.97,
+    0.98,
+    0.99,
+    1,
+]
+
 calc_options = {
     "Bubble-point Pressure": "bubbleP",
     "Dew-point Pressure": "dewP",
@@ -84,7 +118,7 @@ class EOSMixture:
         _d = -(epsilonl * (Bl + 1.0) + Bl * thetal)
 
         roots = np.asarray(solve_cubic(_a, _b, _c, _d))
-        real_values = roots[roots > 0]
+        real_values = roots[roots >= 0]
         return real_values
 
     def getPhi_i(self, i: int, y, P: float, T: float, Z: float):
@@ -208,7 +242,7 @@ class EOSMixture:
         return retPropsliq, retPropsvap
 
     def getdZdT(self, P: float, T: float, y) -> [float, float]:
-        h = 1e-4
+        h = 1e-5
         z_plus_h = self.getZfromPT(P, T + h, y)
         z_minus_h = self.getZfromPT(P, T - h, y)
         zs = (z_plus_h - z_minus_h) / (2.0 * h)
@@ -232,7 +266,7 @@ class EOSMixture:
             )
 
         def _dZdT(v, t):
-            h = 1e-4
+            h = 1e-5
             return (_Zfunc(v, t + h) - _Zfunc(v, t - h)) / (2.0 * h)
 
         def _URfunc(v, t):
@@ -391,11 +425,15 @@ class EOSMixture:
         return x, pd, phivap, philiq, k, ite
 
     def _getdiffPhi_i_respT(self, i, x, p, t, z, h=1e-4):
-        return (self.getPhi_i(i, x, p, t + h, z) - self.getPhi_i(i, x, p, t - h, z)) / (
-            2.0 * h
-        )
+        # return (self.getPhi_i(i, x, p, t + h, z) - self.getPhi_i(i, x, p, t - h, z)) / (
+        #     2.0 * h
+        # )
+        _a = self.getPhi_i(i, x, p, t + h, z)
+        _b = self.getPhi_i(i, x, p, t - h, z)
+        _c = (_a - _b) / (2.0 * h)
+        return _c
 
-    # TODO optimize this!
+    # TODO optimize this! here, I used the secant method for Tb convergence.
     def getBubblePointTemperature(self, x, P, tol=1e3 * DBL_EPSILON, kmax=100):
 
         assert len(x) == self.n
@@ -409,7 +447,6 @@ class EOSMixture:
             else:
                 Tbi[i] = 100.0
 
-        # tb = np.sum(x * Tbi)
         tb = _helper_bubble_T_guess_from_wilson(
             x, P, np.sum(x * Tbi), self.Pcs, self.Tcs, self.omegas
         )
@@ -417,19 +454,29 @@ class EOSMixture:
         k = np.exp(
             np.log(self.Pcs / P) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / tb)
         )
-        # y = np.full(self.n, 1.0 / self.n)
         y = x * k / np.sum(x * k)
 
         err = 100
         ite = 0
 
+        tb2 = tb
+        f2 = np.sum(x * k) - 1.0
+
+        tb1 = tb * 1.1
+        k = np.exp(
+            np.log(self.Pcs / P) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / tb1)
+        )
+        f1 = np.sum(x * k) - 1.0
+
+        y = x * k / np.sum(x * k)
+
         phivap = np.empty(self.n, dtype=np.float64)
         philiq = np.empty(self.n, dtype=np.float64)
-        diffk = np.empty(self.n, dtype=np.float64)
-        h = 1e-3
 
         while err > tol and ite < kmax:
             ite += 1
+
+            tb = tb1 - f1 * ((tb1 - tb2) / (f1 - f2))
 
             zsvap = self.getZfromPT(P, tb, y)
             zsliq = self.getZfromPT(P, tb, x)
@@ -440,24 +487,17 @@ class EOSMixture:
             for i in range(self.n):
                 phivap[i] = self.getPhi_i(i, y, P, tb, zvap)
                 philiq[i] = self.getPhi_i(i, x, P, tb, zliq)
-                dphiv = self._getdiffPhi_i_respT(i, y, P, tb, zvap)
-                dphil = self._getdiffPhi_i_respT(i, x, P, tb, zliq)
-                diffk[i] = (-dphil * phivap[i] + philiq[i] * dphiv) / philiq[i] ** 2
-
-                # dphiv = self._getdiffPhi_i_respT(i, y, P, tb, zvap)
-                # dphil = self._getdiffPhi_i_respT(i, x, P, tb, zliq)
-                # diffk[i] = (dphil * phivap[i] - philiq[i] * dphiv) / phivap[i] ** 2
 
             k = philiq / phivap
-            tb = tb - (np.sum(y / k) - 1.0) / (np.sum(y * diffk))
-
-            # k = philiq / phivap
-            # tb = tb - (np.sum(x * k) - 1.0) / (np.sum(x * diffk))
 
             y = x * k
             yt = np.sum(y)
             err = np.abs(1.0 - yt)
             y = y / yt
+            tb2 = tb1
+            tb1 = tb
+            f2 = f1
+            f1 = np.sum(k * x) - 1.0
 
         return y, tb, phivap, philiq, k, ite
 
@@ -476,7 +516,19 @@ class EOSMixture:
 
         td = np.sum(y * Tdi)
 
-        x = np.full(self.n, 1.0 / self.n)
+        k = np.exp(
+            np.log(self.Pcs / P) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / td)
+        )
+
+        x = (y / k) / np.sum(y / k)
+        td2 = td
+        f2 = np.sum(y / k) - 1.0
+
+        td1 = td * 1.1
+        k = np.exp(
+            np.log(self.Pcs / P) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / td1)
+        )
+        f1 = np.sum(y / k) - 1.0
 
         err = 100
         ite = 0
@@ -487,6 +539,8 @@ class EOSMixture:
 
         while err > tol and ite < kmax:
             ite += 1
+
+            td = td1 - f1 * ((td1 - td2) / (f1 - f2))
 
             zsvap = self.getZfromPT(P, td, y)
             zsliq = self.getZfromPT(P, td, x)
@@ -508,6 +562,10 @@ class EOSMixture:
             xt = np.sum(x)
             err = np.abs(1.0 - xt)
             x = x / xt
+            td2 = td1
+            td1 = td
+            f2 = f1
+            f1 = np.sum(y / k) - 1.0
 
         return x, td, phivap, philiq, k, ite
 
@@ -522,7 +580,7 @@ class EOSMixture:
         x, pb, pv, pl, k, ite = self.getBubblePointPressure(z, T)
 
         if not (pd <= P <= pb):
-            raise ValueError("P is not bewteen Pdew and Pbubble")
+            raise ValueError("P is not between Pdew and Pbubble")
 
         # pb = self._getPb_guess(z, T)
         # pd = self._getPd_guess(z, T)
@@ -565,39 +623,7 @@ class EOSMixture:
         assert self.n == 2
 
         if x is None:
-            x = [
-                0,
-                0.01,
-                0.02,
-                0.03,
-                0.04,
-                0.06,
-                0.08,
-                0.1,
-                0.15,
-                0.2,
-                0.25,
-                0.3,
-                0.35,
-                0.4,
-                0.45,
-                0.5,
-                0.55,
-                0.6,
-                0.65,
-                0.7,
-                0.75,
-                0.8,
-                0.85,
-                0.9,
-                0.92,
-                0.94,
-                0.96,
-                0.97,
-                0.98,
-                0.99,
-                1,
-            ]
+            x = x_vec_for_plot
 
         x = np.atleast_1d(x)
 
@@ -609,7 +635,20 @@ class EOSMixture:
             xmix[0] = x[i]
             xmix[1] = 1.0 - x[i]
 
-            yres, T[i], pv, pl, k, ite = self.getBubblePointTemperature(xmix, P)
+            try:
+                yres, T[i], pv, pl, k, ite = self.getBubblePointTemperature(xmix, P)
+            except:
+                try:
+                    yres = [0, 0]
+                    yres[0] = y[i - 1]
+                    T[i] = T[i - 1]
+                    x[i] = x[i - 1]
+                except:
+                    yres = [0, 0]
+                    yres[0] = y[i + 1]
+                    T[i] = T[i + 1]
+                    x[i] = x[i + 1]
+
             T[i] = conv_unit(T[i], "K", Tunit)
             y[i] = yres[0]
 
@@ -620,39 +659,7 @@ class EOSMixture:
         assert self.n == 2
 
         if x is None:
-            x = [
-                0,
-                0.01,
-                0.02,
-                0.03,
-                0.04,
-                0.06,
-                0.08,
-                0.1,
-                0.15,
-                0.2,
-                0.25,
-                0.3,
-                0.35,
-                0.4,
-                0.45,
-                0.5,
-                0.55,
-                0.6,
-                0.65,
-                0.7,
-                0.75,
-                0.8,
-                0.85,
-                0.9,
-                0.92,
-                0.94,
-                0.96,
-                0.97,
-                0.98,
-                0.99,
-                1,
-            ]
+            x = x_vec_for_plot
 
         x = np.atleast_1d(x)
 
@@ -664,9 +671,21 @@ class EOSMixture:
             xmix[0] = x[i]
             xmix[1] = 1.0 - x[i]
 
-            yres, P[i], pv, pl, k, ite = self.getBubblePointPressure(
-                xmix, T, tol=1e-5, kmax=100
-            )
+            try:
+                yres, P[i], pv, pl, k, ite = self.getBubblePointPressure(
+                    xmix, T, tol=1e-5, kmax=100
+                )
+            except:
+                try:
+                    yres = [0, 0]
+                    yres[0] = y[i - 1]
+                    P[i] = P[i - 1]
+                    x[i] = x[i - 1]
+                except:
+                    yres = [0, 0]
+                    yres[0] = y[i + 1]
+                    P[i] = P[i + 1]
+                    x[i] = x[i + 1]
             P[i] = conv_unit(P[i], "Pa", Punit)
             y[i] = yres[0]
 
@@ -679,39 +698,7 @@ class EOSMixture:
         assert self.n == 2
 
         if x is None:
-            x = [
-                0.0,
-                0.01,
-                0.02,
-                0.03,
-                0.04,
-                0.06,
-                0.08,
-                0.1,
-                0.15,
-                0.2,
-                0.25,
-                0.3,
-                0.35,
-                0.4,
-                0.45,
-                0.5,
-                0.55,
-                0.6,
-                0.65,
-                0.7,
-                0.75,
-                0.8,
-                0.85,
-                0.9,
-                0.92,
-                0.94,
-                0.96,
-                0.97,
-                0.98,
-                0.99,
-                1.0,
-            ]
+            x = x_vec_for_plot
 
         x, y, T = self.isobaricBinaryMixtureGenData(P, x, Punit=Punit, Tunit=Tunit)
 
@@ -737,39 +724,7 @@ class EOSMixture:
         assert self.n == 2
 
         if x is None:
-            x = [
-                0,
-                0.01,
-                0.02,
-                0.03,
-                0.04,
-                0.06,
-                0.08,
-                0.1,
-                0.15,
-                0.2,
-                0.25,
-                0.3,
-                0.35,
-                0.4,
-                0.45,
-                0.5,
-                0.55,
-                0.6,
-                0.65,
-                0.7,
-                0.75,
-                0.8,
-                0.85,
-                0.9,
-                0.92,
-                0.94,
-                0.96,
-                0.97,
-                0.98,
-                0.99,
-                1,
-            ]
+            x = x_vec_for_plot
 
         x, y, P = self.isothermalBinaryMixtureGenData(T, x, Punit=Punit, Tunit=Tunit)
 

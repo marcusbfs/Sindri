@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/TPCAE/VLE.py" line="391" />
     <bookmark url="file://$PROJECT_DIR$/TPCAE/VLE.py" line="384" />
-    <bookmark url="file://$PROJECT_DIR$/TPCAE/VLE.py" line="377" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
+      <change afterPath="$PROJECT_DIR$/tests/test_newVLE_equilibrium.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/EOSMixture.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/EOSMixture.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/VLEWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/VLEWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/mixtureCalculationsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/mixtureCalculationsWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/VLE.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/VLE.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/compounds.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/compounds.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,73 +19,76 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/TPCAE/VLEWindow.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="197">
-                  <caret line="312" column="32" selection-start-line="312" selection-start-column="32" selection-end-line="312" selection-end-column="32" />
-                  <folding>
-                    <element signature="e#0#18#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/TPCAE/VLE.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="182">
-                  <caret line="25" selection-start-line="25" selection-end-line="25" />
-                  <folding>
-                    <element signature="e#0#38#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/TPCAE/EOSMixture.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="323">
-                  <caret line="719" column="33" selection-start-line="719" selection-start-column="33" selection-end-line="719" selection-end-column="33" />
-                  <folding>
-                    <element signature="e#0#9#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="14" column="49" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/TPCAE/VLE.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="163">
-                  <caret line="142" column="25" selection-start-line="142" selection-start-column="25" selection-end-line="142" selection-end-column="25" />
-                  <folding>
-                    <element signature="e#0#38#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/VLEWindow.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="190" column="57" lean-forward="true" selection-start-line="190" selection-start-column="57" selection-end-line="190" selection-end-column="57" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TPCAE/EOSMixture.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="301">
+              <caret line="581" column="30" selection-start-line="581" selection-start-column="30" selection-end-line="581" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/units.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="429">
+              <caret line="127" selection-start-line="127" selection-end-line="127" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2057">
+              <caret line="124" column="8" selection-start-line="124" selection-start-column="8" selection-end-line="124" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/test_newVLE_equilibrium.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/test_VLE_random_stuff.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -119,7 +124,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/tests/test_symbolic_mixture_derivatives.py" />
         <option value="$PROJECT_DIR$/tests/test_polyEqSolver.py" />
         <option value="$PROJECT_DIR$/TPCAE/edtiBinaryInteractionsParametersWin.py" />
         <option value="$PROJECT_DIR$/TPCAE/editBinaryInteractionsParametersWin.py" />
@@ -147,12 +151,10 @@
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/RedlichAndKwong1949.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/Soave1984.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/vanderWaals1890.py" />
-        <option value="$PROJECT_DIR$/TPCAE/VLE.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/AdachiEtAl1983.py" />
         <option value="$PROJECT_DIR$/tests/test_EOSPureSubstanceInterface.py" />
         <option value="$PROJECT_DIR$/TPCAE/diagrams.py" />
         <option value="$PROJECT_DIR$/TPCAE/pureSubstanceDiagramsWindow.py" />
-        <option value="$PROJECT_DIR$/TPCAE/compounds.py" />
         <option value="$PROJECT_DIR$/TPCAE/EOSPureSubstanceInterface.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/PengAndRobinson1976.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/AdachiEtAl1985.py" />
@@ -169,6 +171,9 @@
         <option value="$PROJECT_DIR$/tests/test_new_vle_implementation.py" />
         <option value="$PROJECT_DIR$/TPCAE/mixtureCalculationsWindow.py" />
         <option value="$PROJECT_DIR$/TPCAE/VLEWindow.py" />
+        <option value="$PROJECT_DIR$/tests/test_newVLE_equilibrium.py" />
+        <option value="$PROJECT_DIR$/TPCAE/VLE.py" />
+        <option value="$PROJECT_DIR$/TPCAE/compounds.py" />
         <option value="$PROJECT_DIR$/TPCAE/EOSMixture.py" />
       </list>
     </option>
@@ -198,7 +203,12 @@
             <path>
               <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
               <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="designer" type="462c0819:PsiDirectoryNode" />
+              <item name=".pytest_cache" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
@@ -318,7 +328,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest in test_DepartureFunctions_new_implementation.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_newVLE_equilibrium.test_bubblePoint" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="software" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -329,8 +339,8 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_DepartureFunctions_new_implementation.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <option name="_new_target" value="&quot;test_newVLE_equilibrium.test_bubblePoint&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <configuration name="pytest in test_new_vle_implementation.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
@@ -351,17 +361,17 @@
     <list>
       <item itemvalue="Python.main" />
       <item itemvalue="Python tests.pytest in test_new_vle_implementation.py" />
-      <item itemvalue="Python tests.pytest in test_DepartureFunctions_new_implementation.py" />
       <item itemvalue="Python tests.pytest for test_EOSPureSubstanceInterface.test_first_pure_substance_PR1976" />
       <item itemvalue="Python.MathiasAndCopeman1983" />
+      <item itemvalue="Python tests.pytest for test_newVLE_equilibrium.test_bubblePoint" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python tests.pytest for test_newVLE_equilibrium.test_bubblePoint" />
         <item itemvalue="Python tests.pytest in test_new_vle_implementation.py" />
         <item itemvalue="Python.MathiasAndCopeman1983" />
         <item itemvalue="Python tests.pytest for test_EOSPureSubstanceInterface.test_first_pure_substance_PR1976" />
-        <item itemvalue="Python tests.pytest in test_DepartureFunctions_new_implementation.py" />
       </list>
     </recent_temporary>
   </component>
@@ -401,35 +411,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_in_test_new_vle_implementation_py - 2019.04.03 at 18h 57m 07s.xml">
-      <configuration name="pytest in test_new_vle_implementation.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_newVLE_equilibrium_test_bubblePoint - 2019.04.03 at 21h 20m 14s.xml">
+      <configuration name="pytest for test_newVLE_equilibrium.test_bubblePoint" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_new_vle_implementation_py - 2019.04.03 at 18h 59m 41s.xml">
-      <configuration name="pytest in test_new_vle_implementation.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_newVLE_equilibrium_test_bubblePoint - 2019.04.03 at 21h 20m 21s.xml">
+      <configuration name="pytest for test_newVLE_equilibrium.test_bubblePoint" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_new_vle_implementation_py - 2019.04.03 at 19h 01m 58s.xml">
-      <configuration name="pytest in test_new_vle_implementation.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_newVLE_equilibrium_test_bubblePoint - 2019.04.03 at 21h 23m 02s.xml">
+      <configuration name="pytest for test_newVLE_equilibrium.test_bubblePoint" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_new_vle_implementation_py - 2019.04.03 at 19h 14m 47s.xml">
-      <configuration name="pytest in test_new_vle_implementation.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_newVLE_equilibrium_test_bubblePoint - 2019.04.03 at 21h 24m 46s.xml">
+      <configuration name="pytest for test_newVLE_equilibrium.test_bubblePoint" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_new_vle_implementation_py - 2019.04.03 at 19h 15m 47s.xml">
-      <configuration name="pytest in test_new_vle_implementation.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_newVLE_equilibrium_test_bubblePoint - 2019.04.03 at 21h 25m 14s.xml">
+      <configuration name="pytest for test_newVLE_equilibrium.test_bubblePoint" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_new_vle_implementation_py - 2019.04.03 at 19h 19m 35s.xml">
-      <configuration name="pytest in test_new_vle_implementation.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_newVLE_equilibrium_test_bubblePoint - 2019.04.03 at 21h 28m 39s.xml">
+      <configuration name="pytest for test_newVLE_equilibrium.test_bubblePoint" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_new_vle_implementation_py - 2019.04.03 at 19h 20m 21s.xml">
-      <configuration name="pytest in test_new_vle_implementation.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_newVLE_equilibrium_test_bubblePoint - 2019.04.03 at 21h 29m 12s.xml">
+      <configuration name="pytest for test_newVLE_equilibrium.test_bubblePoint" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_new_vle_implementation_py - 2019.04.03 at 19h 22m 34s.xml">
-      <configuration name="pytest in test_new_vle_implementation.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_newVLE_equilibrium_test_bubblePoint - 2019.04.03 at 21h 31m 38s.xml">
+      <configuration name="pytest for test_newVLE_equilibrium.test_bubblePoint" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_new_vle_implementation_py - 2019.04.03 at 19h 27m 42s.xml">
-      <configuration name="pytest in test_new_vle_implementation.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_newVLE_equilibrium_test_bubblePoint - 2019.04.03 at 21h 47m 14s.xml">
+      <configuration name="pytest for test_newVLE_equilibrium.test_bubblePoint" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_new_vle_implementation_py - 2019.04.03 at 19h 52m 25s.xml">
-      <configuration name="pytest in test_new_vle_implementation.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_newVLE_equilibrium_test_bubblePoint - 2019.04.03 at 21h 47m 28s.xml">
+      <configuration name="pytest for test_newVLE_equilibrium.test_bubblePoint" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -443,21 +453,22 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.19546892" />
       <window_info id="Structure" order="1" sideWeight="0.1953125" side_tool="true" weight="0.17755532" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49367756" weight="0.3287234" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5958904" visible="true" weight="0.36595744" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5922023" visible="true" weight="0.36595744" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.4963119" weight="0.32553193" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49525815" weight="0.3287234" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.46628028" weight="0.33723405" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.4041096" side_tool="true" visible="true" weight="0.36595744" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.4077977" side_tool="true" visible="true" weight="0.36595744" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4873551" weight="0.32553193" />
-      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.54162276" weight="0.5042553" />
+      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.53793466" weight="0.40319148" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -497,25 +508,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TPCAE/editBinaryInteractionsParametersWin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/polyEqSolver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-68">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/CubicEquationsOfState/SchmidtAndWenzel1979.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -605,13 +597,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/units.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1632">
-          <caret line="96" column="29" selection-start-line="96" selection-start-column="29" selection-end-line="96" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/CubicEquationsOfState/Wilson1964.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -626,13 +611,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="10" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -654,16 +632,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="141">
           <caret line="217" column="29" selection-start-line="217" selection-start-column="29" selection-end-line="217" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/compounds.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="184" selection-start-line="184" selection-end-line="184" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
@@ -872,10 +840,56 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_VLE_random_stuff.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_newVLE_equilibrium.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/compounds.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="169" selection-start-line="169" selection-end-line="169" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/units.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="429">
+          <caret line="127" selection-start-line="127" selection-end-line="127" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2057">
+          <caret line="124" column="8" selection-start-line="124" selection-start-column="8" selection-end-line="124" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/VLE.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        <state relative-caret-position="120">
+          <caret line="296" selection-start-line="296" selection-end-line="296" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
@@ -884,8 +898,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/VLEWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="312" column="32" selection-start-line="312" selection-start-column="32" selection-end-line="312" selection-end-column="32" />
+        <state relative-caret-position="231">
+          <caret line="190" column="57" lean-forward="true" selection-start-line="190" selection-start-column="57" selection-end-line="190" selection-end-column="57" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -894,8 +908,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/EOSMixture.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="719" column="33" selection-start-line="719" selection-start-column="33" selection-end-line="719" selection-end-column="33" />
+        <state relative-caret-position="301">
+          <caret line="581" column="30" selection-start-line="581" selection-start-column="30" selection-end-line="581" selection-end-column="30" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

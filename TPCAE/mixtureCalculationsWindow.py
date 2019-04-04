@@ -13,7 +13,8 @@ from Properties import VaporPressure
 from VLEWindow import Window_VLE
 from compounds import MixtureProp, SubstanceProp
 from editBinaryInteractionsParametersWin import Window_BinaryInteractionParameters
-#from eos import EOS
+
+# from eos import EOS
 from Factories.EOSMixFactory import createEOSMix, getEOSMixOptions
 from ui.mixture_calculations_ui import Ui_MixtureCalculationWindow
 from units import conv_unit
@@ -242,8 +243,8 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
 
             try:  # calculate properties at T and P
 
-                self.propsliq, self.propsvap = self.eoseq.getAllProps(self.y,
-                    self.Tref, self.T, self.Pref, self.P
+                self.propsliq, self.propsvap = self.eoseq.getAllProps(
+                    self.y, self.Tref, self.T, self.Pref, self.P
                 )
                 self.Pvp = VaporPressure()
                 self.log = self.propsliq.log

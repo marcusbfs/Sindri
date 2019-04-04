@@ -167,11 +167,13 @@ class SubstanceProp(object):
 
     def getPvpAW(self, T: float) -> float:
         if self.Pc != 0 and self.Tc != 0 and self.omega != 0:
+
             return _ambroseWaltonVP_helper(self.Pc, T / self.Tc, self.omega)
         return 0.0
 
     def getPvpLK(self, T: float) -> float:
         if self.Pc != 0 and self.Tc != 0 and self.omega != 0:
+
             return _leeKeslerVP_helper(self.Pc, T / self.Tc, self.omega)
         return 0.0
 
