@@ -2,7 +2,7 @@ from typing import List
 
 from CubicEquationsOfState.PengAndRobinson1976 import PR1976, biPR1976, thetaiPR1976
 from EOSParametersBehavior.ParametersBehaviorInterface import BiBehavior
-from MixtureRules.ClassicMixtureRule import ClassicBMixture
+from MixtureRules.ClassicMixtureRule import ClassicBMixture, ClassicMixtureRule
 from MixtureRules.MixtureRulesInterface import (
     DeltaMixtureRuleBehavior,
     MixtureRuleBehavior,
@@ -125,7 +125,28 @@ class biTC1998(BiBehavior):
         self.TCti = tiTC1998()
 
     def getBi(self, i: int, T: float, substances: List[SubstanceProp]) -> float:
-        return self.prbi.getBi(i, T, substances) - self.TCti.getBi(i, T, substances)
+        # return self.prbi.getBi(i, T, substances) - self.TCti.getBi(i, T, substances)
+        return self.prbi.getBi(i, T, substances)
+
+
+class BMixtureRuleBehaviorVolumeTranslated(ClassicBMixture):
+    def __init__(self):
+        self.tm = tmTC1998()
+
+    def bm(self, y, T: float, bib: BiBehavior, substances) -> float:
+        s1 = 0.0
+        for i in range(len(y)):
+            s1 += y[i] * bib.getBi(i, T, substances)
+        return s1 - self.tm.tm(y, T, substances)
+
+    def diffBm(self, i: int, y, T: float, bib: BiBehavior, substances) -> float:
+        return bib.getBi(i, T, substances) - self.tm.tiBehavior.getTi(i, T, substances)
+
+
+class ClassicMixtureRuleVolumeTranslated(ClassicMixtureRule):
+    def __init__(self):
+        super().__init__()
+        self.bmBehavior = BMixtureRuleBehaviorVolumeTranslated()
 
 
 class TsaiChen1998(PR1976):
@@ -135,4 +156,4 @@ class TsaiChen1998(PR1976):
         self.thetaiBehavior = thetaiTC1998()
         self.deltaMixBehavior = deltaMixTC1998()
         self.epsilonMixBehavior = epsilonMixTC1998()
-        self.biBehavior = biTC1998()
+        self.mixRuleBehavior = ClassicMixtureRuleVolumeTranslated()
