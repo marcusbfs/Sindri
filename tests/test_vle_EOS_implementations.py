@@ -1,6 +1,6 @@
 import numpy as np
 
-from TPCAE.VLE import *
+from TPCAE.Factories.EOSMixFactory import createEOSMix as VLE
 from TPCAE.compounds import SubstanceProp
 
 methane = SubstanceProp("methane", "CH4")
@@ -21,10 +21,9 @@ def test_peneloux1982():
     y = [0.5, 0.5]
     i = 0
 
-    z = eq.getZ(p, t, y)
+    z = eq.getZfromPT(p, t, y)
     phi = eq.getPhi_i(i, y, p, t, np.min(z))
     print(phi)
-    assert 0
 
 
 def test_PR1976():
@@ -37,7 +36,6 @@ def test_PR1976():
     y = [0.5, 0.5]
     i = 0
 
-    z = eq.getZ(p, t, y)
+    z = eq.getZfromPT(p, t, y)
     phi = eq.getPhi_i(i, y, p, t, np.min(z))
     print(phi)
-    assert 0

@@ -395,6 +395,7 @@ class EOSMixture:
             np.log(self.Pcs / pd) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / T)
         )
         x = y / k
+        x = x / np.sum(x)
 
         err = 100
         ite = 0
@@ -423,15 +424,6 @@ class EOSMixture:
             x = x / xt
 
         return x, pd, phivap, philiq, k, ite
-
-    def _getdiffPhi_i_respT(self, i, x, p, t, z, h=1e-4):
-        # return (self.getPhi_i(i, x, p, t + h, z) - self.getPhi_i(i, x, p, t - h, z)) / (
-        #     2.0 * h
-        # )
-        _a = self.getPhi_i(i, x, p, t + h, z)
-        _b = self.getPhi_i(i, x, p, t - h, z)
-        _c = (_a - _b) / (2.0 * h)
-        return _c
 
     # TODO optimize this! here, I used the secant method for Tb convergence.
     def getBubblePointTemperature(self, x, P, tol=1e3 * DBL_EPSILON, kmax=100):
@@ -501,7 +493,9 @@ class EOSMixture:
 
         return y, tb, phivap, philiq, k, ite
 
-    def getDewPointTemperature(self, y, P, tol=1e3 * DBL_EPSILON, kmax=1000):
+    def getDewPointTemperature(
+        self, y, P: float, tol: float = 1e3 * DBL_EPSILON, kmax: int = 1000
+    ):
         assert len(y) == self.n
         y = np.atleast_1d(y)
         assert np.sum(y) == 1.0
@@ -520,7 +514,6 @@ class EOSMixture:
             np.log(self.Pcs / P) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / td)
         )
 
-        x = (y / k) / np.sum(y / k)
         td2 = td
         f2 = np.sum(y / k) - 1.0
 
@@ -532,10 +525,11 @@ class EOSMixture:
 
         err = 100
         ite = 0
+        # x = np.full(self.n, 1.0 / self.n)
+        x = (y / k) / np.sum(y / k)
 
         phivap = np.empty(self.n, dtype=np.float64)
         philiq = np.empty(self.n, dtype=np.float64)
-        diffkl = np.empty(self.n, dtype=np.float64)
 
         while err > tol and ite < kmax:
             ite += 1
@@ -549,18 +543,15 @@ class EOSMixture:
             zliq = np.min(zsliq)
 
             for i in range(self.n):
-                dphiv = self._getdiffPhi_i_respT(i, y, P, td, zvap)
-                dphil = self._getdiffPhi_i_respT(i, x, P, td, zliq)
                 phivap[i] = self.getPhi_i(i, y, P, td, zvap)
                 philiq[i] = self.getPhi_i(i, x, P, td, zliq)
-                diffkl[i] = (-dphil * phivap[i] + philiq[i] * dphiv) / philiq[i] ** 2
 
             k = philiq / phivap
-            td = td - (np.sum(y / k) - 1.0) / (np.sum(y * diffkl))
 
             x = y / k
             xt = np.sum(x)
             err = np.abs(1.0 - xt)
+
             x = x / xt
             td2 = td1
             td1 = td

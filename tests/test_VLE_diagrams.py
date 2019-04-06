@@ -1,4 +1,4 @@
-from TPCAE.VLE import *
+from TPCAE.Factories.EOSMixFactory import createEOSMix as VLE
 
 from TPCAE.compounds import SubstanceProp
 
@@ -17,7 +17,7 @@ def test_isobaricPlot():
     eq = VLE([pentane, heptane], eosname)
     p = 1e5
 
-    eq.isobaricBinaryMixturePlot(p, Tunit="ºC", Punit="bar")
+    # eq.isobaricBinaryMixturePlot(p, Tunit="ºC", Punit="bar")
 
 
 def test_isothermalPlot():
@@ -27,4 +27,4 @@ def test_isothermalPlot():
     eq = VLE([pentane, hexane], eosname)
     t = 298.7
 
-    eq.isothermalBinaryMixturePlot(t, Tunit="ºC", Punit="bar")
+    # eq.isothermalBinaryMixturePlot(t, Tunit="ºC", Punit="bar")
