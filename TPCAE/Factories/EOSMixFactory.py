@@ -1,26 +1,28 @@
+from typing import List
+
 import numpy as np
 
 from CubicEquationsOfState.AdachiEtAl1983 import Adachi1983
+from CubicEquationsOfState.AdachiEtAl1985 import Adachi1985
+from CubicEquationsOfState.AhlersGmehling2001 import AG2001
+from CubicEquationsOfState.Coquelet2004 import Coquelet2004
+from CubicEquationsOfState.GasemEtAl2001 import Gasem2001
+from CubicEquationsOfState.GasemEtAlPRmod2001 import GasemPRmod2001
+from CubicEquationsOfState.GasemEtAlTwuMod2001 import GasemTwuMod2001
+from CubicEquationsOfState.MathiasAndCopeman1983 import MathiasCopeman1983
 from CubicEquationsOfState.PatelAndTeja1982 import PT1982
 from CubicEquationsOfState.PenelouxEtAl1982 import PenelouxEtAl1982
 from CubicEquationsOfState.PengAndRobinson1976 import PR1976
 from CubicEquationsOfState.RedlichAndKwong1949 import RedlichAndKwong1949
 from CubicEquationsOfState.Soave1972 import Soave1972
 from CubicEquationsOfState.Soave1984 import Soave1984
+from CubicEquationsOfState.StryjekAndVera1986 import SV1986
+from CubicEquationsOfState.TsaiAndChen1998 import TsaiChen1998
+from CubicEquationsOfState.Twu1995 import Twu1995
 from CubicEquationsOfState.Wilson1964 import Wilson1964
 from CubicEquationsOfState.vanderWaals1890 import vanderWaals1890
-from CubicEquationsOfState.AdachiEtAl1985 import Adachi1985
-from CubicEquationsOfState.StryjekAndVera1986 import SV1986
-from CubicEquationsOfState.Twu1995 import Twu1995
-from CubicEquationsOfState.GasemEtAlPRmod2001 import GasemPRmod2001
-from CubicEquationsOfState.GasemEtAlTwuMod2001 import GasemTwuMod2001
-from CubicEquationsOfState.GasemEtAl2001 import Gasem2001
-from CubicEquationsOfState.MathiasAndCopeman1983 import MathiasCopeman1983
-from CubicEquationsOfState.Coquelet2004 import Coquelet2004
-from CubicEquationsOfState.TsaiAndChen1998 import TsaiChen1998
 from EOSMixture import EOSMixture
 from compounds import SubstanceProp
-from typing import List
 
 _subs = []
 _k = []
@@ -60,8 +62,8 @@ def createEOSMix(substances: List[SubstanceProp], eostype: str, k=None) -> EOSMi
         return Twu1995(substances, k)
     elif eostype == "Tsai and Chen (1998)":
         return TsaiChen1998(substances, k)
-    # elif eostype == "Ahlers-Gmehling (2001)":
-    #     return Twu1995(substances, k)
+    elif eostype == "Ahlers-Gmehling (2001)":
+        return AG2001(substances, k)
     elif eostype == "Gasem, et al. PR modification (2001)":
         return GasemPRmod2001(substances, k)
     elif eostype == "Gasem, et al. Twu modification (2001)":
@@ -91,7 +93,7 @@ def getEOSMixOptions():
         "Stryjek and Vera (1986)",
         "Twu, et al. (1995)",
         "Tsai and Chen (1998)",
-        # "Ahlers-Gmehling (2001)",
+        "Ahlers-Gmehling (2001)",
         "Gasem, et al. PR modification (2001)",
         "Gasem, et al. Twu modification (2001)",
         "Gasem, et al. (2001)",
