@@ -6,12 +6,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
+      <change afterPath="$PROJECT_DIR$/TPCAE/DatabaseInterface/DatabaseInterface.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TPCAE/DatabaseInterface/DatabaseTableWidgetView.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/EOSMixture.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/EOSMixture.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_VLE_diagrams.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_VLE_diagrams.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_VLE_random_stuff.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_VLE_random_stuff.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_symbolic_mixture_derivatives.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_vle_EOS_implementations.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_vle_EOS_implementations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/mixtureCalculationsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/mixtureCalculationsWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,85 +20,65 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/TPCAE/EOSMixture.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="408">
-                  <caret line="330" column="27" lean-forward="true" selection-start-line="330" selection-start-column="27" selection-end-line="330" selection-end-column="27" />
-                  <folding>
-                    <element signature="e#0#9#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tests/test_VLE_random_stuff.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="300">
-                  <caret line="79" column="24" selection-start-line="79" selection-start-column="24" selection-end-line="79" selection-end-column="24" />
-                  <folding>
-                    <element signature="e#0#18#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="511">
-                  <caret line="617" column="31" selection-start-line="617" selection-start-column="31" selection-end-line="617" selection-end-column="31" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/TPCAE/Factories/EOSMixFactory.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1429">
-                  <caret line="93" column="35" selection-start-line="93" selection-start-column="35" selection-end-line="93" selection-end-column="35" />
-                  <folding>
-                    <element signature="e#0#18#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/TPCAE/EOSMixture.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="154">
-                  <caret line="503" selection-start-line="503" selection-end-line="503" />
-                  <folding>
-                    <element signature="e#0#9#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/TPCAE/VLE.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="197">
-                  <caret line="279" column="12" selection-start-line="279" selection-start-column="12" selection-end-line="279" selection-end-column="12" />
-                  <folding>
-                    <element signature="e#0#38#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/databaseWindow.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-86">
+              <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/DatabaseInterface/DatabaseInterface.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="45" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/DatabaseInterface/DatabaseTableWidgetView.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TPCAE/mixtureCalculationsWindow.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="48" column="7" selection-start-line="48" selection-start-column="7" selection-end-line="48" selection-end-column="7" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="45" selection-start-line="45" selection-end-line="45" />
+              <folding>
+                <element signature="e#0#37#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -134,9 +114,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/TPCAE/_devinfo.py" />
-        <option value="$PROJECT_DIR$/tests/VLEEOSIterfaces.py" />
-        <option value="$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py" />
         <option value="$PROJECT_DIR$/TPCAE/eos.py" />
         <option value="$PROJECT_DIR$/TPCAE/MixtureRules/ClassicMixtureRule.py" />
         <option value="$PROJECT_DIR$/TPCAE/Factories/MixtureFactory.py" />
@@ -166,11 +143,9 @@
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/GasemEtAlPRmod2001.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/GasemEtAlTwuMod2001.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/GasemEtAl2001.py" />
-        <option value="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/MathiasAndCopeman1983.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/Coquelet2004.py" />
         <option value="$PROJECT_DIR$/tests/test_new_vle_implementation.py" />
-        <option value="$PROJECT_DIR$/TPCAE/mixtureCalculationsWindow.py" />
         <option value="$PROJECT_DIR$/TPCAE/VLEWindow.py" />
         <option value="$PROJECT_DIR$/tests/test_newVLE_equilibrium.py" />
         <option value="$PROJECT_DIR$/TPCAE/VLE.py" />
@@ -185,6 +160,11 @@
         <option value="$PROJECT_DIR$/tests/test_VLE_diagrams.py" />
         <option value="$PROJECT_DIR$/tests/test_VLE_random_stuff.py" />
         <option value="$PROJECT_DIR$/TPCAE/EOSMixture.py" />
+        <option value="$PROJECT_DIR$/TPCAE/DatabaseInterface.py" />
+        <option value="$PROJECT_DIR$/TPCAE/DatabaseInterface/DatabaseInterface.py" />
+        <option value="$PROJECT_DIR$/TPCAE/DatabaseInterface/DatabaseTableWidgetView.py" />
+        <option value="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" />
+        <option value="$PROJECT_DIR$/TPCAE/mixtureCalculationsWindow.py" />
       </list>
     </option>
   </component>
@@ -212,28 +192,13 @@
             <path>
               <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
               <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name=".pytest_cache" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="designer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
               <item name="TPCAE" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
               <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
               <item name="TPCAE" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="DatabaseInterface" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -258,13 +223,14 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Google Drive\TCC\TCC_software\TPCAE" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Google Drive\TCC\TCC_software\TPCAE" />
       <recent name="C:\Users\Marcus\Google Drive\TCC\TCC_software\tests" />
       <recent name="C:\Users\Marcus\Google Drive\TCC\TCC_software\TPCAE" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Google Drive\TCC\TCC_software\TPCAE\DatabaseInterface" />
+      <recent name="D:\Google Drive\TCC\TCC_software\TPCAE" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -279,7 +245,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for tests.test_VLE_random_stuff (1)">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="software" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -316,7 +282,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for tests.test_VLE_random_stuff (1)" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for tests.test_VLE_random_stuff" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="software" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -370,11 +336,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main" />
         <item itemvalue="Python tests.pytest for tests.test_VLE_random_stuff (1)" />
         <item itemvalue="Python tests.pytest for test_VLE_random_stuff.test_dewpoint_temperature_validate_from_youtube" />
         <item itemvalue="Python tests.pytest in tests" />
         <item itemvalue="Python tests.pytest for tests.test_VLE_random_stuff" />
-        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -463,15 +429,15 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49367756" weight="0.3287234" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.58746046" visible="true" weight="0.36914894" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.58640677" visible="true" weight="0.36914894" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.4963119" weight="0.32553193" />
-      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49525815" weight="0.3287234" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4627976" weight="0.33598727" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.4125395" side_tool="true" visible="true" weight="0.36914894" />
+      <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49578503" weight="0.32553193" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4947313" weight="0.3287234" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.46206534" weight="0.33510637" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.41359326" side_tool="true" visible="true" weight="0.36914894" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4873551" weight="0.32553193" />
-      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.53635406" weight="0.40212765" />
+      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.53582716" weight="0.40212765" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -501,6 +467,18 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py</url>
+          <line>133</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py</url>
+          <line>125</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -511,57 +489,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TPCAE/CubicEquationsOfState/Wilson1964.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="34" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/CubicEquationsOfState/RedlichAndKwong1949.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/CubicEquationsOfState/Soave1984.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="10" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/constants.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/CubicEOS.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="128" selection-start-line="128" selection-end-line="128" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/diagrams.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="217" column="29" selection-start-line="217" selection-start-column="29" selection-end-line="217" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceDiagramsWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-584">
-          <caret line="108" column="11" selection-start-line="108" selection-start-column="11" selection-end-line="108" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_EOSPureSubstanceInterface.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="548">
@@ -679,13 +606,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/mixtureCalculationsWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/compounds.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="65">
@@ -747,30 +667,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="236" column="21" selection-start-line="236" selection-start-column="21" selection-end-line="236" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/texts/about.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/VLEWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -927,7 +827,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/VLE.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
+        <state relative-caret-position="401">
           <caret line="279" column="12" selection-start-line="279" selection-start-column="12" selection-end-line="279" selection-end-column="12" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
@@ -947,10 +847,100 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/EOSMixture.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="330" column="27" lean-forward="true" selection-start-line="330" selection-start-column="27" selection-end-line="330" selection-end-column="27" />
+        <state relative-caret-position="254">
+          <caret line="571" column="30" selection-start-line="571" selection-start-column="30" selection-end-line="571" selection-end-column="30" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/VLEWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/db_editSubstanceProperties.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3570">
+          <caret line="99" column="26" lean-forward="true" selection-start-line="99" selection-start-column="26" selection-end-line="99" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/db_addSubstanceProperties.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="59" column="7" lean-forward="true" selection-start-line="59" selection-start-column="7" selection-end-line="59" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/DatabaseInterface/DatabaseInterface.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="45" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/db.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/databaseWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-86">
+          <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceDiagramsWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="25" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/DatabaseInterface/DatabaseTableWidgetView.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/mixtureCalculationsWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="48" column="7" selection-start-line="48" selection-start-column="7" selection-end-line="48" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>

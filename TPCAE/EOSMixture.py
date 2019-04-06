@@ -446,7 +446,6 @@ class EOSMixture:
         k = np.exp(
             np.log(self.Pcs / P) + 5.373 * (1 + self.omegas) * (1.0 - self.Tcs / tb)
         )
-        y = x * k / np.sum(x * k)
 
         err = 100
         ite = 0
@@ -573,10 +572,7 @@ class EOSMixture:
         if not (pd <= P <= pb):
             raise ValueError("P is not between Pdew and Pbubble")
 
-        # pb = self._getPb_guess(z, T)
-        # pd = self._getPd_guess(z, T)
         v = (pb - P) / (pb - pd)
-        # v = 0.5
 
         err = 100
         ite = 0

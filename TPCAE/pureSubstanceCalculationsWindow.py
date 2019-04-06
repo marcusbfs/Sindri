@@ -1,19 +1,13 @@
-import os
-
 from PySide2 import QtCore, QtWidgets
 
-import db
-import db_utils
-import eos
 import reports
 import units
 import utils
-from Properties import VaporPressure
-from compounds import MixtureProp, SubstanceProp
-
-# from eos import EOS
+from DatabaseInterface.DatabaseTableWidgetView import DatabaseTableWidgetView
 from EOSPureSubstanceInterface import EOSPureSubstanceInterface as EOS
 from Factories.EOSMixFactory import getEOSMixOptions
+from Properties import VaporPressure
+from compounds import MixtureProp, SubstanceProp
 from pureSubstanceDiagramsWindow import Window_PureSubstanceDiagrams
 from ui.pure_substance_calculations_ui import Ui_PureSubstanceCalculationsWindow
 from units import conv_unit
@@ -27,7 +21,6 @@ class Window_PureSubstanceCalculations(
         super(Window_PureSubstanceCalculations, self).__init__(parent)
         self.setupUi(self)
 
-        self.btn_searchSubstance.clicked.connect(self.search_substance)
         self.btn_calculate.clicked.connect(self.calculatePureSubstance)
         self.btn_diagrams.clicked.connect(self.open_diagrams)
         self.btn_savetxt.clicked.connect(self.save_to_txt)
@@ -50,12 +43,6 @@ class Window_PureSubstanceCalculations(
         h_header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         h_header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
 
-        # tablewidget -> database
-        self.tableWidget_searchSubstance.itemSelectionChanged.connect(
-            self.substance_selected
-        )
-        self.dbfile = db.database_file
-        # 26 colunas
         self.units = {
             "P": "bar",
             "T": "K",
@@ -64,42 +51,13 @@ class Window_PureSubstanceCalculations(
             "energy_per_mol": "J/mol",
             "energy_per_mol_temp": "J/molK",
         }
-        self.col_headers = [
-            "Formula",
-            "Name",
-            "CAS #",
-            "Mol. Wt.",
-            "Tfp [K]",
-            "Tb [K]",
-            "Tc [K]",
-            "Pc [bar]",
-            "Vc [cm3/mol]",
-            "Zc",
-            "Omega",
-            "T range (Cp) [K]",
-            "a0",
-            "a1",
-            "a2",
-            "a3",
-            "a4",
-            "Cp IG",
-            "Cp liq.",
-            "Antoine A",
-            "Antoine B",
-            "Antoine C",
-            "Pvp min [bar]",
-            "Tmin [K]",
-            "Pvp max [bar]",
-            "Tmax [K]",
-        ]
 
-        self.tableWidget_searchSubstance.setHorizontalHeaderLabels(self.col_headers)
-        header = self.tableWidget_searchSubstance.horizontalHeader()
-        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
-
-        self.load_db()
-        self.le_searchSubstance.setFocus()
-        self.database_changed = False
+        # Database tablewidget search
+        self.databasetablewidget = DatabaseTableWidgetView(
+            self.tableWidget_searchSubstance,
+            self.le_searchSubstance,
+            self.btn_searchSubstance,
+        )
 
         # listview -> eos options
         # self.listWidget_eos_options.addItems(list(eos.eos_options.keys()))
@@ -109,6 +67,9 @@ class Window_PureSubstanceCalculations(
         )
         self.listWidget_eos_options.addItems(eosmixoptions)
         self.listWidget_eos_options.itemSelectionChanged.connect(self.eos_selected)
+        self.tableWidget_searchSubstance.itemSelectionChanged.connect(
+            self.substance_selected
+        )
 
     @QtCore.Slot()
     def calculatePureSubstance(self):
@@ -139,6 +100,11 @@ class Window_PureSubstanceCalculations(
             )
             return 1
 
+        # current_row = self.tableWidget_searchSubstance.currentRow()
+        # if current_row > -1:
+        #     self.sname = self.tableWidget_searchSubstance.item(current_row, 0).text()
+        #     self.sformula = self.tableWidget_searchSubstance.item(current_row, 1).text()
+
         if len(self.sname.strip()) > 1 and len(self.eosname.strip()) > 1:
 
             _decimals = 7
@@ -153,7 +119,6 @@ class Window_PureSubstanceCalculations(
 
                 self.subs = SubstanceProp(self.sname, self.sformula)
                 self.mix = MixtureProp([self.subs], [1.0])
-                # self.eoseq = EOS(self.mix, [[0]], self.eosname)
                 self.eoseq = EOS([self.subs], self.eosname)
 
                 self.info = ""
@@ -311,7 +276,7 @@ class Window_PureSubstanceCalculations(
             QtWidgets.QMessageBox.about(self, til, msg)
             return
         try:
-            name_suggestion = self.compound.getName() + ".txt"
+            name_suggestion = self.sname + ".txt"
             txt_file_name = QtWidgets.QFileDialog.getSaveFileName(
                 self, "Save file", name_suggestion, "Text files (*.txt)"
             )[0]
@@ -357,45 +322,6 @@ class Window_PureSubstanceCalculations(
             report += fmt(str(lbl), str(l), str(v))
         return report
 
-    def load_db(self):
-        # Abrir banco de dados
-        if os.path.isfile(self.dbfile):
-            self.show_full_db()
-        else:
-            error_dialog = QtWidgets.QErrorMessage()
-            error_dialog.showMessage("Database not found")
-            error_dialog.exec_()
-            raise Exception("Database not found")
-
-    def show_full_db(self):
-        try:
-            query = "SELECT * FROM database"
-            db.cursor.execute(query)
-            results = db.cursor.fetchall()
-            self.update_table_db(results)
-        except:
-            pass
-
-    def update_table_db(self, results):
-        self.tableWidget_searchSubstance.setRowCount(0)
-
-        for row_number, row_data in enumerate(results):
-            self.tableWidget_searchSubstance.insertRow(row_number)
-            for col_number, data in enumerate(row_data):
-                self.tableWidget_searchSubstance.setItem(
-                    row_number, col_number, QtWidgets.QTableWidgetItem(str(data))
-                )
-
-    def get_row_values(self, n):
-        row_values = []
-        current_row = self.tableWidget_searchSubstance.currentRow()
-
-        for i in range(n):
-            item = self.tableWidget_searchSubstance.item(current_row, i).text()
-            row_values.append(item)
-
-        return row_values
-
     @QtCore.Slot()
     def eos_selected(self):
         self.eosname = self.listWidget_eos_options.currentItem().text()
@@ -403,39 +329,6 @@ class Window_PureSubstanceCalculations(
     @QtCore.Slot()
     def substance_selected(self):
         current_row = self.tableWidget_searchSubstance.currentRow()
-        if current_row >= 0:
-            r = self.get_row_values(10)
-            self.compound = db_utils.get_compound_properties(r[1], r[0])
-            self.sname = self.compound.getName()
-            self.sformula = self.compound.getFormula()
-
-    @QtCore.Slot()
-    def search_substance(self):
-        substance_string_name = str(self.le_searchSubstance.text())
-        if substance_string_name == "":
-            self.show_full_db()
-        else:
-            try:
-                # query = "SELECT * FROM database WHERE Name LIKE '%" + substance_string_name + "%'" + \
-                #         " OR Formula LIKE '%" + substance_string_name + "%'" + \
-                #         " OR `CAS #` LIKE '%" + substance_string_name + "%'"
-                query = (
-                    "SELECT * FROM database WHERE Name LIKE '"
-                    + substance_string_name
-                    + "%'"
-                    + " OR Formula LIKE '"
-                    + substance_string_name
-                    + "%'"
-                    + " OR `CAS #` LIKE '"
-                    + substance_string_name
-                    + "%'"
-                )
-                db.cursor.execute(query)
-                results = db.cursor.fetchall()
-                self.update_table_db(results)
-            except:
-                self.tableWidget_searchSubstance.setRowCount(0)
-
-    def clear_search(self):
-        self.le_searchSubstance.clear()
-        self.le_searchSubstance.setFocus()
+        if current_row > -1:
+            self.sname = self.tableWidget_searchSubstance.item(current_row, 1).text()
+            self.sformula = self.tableWidget_searchSubstance.item(current_row, 0).text()

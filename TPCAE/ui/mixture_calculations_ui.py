@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/mixture_calculations_ui.ui',
 # licensing of 'designer/mixture_calculations_ui.ui' applies.
 #
-# Created: Mon Mar 25 08:52:49 2019
+# Created: Sat Apr  6 13:16:43 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,14 +15,14 @@ class Ui_MixtureCalculationWindow(object):
     def setupUi(self, MixtureCalculationWindow):
         MixtureCalculationWindow.setObjectName("MixtureCalculationWindow")
         MixtureCalculationWindow.setWindowModality(QtCore.Qt.ApplicationModal)
-        MixtureCalculationWindow.resize(856, 612)
+        MixtureCalculationWindow.resize(859, 617)
         self.gridLayout = QtWidgets.QGridLayout(MixtureCalculationWindow)
         self.gridLayout.setObjectName("gridLayout")
         self.scrollArea = QtWidgets.QScrollArea(MixtureCalculationWindow)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 836, 592))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 839, 597))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")

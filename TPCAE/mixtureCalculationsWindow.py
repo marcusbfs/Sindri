@@ -1,21 +1,15 @@
-import os
-
 import numpy as np
 from PySide2 import QtCore, QtWidgets
 
-import db
-import db_utils
-import eos
 import reports
 import units
 import utils
+from DatabaseInterface.DatabaseTableWidgetView import DatabaseTableWidgetView
+from Factories.EOSMixFactory import createEOSMix, getEOSMixOptions
 from Properties import VaporPressure
 from VLEWindow import Window_VLE
 from compounds import MixtureProp, SubstanceProp
 from editBinaryInteractionsParametersWin import Window_BinaryInteractionParameters
-
-# from eos import EOS
-from Factories.EOSMixFactory import createEOSMix, getEOSMixOptions
 from ui.mixture_calculations_ui import Ui_MixtureCalculationWindow
 from units import conv_unit
 from unitsOptionsWindow import Window_UnitsOptions
@@ -53,7 +47,14 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
         self.comboBox_procPunit.addItems(units.pressure_options)
         self.comboBox_refPunit.addItems(units.pressure_options)
 
-        self.btn_searchSubstance.clicked.connect(self.search_substance)
+        self.units = {
+            "P": "bar",
+            "T": "K",
+            "V": "m3/mol",
+            "rho": "kg/m3",
+            "energy_per_mol": "J/mol",
+            "energy_per_mol_temp": "J/molK",
+        }
 
         self.k = [[0, 0]]
         self.n = 0
@@ -71,59 +72,13 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
         h_header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         h_header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
 
-        # tablewidget -> database
-        self.tableWidget_searchSubstance.itemSelectionChanged.connect(
-            self.substance_selected
+        # Database tablewidget search
+        self.databasetablewidget = DatabaseTableWidgetView(
+            self.tableWidget_searchSubstance,
+            self.le_searchSubstance,
+            self.btn_searchSubstance,
         )
-        self.dbfile = db.database_file
-        # 26 colunas
-        self.units = {
-            "P": "bar",
-            "T": "K",
-            "V": "m3/mol",
-            "rho": "kg/m3",
-            "energy_per_mol": "J/mol",
-            "energy_per_mol_temp": "J/molK",
-        }
-        self.col_headers = [
-            "Formula",
-            "Name",
-            "CAS #",
-            "Mol. Wt.",
-            "Tfp [K]",
-            "Tb [K]",
-            "Tc [K]",
-            "Pc [bar]",
-            "Vc [cm3/mol]",
-            "Zc",
-            "Omega",
-            "T range (Cp) [K]",
-            "a0",
-            "a1",
-            "a2",
-            "a3",
-            "a4",
-            "Cp IG",
-            "Cp liq.",
-            "Antoine A",
-            "Antoine B",
-            "Antoine C",
-            "Pvp min [bar]",
-            "Tmin [K]",
-            "Pvp max [bar]",
-            "Tmax [K]",
-        ]
 
-        self.tableWidget_searchSubstance.setHorizontalHeaderLabels(self.col_headers)
-        header = self.tableWidget_searchSubstance.horizontalHeader()
-        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
-
-        self.load_db()
-        self.le_searchSubstance.setFocus()
-        self.database_changed = False
-
-        # listview -> eos options
-        # self.listWidget_eos_options.addItems(list(eos.eos_options.keys()))
         mixeosoptions = getEOSMixOptions()
         self.groupBox_EOS.setTitle(
             "Equation of state ({:d})".format(int(len(mixeosoptions)))
@@ -588,83 +543,3 @@ class Window_MixtureCalculations(QtWidgets.QWidget, Ui_MixtureCalculationWindow)
             self.comboBox_procPunit.currentText(),
         )
         self.vlewindow.show()
-
-    # ================== DB HANDLER ===========================
-    def load_db(self):
-        # Abrir banco de dados
-        if os.path.isfile(self.dbfile):
-            self.show_full_db()
-        else:
-            error_dialog = QtWidgets.QErrorMessage()
-            error_dialog.showMessage("Database not found")
-            error_dialog.exec_()
-            raise Exception("Database not found")
-
-    def show_full_db(self):
-        try:
-            query = "SELECT * FROM database"
-            db.cursor.execute(query)
-            results = db.cursor.fetchall()
-            self.update_table_db(results)
-        except:
-            pass
-
-    def update_table_db(self, results):
-        self.tableWidget_searchSubstance.setRowCount(0)
-
-        for row_number, row_data in enumerate(results):
-            self.tableWidget_searchSubstance.insertRow(row_number)
-            for col_number, data in enumerate(row_data):
-                self.tableWidget_searchSubstance.setItem(
-                    row_number, col_number, QtWidgets.QTableWidgetItem(str(data))
-                )
-
-    def get_row_values(self, n):
-        row_values = []
-        current_row = self.tableWidget_searchSubstance.currentRow()
-
-        for i in range(n):
-            item = self.tableWidget_searchSubstance.item(current_row, i).text()
-            row_values.append(item)
-
-        return row_values
-
-    @QtCore.Slot()
-    def substance_selected(self):
-        current_row = self.tableWidget_searchSubstance.currentRow()
-        if current_row >= 0:
-            r = self.get_row_values(10)
-            self.compound = db_utils.get_compound_properties(r[1], r[0])
-            self.sname = self.compound.getName()
-            self.sformula = self.compound.getFormula()
-
-    @QtCore.Slot()
-    def search_substance(self):
-        substance_string_name = str(self.le_searchSubstance.text())
-        if substance_string_name == "":
-            self.show_full_db()
-        else:
-            try:
-                # query = "SELECT * FROM database WHERE Name LIKE '%" + substance_string_name + "%'" + \
-                #         " OR Formula LIKE '%" + substance_string_name + "%'" + \
-                #         " OR `CAS #` LIKE '%" + substance_string_name + "%'"
-                query = (
-                    "SELECT * FROM database WHERE Name LIKE '"
-                    + substance_string_name
-                    + "%'"
-                    + " OR Formula LIKE '"
-                    + substance_string_name
-                    + "%'"
-                    + " OR `CAS #` LIKE '"
-                    + substance_string_name
-                    + "%'"
-                )
-                db.cursor.execute(query)
-                results = db.cursor.fetchall()
-                self.update_table_db(results)
-            except:
-                self.tableWidget_searchSubstance.setRowCount(0)
-
-    def clear_search(self):
-        self.le_searchSubstance.clear()
-        self.le_searchSubstance.setFocus()
