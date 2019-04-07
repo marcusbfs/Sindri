@@ -10,7 +10,6 @@ class thetaiSoave1972(thetaiWilson1964):
 
     def alpha(self, i: int, T: float, substances):
         tr = T / substances[i].Tc
-        w = substances[i].omega
         m = self.m(i, T, substances)
         return (1.0 + m * (1.0 - np.sqrt(tr))) ** 2
 

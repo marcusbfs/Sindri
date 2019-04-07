@@ -21,7 +21,7 @@ class bivanderWaals1890(BiBehavior):
 
 class thetaivanderWaals1890(ThetaiBehavior):
     def a(self, i: int, T: float, substances):
-        return 0.42188 * (R_IG * substances[i].Tc) ** 2 / substances[i].Pc
+        return 0.421875 * (R_IG * substances[i].Tc) ** 2 / substances[i].Pc
 
     def getThetai(self, i: int, T: float, substances) -> float:
         return self.a(i, T, substances)

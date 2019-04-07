@@ -30,8 +30,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: {app}; Permissions: users-full
 
 [Files]
-Source: "D:\Desktop\TPCAE\TPCAE.exe"; DestDir: "{app}"; Flags: ignoreversion;  Permissions: everyone-full
-Source: "D:\Desktop\TPCAE\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Permissions: everyone-full
+Source: ".\TPCAE\TPCAE.exe"; DestDir: "{app}"; Flags: ignoreversion;  Permissions: everyone-full
+Source: ".\TPCAE\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Permissions: everyone-full
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

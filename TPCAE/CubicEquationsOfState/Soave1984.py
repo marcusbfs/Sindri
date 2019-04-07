@@ -1,60 +1,29 @@
-from CubicEquationsOfState.Soave1972 import Soave1972, thetaiSoave1972
-from EOSParametersBehavior.ParametersBehaviorInterface import EpsiloniBehavior
-from MixtureRules.MixtureRulesInterface import (
-    BiBehavior,
-    EpsilonMixtureRuleBehavior,
-    BMixtureRuleBehavior,
-)
-from constants import R_IG
+from typing import List
+
+import numpy as np
+
+from CubicEquationsOfState.vanderWaals1890 import thetaivanderWaals1890, vanderWaals1890
+from compounds import SubstanceProp
 
 
-class thetaiSoave1984(thetaiSoave1972):
-    def a(self, i: int, T: float, substances):
-        return 0.42188 * (R_IG * substances[i].Tc) ** 2 / substances[i].Pc
-
-    def m(self, i: int, T: float, substances):
+class thetaiSoave1984(thetaivanderWaals1890):
+    def m(self, i: int, T: float, substances: List[SubstanceProp]):
         w = substances[i].omega
-        # return 0.4998 + w* 1.5928 -w*w*0.19563 +  0.025*w*w*w
-        return 0.4998 + w * (1.5928 + w * (-0.19563 + 0.025 * w))
+        return 0.4998 + w * (1.5928 + w * (-0.19563 + w * 0.025))
+
+    def alpha(self, i: int, T: float, substances: List[SubstanceProp]):
+        tr = T / substances[i].Tc
+        m = self.m(i, T, substances)
+        return (1.0 + m * (1.0 - np.sqrt(tr))) ** 2
+
+    def getThetai(self, i: int, T: float, substances: List[SubstanceProp]) -> float:
+        a = self.a(i, T, substances)
+        alpha = self.alpha(i, T, substances)
+        return a * alpha
 
 
-class biSoave1984(BiBehavior):
-    def getBi(self, i: int, T: float, substances) -> float:
-        return 0.08333 / (substances[i].Pc / (R_IG * substances[i].Tc))
-
-
-class epsiloniSoave1984(EpsiloniBehavior):
-    def getEpsiloni(self, b: float) -> float:
-        return 0.001736 * (b / 0.08333) ** 2
-
-
-class epsilonMixSoave1984(EpsilonMixtureRuleBehavior):
-    def epsilonm(
-        self, y, T: float, bib: BiBehavior, bmb: BMixtureRuleBehavior, substances
-    ) -> float:
-        return 0.001736 * (bmb.bm(y, T, bib, substances) / 0.08333) ** 2
-
-    def diffEpsilonm(
-        self,
-        i: int,
-        y,
-        T: float,
-        bib: BiBehavior,
-        bmb: BMixtureRuleBehavior,
-        substances,
-    ) -> float:
-        return (
-            (2.0 * 0.001736 / 0.08333 ** 2)
-            * bmb.bm(y, T, bib, substances)
-            * bmb.diffBm(i, y, T, bib, substances)
-        )
-
-
-class Soave1984(Soave1972):
+class Soave1984(vanderWaals1890):
     def __init__(self, _subs, _k):
         super().__init__(_subs, _k)
         self.eosname = "Soave (1984)"
         self.thetaiBehavior = thetaiSoave1984()
-        self.biBehavior = biSoave1984()
-        self.epsiloniBehavior = epsiloniSoave1984()
-        self.epsilonMixBehavior = epsilonMixSoave1984()
