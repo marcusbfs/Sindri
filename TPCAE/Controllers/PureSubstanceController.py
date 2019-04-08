@@ -2,16 +2,15 @@ from PySide2 import QtWidgets
 
 import diagrams
 import units
+from Controllers.UnitsOptionsController import UnitsOptionsController
 from Models.PureSubstanceModel import PureSubstanceModel
 from Views.PureSubstanceDiagramsView import PureSubstanceDiagramsView
 from Views.PureSubstanceView import PureSubstanceView
-from Views.UnitsOptionsView import UnitsOptionsView
 from units import conv_unit
 
 
 class PureSubstanceController:
     def __init__(self, model: PureSubstanceModel):
-        self.unitsOptionsObservers = []
 
         self.units = {
             "P": "bar",
@@ -27,15 +26,15 @@ class PureSubstanceController:
         self.model = model
         self.mainView = PureSubstanceView(self, self.model)
         self.diagramsView = PureSubstanceDiagramsView(self, self.model)
-        self.unitsOptionsView = UnitsOptionsView(self, self.model)
+        self.unitsOptionsController = UnitsOptionsController()
+        self.unitsOptionsController.registerUnitsOptionsObserver(self)
 
     # getters
+    def createUnitsOptionsView(self):
+        self.unitsOptionsController.createUnitsOptionsView()
 
     def createMainView(self):
         self.mainView.show()
-
-    def createUnitsOptionsView(self):
-        self.unitsOptionsView.show()
 
     def createDiagramsView(self):
         self.setEOSandSubstance()
@@ -98,25 +97,6 @@ class PureSubstanceController:
                 self.model.getSubstanceName(), self.model.getSubstanceFormula()
             )
         )
-
-    def okPressedUnitsOptions(self):
-        self.units = {
-            "P": self.unitsOptionsView.comboBox_pressure.currentText(),
-            "T": self.unitsOptionsView.comboBox_temperature.currentText(),
-            "V": self.unitsOptionsView.comboBox_volume.currentText(),
-            "rho": self.unitsOptionsView.comboBox_density.currentText(),
-            "energy_per_mol": self.unitsOptionsView.comboBox_energ_per_mol.currentText(),
-            "energy_per_mol_temp": self.unitsOptionsView.comboBox_energ_per_mol_temp.currentText(),
-        }
-        self.notifyUnitsOptionsObserver()
-        self.unitsOptionsView.close()
-
-    def registerUnitsOptionsObserver(self, o):
-        self.unitsOptionsObservers.append(o)
-
-    def notifyUnitsOptionsObserver(self):
-        for o in self.unitsOptionsObservers:
-            o.updateUnitsOptions()
 
     def _setupDiagramsDict(self):
 
@@ -353,3 +333,7 @@ class PureSubstanceController:
                 self.mainView, "Error", "Invalid values for T and/or P"
             )
             raise ValueError("Invalid T and/or P numbers")
+
+    def updateUnitsOptions(self):
+        self.units = self.unitsOptionsController.units
+        self.mainView.units = self.units

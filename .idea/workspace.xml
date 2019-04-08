@@ -6,14 +6,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change afterPath="$PROJECT_DIR$/TPCAE/Views/PureSubstanceDiagramsView.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TPCAE/Views/UnitsOptionsView.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TPCAE/Controllers/UnitsOptionsController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/Controllers/PureSubstanceController.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/Controllers/PureSubstanceController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPCAE/Views/PureSubstanceView.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/Views/PureSubstanceView.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/mainwindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/mainwindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPCAE/pureSubstanceDiagramsWindow.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/Views/UnitsOptionsView.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/Views/UnitsOptionsView.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,14 +20,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TPCAE/Views/PureSubstanceView.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="21" column="39" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
+            <state>
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/Views/UnitsOptionsView.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#37#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/PureSubstanceController.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/UnitsOptionsController.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="37" lean-forward="true" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -71,7 +98,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/PatelAndTeja1982.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/PenelouxEtAl1982.py" />
         <option value="$PROJECT_DIR$/TPCAE/VLEEOSIterfaces.py" />
         <option value="$PROJECT_DIR$/tests/test_DepartureFunctions_new_implementation.py" />
@@ -117,11 +143,12 @@
         <option value="$PROJECT_DIR$/TPCAE/Models/Observer.py" />
         <option value="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" />
         <option value="$PROJECT_DIR$/TPCAE/Models/PureSubstanceModel.py" />
-        <option value="$PROJECT_DIR$/TPCAE/Views/UnitsOptionsView.py" />
-        <option value="$PROJECT_DIR$/TPCAE/Views/PureSubstanceView.py" />
         <option value="$PROJECT_DIR$/TPCAE/mainwindow.py" />
         <option value="$PROJECT_DIR$/TPCAE/Views/PureSubstanceDiagramsView.py" />
+        <option value="$PROJECT_DIR$/TPCAE/Controllers/UnitsOptionsController.py" />
         <option value="$PROJECT_DIR$/TPCAE/Controllers/PureSubstanceController.py" />
+        <option value="$PROJECT_DIR$/TPCAE/Views/PureSubstanceView.py" />
+        <option value="$PROJECT_DIR$/TPCAE/Views/UnitsOptionsView.py" />
       </list>
     </option>
   </component>
@@ -161,12 +188,6 @@
               <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
               <item name="TPCAE" type="462c0819:PsiDirectoryNode" />
               <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="TPCAE" type="462c0819:PsiDirectoryNode" />
-              <item name="Models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
@@ -417,20 +438,21 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.19419643" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.1938883" />
       <window_info id="Structure" order="1" sideWeight="0.1953125" side_tool="true" weight="0.17755532" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49367756" weight="0.3287234" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5766369" weight="0.3678344" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5758693" visible="true" weight="0.36702126" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49578503" weight="0.32553193" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49367756" weight="0.3287234" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.45535713" visible="true" weight="0.3057325" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.54464287" side_tool="true" visible="true" weight="0.3057325" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.45468915" weight="0.30531916" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.42413068" side_tool="true" visible="true" weight="0.36702126" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.56473213" weight="0.43471336" />
       <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5342262" weight="0.40127388" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -462,13 +484,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TPCAE/Controllers/PureSubstanceController.py</url>
-          <line>28</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -479,16 +494,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tests/test_newVLE_equilibrium.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -816,16 +821,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="227" column="48" selection-start-line="227" selection-start-column="48" selection-end-line="227" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" />
     <entry file="file://$PROJECT_DIR$/TPCAE/unitsOptionsWindow.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -835,22 +831,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/Views/UnitsOptionsView.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceDiagramsWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/pureSubstanceDiagramsWindow.py" />
     <entry file="file://$PROJECT_DIR$/TPCAE/EOSPureSubstanceInterface.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -895,7 +876,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/Views/PureSubstanceDiagramsView.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="510">
+          <caret line="52" column="8" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="8" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
@@ -913,11 +895,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/Views/PureSubstanceView.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="21" column="39" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
+        <state>
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/Views/UnitsOptionsView.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/UnitsOptionsController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="37" lean-forward="true" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
         </state>
       </provider>
     </entry>

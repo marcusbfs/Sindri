@@ -2,14 +2,12 @@ from PySide2 import QtCore, QtWidgets
 
 import units
 from ui.units_options_ui import Ui_Form_UnitsOptions
-from Models.PureSubstanceModel import PureSubstanceModel
 
 
 class UnitsOptionsView(QtWidgets.QWidget, Ui_Form_UnitsOptions):
-    def __init__(self, controller, model: PureSubstanceModel, parent=None):
+    def __init__(self, controller, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-        self.model = model
         self.controller = controller
 
         self.units = self.controller.units

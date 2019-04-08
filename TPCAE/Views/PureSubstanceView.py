@@ -20,7 +20,6 @@ class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
 
         self.controller: PureSubstanceController = controller
         self.model.registerCalculationsObserver(self)
-        self.controller.registerUnitsOptionsObserver(self)
 
         self.btn_calculate.clicked.connect(self.calculatePureSubstance)
         self.btn_diagrams.clicked.connect(self.open_diagrams)
@@ -199,6 +198,3 @@ class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
             v = self.vap[i]
             report += fmt(str(lbl), str(l), str(v))
         return report
-
-    def updateUnitsOptions(self):
-        self.units = self.controller.units
