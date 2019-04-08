@@ -27,8 +27,15 @@ class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     @Slot()
     def open_PureSubstanceCalculations(self):
-        self.pureSubsWin = Window_PureSubstanceCalculations()
-        self.pureSubsWin.show()
+        from Controllers.PureSubstanceController import (
+            PureSubstanceModel,
+            PureSubstanceController,
+        )
+
+        self.PureSubstanceController = PureSubstanceController(PureSubstanceModel())
+        self.PureSubstanceController.createView()
+        # self.pureSubsWin = Window_PureSubstanceCalculations()
+        # self.pureSubsWin.show()
 
     @Slot()
     def open_MixtureCalculations(self):
