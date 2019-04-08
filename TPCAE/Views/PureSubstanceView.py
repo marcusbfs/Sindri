@@ -3,35 +3,24 @@ from PySide2 import QtCore, QtWidgets
 import reports
 import units
 import utils
-
-# from Controllers.PureSubstanceController import PureSubstanceController
 from DatabaseInterface.DatabaseTableWidgetView import DatabaseTableWidgetView
-from EOSPureSubstanceInterface import EOSPureSubstanceInterface as EOS
 from Factories.EOSMixFactory import getEOSMixOptions
 from Models.PureSubstanceModel import PureSubstanceModel
-from compounds import MixtureProp, SubstanceProp
-from pureSubstanceDiagramsWindow import Window_PureSubstanceDiagrams
 from ui.pure_substance_calculations_ui import Ui_PureSubstanceCalculationsWindow
 from units import conv_unit
-from unitsOptionsWindow import Window_UnitsOptions
 
 
 class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
-    def __init__(
-        self,
-        # controller: PureSubstanceController,
-        controller,
-        model: PureSubstanceModel,
-        parent=None,
-    ):
+    def __init__(self, controller, model: PureSubstanceModel, parent=None):
         super(PureSubstanceView, self).__init__(parent)
         self.setupUi(self)
 
-        self.controller = controller
         self.model = model
-        # self.model.registerSubstanceObserver(self)
-        # self.model.registerEOSObserver(self)
+        from Controllers.PureSubstanceController import PureSubstanceController
+
+        self.controller: PureSubstanceController = controller
         self.model.registerCalculationsObserver(self)
+        self.controller.registerUnitsOptionsObserver(self)
 
         self.btn_calculate.clicked.connect(self.calculatePureSubstance)
         self.btn_diagrams.clicked.connect(self.open_diagrams)
@@ -62,16 +51,13 @@ class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
         )
 
         # listview -> eos options
-        # self.listWidget_eos_options.addItems(list(eos.eos_options.keys()))
         eosmixoptions = getEOSMixOptions()
         self.groupBox_EOS.setTitle(
             "Equation of state ({:d})".format(int(len(eosmixoptions)))
         )
         self.listWidget_eos_options.addItems(eosmixoptions)
-        self.listWidget_eos_options.itemSelectionChanged.connect(self.eos_selected)
-        self.tableWidget_searchSubstance.itemSelectionChanged.connect(
-            self.substance_selected
-        )
+        self.listWidget_eos_options.setCurrentRow(0)
+        self.tableWidget_searchSubstance.setCurrentCell(0, 0)
 
     def updateEOS(self):
         self.setWindowTitle(
@@ -150,57 +136,11 @@ class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
 
     @QtCore.Slot()
     def open_diagrams(self):
-        if len(self.sname.strip()) > 1 and len(self.eosname.strip()) > 1:
-
-            _decimals = 7
-            _lt = 1e-3
-            _gt = 1e4
-
-            try:  # to initialize EOS
-                self.subs = SubstanceProp(self.sname, self.sformula)
-                self.mix = MixtureProp([self.subs], [1.0])
-                # self.eoseq = EOS(self.mix, [[0]], self.eosname)
-                self.eoseq = EOS([self.subs], self.eosname)
-            except:
-                err = (
-                    "One or more of the following properties is not set: Tc, Pc, omega"
-                )
-                msg = QtWidgets.QMessageBox.about(self, "Error", str(err))
-                return 1
-
-            self.refTunit = self.comboBox_refTunit.currentText()
-            self.refPunit = self.comboBox_refPunit.currentText()
-
-            try:
-                self.Tref = conv_unit(
-                    float(self.le_refT.text()), self.refTunit, "K"
-                )  # convert to Kelvin
-                self.Pref = conv_unit(
-                    float(self.le_refP.text()), self.refPunit, "Pa"
-                )  # convert to pascal
-            except Exception as e:
-                print(str(e))
-                msg = QtWidgets.QMessageBox.about(
-                    self, "Error", "Reference state variables are not numbers"
-                )
-                return -1
-
-            self.diagramsWindow = Window_PureSubstanceDiagrams(
-                self.eoseq, self.Pref, self.Tref
-            )
-            self.diagramsWindow.show()
-
-        else:
-            msg = QtWidgets.QMessageBox.about(
-                self, "Error", "Please, select compound and EOS"
-            )
-            return
+        self.controller.openDiagramsClicked()
 
     @QtCore.Slot()
     def open_units_options(self):
-        self.unitsOptionsWindow = Window_UnitsOptions(self.units)
-        self.unitsOptionsWindow.return_units_dict.connect(self.set_units_dict)
-        self.unitsOptionsWindow.show()
+        self.controller.createUnitsOptionsView()
 
     @QtCore.Slot()
     def set_units_dict(self, dictionary):
@@ -260,15 +200,5 @@ class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
             report += fmt(str(lbl), str(l), str(v))
         return report
 
-    @QtCore.Slot()
-    def eos_selected(self):
-        self.eosname = self.listWidget_eos_options.currentItem().text()
-        self.controller.setEOS(self.eosname)
-
-    @QtCore.Slot()
-    def substance_selected(self):
-        current_row = self.tableWidget_searchSubstance.currentRow()
-        if current_row > -1:
-            self.sname = self.tableWidget_searchSubstance.item(current_row, 1).text()
-            self.sformula = self.tableWidget_searchSubstance.item(current_row, 0).text()
-            self.controller.setSubstance(self.sname, self.sformula)
+    def updateUnitsOptions(self):
+        self.units = self.controller.units
