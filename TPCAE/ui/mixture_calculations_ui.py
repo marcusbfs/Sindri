@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/mixture_calculations_ui.ui',
 # licensing of 'designer/mixture_calculations_ui.ui' applies.
 #
-# Created: Sat Apr  6 13:16:43 2019
+# Created: Mon Apr  8 19:33:43 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,21 +15,20 @@ class Ui_MixtureCalculationWindow(object):
     def setupUi(self, MixtureCalculationWindow):
         MixtureCalculationWindow.setObjectName("MixtureCalculationWindow")
         MixtureCalculationWindow.setWindowModality(QtCore.Qt.ApplicationModal)
-        MixtureCalculationWindow.resize(859, 617)
+        MixtureCalculationWindow.resize(868, 617)
         self.gridLayout = QtWidgets.QGridLayout(MixtureCalculationWindow)
         self.gridLayout.setObjectName("gridLayout")
         self.scrollArea = QtWidgets.QScrollArea(MixtureCalculationWindow)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 839, 597))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 848, 597))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        spacerItem = QtWidgets.QSpacerItem(
-            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
-        )
-        self.gridLayout_2.addItem(spacerItem, 1, 2, 1, 1)
+        self.btn_VLE = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.btn_VLE.setObjectName("btn_VLE")
+        self.gridLayout_2.addWidget(self.btn_VLE, 1, 1, 1, 1)
         self.tabWidget = QtWidgets.QTabWidget(self.scrollAreaWidgetContents)
         self.tabWidget.setTabPosition(QtWidgets.QTabWidget.North)
         self.tabWidget.setTabShape(QtWidgets.QTabWidget.Rounded)
@@ -45,6 +44,18 @@ class Ui_MixtureCalculationWindow(object):
         self.frame.setObjectName("frame")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.frame)
         self.gridLayout_4.setObjectName("gridLayout_4")
+        self.btn_LoadSystem = QtWidgets.QPushButton(self.frame)
+        self.btn_LoadSystem.setMaximumSize(QtCore.QSize(80, 16777215))
+        self.btn_LoadSystem.setObjectName("btn_LoadSystem")
+        self.gridLayout_4.addWidget(self.btn_LoadSystem, 1, 0, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(
+            510, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.gridLayout_4.addItem(spacerItem, 1, 2, 1, 2)
+        self.btn_SaveSystem = QtWidgets.QPushButton(self.frame)
+        self.btn_SaveSystem.setMaximumSize(QtCore.QSize(80, 16777215))
+        self.btn_SaveSystem.setObjectName("btn_SaveSystem")
+        self.gridLayout_4.addWidget(self.btn_SaveSystem, 1, 1, 1, 1)
         self.tableWidget_MixtureSystem = QtWidgets.QTableWidget(self.frame)
         self.tableWidget_MixtureSystem.setMinimumSize(QtCore.QSize(400, 150))
         self.tableWidget_MixtureSystem.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -69,25 +80,9 @@ class Ui_MixtureCalculationWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget_MixtureSystem.setHorizontalHeaderItem(2, item)
         self.gridLayout_4.addWidget(self.tableWidget_MixtureSystem, 0, 0, 1, 4)
-        self.btn_EditBIParameters = QtWidgets.QPushButton(self.frame)
-        self.btn_EditBIParameters.setObjectName("btn_EditBIParameters")
-        self.gridLayout_4.addWidget(self.btn_EditBIParameters, 1, 0, 1, 3)
-        spacerItem1 = QtWidgets.QSpacerItem(
-            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
-        )
-        self.gridLayout_4.addItem(spacerItem1, 1, 3, 1, 1)
-        self.btn_LoadSystem = QtWidgets.QPushButton(self.frame)
-        self.btn_LoadSystem.setMaximumSize(QtCore.QSize(80, 16777215))
-        self.btn_LoadSystem.setObjectName("btn_LoadSystem")
-        self.gridLayout_4.addWidget(self.btn_LoadSystem, 2, 0, 1, 1)
-        self.btn_SaveSystem = QtWidgets.QPushButton(self.frame)
-        self.btn_SaveSystem.setMaximumSize(QtCore.QSize(80, 16777215))
-        self.btn_SaveSystem.setObjectName("btn_SaveSystem")
-        self.gridLayout_4.addWidget(self.btn_SaveSystem, 2, 1, 1, 1)
-        spacerItem2 = QtWidgets.QSpacerItem(
-            510, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
-        )
-        self.gridLayout_4.addItem(spacerItem2, 2, 2, 1, 2)
+        self.btn_setEquimolar = QtWidgets.QPushButton(self.frame)
+        self.btn_setEquimolar.setObjectName("btn_setEquimolar")
+        self.gridLayout_4.addWidget(self.btn_setEquimolar, 2, 0, 1, 1)
         self.gridLayout_5.addWidget(self.frame, 1, 0, 1, 1)
         self.groupBox_searchSubstance = QtWidgets.QGroupBox(self.tabSystem)
         self.groupBox_searchSubstance.setMinimumSize(QtCore.QSize(0, 100))
@@ -109,10 +104,10 @@ class Ui_MixtureCalculationWindow(object):
         self.le_searchSubstance.setText("")
         self.le_searchSubstance.setObjectName("le_searchSubstance")
         self.gridLayout_3.addWidget(self.le_searchSubstance, 0, 1, 1, 4)
-        spacerItem3 = QtWidgets.QSpacerItem(
+        spacerItem1 = QtWidgets.QSpacerItem(
             406, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
-        self.gridLayout_3.addItem(spacerItem3, 2, 4, 1, 1)
+        self.gridLayout_3.addItem(spacerItem1, 2, 4, 1, 1)
         self.label = QtWidgets.QLabel(self.groupBox_searchSubstance)
         self.label.setObjectName("label")
         self.gridLayout_3.addWidget(self.label, 2, 0, 1, 2)
@@ -357,10 +352,14 @@ class Ui_MixtureCalculationWindow(object):
         self.verticalLayout.addWidget(self.groupBox__log)
         self.gridLayout_11.addWidget(self.frame_results, 0, 1, 1, 1)
         self.tabWidget.addTab(self.tabCalculations, "")
-        self.gridLayout_2.addWidget(self.tabWidget, 0, 0, 1, 3)
-        self.btn_VLE = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.btn_VLE.setObjectName("btn_VLE")
-        self.gridLayout_2.addWidget(self.btn_VLE, 1, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.tabWidget, 0, 0, 1, 4)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.gridLayout_2.addItem(spacerItem2, 1, 3, 1, 1)
+        self.btn_EditBIParameters = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.btn_EditBIParameters.setObjectName("btn_EditBIParameters")
+        self.gridLayout_2.addWidget(self.btn_EditBIParameters, 1, 2, 1, 1)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
 
@@ -384,6 +383,21 @@ class Ui_MixtureCalculationWindow(object):
                 "MixtureCalculationWindow", "Mixture properties calculation", None, -1
             )
         )
+        self.btn_VLE.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Vapor-liquid Equilibrium", None, -1
+            )
+        )
+        self.btn_LoadSystem.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Load system", None, -1
+            )
+        )
+        self.btn_SaveSystem.setText(
+            QtWidgets.QApplication.translate(
+                "MixtureCalculationWindow", "Save system", None, -1
+            )
+        )
         self.tableWidget_MixtureSystem.horizontalHeaderItem(0).setText(
             QtWidgets.QApplication.translate(
                 "MixtureCalculationWindow", "Name", None, -1
@@ -399,22 +413,9 @@ class Ui_MixtureCalculationWindow(object):
                 "MixtureCalculationWindow", "Molar fraction", None, -1
             )
         )
-        self.btn_EditBIParameters.setText(
+        self.btn_setEquimolar.setText(
             QtWidgets.QApplication.translate(
-                "MixtureCalculationWindow",
-                "Edit binary interactions parameters",
-                None,
-                -1,
-            )
-        )
-        self.btn_LoadSystem.setText(
-            QtWidgets.QApplication.translate(
-                "MixtureCalculationWindow", "Load system", None, -1
-            )
-        )
-        self.btn_SaveSystem.setText(
-            QtWidgets.QApplication.translate(
-                "MixtureCalculationWindow", "Save system", None, -1
+                "MixtureCalculationWindow", "Set equimolar system", None, -1
             )
         )
         self.groupBox_searchSubstance.setTitle(
@@ -527,9 +528,12 @@ class Ui_MixtureCalculationWindow(object):
                 "MixtureCalculationWindow", "Calculations", None, -1
             ),
         )
-        self.btn_VLE.setText(
+        self.btn_EditBIParameters.setText(
             QtWidgets.QApplication.translate(
-                "MixtureCalculationWindow", "Vapor-liquid Equilibrium", None, -1
+                "MixtureCalculationWindow",
+                "Edit binary interactions parameters",
+                None,
+                -1,
             )
         )
 
