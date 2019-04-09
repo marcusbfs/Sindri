@@ -35,21 +35,14 @@ class MixtureCalculationsView(QtWidgets.QWidget, Ui_MixtureCalculationWindow):
         # connect
         self.btn_Add.clicked.connect(self.add_substance_to_system)
         self.btn_Remove.clicked.connect(self.remove_substance_from_system)
-        # self.btn_Add.clicked.connect(self._changedSystem)
-        # self.btn_Remove.clicked.connect(self._changedSystem)
         self.btn_EditBIParameters.clicked.connect(self.edit_binary_parameters)
         self.btn_units.clicked.connect(self.open_units_options)
         self.btn_calculate.clicked.connect(self.calculateMixProperties)
         self.btn_setEquimolar.clicked.connect(self.clicked_setEquimolar)
-        # self.btn_savetxt.clicked.connect(self.save_to_txt)
-        # self.btn_SaveSystem.clicked.connect(self.saveSystem)
-        # self.btn_LoadSystem.clicked.connect(self.loadSystem)
-        # self.btn_VLE.clicked.connect(self.openVLEWindow)
-        # self.tableWidget_MixtureSystem.itemChanged.connect(
-        #     self._autoCompleteLastMolarFraction
-        # )
-        # self.btn_Add.clicked.connect(self._autoCompleteLastMolarFraction)
-        # self.btn_Remove.clicked.connect(self._autoCompleteLastMolarFraction)
+        self.btn_savetxt.clicked.connect(self.save_to_txt)
+        self.btn_SaveSystem.clicked.connect(self.saveSystem)
+        self.btn_LoadSystem.clicked.connect(self.loadSystem)
+        self.btn_VLE.clicked.connect(self.openVLEWindow)
 
         # add combobox units options
         self.comboBox_procTunit.addItems(units.temperature_options)
@@ -87,7 +80,6 @@ class MixtureCalculationsView(QtWidgets.QWidget, Ui_MixtureCalculationWindow):
             "Equation of state ({:d})".format(int(len(mixeosoptions)))
         )
         self.listWidget_eos_options.addItems(mixeosoptions)
-        # self.listWidget_eos_options.itemSelectionChanged.connect(self.eos_selected)
 
     @QtCore.Slot()
     def open_units_options(self):
@@ -141,6 +133,36 @@ class MixtureCalculationsView(QtWidgets.QWidget, Ui_MixtureCalculationWindow):
             print("Couldn't generate report")
             print(str(e))
 
+        report = ""
+
+        def fmt(label, liq, vap):
+            return "{:<25}\t{:>20}\t{:>20}\n".format(str(label), str(liq), str(vap))
+
+        report += fmt("Properties", "Liquid", "Vapor")
+
+        for i in range(len(rowlabels)):
+            lbl = rowlabels[i]
+            l = liq[i]
+            v = vap[i]
+            report += fmt(str(lbl), str(l), str(v))
+        self.controller.setReport(report)
+
     @QtCore.Slot()
     def clicked_setEquimolar(self):
         self.controller.setEquimolarClicked()
+
+    @QtCore.Slot()
+    def save_to_txt(self):
+        self.controller.saveToTxtClicked()
+
+    @QtCore.Slot()
+    def saveSystem(self):
+        self.controller.saveSystemClicked()
+
+    @QtCore.Slot()
+    def loadSystem(self):
+        self.controller.loadSystemClicked()
+
+    @QtCore.Slot()
+    def openVLEWindow(self):
+        self.controller.VLEClicked()

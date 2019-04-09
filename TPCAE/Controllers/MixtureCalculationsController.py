@@ -1,6 +1,7 @@
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMessageBox
 import numpy as np
+from typing import List
 
 from Views.MixtureCalculationsView import MixtureCalculationsView
 from Models.MixtureModel import MixtureModel
@@ -25,6 +26,7 @@ class MixtureCalculationsController:
             "energy_per_mol": "J/mol",
             "energy_per_mol_temp": "J/molK",
         }
+        self.report = None
 
         self.model = model
 
@@ -223,3 +225,193 @@ class MixtureCalculationsController:
             self.mixtureCalcView.tableWidget_MixtureSystem.setItem(
                 i, 2, QtWidgets.QTableWidgetItem(str(1.0 / n))
             )
+
+    def saveToTxtClicked(self):
+        if self.mixtureCalcView.plainTextEdit_information.toPlainText() == "":
+            til = "No data"
+            msg = "Please, generate the data first"
+            QtWidgets.QMessageBox.about(self.mixtureCalcView, til, msg)
+            return
+        try:
+            name_suggestion = "mixture01" + ".txt"
+            txt_file_name = QtWidgets.QFileDialog.getSaveFileName(
+                self.mixtureCalcView, "Save file", name_suggestion, "Text files (*.txt)"
+            )[0]
+            if not txt_file_name:
+                return 0
+            info = self.mixtureCalcView.plainTextEdit_information.toPlainText()
+            log = self.mixtureCalcView.plainTextEdit_log.toPlainText()
+            file_content = info + "\n\n" + self.report + "\n--- LOG ---\n" + log
+            try:
+                with open(txt_file_name, "w") as f:
+                    f.write(file_content)
+                til = "Successful"
+                msg = "The data has been successfully saved."
+            except Exception as e:
+                til = "Problem"
+                msg = "The data couldn't be saved.\n" + str(e)
+            QtWidgets.QMessageBox.about(self.mixtureCalcView, til, msg)
+
+        except Exception as e:
+            if (
+                str(e)
+                == "'Window_PureSubstanceCalculations' object has no attribute 'report'"
+            ):
+                til = "Missing data"
+                msg = "Please, generate the data first."
+            else:
+                til = "Error generating txt file"
+                msg = str(e)
+            QtWidgets.QMessageBox.about(self.mixtureCalcView, til, msg)
+            return -1
+
+    def setReport(self, s: str):
+        self.report = s
+
+    def saveSystemClicked(self):
+        n = self.model.getNumberOfSubstancesInSystem()
+        if n < 2:
+            til = "No mixture"
+            msg = "Please, select two or more substances"
+            QtWidgets.QMessageBox.about(self.mixtureCalcView, til, msg)
+            return
+
+        import _devinfo
+
+        try:
+            _file_extension = _devinfo.__MIXTURESYSTEM_FILE_EXTENSION__
+            name_suggestion = "mixture_system" + _file_extension
+            txt_file_name = QtWidgets.QFileDialog.getSaveFileName(
+                self.mixtureCalcView,
+                "Save file",
+                name_suggestion,
+                "{} files (*{})".format(_devinfo.__SOFTWARE_NAME__, _file_extension),
+            )[0]
+            if not txt_file_name:
+                return 0
+            try:
+                import datetime
+
+                now = datetime.datetime.now()
+                dateandtime = now.strftime("%H:%M %d-%m-%Y")
+
+                file_content = ""
+                # Header (two lines)
+                file_content += _devinfo.__SOFTWARE_NAME__ + " MIXTURE SYSTEM\n"
+                file_content += dateandtime + "\n"
+                file_content += "\n"
+
+                # number of components
+                file_content += str(n) + "\n"
+                file_content += "\n"
+
+                y = self.getMolarFractionsFromTable(
+                    self.mixtureCalcView.tableWidget_MixtureSystem, 2
+                )
+                k = self.model.getBinaryInteractionsParameters()
+
+                # Name, formula and molar fraction
+                for i in range(n):
+                    name = self.mixtureCalcView.tableWidget_MixtureSystem.item(
+                        i, 0
+                    ).text()
+                    formula = self.mixtureCalcView.tableWidget_MixtureSystem.item(
+                        i, 1
+                    ).text()
+                    file_content += '"{0:s}"\t"{1:s}"\t{2:0.17f}\n'.format(
+                        name, formula, y[i]
+                    )
+
+                file_content += "\n"
+
+                # binary interaction parameters
+                for i in range(n):
+                    for j in range(n - 1):
+                        file_content += "{0:0.17f}\t".format(k[i][j])
+                    file_content += "{0:0.17f}\n".format(k[i][n - 1])
+
+                with open(txt_file_name, "w") as f:
+                    f.write(file_content)
+                til = "Successful"
+                msg = "The system has been successfully saved."
+            except Exception as e:
+                til = "Error"
+                msg = "The system couldn't be saved.\n" + str(e)
+            QtWidgets.QMessageBox.about(self.mixtureCalcView, til, msg)
+
+        except Exception as e:
+            til = "Error generating txt file"
+            msg = str(e)
+            QtWidgets.QMessageBox.about(self.mixtureCalcView, til, msg)
+            return -1
+
+    def loadSystemClicked(self):
+        import _devinfo
+        import shlex
+
+        _file_extension = _devinfo.__MIXTURESYSTEM_FILE_EXTENSION__
+        filename = QtWidgets.QFileDialog.getOpenFileName(
+            self.mixtureCalcView,
+            "Load file",
+            "",
+            "{} files (*{})".format(_devinfo.__SOFTWARE_NAME__, _file_extension),
+        )[0]
+
+        if not filename:
+            return 0
+
+        try:
+            with open(filename, "r") as file:
+                skiplines = 3
+                for i in range(skiplines):
+                    file.readline()
+                content = [line.rstrip("\n") for line in file if line != "\n"]
+
+            n = int(content[0])
+            y = np.empty(n, dtype=np.float64)
+            k = np.empty([n, n], dtype=np.float64)
+            self.mixtureCalcView.tableWidget_MixtureSystem.setRowCount(n)
+
+            index = 1
+            # substances : List[SubstanceProp] = []
+            self.model.clearSubstancesInSystem()
+            for i in range(n):
+                subs = shlex.split(content[index + i])
+                name = QtWidgets.QTableWidgetItem(subs[0])
+                formula = QtWidgets.QTableWidgetItem(subs[1])
+                molar_fraction = QtWidgets.QTableWidgetItem(subs[2])
+                y[i] = float(subs[2])
+                self.mixtureCalcView.tableWidget_MixtureSystem.setItem(i, 0, name)
+                self.mixtureCalcView.tableWidget_MixtureSystem.setItem(i, 1, formula)
+                self.mixtureCalcView.tableWidget_MixtureSystem.setItem(
+                    i, 2, molar_fraction
+                )
+                self.model.addSubstanceToSystem(
+                    SubstanceProp(name.text(), formula.text())
+                )
+                # substances.append(SubstanceProp(n, f))
+
+            index += n
+            for i in range(n):
+                for j in range(n):
+                    ks = shlex.split(content[index + i])
+                    k[i][j] = float(ks[j])
+
+            self.model.setBinaryInteractionsParameters(k)
+
+        except Exception as e:
+            title = "Error loading system"
+            msg = 'Error reading from file "' + filename + '"\n' + str(e)
+            QtWidgets.QMessageBox.about(self.mixtureCalcView, title, msg)
+
+    def VLEClicked(self):
+        n = self.model.getNumberOfSubstancesInSystem()
+        if n < 2:
+            QtWidgets.QMessageBox.about(
+                self.mixtureCalcView, "Error", "Please, select two or more substances"
+            )
+            return
+        from Controllers.MixtureVLEController import MixtureVLEController
+
+        mixtureVLEController = MixtureVLEController(self, self.model)
+        mixtureVLEController.createMixVLEView()

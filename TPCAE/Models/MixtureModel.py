@@ -60,6 +60,12 @@ class MixtureModel:
         self.setupSystem()
         self.notifySubstanceObservers()
 
+    def clearSubstancesInSystem(self):
+        self.substances_in_the_system: List[SubstanceProp] = []
+        self.updateK()
+        self.setupSystem()
+        self.notifySubstanceObservers()
+
     def removeSubstanceFromSystem(self, substance: str):
         if self.getNumberOfSubstancesInSystem() > 0:
             for s in self.substances_in_the_system:
@@ -75,7 +81,7 @@ class MixtureModel:
             raise ValueError(
                 "Number of molar fractions not equals number of substances in the system"
             )
-        if np.sum(y) != 1.0:
+        if np.abs(np.sum(y) - 1.0) > 1e-10:
             raise ValueError("Molar fractions doesn't sum to one")
         self.y = y
 

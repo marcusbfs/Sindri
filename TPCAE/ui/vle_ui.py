@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/vle_ui.ui',
 # licensing of 'designer/vle_ui.ui' applies.
 #
-# Created: Mon Mar 25 17:45:29 2019
+# Created: Tue Apr  9 10:04:34 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,16 +26,6 @@ class Ui_FormVLE(object):
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        spacerItem = QtWidgets.QSpacerItem(
-            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
-        )
-        self.gridLayout_2.addItem(spacerItem, 1, 2, 1, 1)
-        self.comboBox_EOS = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
-        self.comboBox_EOS.setObjectName("comboBox_EOS")
-        self.gridLayout_2.addWidget(self.comboBox_EOS, 1, 1, 1, 1)
-        self.label_2 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.label_2.setObjectName("label_2")
-        self.gridLayout_2.addWidget(self.label_2, 1, 0, 1, 1)
         self.tabWidget_VLE = QtWidgets.QTabWidget(self.scrollAreaWidgetContents)
         self.tabWidget_VLE.setObjectName("tabWidget_VLE")
         self.tab_VLEcalc = QtWidgets.QWidget()
@@ -64,10 +54,10 @@ class Ui_FormVLE(object):
         self.tableWidget_Results.setColumnCount(0)
         self.tableWidget_Results.setRowCount(0)
         self.gridLayout_5.addWidget(self.tableWidget_Results, 1, 0, 1, 4)
-        spacerItem1 = QtWidgets.QSpacerItem(
+        spacerItem = QtWidgets.QSpacerItem(
             40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
-        self.gridLayout_5.addItem(spacerItem1, 0, 3, 1, 1)
+        self.gridLayout_5.addItem(spacerItem, 0, 3, 1, 1)
         self.gridLayout_6.addWidget(self.groupBox, 0, 1, 1, 1)
         self.frame = QtWidgets.QFrame(self.tab_VLEcalc)
         sizePolicy = QtWidgets.QSizePolicy(
@@ -188,7 +178,20 @@ class Ui_FormVLE(object):
         self.gridLayout_7.addWidget(self.tableWidget_DataResult, 0, 0, 1, 1)
         self.gridLayout_9.addWidget(self.groupBox_3, 0, 1, 1, 1)
         self.tabWidget_VLE.addTab(self.tab_Diagrams, "")
-        self.gridLayout_2.addWidget(self.tabWidget_VLE, 3, 0, 1, 3)
+        self.gridLayout_2.addWidget(self.tabWidget_VLE, 3, 0, 1, 4)
+        self.comboBox_EOS = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
+        self.comboBox_EOS.setObjectName("comboBox_EOS")
+        self.gridLayout_2.addWidget(self.comboBox_EOS, 1, 1, 1, 1)
+        self.label_2 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.label_2.setObjectName("label_2")
+        self.gridLayout_2.addWidget(self.label_2, 1, 0, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.gridLayout_2.addItem(spacerItem1, 1, 3, 1, 1)
+        self.btn_EditBIParameters = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.btn_EditBIParameters.setObjectName("btn_EditBIParameters")
+        self.gridLayout_2.addWidget(self.btn_EditBIParameters, 1, 2, 1, 1)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
 
@@ -201,9 +204,6 @@ class Ui_FormVLE(object):
             QtWidgets.QApplication.translate(
                 "FormVLE", "Vapor-liquid equilibrium", None, -1
             )
-        )
-        self.label_2.setText(
-            QtWidgets.QApplication.translate("FormVLE", "Equation of state", None, -1)
         )
         self.groupBox.setTitle(
             QtWidgets.QApplication.translate("FormVLE", "Results", None, -1)
@@ -266,6 +266,14 @@ class Ui_FormVLE(object):
             QtWidgets.QApplication.translate(
                 "FormVLE", "Binary mixture diagrams", None, -1
             ),
+        )
+        self.label_2.setText(
+            QtWidgets.QApplication.translate("FormVLE", "Equation of state", None, -1)
+        )
+        self.btn_EditBIParameters.setText(
+            QtWidgets.QApplication.translate(
+                "FormVLE", "Edit binary interaction parameters", None, -1
+            )
         )
 
 
