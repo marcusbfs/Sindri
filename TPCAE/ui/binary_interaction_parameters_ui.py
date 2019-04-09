@@ -3,12 +3,12 @@
 # Form implementation generated from reading ui file 'designer/binary_interaction_parameters_ui.ui',
 # licensing of 'designer/binary_interaction_parameters_ui.ui' applies.
 #
-# Created: Sat Mar 23 14:45:33 2019
+# Created: Tue Apr  9 13:19:41 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
 
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 
 
 class Ui_FormBinaryParameters(object):
@@ -26,6 +26,13 @@ class Ui_FormBinaryParameters(object):
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
+        self.btn_ok = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.btn_ok.setObjectName("btn_ok")
+        self.gridLayout_2.addWidget(self.btn_ok, 2, 1, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(
+            352, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.gridLayout_2.addItem(spacerItem, 2, 0, 1, 1)
         self.tableWidget_BinaryParameters = QtWidgets.QTableWidget(
             self.scrollAreaWidgetContents
         )
@@ -46,16 +53,16 @@ class Ui_FormBinaryParameters(object):
         self.tableWidget_BinaryParameters.setColumnCount(0)
         self.tableWidget_BinaryParameters.setRowCount(0)
         self.gridLayout_2.addWidget(self.tableWidget_BinaryParameters, 0, 0, 1, 3)
-        spacerItem = QtWidgets.QSpacerItem(
-            352, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
-        )
-        self.gridLayout_2.addItem(spacerItem, 1, 0, 1, 1)
-        self.btn_ok = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.btn_ok.setObjectName("btn_ok")
-        self.gridLayout_2.addWidget(self.btn_ok, 1, 1, 1, 1)
         self.btn_cancel = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.btn_cancel.setObjectName("btn_cancel")
-        self.gridLayout_2.addWidget(self.btn_cancel, 1, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.btn_cancel, 2, 2, 1, 1)
+        self.btn_setZero = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.btn_setZero.setObjectName("btn_setZero")
+        self.gridLayout_2.addWidget(self.btn_setZero, 1, 2, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.gridLayout_2.addItem(spacerItem1, 1, 0, 1, 2)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
 
@@ -73,6 +80,11 @@ class Ui_FormBinaryParameters(object):
         )
         self.btn_cancel.setText(
             QtWidgets.QApplication.translate("FormBinaryParameters", "Cancel", None, -1)
+        )
+        self.btn_setZero.setText(
+            QtWidgets.QApplication.translate(
+                "FormBinaryParameters", "Set all values to zero", None, -1
+            )
         )
 
 

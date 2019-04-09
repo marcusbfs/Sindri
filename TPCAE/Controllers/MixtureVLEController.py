@@ -91,9 +91,10 @@ class MixtureVLEController:
             self.vleView.comboBox_diagramType.addItems(diagram_types)
 
         self._connectPlotCheckBox()
+        self.model.setEOS(
+            self.mixCalcController.mixtureCalcView.listWidget_eos_options.currentItem().text()
+        )
         self.vleView.comboBox_EOS.setCurrentText(self.model.getEOS())
-        self.model.setEOS(self.vleView.comboBox_EOS.currentText())
-
         self.vleView.show()
 
     def calculateClicked(self):

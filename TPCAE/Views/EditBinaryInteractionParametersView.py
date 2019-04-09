@@ -17,9 +17,13 @@ class EditBinaryInteractionParametersView(QtWidgets.QWidget, Ui_FormBinaryParame
 
         self.btn_ok.clicked.connect(self.clicked_ok)
         self.btn_cancel.clicked.connect(self.clicked_cancel)
+        self.btn_setZero.clicked.connect(self.clicked_setZero)
 
     def clicked_ok(self):
         self.controller.okClicked()
 
     def clicked_cancel(self):
         self.controller.cancelClicked()
+
+    def clicked_setZero(self):
+        self.controller.setZeroClicked()

@@ -3,13 +3,12 @@ from PySide2.QtCore import Slot
 
 import _devinfo
 import db
-from Controllers.PureSubstanceController import PureSubstanceController
 from Controllers.MixtureCalculationsController import MixtureCalculationsController
-from Models.PureSubstanceModel import PureSubstanceModel
+from Controllers.PureSubstanceController import PureSubstanceController
 from Models.MixtureModel import MixtureModel
+from Models.PureSubstanceModel import PureSubstanceModel
 from aboutWindow import Window_About
 from databaseWindow import databaseWindow
-from mixtureCalculationsWindow import Window_MixtureCalculations
 from ui.mainwindow_ui import Ui_MainWindow
 
 
@@ -35,8 +34,6 @@ class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     @Slot()
     def open_MixtureCalculations(self):
-        # self.MixCalcWin = Window_MixtureCalculations()
-        # self.MixCalcWin.show()
         self.mixtureCalculationsController = MixtureCalculationsController(
             MixtureModel()
         )

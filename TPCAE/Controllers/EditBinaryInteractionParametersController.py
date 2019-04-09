@@ -66,3 +66,10 @@ class EditBinaryInteractionParametersController:
 
     def getK(self):
         return self.k
+
+    def setZeroClicked(self):
+        for i in range(self.n):
+            for j in range(self.n):
+                self.binInteractionView.tableWidget_BinaryParameters.setItem(
+                    i, j, QtWidgets.QTableWidgetItem(str("0.0"))
+                )
