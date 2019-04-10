@@ -23,7 +23,7 @@ mkdir "%app_name%\texts"
 
 xcopy %db_folder% %app_name%\db /E
 xcopy %texts_folder% %app_name%\texts /E
-xcopy %innofile% %app_name% /E
+xcopy %innofile% %work_folder% /E
 
 REM if exist %s7z% (call %s7z% a TPCAE -t"zip" TPCAE & call %s7z% a TPCAE.exe TPCAE -sfx)
 
