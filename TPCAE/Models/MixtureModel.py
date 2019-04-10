@@ -87,6 +87,7 @@ class MixtureModel:
 
     def setBinaryInteractionsParameters(self, k: List[List[float]]):
         self.k = k
+        self.setupSystem()
 
     def setupSystem(self):
         self.system = createEOSMix(self.substances_in_the_system, self.eosname, self.k)

@@ -9,6 +9,7 @@ set "texts_folder=%code_folder%\texts"
 set venv=deploy_venv
 set venv_scripts=%venv%\Scripts
 set logfile=deploy_time.txt
+set innofile="D:\Google Drive\TCC\TCC_software\TPCAEinno.iss"
 set s7z="C:\Program Files\7-Zip\7z.exe"
 
 cd %app_name%
@@ -22,6 +23,7 @@ mkdir "%app_name%\texts"
 
 xcopy %db_folder% %app_name%\db /E
 xcopy %texts_folder% %app_name%\texts /E
+xcopy %innofile% %app_name% /E
 
 REM if exist %s7z% (call %s7z% a TPCAE -t"zip" TPCAE & call %s7z% a TPCAE.exe TPCAE -sfx)
 
