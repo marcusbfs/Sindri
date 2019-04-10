@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/binary_interaction_parameters_ui.ui',
 # licensing of 'designer/binary_interaction_parameters_ui.ui' applies.
 #
-# Created: Wed Apr 10 08:26:13 2019
+# Created: Wed Apr 10 10:49:34 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,13 +26,18 @@ class Ui_FormBinaryParameters(object):
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        spacerItem = QtWidgets.QSpacerItem(
-            352, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
-        )
-        self.gridLayout_2.addItem(spacerItem, 3, 0, 1, 1)
         self.btn_cancel = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.btn_cancel.setObjectName("btn_cancel")
-        self.gridLayout_2.addWidget(self.btn_cancel, 3, 3, 1, 1)
+        self.gridLayout_2.addWidget(self.btn_cancel, 3, 4, 1, 1)
+        self.btn_setZero = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.btn_setZero.setObjectName("btn_setZero")
+        self.gridLayout_2.addWidget(self.btn_setZero, 1, 4, 1, 1)
+        self.btn_ok = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.btn_ok.setObjectName("btn_ok")
+        self.gridLayout_2.addWidget(self.btn_ok, 3, 3, 1, 1)
+        self.btn_setSymmetric = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.btn_setSymmetric.setObjectName("btn_setSymmetric")
+        self.gridLayout_2.addWidget(self.btn_setSymmetric, 1, 3, 1, 1)
         self.tableWidget_BinaryParameters = QtWidgets.QTableWidget(
             self.scrollAreaWidgetContents
         )
@@ -52,20 +57,15 @@ class Ui_FormBinaryParameters(object):
         self.tableWidget_BinaryParameters.setObjectName("tableWidget_BinaryParameters")
         self.tableWidget_BinaryParameters.setColumnCount(0)
         self.tableWidget_BinaryParameters.setRowCount(0)
-        self.gridLayout_2.addWidget(self.tableWidget_BinaryParameters, 0, 0, 1, 4)
-        self.btn_setZero = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.btn_setZero.setObjectName("btn_setZero")
-        self.gridLayout_2.addWidget(self.btn_setZero, 1, 3, 1, 1)
+        self.gridLayout_2.addWidget(self.tableWidget_BinaryParameters, 0, 0, 1, 5)
+        spacerItem = QtWidgets.QSpacerItem(
+            352, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.gridLayout_2.addItem(spacerItem, 3, 0, 1, 3)
         spacerItem1 = QtWidgets.QSpacerItem(
             40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
-        self.gridLayout_2.addItem(spacerItem1, 1, 0, 1, 2)
-        self.btn_setSymmetric = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.btn_setSymmetric.setObjectName("btn_setSymmetric")
-        self.gridLayout_2.addWidget(self.btn_setSymmetric, 1, 2, 1, 1)
-        self.btn_ok = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.btn_ok.setObjectName("btn_ok")
-        self.gridLayout_2.addWidget(self.btn_ok, 3, 2, 1, 1)
+        self.gridLayout_2.addItem(spacerItem1, 1, 0, 1, 3)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
 
@@ -86,13 +86,13 @@ class Ui_FormBinaryParameters(object):
                 "FormBinaryParameters", "Set all values to zero", None, -1
             )
         )
+        self.btn_ok.setText(
+            QtWidgets.QApplication.translate("FormBinaryParameters", "Ok", None, -1)
+        )
         self.btn_setSymmetric.setText(
             QtWidgets.QApplication.translate(
                 "FormBinaryParameters", "Set symmetric", None, -1
             )
-        )
-        self.btn_ok.setText(
-            QtWidgets.QApplication.translate("FormBinaryParameters", "Ok", None, -1)
         )
 
 

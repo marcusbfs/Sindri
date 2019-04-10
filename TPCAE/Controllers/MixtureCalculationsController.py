@@ -123,18 +123,20 @@ class MixtureCalculationsController:
             procPunit = self.mixtureCalcView.comboBox_procPunit.currentText()
             refTunit = self.mixtureCalcView.comboBox_refTunit.currentText()
             refPunit = self.mixtureCalcView.comboBox_refPunit.currentText()
-            self.T = conv_unit(
+            T = conv_unit(
                 float(self.mixtureCalcView.le_procT.text()), procTunit, "K"
             )  # convert to Kelvin
-            self.P = conv_unit(
+            P = conv_unit(
                 float(self.mixtureCalcView.le_procP.text()), procPunit, "Pa"
             )  # convert to pascal
-            self.Tref = conv_unit(
+            Tref = conv_unit(
                 float(self.mixtureCalcView.le_refT.text()), refTunit, "K"
             )  # convert to Kelvin
-            self.Pref = conv_unit(
+            Pref = conv_unit(
                 float(self.mixtureCalcView.le_refP.text()), refPunit, "Pa"
             )  # convert to pascal
+            self.model.setProc(P, T)
+            self.model.setRef(Pref, Tref)
         except:
             print("error process variables")
             msg = QtWidgets.QMessageBox.about(

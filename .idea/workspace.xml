@@ -6,7 +6,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change beforePath="$PROJECT_DIR$/TPCAE/ESTIMATION_INTERACTION.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/ESTIMATION_INTERACTION.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TPCAE/Models/FitExpDataToBinaryParameterModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/Controllers/EditBinaryInteractionParametersController.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/Controllers/EditBinaryInteractionParametersController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/Controllers/MixtureCalculationsController.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/Controllers/MixtureCalculationsController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/Controllers/MixtureVLEController.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/Controllers/MixtureVLEController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/ESTIMATION_INTERACTION.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/Views/EditBinaryInteractionParametersView.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/Views/EditBinaryInteractionParametersView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/Views/MixtureCalculationsView.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/Views/MixtureCalculationsView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/Views/MixtureVLEView.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/Views/MixtureVLEView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/editBinaryInteractionsParametersWin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/mixtureCalculationsWindow.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/ui/binary_interaction_parameters_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/ui/binary_interaction_parameters_ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPCAE/ui/vle_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/TPCAE/ui/vle_ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/designer/binary_interaction_parameters_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/binary_interaction_parameters_ui.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/designer/vle_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/vle_ui.ui" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,23 +30,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TPCAE/ESTIMATION_INTERACTION.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/Views/EditBinaryInteractionParametersView.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="188" column="21" selection-start-line="188" selection-start-column="21" selection-end-line="188" selection-end-column="21" />
+            <state relative-caret-position="-142">
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
               <folding>
-                <element signature="e#0#35#0" expanded="true" />
+                <element signature="e#0#18#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TPCAE/EOSMixture.py">
+        <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/MixtureVLEController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+            <state relative-caret-position="167">
+              <caret line="99" column="8" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/MixtureCalculationsController.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="135" column="21" selection-start-line="135" selection-start-column="21" selection-end-line="135" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/PureSubstanceController.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="323" selection-start-line="323" selection-end-line="323" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -73,7 +114,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/TPCAE/EOSPureSubstanceInterface.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/AdachiEtAl1985.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/StryjekAndVera1986.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/Twu1995.py" />
@@ -114,16 +154,17 @@
         <option value="$PROJECT_DIR$/TPCAE/Views/PureSubstanceView.py" />
         <option value="$PROJECT_DIR$/TPCAE/Controllers/editBinaryInteractionParameterController.py" />
         <option value="$PROJECT_DIR$/TPCAE/Controllers/EditBinaryInteractionParameterController.py" />
-        <option value="$PROJECT_DIR$/TPCAE/Views/MixtureCalculationsView.py" />
-        <option value="$PROJECT_DIR$/TPCAE/Controllers/MixtureCalculationsController.py" />
-        <option value="$PROJECT_DIR$/TPCAE/Views/MixtureVLEView.py" />
-        <option value="$PROJECT_DIR$/TPCAE/Controllers/MixtureVLEController.py" />
         <option value="$PROJECT_DIR$/TPCAE/mainwindow.py" />
         <option value="$PROJECT_DIR$/TPCAE/Models/MixtureModel.py" />
-        <option value="$PROJECT_DIR$/TPCAE/Views/EditBinaryInteractionParametersView.py" />
-        <option value="$PROJECT_DIR$/TPCAE/Controllers/EditBinaryInteractionParametersController.py" />
         <option value="$PROJECT_DIR$/TPCAE/EOSMixture.py" />
         <option value="$PROJECT_DIR$/TPCAE/ESTIMATION_INTERACTION.py" />
+        <option value="$PROJECT_DIR$/TPCAE/Models/FitExpDataToBinaryParameterModel.py" />
+        <option value="$PROJECT_DIR$/TPCAE/Views/EditBinaryInteractionParametersView.py" />
+        <option value="$PROJECT_DIR$/TPCAE/Views/MixtureVLEView.py" />
+        <option value="$PROJECT_DIR$/TPCAE/Controllers/MixtureVLEController.py" />
+        <option value="$PROJECT_DIR$/TPCAE/Controllers/EditBinaryInteractionParametersController.py" />
+        <option value="$PROJECT_DIR$/TPCAE/Views/MixtureCalculationsView.py" />
+        <option value="$PROJECT_DIR$/TPCAE/Controllers/MixtureCalculationsController.py" />
       </list>
     </option>
   </component>
@@ -162,6 +203,12 @@
               <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
               <item name="TPCAE" type="462c0819:PsiDirectoryNode" />
               <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
+              <item name="TPCAE" type="462c0819:PsiDirectoryNode" />
+              <item name="Models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
@@ -215,7 +262,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.ESTIMATION_INTERACTION">
+  <component name="RunManager" selected="Python.main">
     <configuration name="ESTIMATION_INTERACTION" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="software" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -340,8 +387,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.ESTIMATION_INTERACTION" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.ESTIMATION_INTERACTION" />
         <item itemvalue="Python.MixtureModel" />
         <item itemvalue="Python.PureSubstanceController" />
         <item itemvalue="Python.PureSubstanceController" />
@@ -432,16 +479,16 @@
       <window_info id="Structure" order="1" sideWeight="0.1953125" side_tool="true" weight="0.17755532" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49367756" weight="0.3287234" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.56473213" visible="true" weight="0.36464968" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49330357" weight="0.3280255" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5610119" weight="0.36464968" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49578503" weight="0.32553193" />
-      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49367756" weight="0.3287234" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.44791666" weight="0.30254778" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.43526787" side_tool="true" visible="true" weight="0.36464968" />
-      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.56324404" weight="0.43312103" />
-      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5282738" weight="0.39808917" />
+      <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49479166" weight="0.32484075" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49330357" weight="0.3280255" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.44642857" visible="true" weight="0.30254778" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5535714" side_tool="true" visible="true" weight="0.30254778" />
+      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.5625" weight="0.43312103" />
+      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5245536" weight="0.39808917" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -481,63 +528,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TPCAE/db_editSubstanceProperties.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3570">
-          <caret line="99" column="26" lean-forward="true" selection-start-line="99" selection-start-column="26" selection-end-line="99" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/db_addSubstanceProperties.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="59" column="7" lean-forward="true" selection-start-line="59" selection-start-column="7" selection-end-line="59" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/DatabaseInterface/DatabaseInterface.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/databaseWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1055">
-          <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/CubicEquationsOfState/PengAndRobinson1976.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="43" column="14" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/CubicEquationsOfState/TsaiAndChen1998.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2380">
-          <caret line="151" selection-start-line="151" selection-end-line="151" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/CubicEquationsOfState/AhlersGmehling2001.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="358">
@@ -671,33 +661,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/PureSubstanceController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/editBinaryInteractionsParametersWin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/Views/PureSubstanceView.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -774,25 +739,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/Views/MixtureCalculationsView.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="167" selection-start-line="167" selection-end-line="167" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/MixtureCalculationsController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-102">
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/VLEWindow.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -810,26 +756,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/MixtureVLEController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="88" column="44" selection-start-line="88" selection-start-column="44" selection-end-line="88" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/Views/MixtureVLEView.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="37" column="37" lean-forward="true" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TPCAE/mainwindow.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -844,9 +770,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret line="490" column="17" selection-start-line="490" selection-start-column="17" selection-end-line="490" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -857,16 +780,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/Models/MixtureModel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="89" column="25" selection-start-line="89" selection-start-column="25" selection-end-line="89" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/Desktop/workspace/venv_TPCAE/Lib/site-packages/scipy/optimize/optimize.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="333">
@@ -874,39 +787,153 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/Views/EditBinaryInteractionParametersView.py">
+    <entry file="file://$PROJECT_DIR$/TPCAE/Models/MixtureModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="-1581">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/EditBinaryInteractionParametersController.py">
+    <entry file="file://D:/Desktop/workspace/venv_TPCAE/Lib/site-packages/numpy/lib/type_check.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1326">
-          <caret line="78" column="30" selection-start-line="78" selection-start-column="30" selection-end-line="78" selection-end-column="30" />
+        <state relative-caret-position="202">
+          <caret line="319" selection-start-line="319" selection-end-line="319" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Desktop/workspace/venv_TPCAE/Lib/site-packages/numpy/core/shape_base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="73" selection-start-line="73" selection-end-line="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Desktop/workspace/venv_TPCAE/Lib/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="2163" selection-start-line="2163" selection-end-line="2163" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Desktop/workspace/venv_TPCAE/Lib/site-packages/numpy/core/numeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="590" selection-start-line="590" selection-end-line="590" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Desktop/workspace/venv_TPCAE/Lib/site-packages/scipy/optimize/_lsq/least_squares.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="802" selection-start-line="802" selection-end-line="802" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/EOSMixture.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="726" column="13" selection-start-line="726" selection-start-column="13" selection-end-line="726" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/ESTIMATION_INTERACTION.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="130" selection-start-line="130" selection-end-line="130" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/Models/FitExpDataToBinaryParameterModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="77" column="42" lean-forward="true" selection-start-line="77" selection-start-column="42" selection-end-line="77" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/VLEBinaryDiagrams.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="83" column="58" selection-start-line="83" selection-start-column="58" selection-end-line="83" selection-end-column="58" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/Views/MixtureVLEView.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="62">
+          <caret line="74" column="37" selection-start-line="74" selection-start-column="37" selection-end-line="74" selection-end-column="37" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/EOSMixture.py">
+    <entry file="file://$PROJECT_DIR$/TPCAE/Views/MixtureCalculationsView.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+        <state>
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TPCAE/ESTIMATION_INTERACTION.py">
+    <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/EditBinaryInteractionParametersController.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="188" column="21" selection-start-line="188" selection-start-column="21" selection-end-line="188" selection-end-column="21" />
+        <state relative-caret-position="16">
+          <caret line="71" column="18" selection-start-line="71" selection-start-column="18" selection-end-line="71" selection-end-column="18" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/Views/EditBinaryInteractionParametersView.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-142">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/MixtureVLEController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="99" column="8" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/PureSubstanceController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="323" selection-start-line="323" selection-end-line="323" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TPCAE/Controllers/MixtureCalculationsController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="135" column="21" selection-start-line="135" selection-start-column="21" selection-end-line="135" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>

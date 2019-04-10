@@ -19,6 +19,7 @@ class EditBinaryInteractionParametersView(QtWidgets.QWidget, Ui_FormBinaryParame
         self.btn_cancel.clicked.connect(self.clicked_cancel)
         self.btn_setZero.clicked.connect(self.clicked_setZero)
         self.btn_setSymmetric.clicked.connect(self.clicked_setSymmetric)
+        # self.btn_fitToExp.clicked.connect(self.clicked_fitToExp)
 
     def clicked_ok(self):
         self.controller.okClicked()
@@ -31,3 +32,6 @@ class EditBinaryInteractionParametersView(QtWidgets.QWidget, Ui_FormBinaryParame
 
     def clicked_setSymmetric(self):
         self.controller.setSymmetricClicked()
+
+    # def clicked_fitToExp(self):
+    #     self.controller.fitToExpClicked()

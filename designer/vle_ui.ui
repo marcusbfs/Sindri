@@ -179,6 +179,18 @@
            <string>Binary mixture diagrams</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="1">
+            <widget class="QGroupBox" name="groupBox_3">
+             <property name="title">
+              <string>Results</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_7">
+              <item row="0" column="0">
+               <widget class="QTableWidget" name="tableWidget_DataResult"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QFrame" name="frame_2">
              <property name="frameShape">
@@ -188,33 +200,24 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
-              <item row="0" column="1" colspan="2">
-               <widget class="QComboBox" name="comboBox_diagramType"/>
-              </item>
-              <item row="1" column="1" colspan="2">
-               <widget class="QLineEdit" name="le_varValue"/>
-              </item>
-              <item row="8" column="2" colspan="2">
-               <widget class="QPushButton" name="btn_saveToTxtBinaryMixData">
+              <item row="7" column="1">
+               <widget class="QCheckBox" name="checkBox_ploty">
                 <property name="text">
-                 <string>Save to txt</string>
+                 <string>plot y</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="2" colspan="2">
-               <widget class="QLineEdit" name="le_expDataFileName"/>
+              <item row="1" column="1" colspan="2">
+               <widget class="QLineEdit" name="le_varValue">
+                <property name="readOnly">
+                 <bool>false</bool>
+                </property>
+               </widget>
               </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label">
                 <property name="text">
                  <string>Type:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_var">
-                <property name="text">
-                 <string>Var</string>
                 </property>
                </widget>
               </item>
@@ -225,38 +228,45 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="3">
-               <widget class="QComboBox" name="comboBox_varUnit"/>
-              </item>
-              <item row="8" column="0" colspan="2">
+              <item row="10" column="0" colspan="2">
                <widget class="QPushButton" name="btn_plot">
                 <property name="text">
                  <string>Plot</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="0" colspan="3">
+              <item row="6" column="0" colspan="3">
                <widget class="QCheckBox" name="checkBox_plotExpData">
                 <property name="text">
                  <string>plot experimental data</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="0">
+              <item row="0" column="1" colspan="2">
+               <widget class="QComboBox" name="comboBox_diagramType"/>
+              </item>
+              <item row="2" column="2" colspan="2">
+               <widget class="QLineEdit" name="le_expDataFileName">
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
                <widget class="QCheckBox" name="checkBox_plotx">
                 <property name="text">
                  <string>plot x</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="1">
-               <widget class="QCheckBox" name="checkBox_ploty">
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_var">
                 <property name="text">
-                 <string>plot y</string>
+                 <string>Var</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="2">
+              <item row="7" column="2">
                <widget class="QCheckBox" name="checkBox_plotxy">
                 <property name="text">
                  <string>plot xy</string>
@@ -266,17 +276,22 @@
                 </property>
                </widget>
               </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QGroupBox" name="groupBox_3">
-             <property name="title">
-              <string>Results</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_7">
-              <item row="0" column="0">
-               <widget class="QTableWidget" name="tableWidget_DataResult"/>
+              <item row="10" column="2" colspan="2">
+               <widget class="QPushButton" name="btn_saveToTxtBinaryMixData">
+                <property name="text">
+                 <string>Save to txt</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QComboBox" name="comboBox_varUnit"/>
+              </item>
+              <item row="6" column="3">
+               <widget class="QPushButton" name="btn_fitKij">
+                <property name="text">
+                 <string>Fit kij</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>

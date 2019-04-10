@@ -1,20 +1,12 @@
-import numpy as np
 from PySide2 import QtCore, QtWidgets
 
 import reports
 import units
-import utils
 from DatabaseInterface.DatabaseTableWidgetView import DatabaseTableWidgetView
-from Factories.EOSMixFactory import createEOSMix, getEOSMixOptions
-from Properties import VaporPressure
-from VLEWindow import Window_VLE
-from compounds import MixtureProp, SubstanceProp
-from editBinaryInteractionsParametersWin import Window_BinaryInteractionParameters
-from ui.mixture_calculations_ui import Ui_MixtureCalculationWindow
+from Factories.EOSMixFactory import getEOSMixOptions
 from Models.MixtureModel import MixtureModel
-from Controllers.UnitsOptionsController import UnitsOptionsController
-from units import conv_unit
-from unitsOptionsWindow import Window_UnitsOptions
+from Properties import VaporPressure
+from ui.mixture_calculations_ui import Ui_MixtureCalculationWindow
 
 
 class MixtureCalculationsView(QtWidgets.QWidget, Ui_MixtureCalculationWindow):

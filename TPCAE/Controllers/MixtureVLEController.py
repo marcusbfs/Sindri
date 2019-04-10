@@ -511,3 +511,61 @@ class MixtureVLEController:
 
     def setEOSChange(self):
         self.model.setEOS(self.vleView.comboBox_EOS.currentText())
+
+    def fitKijClicked(self):
+
+        expfilename = self.vleView.le_expDataFileName.text()
+
+        if expfilename == "":
+            QtWidgets.QMessageBox.about(self.vleView, "Error", "No experimental data")
+            return
+
+        import shlex
+
+        with open(expfilename, "r") as file:
+            try:
+                content = [line.rstrip("\n") for line in file if line != "\n"]
+                n_exp = len(content) - 1
+                var_exp = np.empty(n_exp, dtype=np.float64)
+                x_exp = np.empty(n_exp, dtype=np.float64)
+                y_exp = np.empty(n_exp, dtype=np.float64)
+                var_exp_unit = shlex.split(content[0])[0]
+
+                if var_exp_unit in pressure_options:
+                    diagtype = "isothermal"
+                    varunit = "Pa"
+                elif var_exp_unit in temperature_options:
+                    diagtype = "isobaric"
+                    varunit = "K"
+                else:
+                    raise ValueError("Diagram type neither 'isothermal' or 'isobaric'")
+
+                for i in range(n_exp):
+                    ret3 = shlex.split(content[1 + i])
+                    var_exp[i] = conv_unit(float(ret3[0]), var_exp_unit, varunit)
+                    x_exp[i] = float(ret3[1])
+                    y_exp[i] = float(ret3[2])
+
+            except Exception as e:
+                raise ValueError("Error in experimental data\n" + str(e))
+
+        isovar = conv_unit(
+            float(self.vleView.le_varValue.text()),
+            self.vleView.comboBox_varUnit.currentText(),
+            "K",
+        )
+
+        from Models.FitExpDataToBinaryParameterModel import (
+            FitExpDataToBinaryParameterModel,
+        )
+
+        fitExpModel = FitExpDataToBinaryParameterModel(
+            self.model, isovar, diagtype, x_exp, y_exp, var_exp
+        )
+        kval = fitExpModel.fitBinaryInteractionParameter()
+
+        self.editBinIntController.createBinInteractionView()
+        self.editBinIntController.binInteractionView.tableWidget_BinaryParameters.setItem(
+            0, 1, QtWidgets.QTableWidgetItem(str(kval))
+        )
+        self.editBinIntController.setSymmetricClicked()

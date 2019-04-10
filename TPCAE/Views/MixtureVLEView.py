@@ -35,6 +35,7 @@ class MixtureVLEView(QtWidgets.QWidget, Ui_FormVLE):
         self.comboBox_diagramType.currentTextChanged.connect(self._setDiagType)
         self.btn_openExpData.clicked.connect(self._openExpDataFile)
         self.btn_plot.clicked.connect(self._plot)
+        self.btn_fitKij.clicked.connect(self.fitKijClicked)
         self.btn_saveToTxtBinaryMixData.clicked.connect(
             self._saveToTxtBinaryMixtureData
         )
@@ -79,3 +80,6 @@ class MixtureVLEView(QtWidgets.QWidget, Ui_FormVLE):
 
     def _setEOSChange(self):
         self.controller.setEOSChange()
+
+    def fitKijClicked(self):
+        self.controller.fitKijClicked()
