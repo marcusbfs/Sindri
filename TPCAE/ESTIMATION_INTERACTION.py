@@ -1,7 +1,7 @@
 from compounds import SubstanceProp
 from Models.MixtureModel import MixtureModel
 import numpy as np
-from scipy.optimize import brute
+from scipy.optimize import brute, least_squares
 
 
 # def setK(model: MixtureModel, v: float):
@@ -67,6 +67,7 @@ ethane = SubstanceProp("ethane", "C2H6")
 hydrogen_sulfide = SubstanceProp("hydrogen sulfide", "H2S")
 
 eosname = "Peng and Robinson (1976)"
+# eosname = "Tsai and Chen (1998)"
 model = MixtureModel()
 model.setEOS(eosname)
 model.addSubstanceToSystem(ethane)
@@ -149,7 +150,39 @@ def gety_exp():
 t = 283.71
 
 
+# def getObjectiveFunction(k):
+#     # this worked for brute and least squares
+#     setK(k)
+#
+#     p_exp = getP_exp()
+#     x_exp = getx_exp()
+#     y_exp = gety_exp()
+#
+#     p_exp = np.atleast_1d(p_exp)
+#
+#     x1_exp = np.atleast_1d(x_exp)
+#     x2_exp = 1.0 - x1_exp
+#
+#     y1_exp = np.atleast_1d(y_exp)
+#     y2_exp = 1.0 - y1_exp
+#
+#     n_exp = len(x_exp)
+#
+#     s = 0.0
+#     for i in range(n_exp):
+#         y, pb, pv, pl, k, it = model.system.getBubblePointPressure(
+#             [x1_exp[i], x2_exp[i]], t
+#         )
+#         s += ((pb - p_exp[i]) / p_exp[i]) ** 2
+#         x, pd, pv, pl, k, it = model.system.getDewPointPressure(
+#             [y1_exp[i], y2_exp[i]], t
+#         )
+#         s += ((pd - p_exp[i]) / p_exp[i]) ** 2
+#
+#     return s
+
 def getObjectiveFunction(k):
+    # paper: https://www.sciencedirect.com/science/article/pii/009813549500001I
     setK(k)
 
     p_exp = getP_exp()
@@ -168,25 +201,63 @@ def getObjectiveFunction(k):
 
     s = 0.0
     for i in range(n_exp):
-        y, pb, pv, pl, k, it = model.system.getBubblePointPressure(
-            [x1_exp[i], x2_exp[i]], t
-        )
-        s += ((pb - p_exp[i]) / p_exp[i]) ** 2
-        x, pd, pv, pl, k, it = model.system.getDewPointPressure(
-            [y1_exp[i], y2_exp[i]], t
-        )
-        s += ((pd - p_exp[i]) / p_exp[i]) ** 2
+        zls = model.system.getZfromPT(p_exp[i],t, [x1_exp[i], x2_exp[i]])
+        zl = np.min(zls)
+        phi_liq_0 = model.system.getPhi_i(0,[x1_exp[i], x2_exp[i]],p_exp[i],t,zl)
+        phi_liq_1 = model.system.getPhi_i(1,[x1_exp[i], x2_exp[i]],p_exp[i],t,zl)
+
+        zvs = model.system.getZfromPT(p_exp[i],t, [y1_exp[i], y2_exp[i]])
+        zv = np.max(zvs)
+        phi_vap_0 = model.system.getPhi_i(0,[y1_exp[i], y2_exp[i]],p_exp[i],t,zv)
+        phi_vap_1 = model.system.getPhi_i(1,[y1_exp[i], y2_exp[i]],p_exp[i],t,zv)
+
+        k0_exp = y1_exp[i]/x1_exp[i]
+        k1_exp = y2_exp[i]/x2_exp[i]
+        k0_calc = phi_liq_0/phi_vap_0
+        k1_calc = phi_liq_1/phi_vap_1
+
+        s+= ((np.log(k0_exp) - np.log(k0_calc))/np.log(k0_exp))**2
+        s+= ((np.log(k1_exp) - np.log(k1_calc))/np.log(k1_exp))**2
 
     return s
-
 
 from time import time
 
 s1 = time()
-ans = brute(getObjectiveFunction, ((-0.2, 0.2),), Ns=10, full_output=True)
+# ans = brute(getObjectiveFunction, ((-0.1, 0.1),), Ns=10, full_output=True) # time: 19.74
+ans = least_squares(getObjectiveFunction, 0.0, method='lm') # time: 27.038
 s2 = time()
-print(ans[0], ans[1])
+# print(ans[0], ans[1])
+print(ans.x)
+print(getObjectiveFunction(ans.x[0]))
 print(s2 - s1)
+
+# k0 = 0.07
+# f0 = getObjectiveFunction( k0)
+#
+# k1 = 0.08
+# f1 = getObjectiveFunction( k1)
+#
+# k2, f2 = 0, 0
+#
+# tol = 1e-10
+# kmax = 10000
+#
+# k = 0
+# for k in range(kmax):
+#
+#     k2 = k1 - f1 * (k1 - k0) / (f1 - f0)
+#     f2 = getObjectiveFunction(k2)
+#
+#     if np.abs(f2) < tol:
+#         break
+#
+#     k0, f0 = k1, f1
+#     k1, f1 = k2, f2
+#
+# print("iterations : ", k)
+# print("f2: ", f2)
+# print("K: ", k2)
 
 # k0 = 0.07
 # f0 = getObjectiveFunction( k0, t, x1_exp, y1_exp, p_exp)
