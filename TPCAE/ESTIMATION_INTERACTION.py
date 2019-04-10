@@ -137,12 +137,18 @@ def setK(v: float):
 def getP_exp():
     return p_exp
 
+
 def getx_exp():
     return x1_exp
+
+
 def gety_exp():
     return y1_exp
 
+
 t = 283.71
+
+
 def getObjectiveFunction(k):
     setK(k)
 
@@ -160,25 +166,27 @@ def getObjectiveFunction(k):
 
     n_exp = len(x_exp)
 
-
-
     s = 0.0
     for i in range(n_exp):
-        y, pb, pv,pl,k, it = model.system.getBubblePointPressure([x1_exp[i], x2_exp[i]],t)
-        s += ((pb -p_exp[i] )/p_exp[i])**2
-        x, pd, pv,pl,k, it = model.system.getDewPointPressure([y1_exp[i], y2_exp[i]],t)
-        s += ((pd -p_exp[i] )/p_exp[i])**2
-
+        y, pb, pv, pl, k, it = model.system.getBubblePointPressure(
+            [x1_exp[i], x2_exp[i]], t
+        )
+        s += ((pb - p_exp[i]) / p_exp[i]) ** 2
+        x, pd, pv, pl, k, it = model.system.getDewPointPressure(
+            [y1_exp[i], y2_exp[i]], t
+        )
+        s += ((pd - p_exp[i]) / p_exp[i]) ** 2
 
     return s
 
 
 from time import time
+
 s1 = time()
-ans = brute(getObjectiveFunction, ((-.5,.5),), full_output=True)
+ans = brute(getObjectiveFunction, ((-0.2, 0.2),), Ns=10, full_output=True)
 s2 = time()
 print(ans[0], ans[1])
-print(s2 -s1)
+print(s2 - s1)
 
 # k0 = 0.07
 # f0 = getObjectiveFunction( k0, t, x1_exp, y1_exp, p_exp)
@@ -206,4 +214,3 @@ print(s2 -s1)
 # print("iterations : ", k)
 # print("f2: ", f2)
 # print("K: ", k2)
-

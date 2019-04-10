@@ -1,8 +1,9 @@
+from PySide2 import QtWidgets
+
+from Models.MixtureModel import MixtureModel
 from Views.EditBinaryInteractionParametersView import (
     EditBinaryInteractionParametersView,
 )
-from Models.MixtureModel import MixtureModel
-from PySide2 import QtWidgets
 
 
 class EditBinaryInteractionParametersController:
@@ -73,3 +74,10 @@ class EditBinaryInteractionParametersController:
                 self.binInteractionView.tableWidget_BinaryParameters.setItem(
                     i, j, QtWidgets.QTableWidgetItem(str("0.0"))
                 )
+
+    def setSymmetricClicked(self):
+        for i in range(self.n):
+            for j in range(i + 1, self.n):
+                item = self.binInteractionView.tableWidget_BinaryParameters.item(i, j)
+                item = QtWidgets.QTableWidgetItem(item)
+                self.binInteractionView.tableWidget_BinaryParameters.setItem(j, i, item)
