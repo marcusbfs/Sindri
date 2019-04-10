@@ -25,6 +25,16 @@ class FitExpDataToBinaryParameterModel:
         self.data_exp = np.atleast_1d(data_exp)
         self.initial_k = initial_k
 
+        if np.allclose(0, self.x_exp[0], 1e-5):
+            self.x_exp = self.x_exp[1:]
+            self.y_exp = self.y_exp[1:]
+            self.data_exp = self.data_exp[1:]
+
+        if np.allclose(1, self.x_exp[-1], 1e-5):
+            self.x_exp = self.x_exp[:-1]
+            self.y_exp = self.y_exp[:-1]
+            self.data_exp = self.data_exp[:-1]
+
         self.n_exp = len(self.x_exp)
 
     def fitBinaryInteractionParameter(self):

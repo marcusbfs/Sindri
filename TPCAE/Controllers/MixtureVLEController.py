@@ -549,10 +549,15 @@ class MixtureVLEController:
             except Exception as e:
                 raise ValueError("Error in experimental data\n" + str(e))
 
+        if diagtype == "isothermal":
+            conv_isovar_to = "K"
+        else:
+            conv_isovar_to = "Pa"
+
         isovar = conv_unit(
             float(self.vleView.le_varValue.text()),
             self.vleView.comboBox_varUnit.currentText(),
-            "K",
+            conv_isovar_to,
         )
 
         from Models.FitExpDataToBinaryParameterModel import (
