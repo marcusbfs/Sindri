@@ -5,23 +5,22 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{AE889C70-CE01-4AB1-8A95-C510F8415553}
+AppId={{D3900E38-79E3-4D50-A50F-8C35F71529F0}
 AppName=Sindri
 AppVersion=1.0.0
 ;AppVerName=Sindri 1.0.0
-AppPublisher=Marcus Bruno
-AppPublisherURL=www.github.com/mrcsbrn/Sindri
-AppSupportURL=www.github.com/mrcsbrn/Sindri
-AppUpdatesURL=www.github.com/mrcsbrn/Sindri
+AppPublisher=Marcus Bruno Fernandes Silva
+AppPublisherURL=https://github.com/mrcsbrn/Sindri
+AppSupportURL=https://github.com/mrcsbrn/Sindri
+AppUpdatesURL=https://github.com/mrcsbrn/Sindri
 DefaultDirName={pf}\Sindri
 DisableProgramGroupPage=yes
-OutputBaseFilename=Sindri_setup
+OutputBaseFilename=Sindri
 Compression=lzma
 SolidCompression=yes
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
@@ -30,7 +29,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: {app}; Permissions: users-full
 
 [Files]
-Source: ".\Sindri\Sindri.exe"; DestDir: "{app}"; Flags: ignoreversion;  Permissions: everyone-full
+Source: ".\Sindri\Sindri.exe"; DestDir: "{app}"; Flags: ignoreversion; Permissions: everyone-full
 Source: ".\Sindri\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Permissions: everyone-full
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

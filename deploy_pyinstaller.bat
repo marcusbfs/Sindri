@@ -11,11 +11,12 @@ set venv_scripts=%venv%\Scripts
 set logfile=deploy_time.txt
 set innofile="D:\Google Drive\TCC\TCC_software\Sindri_inno.iss"
 set s7z="C:\Program Files\7-Zip\7z.exe"
+set icon_file="D:\Google Drive\TCC\TCC_software\images\main_logo.ico"
 
 cd %app_name%
 mkdir %work_folder%
 
-call pyinstaller.exe -D -w --clean main.py -n %app_name% --distpath %work_folder% --workpath %work_folder%\build
+call pyinstaller.exe -D -w --clean main.py -n %app_name% --distpath %work_folder% --workpath %work_folder%\build --icon %icon_file%
 
 cd %work_folder%
 mkdir "%app_name%\db"
