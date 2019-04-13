@@ -6,16 +6,16 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{AE889C70-CE01-4AB1-8A95-C510F8415553}
-AppName=TPCAE
-AppVersion=1.0
-;AppVerName=TPCAE 1.0
+AppName=Sindri
+AppVersion=1.0.0
+;AppVerName=Sindri 1.0.0
 AppPublisher=Marcus Bruno
-AppPublisherURL=www.github.com/mrcsbrn
-AppSupportURL=www.github.com/mrcsbrn
-AppUpdatesURL=www.github.com/mrcsbrn
-DefaultDirName={pf}\TPCAE
+AppPublisherURL=www.github.com/mrcsbrn/Sindri
+AppSupportURL=www.github.com/mrcsbrn/Sindri
+AppUpdatesURL=www.github.com/mrcsbrn/Sindri
+DefaultDirName={pf}\Sindri
 DisableProgramGroupPage=yes
-OutputBaseFilename=TPCAE_setup
+OutputBaseFilename=Sindri_setup
 Compression=lzma
 SolidCompression=yes
 
@@ -30,14 +30,14 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: {app}; Permissions: users-full
 
 [Files]
-Source: ".\TPCAE\TPCAE.exe"; DestDir: "{app}"; Flags: ignoreversion;  Permissions: everyone-full
-Source: ".\TPCAE\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Permissions: everyone-full
+Source: ".\Sindri\Sindri.exe"; DestDir: "{app}"; Flags: ignoreversion;  Permissions: everyone-full
+Source: ".\Sindri\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Permissions: everyone-full
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{commonprograms}\TPCAE"; Filename: "{app}\TPCAE.exe"
-Name: "{commondesktop}\TPCAE"; Filename: "{app}\TPCAE.exe"; Tasks: desktopicon
+Name: "{commonprograms}\Sindri"; Filename: "{app}\Sindri.exe"
+Name: "{commondesktop}\Sindri"; Filename: "{app}\Sindri.exe"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\TPCAE.exe"; Description: "{cm:LaunchProgram,TPCAE}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\Sindri.exe"; Description: "{cm:LaunchProgram,Sindri}"; Flags: nowait postinstall skipifsilent
 

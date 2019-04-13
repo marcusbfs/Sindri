@@ -1,6 +1,0 @@
-__SOFTWARE_NAME__ = "TPCAE"
-__SOFTWARE_VERSION__ = "1.0.0"
-__AUTHOR__ = "Marcus Bruno Fernandes Silva"
-__GITHUB__ = "https://github.com/mrcsbrn"
-__EMAIL__ = "marcusbfs@gmail.com"
-__MIXTURESYSTEM_FILE_EXTENSION__ = ".tp"

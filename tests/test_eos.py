@@ -1,8 +1,8 @@
 import numpy as np
 
-from TPCAE.Properties import DeltaProp
-from TPCAE.compounds import MixtureProp, SubstanceProp
-from TPCAE.eos import EOS
+from Sindri.Properties import DeltaProp
+from Sindri.compounds import MixtureProp, SubstanceProp
+from Sindri.eos import EOS
 
 methane = SubstanceProp("methane", "CH4")
 water = SubstanceProp("water", "H2O")

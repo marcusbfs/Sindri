@@ -1,6 +1,6 @@
-from TPCAE.compounds import MixtureProp, SubstanceProp
-from TPCAE.diagrams import *
-from TPCAE.eos import EOS
+from Sindri.compounds import MixtureProp, SubstanceProp
+from Sindri.diagrams import *
+from Sindri.eos import EOS
 
 methane = SubstanceProp("methane", "CH4")
 water = SubstanceProp("water", "H2O")

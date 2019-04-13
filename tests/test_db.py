@@ -1,11 +1,11 @@
-import TPCAE.db
+import Sindri.db
 from tests.db_compound import methane
 
 
 def test_db_cursor():
     name = methane["Name"]
     formula = methane["Formula"]
-    TPCAE.db.init()  # verificar problemas com isso aqui
+    Sindri.db.init()  # verificar problemas com isso aqui
     query = (
         "SELECT * FROM database WHERE Formula LIKE '%"
         + formula
@@ -14,8 +14,8 @@ def test_db_cursor():
         + name
         + "%'"
     )
-    TPCAE.db.cursor.execute(query)
-    results = TPCAE.db.cursor.fetchall()
+    Sindri.db.cursor.execute(query)
+    results = Sindri.db.cursor.fetchall()
     res = results[0]
 
     dict_names = [

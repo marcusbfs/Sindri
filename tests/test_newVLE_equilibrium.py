@@ -1,8 +1,8 @@
 import numpy as np
 
-from TPCAE.VLE import *
-from TPCAE.compounds import SubstanceProp
-from TPCAE.Factories.EOSMixFactory import createEOSMix
+from Sindri.VLE import *
+from Sindri.compounds import SubstanceProp
+from Sindri.Factories.EOSMixFactory import createEOSMix
 
 methane = SubstanceProp("methane", "CH4")
 ethane = SubstanceProp("ethane", "C2H4")

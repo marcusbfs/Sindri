@@ -1,4 +1,4 @@
-from TPCAE.db_utils import get_compound_properties
+from Sindri.db_utils import get_compound_properties
 from tests.db_compound import methane
 
 name = methane["Name"]

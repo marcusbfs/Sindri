@@ -1,6 +1,6 @@
 import numpy as np
 
-from TPCAE.compounds import SubstanceProp, MixtureProp
+from Sindri.compounds import SubstanceProp, MixtureProp
 
 
 def test_creation_substance():

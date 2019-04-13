@@ -103,7 +103,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(
-            QtWidgets.QApplication.translate("MainWindow", "TPCAE", None, -1)
+            QtWidgets.QApplication.translate("MainWindow", "Sindri", None, -1)
         )
         self.btn_BancoDeDados.setText(
             QtWidgets.QApplication.translate("MainWindow", "Database", None, -1)

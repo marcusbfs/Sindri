@@ -1,4 +1,4 @@
-from TPCAE.utils import f2str
+from Sindri.utils import f2str
 
 
 def test_f2str_return_correct_string():

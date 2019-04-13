@@ -1,15 +1,15 @@
 set current_dir=%cd%
 set desktop_dir=D:\Desktop
 
-set app_name=TPCAE
+set app_name=Sindri
 set work_folder=%desktop_dir%\%app_name%_build
-set code_folder="D:\Google Drive\TCC\TCC_software\TPCAE"
+set code_folder="D:\Google Drive\TCC\TCC_software\Sindri"
 set "db_folder=%code_folder%\db"
 set "texts_folder=%code_folder%\texts"
 set venv=deploy_venv
 set venv_scripts=%venv%\Scripts
 set logfile=deploy_time.txt
-set innofile="D:\Google Drive\TCC\TCC_software\TPCAEinno.iss"
+set innofile="D:\Google Drive\TCC\TCC_software\Sindri_inno.iss"
 set s7z="C:\Program Files\7-Zip\7z.exe"
 
 cd %app_name%
@@ -25,6 +25,6 @@ xcopy %db_folder% %app_name%\db /E
 xcopy %texts_folder% %app_name%\texts /E
 xcopy %innofile% %work_folder% /E
 
-REM if exist %s7z% (call %s7z% a TPCAE -t"zip" TPCAE & call %s7z% a TPCAE.exe TPCAE -sfx)
+REM if exist %s7z% (call %s7z% a Sindri -t"zip" Sindri & call %s7z% a Sindri.exe Sindri -sfx)
 
 cd %current_dir%
