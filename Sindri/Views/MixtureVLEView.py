@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtGui
 
 from Factories.EOSMixFactory import createEOSMix, getEOSMixOptions
 from EOSMixture import calc_options
@@ -13,6 +13,12 @@ class MixtureVLEView(QtWidgets.QWidget, Ui_FormVLE):
     def __init__(self, controller, model: MixtureModel, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+
+        icon = QtGui.QIcon()
+        icon.addPixmap(
+            QtGui.QPixmap(":/images/main_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+        )
+        self.setWindowIcon(icon)
 
         self.model = model
         from Controllers.MixtureVLEController import MixtureVLEController

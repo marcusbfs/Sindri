@@ -1,4 +1,4 @@
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtWidgets, QtGui
 
 import units
 from ui.units_options_ui import Ui_Form_UnitsOptions
@@ -8,6 +8,13 @@ class UnitsOptionsView(QtWidgets.QWidget, Ui_Form_UnitsOptions):
     def __init__(self, controller, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+
+        icon = QtGui.QIcon()
+        icon.addPixmap(
+            QtGui.QPixmap(":/images/main_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+        )
+        self.setWindowIcon(icon)
+
         self.controller = controller
 
         self.units = self.controller.units

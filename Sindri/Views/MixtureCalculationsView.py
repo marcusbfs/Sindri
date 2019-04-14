@@ -1,4 +1,4 @@
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtWidgets, QtGui
 
 import reports
 import units
@@ -13,6 +13,12 @@ class MixtureCalculationsView(QtWidgets.QWidget, Ui_MixtureCalculationWindow):
     def __init__(self, controller, model: MixtureModel, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+
+        icon = QtGui.QIcon()
+        icon.addPixmap(
+            QtGui.QPixmap(":/images/main_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+        )
+        self.setWindowIcon(icon)
 
         self.model = model
 

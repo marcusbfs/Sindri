@@ -1,4 +1,4 @@
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtWidgets, QtGui
 
 from Models.PureSubstanceModel import PureSubstanceModel
 from ui.pure_substance_diagrams_ui import Ui_Form_PureSubstanceDiagrams
@@ -14,6 +14,18 @@ class PureSubstanceDiagramsView(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams
     ):
         super().__init__(parent)
         self.setupUi(self)
+
+        icon = QtGui.QIcon()
+        icon.addPixmap(
+            QtGui.QPixmap(":/images/main_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+        )
+        self.setWindowIcon(icon)
+
+        icon = QtGui.QIcon()
+        icon.addPixmap(
+            QtGui.QPixmap(":/images/main_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+        )
+        self.setWindowIcon(icon)
 
         self.model = model
         from Controllers.PureSubstanceController import PureSubstanceController

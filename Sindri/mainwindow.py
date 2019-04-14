@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtGui
 from PySide2.QtCore import Slot
 
 import _devinfo
@@ -10,6 +10,7 @@ from Models.PureSubstanceModel import PureSubstanceModel
 from aboutWindow import Window_About
 from databaseWindow import databaseWindow
 from ui.mainwindow_ui import Ui_MainWindow
+import resources.icons_rc
 
 
 class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -20,6 +21,13 @@ class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btn_PureSubstanceCalculations.clicked.connect(
             self.open_PureSubstanceCalculations
         )
+
+        icon = QtGui.QIcon()
+        icon.addPixmap(
+            QtGui.QPixmap(":/images/main_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+        )
+        self.setWindowIcon(icon)
+
         self.btn_MixtureCalculations.clicked.connect(self.open_MixtureCalculations)
         self.btn_about.clicked.connect(self.open_AboutWindow)
         self.setWindowTitle(_devinfo.__SOFTWARE_NAME__)

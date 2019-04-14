@@ -208,11 +208,3 @@ class MixtureModel:
     def notifyCalculationsObserver(self):
         for o in self.CalculationObservers:
             o.updateCalculations()
-
-
-if __name__ == "__main__":
-
-    m = MixtureModel()
-    m.addSubstanceToSystem(SubstanceProp("methane", "CH4"))
-    print(m.getEOS())
-    print(m.getNumberOfSubstancesInSystem())

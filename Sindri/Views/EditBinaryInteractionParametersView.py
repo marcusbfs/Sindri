@@ -1,5 +1,4 @@
-import numpy as np
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtWidgets, QtGui
 
 from ui.binary_interaction_parameters_ui import Ui_FormBinaryParameters
 
@@ -8,6 +7,12 @@ class EditBinaryInteractionParametersView(QtWidgets.QWidget, Ui_FormBinaryParame
     def __init__(self, controller, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+
+        icon = QtGui.QIcon()
+        icon.addPixmap(
+            QtGui.QPixmap(":/images/main_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+        )
+        self.setWindowIcon(icon)
 
         from Controllers.EditBinaryInteractionParametersController import (
             EditBinaryInteractionParametersController,

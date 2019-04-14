@@ -3,12 +3,12 @@
 # Form implementation generated from reading ui file 'designer/mainwindow_ui.ui',
 # licensing of 'designer/mainwindow_ui.ui' applies.
 #
-# Created: Sat Mar 23 22:08:12 2019
+# Created: Sun Apr 14 10:36:21 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
 
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):

@@ -1,6 +1,6 @@
 import os.path
 
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtGui
 
 import db
 from db_addSubstanceProperties import Form_AddSubstanceProperties
@@ -12,6 +12,12 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
     def __init__(self, parent=None):
         super(databaseWindow, self).__init__(parent)
         self.setupUi(self)
+
+        icon = QtGui.QIcon()
+        icon.addPixmap(
+            QtGui.QPixmap(":/images/main_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+        )
+        self.setWindowIcon(icon)
 
         self.dbfile = db.database_file
         # 26 colunas
