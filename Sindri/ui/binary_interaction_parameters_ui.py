@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/binary_interaction_parameters_ui.ui',
 # licensing of 'designer/binary_interaction_parameters_ui.ui' applies.
 #
-# Created: Wed Apr 10 10:49:34 2019
+# Created: Mon Apr 15 19:19:07 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,14 +15,15 @@ class Ui_FormBinaryParameters(object):
     def setupUi(self, FormBinaryParameters):
         FormBinaryParameters.setObjectName("FormBinaryParameters")
         FormBinaryParameters.setWindowModality(QtCore.Qt.ApplicationModal)
-        FormBinaryParameters.resize(555, 328)
+        FormBinaryParameters.resize(450, 270)
+        FormBinaryParameters.setMinimumSize(QtCore.QSize(450, 270))
         self.gridLayout = QtWidgets.QGridLayout(FormBinaryParameters)
         self.gridLayout.setObjectName("gridLayout")
         self.scrollArea = QtWidgets.QScrollArea(FormBinaryParameters)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 535, 308))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 430, 250))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")

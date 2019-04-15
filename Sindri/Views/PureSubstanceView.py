@@ -45,6 +45,12 @@ class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
         h_header = self.tableWidget_results.horizontalHeader()
         h_header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         h_header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+        self.tableWidget_searchSubstance.horizontalHeader().setDefaultAlignment(
+            QtCore.Qt.AlignLeft
+        )
+        self.tableWidget_results.horizontalHeader().setDefaultAlignment(
+            QtCore.Qt.AlignRight
+        )
 
         self.units = self.controller.units
 

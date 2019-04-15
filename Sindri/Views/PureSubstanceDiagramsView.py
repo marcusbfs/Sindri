@@ -47,6 +47,7 @@ class PureSubstanceDiagramsView(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams
         self.btn_gen.clicked.connect(self.gen)
         self.btn_plot.clicked.connect(self.plot)
         self.comboBox_diagram.currentTextChanged.connect(self.update_axis)
+        self.checkBox_isotherms.stateChanged.connect(self.isothermsStateChanged)
 
         # set initial and final temperatures to freezing and critical point
 
@@ -68,6 +69,10 @@ class PureSubstanceDiagramsView(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams
     @QtCore.Slot()
     def changed_Trange(self):
         self.data_is_gen = False
+
+    @QtCore.Slot()
+    def isothermsStateChanged(self, state):
+        self.controller.diagrams_isothermStateChanged(state)
 
     def initialTrange(self, Ti=None, Tf=None):
         if Ti is not None:

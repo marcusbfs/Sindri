@@ -1,6 +1,6 @@
 import os.path
 
-from PySide2 import QtWidgets, QtGui
+from PySide2 import QtWidgets, QtGui, QtCore
 
 import db
 from db_addSubstanceProperties import Form_AddSubstanceProperties
@@ -57,6 +57,7 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+        self.tableWidget_db.horizontalHeader().setDefaultAlignment(QtCore.Qt.AlignLeft)
 
         self.load_db()
         self.le_db_search.setFocus()

@@ -12,9 +12,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>778</width>
-    <height>469</height>
+    <width>744</width>
+    <height>398</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>600</width>
+    <height>250</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Database</string>
@@ -30,8 +42,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>758</width>
-        <height>449</height>
+        <width>724</width>
+        <height>378</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -146,7 +158,7 @@
             <number>0</number>
            </property>
            <property name="columnCount">
-            <number>27</number>
+            <number>26</number>
            </property>
            <attribute name="horizontalHeaderVisible">
             <bool>true</bool>
@@ -157,7 +169,6 @@
            <attribute name="verticalHeaderVisible">
             <bool>true</bool>
            </attribute>
-           <column/>
            <column/>
            <column/>
            <column/>

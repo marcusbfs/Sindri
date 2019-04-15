@@ -9,9 +9,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>555</width>
-    <height>328</height>
+    <width>450</width>
+    <height>270</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>450</width>
+    <height>270</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Binary interaction parameters</string>
@@ -27,8 +33,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>535</width>
-        <height>308</height>
+        <width>430</width>
+        <height>250</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">

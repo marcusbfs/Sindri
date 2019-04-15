@@ -214,6 +214,13 @@ class MixtureVLEController:
                 self.vleView.tableWidget_Results.setItem(i, 5, spl)
                 self.vleView.tableWidget_Results.setItem(i, 6, sk)
 
+        tn = self.vleView.tableWidget_Results.columnCount()
+
+        h_header = self.vleView.tableWidget_Results.horizontalHeader()
+        for i in range(tn - 2):
+            # h_header.setSectionResizeMode(i+2, QtWidgets.QHeaderView.Stretch)
+            h_header.setSectionResizeMode(i + 2, QtWidgets.QHeaderView.ResizeToContents)
+
     def _connectPlotCheckBox(self):
         self.vleView.checkBox_plotx.stateChanged.connect(self.vleView._uncheckY_and_XY)
         self.vleView.checkBox_ploty.stateChanged.connect(self.vleView._uncheckX_and_XY)

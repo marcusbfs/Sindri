@@ -3,30 +3,38 @@
 # Form implementation generated from reading ui file 'designer/units_options_ui.ui',
 # licensing of 'designer/units_options_ui.ui' applies.
 #
-# Created: Sun Feb 24 23:04:42 2019
+# Created: Mon Apr 15 19:19:26 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
 
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Form_UnitsOptions(object):
     def setupUi(self, Form_UnitsOptions):
         Form_UnitsOptions.setObjectName("Form_UnitsOptions")
         Form_UnitsOptions.setWindowModality(QtCore.Qt.ApplicationModal)
-        Form_UnitsOptions.resize(319, 283)
+        Form_UnitsOptions.resize(260, 270)
+        Form_UnitsOptions.setMinimumSize(QtCore.QSize(260, 270))
         self.gridLayout_2 = QtWidgets.QGridLayout(Form_UnitsOptions)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.scrollArea = QtWidgets.QScrollArea(Form_UnitsOptions)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 299, 263))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 240, 250))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout.setObjectName("gridLayout")
         self.frame = QtWidgets.QFrame(self.scrollAreaWidgetContents)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred
+        )
+        sizePolicy.setHorizontalStretch(3)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy)
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -94,7 +102,14 @@ class Ui_Form_UnitsOptions(object):
         self.verticalLayout_2.addWidget(self.label_6)
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
         self.frame_2 = QtWidgets.QFrame(self.scrollAreaWidgetContents)
-        self.frame_2.setMaximumSize(QtCore.QSize(100, 16777215))
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred
+        )
+        sizePolicy.setHorizontalStretch(4)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame_2.sizePolicy().hasHeightForWidth())
+        self.frame_2.setSizePolicy(sizePolicy)
+        self.frame_2.setMaximumSize(QtCore.QSize(16777000, 16777215))
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")

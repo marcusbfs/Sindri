@@ -31,6 +31,13 @@ class MixtureVLEView(QtWidgets.QWidget, Ui_FormVLE):
         self.diagtype = diagram_types[0]
         self.expfilename = ""
 
+        # table widget data result (binary mixture)
+        self.tableWidget_DataResult.setColumnCount(3)
+        h_header = self.tableWidget_DataResult.horizontalHeader()
+        h_header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+        h_header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+        h_header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
+
         # connections
         self.comboBox_EOS.currentTextChanged.connect(self._setEOSChange)
         self.comboBox_CalcType.currentTextChanged.connect(self._setCalculationChanges)

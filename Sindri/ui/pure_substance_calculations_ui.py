@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/pure_substance_calculations_ui.ui',
 # licensing of 'designer/pure_substance_calculations_ui.ui' applies.
 #
-# Created: Wed Apr  3 19:29:05 2019
+# Created: Mon Apr 15 19:19:19 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,7 +15,7 @@ class Ui_PureSubstanceCalculationsWindow(object):
     def setupUi(self, PureSubstanceCalculationsWindow):
         PureSubstanceCalculationsWindow.setObjectName("PureSubstanceCalculationsWindow")
         PureSubstanceCalculationsWindow.setWindowModality(QtCore.Qt.ApplicationModal)
-        PureSubstanceCalculationsWindow.resize(919, 741)
+        PureSubstanceCalculationsWindow.resize(900, 740)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
         )
@@ -25,6 +25,7 @@ class Ui_PureSubstanceCalculationsWindow(object):
             PureSubstanceCalculationsWindow.sizePolicy().hasHeightForWidth()
         )
         PureSubstanceCalculationsWindow.setSizePolicy(sizePolicy)
+        PureSubstanceCalculationsWindow.setMinimumSize(QtCore.QSize(900, 300))
         self.gridLayout_9 = QtWidgets.QGridLayout(PureSubstanceCalculationsWindow)
         self.gridLayout_9.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
         self.gridLayout_9.setObjectName("gridLayout_9")
@@ -36,11 +37,20 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 901, 723))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 882, 722))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_10 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_10.setObjectName("gridLayout_10")
         self.frame_results = QtWidgets.QFrame(self.scrollAreaWidgetContents)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred
+        )
+        sizePolicy.setHorizontalStretch(4)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.frame_results.sizePolicy().hasHeightForWidth()
+        )
+        self.frame_results.setSizePolicy(sizePolicy)
         self.frame_results.setMinimumSize(QtCore.QSize(300, 0))
         self.frame_results.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_results.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -107,8 +117,15 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.verticalLayout.addWidget(self.groupBox__log)
         self.gridLayout_10.addWidget(self.frame_results, 0, 1, 3, 1)
         self.frame_input = QtWidgets.QFrame(self.scrollAreaWidgetContents)
-        self.frame_input.setMinimumSize(QtCore.QSize(200, 0))
-        self.frame_input.setMaximumSize(QtCore.QSize(400, 16777215))
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred
+        )
+        sizePolicy.setHorizontalStretch(3)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame_input.sizePolicy().hasHeightForWidth())
+        self.frame_input.setSizePolicy(sizePolicy)
+        self.frame_input.setMinimumSize(QtCore.QSize(350, 0))
+        self.frame_input.setMaximumSize(QtCore.QSize(1677700, 16777215))
         self.frame_input.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_input.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_input.setObjectName("frame_input")

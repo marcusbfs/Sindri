@@ -3,12 +3,12 @@
 # Form implementation generated from reading ui file 'designer/db_ui.ui',
 # licensing of 'designer/db_ui.ui' applies.
 #
-# Created: Sun Feb 24 20:59:33 2019
+# Created: Mon Apr 15 19:19:13 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
 
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 
 
 class Ui_databaseWindow(object):
@@ -16,14 +16,16 @@ class Ui_databaseWindow(object):
         databaseWindow.setObjectName("databaseWindow")
         databaseWindow.setWindowModality(QtCore.Qt.ApplicationModal)
         databaseWindow.setEnabled(True)
-        databaseWindow.resize(778, 469)
+        databaseWindow.resize(744, 398)
+        databaseWindow.setMinimumSize(QtCore.QSize(600, 250))
+        databaseWindow.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.gridLayout = QtWidgets.QGridLayout(databaseWindow)
         self.gridLayout.setObjectName("gridLayout")
         self.scrollArea = QtWidgets.QScrollArea(databaseWindow)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 758, 449))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 724, 378))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -83,9 +85,9 @@ class Ui_databaseWindow(object):
         self.tableWidget_db.setWordWrap(True)
         self.tableWidget_db.setCornerButtonEnabled(True)
         self.tableWidget_db.setRowCount(0)
-        self.tableWidget_db.setColumnCount(27)
+        self.tableWidget_db.setColumnCount(26)
         self.tableWidget_db.setObjectName("tableWidget_db")
-        self.tableWidget_db.setColumnCount(27)
+        self.tableWidget_db.setColumnCount(26)
         self.tableWidget_db.setRowCount(0)
         self.tableWidget_db.horizontalHeader().setVisible(True)
         self.tableWidget_db.horizontalHeader().setHighlightSections(True)

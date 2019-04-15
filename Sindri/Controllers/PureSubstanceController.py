@@ -47,6 +47,7 @@ class PureSubstanceController:
         self.diagramsView.comboBox_diagram.addItems(self.getDiagramOptions())
         self.diagramsView.comboBox_TrangeUnit.addItems(units.temperature_options)
         self.diagramsView.update_axis()
+        self.diagramsView.le_isotherms.setEnabled(False)
         self.diagramsView.show()
 
     def getZ(self):
@@ -337,3 +338,6 @@ class PureSubstanceController:
     def updateUnitsOptions(self):
         self.units = self.unitsOptionsController.units
         self.mainView.units = self.units
+
+    def diagrams_isothermStateChanged(self, state):
+        self.diagramsView.le_isotherms.setEnabled(state)

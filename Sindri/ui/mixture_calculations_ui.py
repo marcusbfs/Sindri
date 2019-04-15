@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/mixture_calculations_ui.ui',
 # licensing of 'designer/mixture_calculations_ui.ui' applies.
 #
-# Created: Mon Apr  8 19:33:43 2019
+# Created: Mon Apr 15 19:19:16 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,14 +15,15 @@ class Ui_MixtureCalculationWindow(object):
     def setupUi(self, MixtureCalculationWindow):
         MixtureCalculationWindow.setObjectName("MixtureCalculationWindow")
         MixtureCalculationWindow.setWindowModality(QtCore.Qt.ApplicationModal)
-        MixtureCalculationWindow.resize(868, 617)
+        MixtureCalculationWindow.resize(770, 627)
+        MixtureCalculationWindow.setMinimumSize(QtCore.QSize(770, 0))
         self.gridLayout = QtWidgets.QGridLayout(MixtureCalculationWindow)
         self.gridLayout.setObjectName("gridLayout")
         self.scrollArea = QtWidgets.QScrollArea(MixtureCalculationWindow)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 848, 597))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 750, 607))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -159,8 +160,15 @@ class Ui_MixtureCalculationWindow(object):
         self.gridLayout_11 = QtWidgets.QGridLayout(self.tabCalculations)
         self.gridLayout_11.setObjectName("gridLayout_11")
         self.frame_input = QtWidgets.QFrame(self.tabCalculations)
-        self.frame_input.setMinimumSize(QtCore.QSize(200, 0))
-        self.frame_input.setMaximumSize(QtCore.QSize(400, 16777215))
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred
+        )
+        sizePolicy.setHorizontalStretch(3)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame_input.sizePolicy().hasHeightForWidth())
+        self.frame_input.setSizePolicy(sizePolicy)
+        self.frame_input.setMinimumSize(QtCore.QSize(300, 0))
+        self.frame_input.setMaximumSize(QtCore.QSize(16777000, 16777215))
         self.frame_input.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_input.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_input.setObjectName("frame_input")
@@ -286,6 +294,15 @@ class Ui_MixtureCalculationWindow(object):
         self.gridLayout_6.addWidget(self.frame_2, 3, 0, 1, 1)
         self.gridLayout_11.addWidget(self.frame_input, 0, 0, 1, 1)
         self.frame_results = QtWidgets.QFrame(self.tabCalculations)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred
+        )
+        sizePolicy.setHorizontalStretch(4)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.frame_results.sizePolicy().hasHeightForWidth()
+        )
+        self.frame_results.setSizePolicy(sizePolicy)
         self.frame_results.setMinimumSize(QtCore.QSize(300, 0))
         self.frame_results.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_results.setFrameShadow(QtWidgets.QFrame.Raised)

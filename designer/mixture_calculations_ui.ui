@@ -9,9 +9,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>868</width>
-    <height>617</height>
+    <width>770</width>
+    <height>627</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>770</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Mixture properties calculation</string>
@@ -27,8 +33,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>848</width>
-        <height>597</height>
+        <width>750</width>
+        <height>607</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -324,15 +330,21 @@
           <layout class="QGridLayout" name="gridLayout_11">
            <item row="0" column="0">
             <widget class="QFrame" name="frame_input">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>3</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
-               <width>200</width>
+               <width>300</width>
                <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>400</width>
+               <width>16777000</width>
                <height>16777215</height>
               </size>
              </property>
@@ -571,6 +583,12 @@
            </item>
            <item row="0" column="1">
             <widget class="QFrame" name="frame_results">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>4</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>300</width>
