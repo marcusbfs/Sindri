@@ -1,15 +1,15 @@
 import numpy as np
 from PySide2 import QtWidgets
 
-from Factories.EOSMixFactory import getEOSMixOptions
-from EOSMixture import calc_options
-from units import conv_unit, temperature_options, pressure_options
-from Views.MixtureVLEView import MixtureVLEView
 from Controllers.EditBinaryInteractionParametersController import (
     EditBinaryInteractionParametersController,
 )
 from Controllers.MixtureCalculationsController import MixtureCalculationsController
+from EOSMixture import calc_options
+from Factories.EOSMixFactory import getEOSMixOptions
 from Models.MixtureModel import MixtureModel
+from Views.MixtureVLEView import MixtureVLEView
+from units import conv_unit, temperature_options, pressure_options
 
 diagram_types = ["isothermal", "isobaric"]
 
@@ -344,6 +344,7 @@ class MixtureVLEController:
 
         expfilename = filename
         self.vleView.le_expDataFileName.setText(expfilename)
+        self.vleView.checkBox_plotExpData.setChecked(True)
 
     def plot(self):
 
@@ -564,10 +565,15 @@ class MixtureVLEController:
             FitExpDataToBinaryParameterModel,
         )
 
+        original_k = self.model.getBinaryInteractionsParameters()
+
         fitExpModel = FitExpDataToBinaryParameterModel(
             self.model, isovar, diagtype, x_exp, y_exp, var_exp
         )
+        # WARNING! This method overrides "k" matrix in the model.
         kval = fitExpModel.fitBinaryInteractionParameter()
+
+        self.model.setBinaryInteractionsParameters(original_k)
 
         self.editBinIntController.createBinInteractionView()
         self.editBinIntController.binInteractionView.tableWidget_BinaryParameters.setItem(

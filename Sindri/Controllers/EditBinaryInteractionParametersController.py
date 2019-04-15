@@ -1,13 +1,9 @@
 from PySide2 import QtWidgets
 
-import numpy as np
-from compounds import SubstanceProp
 from Models.MixtureModel import MixtureModel
 from Views.EditBinaryInteractionParametersView import (
     EditBinaryInteractionParametersView,
 )
-
-from units import conv_unit, temperature_options, pressure_options
 
 
 class EditBinaryInteractionParametersController:
@@ -44,9 +40,9 @@ class EditBinaryInteractionParametersController:
         self.binInteractionView.show()
 
     def okClicked(self):
-        for i in range(self.n):
-            for j in range(self.n):
-                try:
+        try:
+            for i in range(self.n):
+                for j in range(self.n):
                     v = float(
                         self.binInteractionView.tableWidget_BinaryParameters.item(
                             i, j
@@ -54,10 +50,10 @@ class EditBinaryInteractionParametersController:
                     )
                     tmp = v * 1.0 + 1.0
                     self.k[i][j] = v
-                except:
-                    continue
-        self.notifyBinInteractionObservers()
-        self.binInteractionView.close()
+            self.notifyBinInteractionObservers()
+            self.binInteractionView.close()
+        except:
+            pass
 
     def cancelClicked(self):
         self.binInteractionView.close()

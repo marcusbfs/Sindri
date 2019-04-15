@@ -1,18 +1,16 @@
+import numpy as np
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMessageBox
-import numpy as np
-from typing import List
 
-from Views.MixtureCalculationsView import MixtureCalculationsView
-from Models.MixtureModel import MixtureModel
-from Controllers.UnitsOptionsController import UnitsOptionsController
+import utils
 from Controllers.EditBinaryInteractionParametersController import (
     EditBinaryInteractionParametersController,
 )
+from Controllers.UnitsOptionsController import UnitsOptionsController
+from Models.MixtureModel import MixtureModel
+from Views.MixtureCalculationsView import MixtureCalculationsView
 from compounds import SubstanceProp
 from units import conv_unit
-import units
-import utils
 
 
 class MixtureCalculationsController:
