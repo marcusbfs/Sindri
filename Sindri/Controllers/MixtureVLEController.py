@@ -583,7 +583,12 @@ class MixtureVLEController:
         self.model.setBinaryInteractionsParameters(original_k)
 
         self.editBinIntController.createBinInteractionView()
-        self.editBinIntController.binInteractionView.tableWidget_BinaryParameters.setItem(
-            0, 1, QtWidgets.QTableWidgetItem(str(kval))
+        # self.editBinIntController.binInteractionView.tableWidget_BinaryParameters.setItem(
+        #     0, 1, QtWidgets.QTableWidgetItem(str(kval))
+        # )
+        self.editBinIntController.binInteractionView.tableWidget_BinaryParameters.cellWidget(
+            0, 1
+        ).setText(
+            "{:.7f}".format(kval)
         )
         self.editBinIntController.setSymmetricClicked()

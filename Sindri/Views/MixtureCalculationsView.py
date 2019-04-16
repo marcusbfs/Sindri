@@ -58,6 +58,13 @@ class MixtureCalculationsView(QtWidgets.QWidget, Ui_MixtureCalculationWindow):
         self.eos = None
         self.eosname = None
 
+        # validators
+        self.doublevalidator = QtGui.QDoubleValidator()
+        self.le_procT.setValidator(self.doublevalidator)
+        self.le_procP.setValidator(self.doublevalidator)
+        self.le_refT.setValidator(self.doublevalidator)
+        self.le_refP.setValidator(self.doublevalidator)
+
         # results header
         self.ResultsColumnsLabels = ["Liquid", "Vapor"]
         self.tableWidget_results.setColumnCount(2)

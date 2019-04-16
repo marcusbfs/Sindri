@@ -35,6 +35,13 @@ class PureSubstanceDiagramsView(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams
         self.checkBox_smooth.setChecked(True)
         self.checkBox_grid.setChecked(True)
 
+        # validators
+        self.doublevalidator = QtGui.QDoubleValidator()
+        self.positiveIntvalidator = QtGui.QIntValidator(bottom=0)
+        self.le_Tf.setValidator(self.doublevalidator)
+        self.le_Ti.setValidator(self.doublevalidator)
+        self.le_points.setValidator(self.positiveIntvalidator)
+
         self.points = 30
         self.data_is_gen = False
         self.le_points.setText(str(self.points))

@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtGui
 
 from Models.MixtureModel import MixtureModel
 from Views.EditBinaryInteractionParametersView import (
@@ -32,10 +32,17 @@ class EditBinaryInteractionParametersController:
             formulas
         )
 
+        doubleValidator = QtGui.QDoubleValidator()
         for i in range(self.n):
             for j in range(self.n):
-                self.binInteractionView.tableWidget_BinaryParameters.setItem(
-                    i, j, QtWidgets.QTableWidgetItem(str(self.k[i][j]))
+                # self.binInteractionView.tableWidget_BinaryParameters.setItem(
+                #     i, j, QtWidgets.QTableWidgetItem(str(self.k[i][j]))
+                # )
+                le_item = QtWidgets.QLineEdit(self.binInteractionView)
+                le_item.setValidator(doubleValidator)
+                le_item.setText(str(self.k[i][j]))
+                self.binInteractionView.tableWidget_BinaryParameters.setCellWidget(
+                    i, j, le_item
                 )
         self.binInteractionView.show()
 
@@ -43,8 +50,15 @@ class EditBinaryInteractionParametersController:
         try:
             for i in range(self.n):
                 for j in range(self.n):
+                    # v = float(
+                    #     self.binInteractionView.tableWidget_BinaryParameters.item(
+                    #         i, j
+                    #     ).text()
+                    # )
+                    # tmp = v * 1.0 + 1.0
+                    # self.k[i][j] = v
                     v = float(
-                        self.binInteractionView.tableWidget_BinaryParameters.item(
+                        self.binInteractionView.tableWidget_BinaryParameters.cellWidget(
                             i, j
                         ).text()
                     )
@@ -71,13 +85,27 @@ class EditBinaryInteractionParametersController:
     def setZeroClicked(self):
         for i in range(self.n):
             for j in range(self.n):
-                self.binInteractionView.tableWidget_BinaryParameters.setItem(
-                    i, j, QtWidgets.QTableWidgetItem(str("0.0"))
-                )
+                # self.binInteractionView.tableWidget_BinaryParameters.setItem(
+                #     i, j, QtWidgets.QTableWidgetItem(str("0.0"))
+                # )
+                # doubleValidator = QtGui.QDoubleValidator()
+                # le_item = QtWidgets.QLineEdit(self.binInteractionView)
+                # le_item.setValidator(doubleValidator)
+                # le_item.setText("0.0")
+                self.binInteractionView.tableWidget_BinaryParameters.cellWidget(
+                    i, j
+                ).setText("0.0")
 
     def setSymmetricClicked(self):
         for i in range(self.n):
             for j in range(i + 1, self.n):
-                item = self.binInteractionView.tableWidget_BinaryParameters.item(i, j)
-                item = QtWidgets.QTableWidgetItem(item)
-                self.binInteractionView.tableWidget_BinaryParameters.setItem(j, i, item)
+                # item = self.binInteractionView.tableWidget_BinaryParameters.item(i, j)
+                # item = QtWidgets.QTableWidgetItem(item)
+                # self.binInteractionView.tableWidget_BinaryParameters.setItem(j, i, item)
+                self.binInteractionView.tableWidget_BinaryParameters.cellWidget(
+                    j, i
+                ).setText(
+                    self.binInteractionView.tableWidget_BinaryParameters.cellWidget(
+                        i, j
+                    ).text()
+                )
