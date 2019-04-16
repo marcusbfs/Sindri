@@ -39,10 +39,12 @@ class MixtureVLEView(QtWidgets.QWidget, Ui_FormVLE):
         h_header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
 
         # validators
-        self.doublevalidator = QtGui.QDoubleValidator()
-        self.le_Pvalue.setValidator(self.doublevalidator)
-        self.le_Tvalue.setValidator(self.doublevalidator)
-        self.le_varValue.setValidator(self.doublevalidator)
+        from validators import getDoubleValidatorRegex
+
+        doublevalidator = getDoubleValidatorRegex(self)
+        self.le_Pvalue.setValidator(doublevalidator)
+        self.le_Tvalue.setValidator(doublevalidator)
+        self.le_varValue.setValidator(doublevalidator)
 
         # connections
         self.comboBox_EOS.currentTextChanged.connect(self._setEOSChange)

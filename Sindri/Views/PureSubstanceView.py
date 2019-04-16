@@ -39,11 +39,13 @@ class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
         self.comboBox_refPunit.addItems(units.pressure_options)
 
         # validators
-        self.doublevalidator = QtGui.QDoubleValidator()
-        self.le_procT.setValidator(self.doublevalidator)
-        self.le_procP.setValidator(self.doublevalidator)
-        self.le_refT.setValidator(self.doublevalidator)
-        self.le_refP.setValidator(self.doublevalidator)
+        from validators import getDoubleValidatorRegex
+
+        doublevalidator = getDoubleValidatorRegex(self)
+        self.le_procT.setValidator(doublevalidator)
+        self.le_procP.setValidator(doublevalidator)
+        self.le_refT.setValidator(doublevalidator)
+        self.le_refP.setValidator(doublevalidator)
 
         # results header
         self.ResultsColumnsLabels = ["Liquid", "Vapor"]

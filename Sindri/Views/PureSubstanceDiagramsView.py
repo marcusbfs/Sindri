@@ -36,11 +36,13 @@ class PureSubstanceDiagramsView(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams
         self.checkBox_grid.setChecked(True)
 
         # validators
-        self.doublevalidator = QtGui.QDoubleValidator()
-        self.positiveIntvalidator = QtGui.QIntValidator(bottom=0)
-        self.le_Tf.setValidator(self.doublevalidator)
-        self.le_Ti.setValidator(self.doublevalidator)
-        self.le_points.setValidator(self.positiveIntvalidator)
+        from validators import getDoubleValidatorRegex, getPositiveIntValidator
+
+        doublevalidator = getDoubleValidatorRegex(self)
+        positiveIntvalidator = getPositiveIntValidator()
+        self.le_Tf.setValidator(doublevalidator)
+        self.le_Ti.setValidator(doublevalidator)
+        self.le_points.setValidator(positiveIntvalidator)
 
         self.points = 30
         self.data_is_gen = False

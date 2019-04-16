@@ -32,14 +32,13 @@ class EditBinaryInteractionParametersController:
             formulas
         )
 
-        doubleValidator = QtGui.QDoubleValidator()
+        from validators import getDoubleValidatorRegex
+
+        self.doubleValidator = getDoubleValidatorRegex(self.binInteractionView)
         for i in range(self.n):
             for j in range(self.n):
-                # self.binInteractionView.tableWidget_BinaryParameters.setItem(
-                #     i, j, QtWidgets.QTableWidgetItem(str(self.k[i][j]))
-                # )
                 le_item = QtWidgets.QLineEdit(self.binInteractionView)
-                le_item.setValidator(doubleValidator)
+                le_item.setValidator(self.doubleValidator)
                 le_item.setText(str(self.k[i][j]))
                 self.binInteractionView.tableWidget_BinaryParameters.setCellWidget(
                     i, j, le_item
@@ -50,13 +49,6 @@ class EditBinaryInteractionParametersController:
         try:
             for i in range(self.n):
                 for j in range(self.n):
-                    # v = float(
-                    #     self.binInteractionView.tableWidget_BinaryParameters.item(
-                    #         i, j
-                    #     ).text()
-                    # )
-                    # tmp = v * 1.0 + 1.0
-                    # self.k[i][j] = v
                     v = float(
                         self.binInteractionView.tableWidget_BinaryParameters.cellWidget(
                             i, j
@@ -85,13 +77,6 @@ class EditBinaryInteractionParametersController:
     def setZeroClicked(self):
         for i in range(self.n):
             for j in range(self.n):
-                # self.binInteractionView.tableWidget_BinaryParameters.setItem(
-                #     i, j, QtWidgets.QTableWidgetItem(str("0.0"))
-                # )
-                # doubleValidator = QtGui.QDoubleValidator()
-                # le_item = QtWidgets.QLineEdit(self.binInteractionView)
-                # le_item.setValidator(doubleValidator)
-                # le_item.setText("0.0")
                 self.binInteractionView.tableWidget_BinaryParameters.cellWidget(
                     i, j
                 ).setText("0.0")
@@ -99,9 +84,6 @@ class EditBinaryInteractionParametersController:
     def setSymmetricClicked(self):
         for i in range(self.n):
             for j in range(i + 1, self.n):
-                # item = self.binInteractionView.tableWidget_BinaryParameters.item(i, j)
-                # item = QtWidgets.QTableWidgetItem(item)
-                # self.binInteractionView.tableWidget_BinaryParameters.setItem(j, i, item)
                 self.binInteractionView.tableWidget_BinaryParameters.cellWidget(
                     j, i
                 ).setText(
