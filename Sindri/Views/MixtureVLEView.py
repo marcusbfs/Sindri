@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets, QtGui
+from PySide2 import QtWidgets, QtGui, QtCore
 
 from Factories.EOSMixFactory import createEOSMix, getEOSMixOptions
 from EOSMixture import calc_options
@@ -32,11 +32,13 @@ class MixtureVLEView(QtWidgets.QWidget, Ui_FormVLE):
         self.expfilename = ""
 
         # table widget data result (binary mixture)
-        self.tableWidget_DataResult.setColumnCount(3)
+
+        self.tableWidget_DataResult.setColumnCount(6)
+        self.tableWidget_DataResult.horizontalHeader().setDefaultAlignment(
+            QtCore.Qt.AlignLeft
+        )
         h_header = self.tableWidget_DataResult.horizontalHeader()
-        h_header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
-        h_header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
-        h_header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
+        h_header.setStretchLastSection(True)
 
         # validators
         from validators import getDoubleValidatorRegex

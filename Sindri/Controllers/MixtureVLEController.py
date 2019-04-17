@@ -361,7 +361,8 @@ class MixtureVLEController:
             QtWidgets.QMessageBox.about(self.vleView, title, msg)
             return -1
 
-        gendata_header = ["{} [{}]", "x1", "y1"]
+        # gendata_header = ["{} [{}]", "x1", "y1"]
+        gendata_header = ["{} [{}]", "x1", "y1", "K", "Phi_liq", "Phi_vap"]
 
         try:
             diagtype = self.vleView.comboBox_diagramType.currentText()
@@ -371,7 +372,7 @@ class MixtureVLEController:
                     self.vleView.comboBox_varUnit.currentText(),
                     "K",
                 )
-                x, y, var = self.model.system.isothermalBinaryMixtureGenData(
+                x, y, var, phiv, phil, kvec = self.model.system.isothermalBinaryMixtureGenData(
                     _v,
                     Tunit=self.vleView.comboBox_varUnit.currentText(),
                     Punit=self.vleView.comboBox_Punit.currentText(),
@@ -385,7 +386,7 @@ class MixtureVLEController:
                     self.vleView.comboBox_varUnit.currentText(),
                     "Pa",
                 )
-                x, y, var = self.model.system.isobaricBinaryMixtureGenData(
+                x, y, var, phiv, phil, kvec = self.model.system.isobaricBinaryMixtureGenData(
                     _v,
                     Tunit=self.vleView.comboBox_Tunit.currentText(),
                     Punit=self.vleView.comboBox_varUnit.currentText(),
@@ -402,16 +403,23 @@ class MixtureVLEController:
         # populate table
         n = len(x)
         self.vleView.tableWidget_DataResult.setRowCount(n)
-        self.vleView.tableWidget_DataResult.setColumnCount(3)
+        self.vleView.tableWidget_DataResult.setColumnCount(6)
         self.vleView.tableWidget_DataResult.setHorizontalHeaderLabels(gendata_header)
 
         for i in range(n):
             item_var = QtWidgets.QTableWidgetItem("{:3.5e}".format(var[i]))
             item_x = QtWidgets.QTableWidgetItem("{:0.5f}".format(x[i]))
             item_y = QtWidgets.QTableWidgetItem("{:0.5f}".format(y[i]))
+            item_kvec = QtWidgets.QTableWidgetItem("{:0.5f}".format(kvec[i]))
+            item_philiq = QtWidgets.QTableWidgetItem("{:0.5f}".format(phil[i]))
+            item_phivap = QtWidgets.QTableWidgetItem("{:0.5f}".format(phiv[i]))
+
             self.vleView.tableWidget_DataResult.setItem(i, 0, item_var)
             self.vleView.tableWidget_DataResult.setItem(i, 1, item_x)
             self.vleView.tableWidget_DataResult.setItem(i, 2, item_y)
+            self.vleView.tableWidget_DataResult.setItem(i, 3, item_kvec)
+            self.vleView.tableWidget_DataResult.setItem(i, 4, item_philiq)
+            self.vleView.tableWidget_DataResult.setItem(i, 5, item_phivap)
 
         if self.vleView.checkBox_plotExpData.isChecked():
             expfilename = self.vleView.le_expDataFileName.text()

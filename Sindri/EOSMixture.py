@@ -617,6 +617,12 @@ class EOSMixture:
         xmix = np.empty(2, dtype=np.float64)
         y = np.empty(len(x), dtype=np.float64)
         T = np.empty(len(x), dtype=np.float64)
+        kvec = np.empty(len(x), dtype=np.float64)
+        phi_vap_vec = np.empty(len(x), dtype=np.float64)
+        phi_liq_vec = np.empty(len(x), dtype=np.float64)
+        pv = np.empty(len(x), dtype=np.float64)
+        pl = np.empty(len(x), dtype=np.float64)
+        k = np.empty(len(x), dtype=np.float64)
 
         for i in range(len(x)):
             xmix[0] = x[i]
@@ -630,16 +636,25 @@ class EOSMixture:
                     yres[0] = y[i - 1]
                     T[i] = T[i - 1]
                     x[i] = x[i - 1]
+                    pv[0] = phi_vap_vec[i - 1]
+                    pl[0] = phi_liq_vec[i - 1]
+                    k[0] = kvec[i - 1]
                 except:
                     yres = [0, 0]
                     yres[0] = y[i + 1]
                     T[i] = T[i + 1]
                     x[i] = x[i + 1]
+                    pv[0] = phi_vap_vec[i + 1]
+                    pl[0] = phi_liq_vec[i + 1]
+                    k[0] = kvec[i + 1]
 
             T[i] = conv_unit(T[i], "K", Tunit)
             y[i] = yres[0]
+            phi_vap_vec[i] = pv[0]
+            phi_liq_vec[i] = pl[0]
+            kvec[i] = k[0]
 
-        return x, y, T
+        return x, y, T, phi_vap_vec, phi_liq_vec, kvec
 
     def isothermalBinaryMixtureGenData(self, T, x=None, Punit="Pa", Tunit="K"):
 
@@ -653,13 +668,19 @@ class EOSMixture:
         xmix = np.empty(2, dtype=np.float64)
         y = np.empty(len(x), dtype=np.float64)
         P = np.empty(len(x), dtype=np.float64)
+        kvec = np.empty(len(x), dtype=np.float64)
+        phi_vap_vec = np.empty(len(x), dtype=np.float64)
+        phi_liq_vec = np.empty(len(x), dtype=np.float64)
+        phi_vap = np.empty(len(x), dtype=np.float64)
+        phi_liq = np.empty(len(x), dtype=np.float64)
+        kv = np.empty(len(x), dtype=np.float64)
 
         for i in range(len(x)):
             xmix[0] = x[i]
             xmix[1] = 1.0 - x[i]
 
             try:
-                yres, P[i], pv, pl, k, ite = self.getBubblePointPressure(
+                yres, P[i], phi_vap, phi_liq, kv, ite = self.getBubblePointPressure(
                     xmix, T, tol=1e-5, kmax=100
                 )
             except:
@@ -668,15 +689,25 @@ class EOSMixture:
                     yres[0] = y[i - 1]
                     P[i] = P[i - 1]
                     x[i] = x[i - 1]
+                    phi_vap[0] = phi_vap_vec[i - 1]
+                    phi_liq[0] = phi_liq_vec[i - 1]
+                    kv[0] = kvec[i - 1]
                 except:
                     yres = [0, 0]
                     yres[0] = y[i + 1]
                     P[i] = P[i + 1]
                     x[i] = x[i + 1]
+                    phi_vap[0] = phi_vap_vec[i + 1]
+                    phi_liq[0] = phi_liq_vec[i + 1]
+                    kv[0] = kv[i + 1]
+
             P[i] = conv_unit(P[i], "Pa", Punit)
             y[i] = yres[0]
+            phi_vap_vec[i] = phi_vap[0]
+            phi_liq_vec[i] = phi_liq[0]
+            kvec[i] = kv[0]
 
-        return x, y, P
+        return x, y, P, phi_vap_vec, phi_liq_vec, kvec
 
     def isobaricBinaryMixturePlot(
         self, P, x=None, Punit="Pa", Tunit="K", expfilename="", plottype="both"
@@ -687,7 +718,9 @@ class EOSMixture:
         if x is None:
             x = x_vec_for_plot
 
-        x, y, T = self.isobaricBinaryMixtureGenData(P, x, Punit=Punit, Tunit=Tunit)
+        x, y, T, phiv, phil, kvec = self.isobaricBinaryMixtureGenData(
+            P, x, Punit=Punit, Tunit=Tunit
+        )
 
         title = "{} (1) / {} (2) at {:0.3f} {}\nEquation of state: {}".format(
             self.substances[0].Name,
@@ -713,7 +746,9 @@ class EOSMixture:
         if x is None:
             x = x_vec_for_plot
 
-        x, y, P = self.isothermalBinaryMixtureGenData(T, x, Punit=Punit, Tunit=Tunit)
+        x, y, P, phiv, phil, kvec = self.isothermalBinaryMixtureGenData(
+            T, x, Punit=Punit, Tunit=Tunit
+        )
 
         title = "{} (1) / {} (2) at {:0.3f} {}\nEquation of state: {}".format(
             self.substances[0].Name,
