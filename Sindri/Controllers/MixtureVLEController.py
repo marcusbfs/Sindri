@@ -1,5 +1,5 @@
 import numpy as np
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtCore
 
 from Controllers.EditBinaryInteractionParametersController import (
     EditBinaryInteractionParametersController,
@@ -42,6 +42,30 @@ class MixtureVLEController:
         self.vleView.tableWidget_Results.setRowCount(self.n)
         self.results_col_count = 6
         self.vleView.tableWidget_Results.setColumnCount(self.results_col_count)
+
+        self.vleView.tableWidget_MolarFractions.horizontalHeader().setSectionResizeMode(
+            0, QtWidgets.QHeaderView.ResizeToContents
+        )
+        self.vleView.tableWidget_MolarFractions.horizontalHeader().setSectionResizeMode(
+            1, QtWidgets.QHeaderView.ResizeToContents
+        )
+        self.vleView.tableWidget_MolarFractions.horizontalHeader().setSectionResizeMode(
+            2, QtWidgets.QHeaderView.Stretch
+        )
+        self.vleView.tableWidget_MolarFractions.horizontalHeader().setDefaultAlignment(
+            QtCore.Qt.AlignLeft
+        )
+
+        self.vleView.tableWidget_Results.horizontalHeader().setSectionResizeMode(
+            0, QtWidgets.QHeaderView.ResizeToContents
+        )
+        self.vleView.tableWidget_Results.horizontalHeader().setSectionResizeMode(
+            1, QtWidgets.QHeaderView.ResizeToContents
+        )
+        self.vleView.tableWidget_Results.horizontalHeader().setStretchLastSection(True)
+        self.vleView.tableWidget_Results.horizontalHeader().setDefaultAlignment(
+            QtCore.Qt.AlignLeft
+        )
 
         initialMolarFraction = self.mixCalcController.getMolarFractionsFromTable(
             self.mixCalcController.mixtureCalcView.tableWidget_MixtureSystem, 2
