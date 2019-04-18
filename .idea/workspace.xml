@@ -6,10 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change afterPath="$PROJECT_DIR$/Sindri/GroupContribution/JobackMethod.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sindri/CubicEquationsOfState/HarmensAndKnapp1980.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/CubicEquationsOfState/SchmidtAndWenzel1979.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/CubicEquationsOfState/SchmidtAndWenzel1979.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/Factories/EOSMixFactory.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/Factories/EOSMixFactory.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,43 +18,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Sindri/CubicEquationsOfState/SchmidtAndWenzel1979.py">
+        <entry file="file://$PROJECT_DIR$/Sindri/CubicEquationsOfState/HarmensAndKnapp1980.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="18" column="47" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
+            <state relative-caret-position="102">
+              <caret line="45" column="51" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="51" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sindri/Views/PureSubstanceView.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="150" column="24" selection-start-line="150" selection-start-column="24" selection-end-line="150" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#44#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sindri/MixtureRules/ClassicMixtureRule.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="59" selection-start-line="59" selection-end-line="59" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="97" selection-start-line="97" selection-end-line="97" />
             </state>
           </provider>
         </entry>
@@ -102,7 +70,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/Soave1972.py" />
         <option value="$PROJECT_DIR$/TPCAE/CubicEquationsOfState/Soave1984.py" />
         <option value="$PROJECT_DIR$/TPCAE/Models/Observer.py" />
         <option value="$PROJECT_DIR$/TPCAE/pureSubstanceCalculationsWindow.py" />
@@ -153,6 +120,7 @@
         <option value="$PROJECT_DIR$/Sindri/CubicEquationsOfState/SchmidtWenzel1980.py" />
         <option value="$PROJECT_DIR$/Sindri/Factories/EOSMixFactory.py" />
         <option value="$PROJECT_DIR$/Sindri/CubicEquationsOfState/SchmidtAndWenzel1979.py" />
+        <option value="$PROJECT_DIR$/Sindri/CubicEquationsOfState/HarmensAndKnapp1980.py" />
       </list>
     </option>
   </component>
@@ -176,46 +144,6 @@
             <path>
               <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
               <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="designer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="Sindri" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="Sindri" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="Sindri" type="462c0819:PsiDirectoryNode" />
-              <item name="CubicEquationsOfState" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="Sindri" type="462c0819:PsiDirectoryNode" />
-              <item name="Factories" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="Sindri" type="462c0819:PsiDirectoryNode" />
-              <item name="Models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="Sindri" type="462c0819:PsiDirectoryNode" />
-              <item name="Views" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -525,14 +453,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Sindri/texts/about.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deploy_pycharm.bat" />
     <entry file="file://$PROJECT_DIR$/deploy_notebook.bat" />
     <entry file="file://$PROJECT_DIR$/designer/mainwindow_ui.ui">
       <provider selected="true" editor-type-id="text-editor">
@@ -875,8 +795,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/CubicEquationsOfState/SchmidtAndWenzel1979.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="18" column="47" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
+        <state relative-caret-position="529">
+          <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/CubicEquationsOfState/PengAndRobinson1976.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/CubicEquationsOfState/HarmensAndKnapp1980.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="45" column="51" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="51" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
