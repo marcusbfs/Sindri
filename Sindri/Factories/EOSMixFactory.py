@@ -12,6 +12,7 @@ from CubicEquationsOfState.GasemEtAlTwuMod2001 import GasemTwuMod2001
 from CubicEquationsOfState.MathiasAndCopeman1983 import MathiasCopeman1983
 from CubicEquationsOfState.PatelAndTeja1982 import PT1982
 from CubicEquationsOfState.PenelouxEtAl1982 import PenelouxEtAl1982
+from CubicEquationsOfState.SchmidtAndWenzel1979 import SW1979
 from CubicEquationsOfState.PengAndRobinson1976 import PR1976
 from CubicEquationsOfState.RedlichAndKwong1949 import RedlichAndKwong1949
 from CubicEquationsOfState.Soave1972 import Soave1972
@@ -44,6 +45,8 @@ def createEOSMix(substances: List[SubstanceProp], eostype: str, k=None) -> EOSMi
         return Soave1972(substances, k)
     elif eostype == "Peng and Robinson (1976)":
         return PR1976(substances, k)
+    elif eostype == "Schmidt and Wenzel (1979)":
+        return SW1979(substances, k)
     elif eostype == "Patel and Teja (1982)":
         return PT1982(substances, k)
     elif eostype == "Péneloux, et al. (1982)":
@@ -83,7 +86,7 @@ def getEOSMixOptions():
         "Wilson (1964)",
         "Soave (1972)",
         "Peng and Robinson (1976)",
-        # "Schmidt and Wenzel (1979)",
+        "Schmidt and Wenzel (1979)",
         "Patel and Teja (1982)",
         "Péneloux, et al. (1982)",
         "Adachi, et al. (1983)",

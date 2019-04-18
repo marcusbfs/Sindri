@@ -5,9 +5,7 @@ from MixtureRules.ClassicMixtureRule import ClassicMixtureRule
 from MixtureRules.MixtureRulesInterface import (
     BiBehavior,
     ThetaiBehavior,
-    DeltaiBehavior,
     DeltaMixtureRuleBehavior,
-    EpsiloniBehavior,
     EpsilonMixtureRuleBehavior,
     MixtureRuleBehavior,
 )
@@ -21,7 +19,7 @@ from polyEqSolver import solve_cubic
 def _calc_a_and_b(T: float, Tc: float, Pc: float, w: float):
     Bc = 0.25989 + w * (-0.0217 + 0.00375 * w)
     bs = solve_cubic(6.0 * w + 1.0, 3.0, 3.0, -1.0, x0=Bc)
-    Bc = np.min(bs[bs > 0])
+    Bc = np.min([x for x in bs if x > 0])
     zeta_c = 1.0 / (3.0 * (1.0 + w * Bc))
     omega_b = Bc * zeta_c
     omega_a = (1.0 - zeta_c * (1.0 - Bc)) ** 3
@@ -40,10 +38,10 @@ class thetaiSW1979(ThetaiBehavior):
     def m(self, i: int, T: float, substances):
         w = substances[i].omega
         tr = T / substances[i].Tc
-        k0 = 0.465 + w * (1.347 - 0.528)
+        k0 = 0.465 + w * (1.347 - 0.528 * w)
         if tr > 1:
             tr = 1.0
-        k = k0 + (5.0 * tr - 3.0 * k0 - 1.0) ** 3 / 70.0
+        k = k0 + (5.0 * tr - 3.0 * k0 - 1.0) ** 2 / 70.0
         return k
 
     def a(self, i: int, T: float, substances):
@@ -59,47 +57,45 @@ class thetaiSW1979(ThetaiBehavior):
         return _alpha * self.a(i, T, substances)
 
 
-class epsiloniSW1979(EpsiloniBehavior):
-    # def getEpsiloni(self, b: float) -> float:
-    #     return -b * b
-    def getEpsiloni(self, i, T, bib: BiBehavior, substances) -> float:
-        return -(bib.getBi(i, T, substances)) ** 2
-
-
-class deltaiSW1979(DeltaiBehavior):
-    def getDeltai(self, i: int, T: float, bib: BiBehavior, substances) -> float:
-        return 2.0 * bib.getBi(i, T, substances)
+def getW(y, substances):
+    s = 0.0
+    for i in range(len(y)):
+        s += substances[i].omega * y[i]
+    return -3.0 * s
 
 
 class deltaMixSW1979(DeltaMixtureRuleBehavior):
-    # def deltam(
-    #     self, y, T: float, bib: BiBehavior, bmb: BMixtureRuleBehavior, substances
-    # ) -> float:
-    #     return 2.0 * bmb.bm(y, T, bib, substances)
-
     def deltam(
         self, y, T: float, bib: BiBehavior, bmb: MixtureRuleBehavior, substances
     ) -> float:
-        return 2.0 * bmb.bm(y, T, bib, substances)
+        u = 1.0 - getW(y, substances)
+        return u * bmb.bm(y, T, bib, substances)
 
     def diffDeltam(
         self, i: int, y, T: float, bib: BiBehavior, bmb: MixtureRuleBehavior, substances
     ) -> float:
-        return 2.0 * bmb.diffBm(i, y, T, bib, substances)
+        u = 1.0 - getW(y, substances)
+        return (
+            u * bmb.diffBm(i, y, T, bib, substances)
+            - bmb.bm(y, T, bib, substances) * substances[i].omega
+        )
 
 
 class epsilonMixSW1979(EpsilonMixtureRuleBehavior):
     def epsilonm(
         self, y, T: float, bib: BiBehavior, bmb: MixtureRuleBehavior, substances
     ) -> float:
-        return -(bmb.bm(y, T, bib, substances)) ** 2
+        w = getW(y, substances)
+        return w * (bmb.bm(y, T, bib, substances)) ** 2
 
     def diffEpsilonm(
         self, i: int, y, T: float, bib: BiBehavior, bmb: MixtureRuleBehavior, substances
     ) -> float:
-        return (
-            -2.0 * bmb.bm(y, T, bib, substances) * bmb.diffBm(i, y, T, bib, substances)
-        )
+        w = getW(y, substances)
+        diffw = substances[i].omega
+        b = bmb.bm(y, T, bib, substances)
+        diffb = bmb.diffBm(i, y, T, bib, substances)
+        return diffw * b * b + w * 2.0 * b * diffb
 
 
 class SW1979(EOSMixture):
@@ -109,7 +105,5 @@ class SW1979(EOSMixture):
         self.mixRuleBehavior = ClassicMixtureRule()
         self.biBehavior = biSW1979()
         self.thetaiBehavior = thetaiSW1979()
-        self.deltaiBehavior = deltaiSW1979()
-        self.epsiloniBehavior = epsiloniSW1979()
         self.deltaMixBehavior = deltaMixSW1979()
         self.epsilonMixBehavior = epsilonMixSW1979()
