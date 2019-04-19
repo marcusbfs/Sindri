@@ -80,10 +80,16 @@ class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
         self.tableWidget_searchSubstance.setCurrentCell(0, 0)
 
         # button icons
-        self.btn_searchSubstance.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/search_button.png")))
+        self.btn_searchSubstance.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/search_button.png"))
+        )
         self.btn_savetxt.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/save_button.png")))
-        self.btn_calculate.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/calculate_button.png")))
-        self.btn_diagrams.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/plot_button.png")))
+        self.btn_calculate.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/calculate_button.png"))
+        )
+        self.btn_diagrams.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/plot_button.png"))
+        )
         self.btn_units.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/units_button.png")))
 
     def updateEOS(self):

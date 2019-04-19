@@ -95,16 +95,30 @@ class MixtureCalculationsView(QtWidgets.QWidget, Ui_MixtureCalculationWindow):
         self.listWidget_eos_options.addItems(mixeosoptions)
 
         # button icons
-        self.btn_searchSubstance.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/search_button.png")))
+        self.btn_searchSubstance.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/search_button.png"))
+        )
         self.btn_savetxt.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/save_button.png")))
-        self.btn_SaveSystem.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/save_button.png")))
-        self.btn_LoadSystem.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/loadSystem_button.png")))
-        self.btn_calculate.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/calculate_button.png")))
+        self.btn_SaveSystem.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/save_button.png"))
+        )
+        self.btn_LoadSystem.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/loadSystem_button.png"))
+        )
+        self.btn_calculate.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/calculate_button.png"))
+        )
         self.btn_Add.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/add_button.png")))
-        self.btn_Remove.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/delete_button.png")))
-        self.btn_setEquimolar.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/equality_sign.png")))
+        self.btn_Remove.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/delete_button.png"))
+        )
+        self.btn_setEquimolar.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/equality_sign.png"))
+        )
         self.btn_units.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/units_button.png")))
-        self.btn_EditBIParameters.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/binary_button.png")))
+        self.btn_EditBIParameters.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/binary_button.png"))
+        )
         self.btn_VLE.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/vle_button.png")))
 
     @QtCore.Slot()

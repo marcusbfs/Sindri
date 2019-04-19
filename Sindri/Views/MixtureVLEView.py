@@ -66,8 +66,12 @@ class MixtureVLEView(QtWidgets.QWidget, Ui_FormVLE):
         self.label_VarAnswerUnits.setText("[bar]")
 
         # button icons
-        self.btn_calculate.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/calculate_button.png")))
-        self.btn_openExpData.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/loadexp_button.png")))
+        self.btn_calculate.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/calculate_button.png"))
+        )
+        self.btn_openExpData.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/loadexp_button.png"))
+        )
 
     def calculate(self):
         self.controller.calculateClicked()

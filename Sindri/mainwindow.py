@@ -33,10 +33,16 @@ class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setWindowTitle(_devinfo.__SOFTWARE_NAME__)
 
         # button icons
-        self.btn_BancoDeDados.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/database_button.png")))
+        self.btn_BancoDeDados.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/database_button.png"))
+        )
         self.btn_about.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/about_button.png")))
-        self.btn_PureSubstanceCalculations.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/pureSubstance_button.png")))
-        self.btn_MixtureCalculations.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/mixture_button.png")))
+        self.btn_PureSubstanceCalculations.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/pureSubstance_button.png"))
+        )
+        self.btn_MixtureCalculations.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(":/images/mixture_button.png"))
+        )
 
     def open_db_window(self):
         self.dbw.show()
