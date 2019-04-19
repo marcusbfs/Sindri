@@ -5,6 +5,7 @@ from PySide2.QtWidgets import QTableWidget, QLineEdit, QPushButton
 
 import db
 import db_utils
+from DatabaseInterface.databaseSearchFunctions import getQueryBySearchNameFormulaOrCas
 
 
 class DatabaseTableWidgetView:
@@ -115,20 +116,7 @@ class DatabaseTableWidgetView:
             self.show_full_db()
         else:
             try:
-                # query = "SELECT * FROM database WHERE Name LIKE '%" + substance_string_name + "%'" + \
-                #         " OR Formula LIKE '%" + substance_string_name + "%'" + \
-                #         " OR `CAS #` LIKE '%" + substance_string_name + "%'"
-                query = (
-                    "SELECT * FROM database WHERE Name LIKE '"
-                    + substance_string_name
-                    + "%'"
-                    + " OR Formula LIKE '"
-                    + substance_string_name
-                    + "%'"
-                    + " OR `CAS #` LIKE '"
-                    + substance_string_name
-                    + "%'"
-                )
+                query = getQueryBySearchNameFormulaOrCas(substance_string_name)
                 db.cursor.execute(query)
                 results = db.cursor.fetchall()
                 self.update_table_db(results)

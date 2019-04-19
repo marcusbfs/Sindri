@@ -47,6 +47,12 @@ class Form_AddSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substancePropert
         ]
         self.colLen = len(self.columnHeaders)
         self.substance_added = False
+        self.disableConfirmButton()
+
+        # connections
+        self.le_name.textChanged.connect(self.disableConfirmButton)
+        self.le_formula.textChanged.connect(self.disableConfirmButton)
+        self.le_CAS.textChanged.connect(self.disableConfirmButton)
 
     def confirm_clicked(self):
 
@@ -101,3 +107,16 @@ class Form_AddSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substancePropert
 
     def closeEvent(self, QCloseEvent):
         self.signal.emit(self.substance_added)
+
+    def isNameFormulaAndCasValid(self) -> bool:
+        return (
+            len(self.le_name.text()) > 0
+            and len(self.le_formula.text()) > 0
+            and len(self.le_CAS.text()) > 0
+        )
+
+    def disableConfirmButton(self):
+        if self.isNameFormulaAndCasValid():
+            self.btn_edit_confirm.setDisabled(False)
+        else:
+            self.btn_edit_confirm.setDisabled(True)

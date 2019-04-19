@@ -3,6 +3,7 @@ import os.path
 from PySide2 import QtWidgets, QtGui, QtCore
 
 import db
+from DatabaseInterface.databaseSearchFunctions import getQueryBySearchNameFormulaOrCas
 from db_addSubstanceProperties import Form_AddSubstanceProperties
 from db_editSubstanceProperties import Form_EditSubstanceProperties
 from ui.db_ui import Ui_databaseWindow
@@ -98,17 +99,7 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             self.show_full_db()
         else:
             try:
-                query = (
-                    "SELECT * FROM database WHERE Name LIKE '"
-                    + substance_string_name
-                    + "%'"
-                    + " OR Formula LIKE '"
-                    + substance_string_name
-                    + "%'"
-                    + " OR `CAS #` LIKE '"
-                    + substance_string_name
-                    + "%'"
-                )
+                query = getQueryBySearchNameFormulaOrCas(substance_string_name)
                 db.cursor.execute(query)
                 results = db.cursor.fetchall()
                 self.update_table_db(results)

@@ -161,6 +161,13 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
 
         self.load_entries()
 
+        self.disableConfirmButton()
+
+        # connections
+        self.le_name.textChanged.connect(self.disableConfirmButton)
+        self.le_formula.textChanged.connect(self.disableConfirmButton)
+        self.le_CAS.textChanged.connect(self.disableConfirmButton)
+
     def load_entries(self):
         self.le_formula.setText(self.Formula)
         self.le_name.setText(self.Name)
@@ -380,3 +387,16 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
 
     def closeEvent(self, QCloseEvent):
         self.signal_changes_made.emit(self.changes_made)
+
+    def isNameFormulaAndCasValid(self) -> bool:
+        return (
+            len(self.le_name.text()) > 0
+            and len(self.le_formula.text()) > 0
+            and len(self.le_CAS.text()) > 0
+        )
+
+    def disableConfirmButton(self):
+        if self.isNameFormulaAndCasValid():
+            self.btn_edit_confirm.setDisabled(False)
+        else:
+            self.btn_edit_confirm.setDisabled(True)

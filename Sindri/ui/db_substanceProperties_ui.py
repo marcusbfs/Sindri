@@ -3,12 +3,12 @@
 # Form implementation generated from reading ui file 'designer/db_substanceProperties_ui.ui',
 # licensing of 'designer/db_substanceProperties_ui.ui' applies.
 #
-# Created: Fri Jan 11 18:18:07 2019
+# Created: Fri Apr 19 12:40:01 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
 
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Form_db_substanceProperties(object):
@@ -84,6 +84,11 @@ class Ui_Form_db_substanceProperties(object):
         self.horizontalLayout_4.addWidget(self.le_CAS)
         self.verticalLayout.addLayout(self.horizontalLayout_4)
         self.verticalLayout_2.addLayout(self.verticalLayout)
+        self.label_6 = QtWidgets.QLabel(self.tab_identification)
+        self.label_6.setTextFormat(QtCore.Qt.RichText)
+        self.label_6.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_6.setObjectName("label_6")
+        self.verticalLayout_2.addWidget(self.label_6)
         self.tabWidget_substanceProperties.addTab(self.tab_identification, "")
         self.tab_generalData = QtWidgets.QWidget()
         self.tab_generalData.setObjectName("tab_generalData")
@@ -299,6 +304,10 @@ class Ui_Form_db_substanceProperties(object):
         self.horizontalLayout_25.setObjectName("horizontalLayout_25")
         self.verticalLayout_9 = QtWidgets.QVBoxLayout()
         self.verticalLayout_9.setObjectName("verticalLayout_9")
+        spacerItem = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
+        self.verticalLayout_9.addItem(spacerItem)
         self.label_31 = QtWidgets.QLabel(self.widget)
         self.label_31.setMaximumSize(QtCore.QSize(140, 16777215))
         self.label_31.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -414,18 +423,18 @@ class Ui_Form_db_substanceProperties(object):
         self.verticalLayout_10.addLayout(self.horizontalLayout_31)
         self.verticalLayout_13.addLayout(self.verticalLayout_10)
         self.verticalLayout_14.addLayout(self.verticalLayout_13)
-        spacerItem = QtWidgets.QSpacerItem(
+        spacerItem1 = QtWidgets.QSpacerItem(
             20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
         )
-        self.verticalLayout_14.addItem(spacerItem)
+        self.verticalLayout_14.addItem(spacerItem1)
         self.tabWidget_substanceProperties.addTab(self.tab_VaporPressure, "")
         self.verticalLayout_3.addWidget(self.tabWidget_substanceProperties)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem1 = QtWidgets.QSpacerItem(
+        spacerItem2 = QtWidgets.QSpacerItem(
             40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
-        self.horizontalLayout.addItem(spacerItem1)
+        self.horizontalLayout.addItem(spacerItem2)
         self.btn_edit_confirm = QtWidgets.QPushButton(Form_db_substanceProperties)
         self.btn_edit_confirm.setObjectName("btn_edit_confirm")
         self.horizontalLayout.addWidget(self.btn_edit_confirm)
@@ -468,6 +477,14 @@ class Ui_Form_db_substanceProperties(object):
         self.label_3.setText(
             QtWidgets.QApplication.translate(
                 "Form_db_substanceProperties", "CAS number", None, -1
+            )
+        )
+        self.label_6.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties",
+                "(all fields above are required)",
+                None,
+                -1,
             )
         )
         self.tabWidget_substanceProperties.setTabText(
