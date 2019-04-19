@@ -64,6 +64,15 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
         self.le_db_search.setFocus()
         self.database_changed = False
 
+        # button icons
+        self.btn_search.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/search_button.png")))
+        self.btn_save_db.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/save_button.png")))
+        self.btn_addSubstance.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/add_button.png")))
+        self.btn_deleteSubstance.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/delete_button.png")))
+        self.btn_clearSearch.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/clear_button.png")))
+        self.btn_editSubstance.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/edit_button.png")))
+        self.btn_RestoreOriginalDB.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/restore_button.png")))
+
     def load_db(self):
         # Abrir banco de dados
         if os.path.isfile(self.dbfile):

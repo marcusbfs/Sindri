@@ -1,5 +1,24 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
-    <file>images/main_logo.png</file>
+    <file>../../images/main_logo.png</file>
+    <file>../../images/equality_sign.png</file>
+    <file>../../images/search_button.png</file>
+    <file>../../images/save_button.png</file>
+    <file>../../images/database_button.png</file>
+    <file>../../images/loadSystem_button.png</file>
+    <file>../../images/add_button.png</file>
+    <file>../../images/delete_button.png</file>
+    <file>../../images/calculate_button.png</file>
+    <file>../../images/loadexp_button.png</file>
+    <file>../../images/clear_button.png</file>
+    <file>../../images/edit_button.png</file>
+    <file>../../images/restore_button.png</file>
+    <file>../../images/plot_button.png</file>
+    <file>../../images/units_button.png</file>
+    <file>../../images/binary_button.png</file>
+    <file>../../images/vle_button.png</file>
+    <file>../../images/about_button.png</file>
+    <file>../../images/pureSubstance_button.png</file>
+    <file>../../images/mixture_button.png</file>
 </qresource>
 </RCC>
