@@ -13,9 +13,7 @@ class Window_About(QtWidgets.QDialog, Ui_DialogAbout):
 
         self.setWindowTitle("About {}".format(__SOFTWARE_NAME__))
 
-        self.abouttxt = "texts/about.txt"
         self.abouthtml = "texts/about.html"
 
         with open(self.abouthtml, "r") as aboutContent:
-            # self.textEdit_About.insertPlainText(aboutContent.read())
             self.textBrowser_About.setHtml(aboutContent.read())

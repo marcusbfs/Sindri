@@ -6,8 +6,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/aboutWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/aboutWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/texts/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/texts/about.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,21 +19,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sindri/resources/icons.qrc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="33">
-                <caret line="18" column="40" lean-forward="true" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+              <first_editor relative-caret-position="475">
+                <caret line="52" selection-start-line="52" selection-end-line="52" />
               </first_editor>
               <second_editor />
             </state>
@@ -79,7 +72,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/TPCAE/Controllers/PureSubstanceController.py" />
         <option value="$PROJECT_DIR$/TPCAE/Views/UnitsOptionsView.py" />
         <option value="$PROJECT_DIR$/TPCAE/Views/PureSubstanceView.py" />
         <option value="$PROJECT_DIR$/TPCAE/Controllers/editBinaryInteractionParameterController.py" />
@@ -95,7 +87,6 @@
         <option value="$PROJECT_DIR$/TPCAE/Controllers/MixtureCalculationsController.py" />
         <option value="$PROJECT_DIR$/TPCAE/Controllers/MixtureVLEController.py" />
         <option value="$PROJECT_DIR$/TPCAE/Models/FitExpDataToBinaryParameterModel.py" />
-        <option value="$PROJECT_DIR$/Sindri/texts/about.html" />
         <option value="$PROJECT_DIR$/deploy_notebook.bat" />
         <option value="$PROJECT_DIR$/deploy_pycharm.bat" />
         <option value="$PROJECT_DIR$/designer/mainwindow_ui.ui" />
@@ -129,6 +120,8 @@
         <option value="$PROJECT_DIR$/Sindri/resources/icons.qrc" />
         <option value="$PROJECT_DIR$/Sindri/Views/PureSubstanceDiagramsView.py" />
         <option value="$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py" />
+        <option value="$PROJECT_DIR$/Sindri/aboutWindow.py" />
+        <option value="$PROJECT_DIR$/Sindri/texts/about.html" />
         <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
@@ -147,7 +140,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -170,12 +162,19 @@
               <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
               <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
               <item name="Sindri" type="462c0819:PsiDirectoryNode" />
+              <item name="texts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
+              <item name="Sindri" type="462c0819:PsiDirectoryNode" />
               <item name="Views" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -326,10 +325,10 @@
     </configuration>
     <list>
       <item itemvalue="Python.ESTIMATION_INTERACTION" />
-      <item itemvalue="Python.MixtureModel" />
-      <item itemvalue="Python.main" />
-      <item itemvalue="Python.main (1)" />
       <item itemvalue="Python.JobackMethod" />
+      <item itemvalue="Python.MixtureModel" />
+      <item itemvalue="Python.main (1)" />
+      <item itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list>
@@ -419,7 +418,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.27081138" />
       <window_info id="Structure" order="1" sideWeight="0.1953125" side_tool="true" weight="0.17755532" />
@@ -431,8 +429,8 @@
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49420443" weight="0.32446808" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4926238" weight="0.32765958" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.42781875" visible="true" weight="0.3" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5721812" side_tool="true" visible="true" weight="0.3" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.42676502" visible="true" weight="0.3" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.573235" side_tool="true" visible="true" weight="0.3" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.55479455" weight="0.43297872" />
       <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5205479" weight="0.39787233" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -481,23 +479,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Sindri/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-2121919923/PySide2/QtWidgets/QHeaderView.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="220" column="8" selection-start-line="220" selection-start-column="8" selection-end-line="220" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-2121919923/PySide2/QtWidgets/QTableView.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -835,13 +816,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/resources/icons.qrc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Views/PureSubstanceDiagramsView.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="617">
@@ -869,11 +843,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/resources/icons.qrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/aboutWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/texts/about.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="3" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+          <folding>
+            <element signature="n#style#0;n#p#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#a#1;n#p#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#6;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#a#0;n#p#7;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#10;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#11;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#a#0;n#p#11;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="33">
-            <caret line="18" column="40" lean-forward="true" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+          <first_editor relative-caret-position="475">
+            <caret line="52" selection-start-line="52" selection-end-line="52" />
           </first_editor>
           <second_editor />
         </state>

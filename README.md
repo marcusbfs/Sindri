@@ -2,6 +2,12 @@
 <h2 align="center"><b>Sindri</b></h2>
 <h4 align="center">Estimation of thermodynamics properties and vapor-liquid equilibrium calculations.</h4>
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+<hr>
+<p align="center"><a href="#description">Description</a> &bull; <a href="#features">Features</a> &bull; <a href="#getting-started">Getting Started</a> &bull;  <a href="#authors">Authors</a> &bull;<a href="#contribution">Contribution</a> &bull; <a href="#license">License</a></p>
+<hr>
+
 ## Description
 
 Sindri is a software developed to estimate thermodynamics properties and vapor-liquid equilibrium calculations using cubic equations of state.
@@ -42,4 +48,6 @@ Any bug reports or suggestions are welcome. Also, if wish a new cubic equation o
 implemented, please send me the paper and I will try to add it as soon as possible.
 
 ## License
+
+Sindri is licensed under the MIT License - see the [LICENSE.txt](https://github.com/mrcsbrn/Sindri/blob/master/LICENSE.txt) file for details
 
