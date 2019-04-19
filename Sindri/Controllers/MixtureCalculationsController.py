@@ -189,6 +189,7 @@ class MixtureCalculationsController:
                 ),
                 self.units["P"],
             )
+            self.info += "State: {0:s}".format(self.model.getFluidState())
             self.mixtureCalcView.plainTextEdit_information.appendPlainText(self.info)
         except Exception as e:
             print(e)

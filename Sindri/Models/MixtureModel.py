@@ -148,15 +148,28 @@ class MixtureModel:
     def getVLEMolarFractions(self) -> List[float]:
         return self.y_vle
 
-    def getVLEMolarFractions(self) -> List[float]:
-        return self.y_vle
-
     def getBinaryDiagramType(self) -> str:
         return self.binaryDiagram_type
 
     def updateK(self):
         n = self.getNumberOfSubstancesInSystem()
         self.k = np.zeros((n, n), dtype=np.float64)
+
+    def getFluidState(self) -> str:
+        pbol = self.system.getBubblePointPressure(
+            self.getMolarFractions(), self.getT()
+        )[1]
+        pdew = self.system.getDewPointPressure(self.getMolarFractions(), self.getT())[1]
+        p = self.getP()
+        from compounds import state_dict
+
+        if p < pdew:
+            state = state_dict["vap"]
+        elif p > pbol:
+            state = state_dict["liq"]
+        else:
+            state = state_dict["VL_equi"]
+        return state
 
     # ================= CALCULATIONS ==============
 
