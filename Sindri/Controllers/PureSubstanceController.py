@@ -25,7 +25,6 @@ class PureSubstanceController:
 
         self.model = model
         self.mainView = PureSubstanceView(self, self.model)
-        self.diagramsView = PureSubstanceDiagramsView(self, self.model)
         self.unitsOptionsController = UnitsOptionsController()
         self.unitsOptionsController.registerUnitsOptionsObserver(self)
 
@@ -37,6 +36,7 @@ class PureSubstanceController:
         self.mainView.show()
 
     def createDiagramsView(self):
+        self.diagramsView = PureSubstanceDiagramsView(self, self.model)
         self.setEOSandSubstance()
         ti, tf = None, None
         if self.model.substance.Tfp:
@@ -44,6 +44,8 @@ class PureSubstanceController:
         if self.model.substance.Tc:
             tf = self.model.substance.Tc
         self.diagramsView.initialTrange(ti, tf)
+        self.diagramsView.comboBox_diagram.clear()
+        self.diagramsView.comboBox_TrangeUnit.clear()
         self.diagramsView.comboBox_diagram.addItems(self.getDiagramOptions())
         self.diagramsView.comboBox_TrangeUnit.addItems(units.temperature_options)
         self.diagramsView.update_axis()
