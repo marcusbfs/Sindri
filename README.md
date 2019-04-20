@@ -16,7 +16,7 @@ This software was developed as part of a undergraduate thesis in Chemical Engine
 
 ### Features
 
-- 20 cubic equation of state implemented for all types of calculations. The equation currently used
+- 20 cubic equations of state implemented for all calculations. The active equation 
 can be easily changed, which provides a quickly comparision tool
 - Calculation of thermodynamics properties for single substances and multicomponent mixtures
 - Multiple saturation diagram plots for pure substances
@@ -24,7 +24,7 @@ can be easily changed, which provides a quickly comparision tool
 - Binary mixture isothermal and isobaric equilibrium curves. The models can be adjusted to
 experimental data by fitting a binary interaction parameter
 - Reports generation
-- Modifiable database with more than 469 substances
+- Modifiable database with 469 substances
 
 ## Getting Started
 
@@ -49,5 +49,5 @@ implemented, please send me the paper and I will try to add it as soon as possib
 
 ## License
 
-Sindri is licensed under the MIT License - see the [LICENSE.txt](https://github.com/mrcsbrn/Sindri/blob/master/LICENSE.txt) file for details
+Sindri is licensed under the MIT License - see the [LICENSE.txt](https://github.com/mrcsbrn/Sindri/blob/master/LICENSE.txt) file for details.
 
