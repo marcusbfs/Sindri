@@ -1,14 +1,3 @@
-<head>
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
-</head>
-
-
 <p align="center"><a href="https://github.com/mrcsbrn/Sindri"><img src="https://raw.githubusercontent.com/mrcsbrn/Sindri/master/images/main_logo.png" width="150"></a></p> 
 <h2 align="center"><b>Sindri</b></h2>
 <h4 align="center">Estimation of thermodynamics properties and vapor-liquid equilibrium calculations.</h4>
