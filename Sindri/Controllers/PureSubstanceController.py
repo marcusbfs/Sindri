@@ -187,7 +187,7 @@ class PureSubstanceController:
                 self.model.getPref(),
                 self.model.getTref(),
                 int(self.points),
-                # isotherms=self.isotherms_range,
+                isotherms=self.isotherms_range,
             )
             s2 = time()
             QtWidgets.QMessageBox.information(

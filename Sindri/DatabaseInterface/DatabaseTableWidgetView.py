@@ -74,7 +74,9 @@ class DatabaseTableWidgetView:
 
     def show_full_db(self):
         try:
-            query = "SELECT * FROM database"
+            # join = "substance s LEFT JOIN cp_correlations c ON s.substance_id = c.substance_id LEFT JOIN antoine_correlations a ON a.substance_id = s.substance_id"
+            table_name = "v_all_properties_including_correlations"
+            query = "SELECT * FROM " + table_name
             db.cursor.execute(query)
             results = db.cursor.fetchall()
             self.update_table_db(results)

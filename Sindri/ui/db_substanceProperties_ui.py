@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/db_substanceProperties_ui.ui',
 # licensing of 'designer/db_substanceProperties_ui.ui' applies.
 #
-# Created: Fri Apr 19 12:40:01 2019
+# Created: Tue Apr 23 14:18:59 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -561,7 +561,7 @@ class Ui_Form_db_substanceProperties(object):
         )
         self.label_20.setText(
             QtWidgets.QApplication.translate(
-                "Form_db_substanceProperties", "[g/mol]", None, -1
+                "Form_db_substanceProperties", "[cm3/mol]", None, -1
             )
         )
         self.label_21.setText(

@@ -31,6 +31,8 @@ class PlotPureSubstanceDiagrams(object):
         cp: Props,
         compound: str,
         eosname: str,
+        eoseq=None,
+        isotherms=[],
     ):
 
         self.propsliq = allpropsliq
@@ -40,6 +42,8 @@ class PlotPureSubstanceDiagrams(object):
         self.cpoint = cp
         self.compound = compound
         self.eosname = eosname
+        self.eoseq = eoseq
+        self.isotherms = isotherms
 
         self.Tliq, self.Tvap = np.zeros(self.n), np.zeros(self.n)
         self.Pliq, self.Pvap = np.zeros(self.n), np.zeros(self.n)
@@ -86,12 +90,23 @@ class PlotPureSubstanceDiagrams(object):
                 self.propsvap[i].Props.A,
             )
 
+        if len(self.isotherms) > 0:
+            self.has_isotherms = True
+        else:
+            self.has_isotherms = False
+
     def plotPV(self, xunit: str, yunit: str, lnscale=True, smooth=True, grid=True):
         self.x_letter, self.y_letter = "V", "P"
         self.xliq, self.yliq = self.Vliq, self.Pliq
         self.xvap, self.yvap = self.Vvap, self.Pvap
         self.xcp, self.ycp = self.cpoint.V, self.cpoint.P
         self.xunit, self.yunit = xunit, yunit
+
+        if self.has_isotherms:
+            self.iso_x = np.linspace(np.min(self.xliq), np.max(self.xvap), self.n)
+            self.iso_y = np.zeros(self.n)
+            for i in range(self.n):
+                self.iso_y[i] = self.eoseq.getPfromTV(self.isotherms[0], self.iso_x[i])
 
         self.lnscale = lnscale
         self.grid = grid
@@ -235,6 +250,11 @@ def gen_data(
 
     if len(Ti_f) != 2:
         raise TypeError("Temperature parameter must be an array of len 2")
+
+    if len(isotherms) > 0:
+        has_isotherms = True
+    else:
+        has_isotherms = False
 
     def helper_P_guess(_T):
         fh = lambda x: eoseq.mix.substances[0].getPvpAW(x)

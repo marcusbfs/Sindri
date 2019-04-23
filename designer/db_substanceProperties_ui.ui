@@ -424,7 +424,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>[g/mol]</string>
+                <string>[cm3/mol]</string>
                </property>
                <property name="textFormat">
                 <enum>Qt::RichText</enum>

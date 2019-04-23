@@ -2,6 +2,7 @@ from PySide2 import QtCore, QtWidgets
 
 import db
 from ui.db_substanceProperties_ui import Ui_Form_db_substanceProperties
+from validators import getDoubleValidatorRegex
 
 
 class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProperties):
@@ -103,29 +104,41 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         self.Formula = self.hl_row[0]
         self.Name = self.hl_row[1]
         self.CAS = self.hl_row[2]
-        self.MM = self.hl_row[3]
-        self.Tfp = self.hl_row[4]
-        self.Tb = self.hl_row[5]
-        self.Tc = self.hl_row[6]
-        self.Pc = self.hl_row[7]
-        self.Vc = self.hl_row[8]
-        self.Zc = self.hl_row[9]
-        self.omega = self.hl_row[10]
+        self.MM = self.hl_row[3] if self.hl_row[3] != "None" else ""
+        self.Tfp = self.hl_row[4] if self.hl_row[4] != "None" else ""
+        self.Tb = self.hl_row[5] if self.hl_row[5] != "None" else ""
+        self.Tc = self.hl_row[6] if self.hl_row[6] != "None" else ""
+        self.Pc = self.hl_row[7] if self.hl_row[7] != "None" else ""
+        self.Vc = self.hl_row[8] if self.hl_row[8] != "None" else ""
+        self.Zc = self.hl_row[9] if self.hl_row[9] != "None" else ""
+        self.omega = self.hl_row[10] if self.hl_row[10] != "None" else ""
 
         self.r = self.extract_Cp_Tminmax(self.hl_row[11])
-        self.CpTmin = self.r[0]
-        self.CpTmax = self.r[1]
-        self.a0 = self.hl_row[12]
-        self.a1 = self.hl_row[13]
-        self.a2 = self.hl_row[14]
-        self.a3 = self.hl_row[15]
-        self.a4 = self.hl_row[16]
+        self.CpTmin = self.r[0] if self.r[0] != "None" else ""
+        self.CpTmax = self.r[1] if self.r[1] != "None" else ""
+        self.a0 = self.hl_row[12] if self.hl_row[12] != "None" else ""
+        self.a1 = self.hl_row[13] if self.hl_row[13] != "None" else ""
+        self.a2 = self.hl_row[14] if self.hl_row[14] != "None" else ""
+        self.a3 = self.hl_row[15] if self.hl_row[15] != "None" else ""
+        self.a4 = self.hl_row[16] if self.hl_row[16] != "None" else ""
 
-        self.AntoineA = self.hl_row[19]
-        self.AntoineB = self.hl_row[20]
-        self.AntoineC = self.hl_row[21]
-        self.AntoineTmin = self.hl_row[23]
-        self.AntoineTmax = self.hl_row[25]
+        self.AntoineA = self.hl_row[19] if self.hl_row[19] != "None" else ""
+        self.AntoineB = self.hl_row[20] if self.hl_row[20] != "None" else ""
+        self.AntoineC = self.hl_row[21] if self.hl_row[21] != "None" else ""
+        self.AntoineTmin = self.hl_row[23] if self.hl_row[23] != "None" else ""
+        self.AntoineTmax = self.hl_row[25] if self.hl_row[25] != "None" else ""
+
+        query = (
+            "SELECT substance_id FROM substance WHERE name='"
+            + self.Name
+            + "' AND formula='"
+            + self.Formula
+            + "' AND cas='"
+            + self.CAS
+            + "'"
+        )
+        db.cursor.execute(query)
+        self.substance_id_int = int(db.cursor.fetchone()[0])
 
         self.setWindowTitle("Edit substance - " + str(self.Name))
 
@@ -168,6 +181,31 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         self.le_formula.textChanged.connect(self.disableConfirmButton)
         self.le_CAS.textChanged.connect(self.disableConfirmButton)
 
+        doublevalidator = getDoubleValidatorRegex(self)
+        # general
+        self.le_MM.setValidator(doublevalidator)
+        self.le_Tb.setValidator(doublevalidator)
+        self.le_Tfp.setValidator(doublevalidator)
+        self.le_Tc.setValidator(doublevalidator)
+        self.le_Pc.setValidator(doublevalidator)
+        self.le_Vc.setValidator(doublevalidator)
+        self.le_Zc.setValidator(doublevalidator)
+        self.le_omega.setValidator(doublevalidator)
+        # cp
+        self.le_a0.setValidator(doublevalidator)
+        self.le_a1.setValidator(doublevalidator)
+        self.le_a2.setValidator(doublevalidator)
+        self.le_a3.setValidator(doublevalidator)
+        self.le_a4.setValidator(doublevalidator)
+        self.le_CpTmin.setValidator(doublevalidator)
+        self.le_CpTmax.setValidator(doublevalidator)
+        # antoine
+        self.le_AntoineA.setValidator(doublevalidator)
+        self.le_AntoineB.setValidator(doublevalidator)
+        self.le_AntoineC.setValidator(doublevalidator)
+        self.le_AntoineTmin.setValidator(doublevalidator)
+        self.le_AntoineTmax.setValidator(doublevalidator)
+
     def load_entries(self):
         self.le_formula.setText(self.Formula)
         self.le_name.setText(self.Name)
@@ -204,7 +242,6 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
 
     def confirm_clicked(self):
         if self.changes_made:
-
             edit_confirm_msg = "Save editions?"
             choice = QtWidgets.QMessageBox.question(
                 self,
@@ -215,156 +252,10 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
             )
 
             if choice == QtWidgets.QMessageBox.Yes:
-                query_WHERE = (
-                    " WHERE Formula LIKE '%"
-                    + self.Formula
-                    + "%'"
-                    + " AND Name LIKE '%"
-                    + self.Name
-                    + "%'"
-                    + " AND `CAS #` LIKE '%"
-                    + self.CAS
-                    + "%'"
-                )
-
-                query_ID = (
-                    "UPDATE database SET "
-                    + self.columnHeaders[0]
-                    + " = '"
-                    + self.le_formula.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[1]
-                    + " = '"
-                    + self.le_name.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[2]
-                    + " = '"
-                    + self.le_CAS.text()
-                    + "'"
-                    + query_WHERE
-                )
-
-                query_GENERAL = (
-                    "update database set "
-                    + self.columnHeaders[3]
-                    + "='"
-                    + self.le_MM.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[4]
-                    + " = '"
-                    + self.le_Tfp.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[5]
-                    + " = '"
-                    + self.le_Tb.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[6]
-                    + " = '"
-                    + self.le_Tc.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[7]
-                    + " = '"
-                    + self.le_Pc.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[8]
-                    + " = '"
-                    + self.le_Vc.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[9]
-                    + " = '"
-                    + self.le_Zc.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[10]
-                    + " = '"
-                    + self.le_omega.text()
-                    + "'"
-                    + query_WHERE
-                )
-
-                if self.isFloat(self.le_CpTmin.text()) and self.isFloat(
-                    self.le_CpTmax.text()
-                ):
-                    Trange = self.le_CpTmin.text() + "-" + self.le_CpTmax.text()
-                else:
-                    Trange = ""
-
-                query_CP = (
-                    "update database set "
-                    + self.columnHeaders[11]
-                    + "='"
-                    + Trange
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[12]
-                    + " = '"
-                    + self.le_a0.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[13]
-                    + " = '"
-                    + self.le_a1.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[14]
-                    + " = '"
-                    + self.le_a2.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[15]
-                    + " = '"
-                    + self.le_a3.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[16]
-                    + " = '"
-                    + self.le_a4.text()
-                    + "'"
-                    + query_WHERE
-                )
-
-                query_ANTOINE = (
-                    "update database set "
-                    + self.columnHeaders[19]
-                    + "='"
-                    + self.le_AntoineA.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[20]
-                    + " = '"
-                    + self.le_AntoineB.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[21]
-                    + " = '"
-                    + self.le_AntoineC.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[23]
-                    + " = '"
-                    + self.le_AntoineTmin.text()
-                    + "'"
-                    + ", "
-                    + self.columnHeaders[25]
-                    + " = '"
-                    + self.le_AntoineTmax.text()
-                    + "'"
-                    + query_WHERE
-                )
-
                 try:
-                    db.cursor.execute(query_ID)
-                    db.cursor.execute(query_GENERAL)
-                    db.cursor.execute(query_CP)
-                    db.cursor.execute(query_ANTOINE)
+                    self.updateSubstanceValues()
+                    self.updateCpCorrelationsValues()
+                    self.updateAntoineCorrelationsValues()
                     self.close()
                 except:
                     msg = QtWidgets.QMessageBox.about(
@@ -373,9 +264,9 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
 
     def isFloat(self, s):
         try:
-            float(s)
+            float(s) * 1.0 + 1
             return True
-        except ValueError:
+        except:
             return False
 
     def lineEdit_changed(self):
@@ -400,3 +291,108 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
             self.btn_edit_confirm.setDisabled(False)
         else:
             self.btn_edit_confirm.setDisabled(True)
+
+    def updateCpCorrelationsValues(self):
+        cp_tmin = self.returnNULLifEmptyFloat(self.le_CpTmin)
+        cp_tmax = self.returnNULLifEmptyFloat(self.le_CpTmax)
+        cp_a0 = self.returnNULLifEmptyFloat(self.le_a0)
+        cp_a1 = self.returnNULLifEmptyFloat(self.le_a1)
+        cp_a2 = self.returnNULLifEmptyFloat(self.le_a2)
+        cp_a3 = self.returnNULLifEmptyFloat(self.le_a3)
+        cp_a4 = self.returnNULLifEmptyFloat(self.le_a4)
+
+        query = """UPDATE cp_correlations SET cp_tmin=?,
+        cp_tmax=?,
+        cp_a0=?,
+        cp_a1=?,
+        cp_a2=?,
+        cp_a3=?,
+        cp_a4=? WHERE substance_id=?"""
+        db.cursor.execute(
+            query,
+            (
+                cp_tmin,
+                cp_tmax,
+                cp_a0,
+                cp_a1,
+                cp_a2,
+                cp_a3,
+                cp_a4,
+                self.substance_id_int,
+            ),
+        )
+
+    def updateAntoineCorrelationsValues(self):
+        antoine_a = self.returnNULLifEmptyFloat(self.le_AntoineA)
+        antoine_b = self.returnNULLifEmptyFloat(self.le_AntoineB)
+        antoine_c = self.returnNULLifEmptyFloat(self.le_AntoineC)
+        tmin_k = self.returnNULLifEmptyFloat(self.le_AntoineTmin)
+        tmax_k = self.returnNULLifEmptyFloat(self.le_AntoineTmax)
+
+        query = """UPDATE antoine_correlations SET antoine_a=?,
+                 antoine_b=?,
+                 antoine_c=?,
+                 tmin_k=?,
+                 tmax_k=? WHERE substance_id=?"""
+        db.cursor.execute(
+            query,
+            (antoine_a, antoine_b, antoine_c, tmin_k, tmax_k, self.substance_id_int),
+        )
+
+    def updateSubstanceValues(self):
+        name = self.returnNULLifEmptyString(self.le_name)
+        formula = self.returnNULLifEmptyString(self.le_formula)
+        cas = self.returnNULLifEmptyString(self.le_CAS)
+        tfp_k = self.returnNULLifEmptyFloat(self.le_Tfp)
+        tb_k = self.returnNULLifEmptyFloat(self.le_Tb)
+        tc_k = self.returnNULLifEmptyFloat(self.le_Tc)
+        pc_bar = self.returnNULLifEmptyFloat(self.le_Pc)
+        vc_cm3_per_mol = self.returnNULLifEmptyFloat(self.le_Vc)
+        zc = self.returnNULLifEmptyFloat(self.le_Zc)
+        omega = self.returnNULLifEmptyFloat(self.le_omega)
+        molar_weigth = self.returnNULLifEmptyFloat(self.le_MM)
+
+        query = """UPDATE substance SET name=?,
+        formula=?,
+        cas=?,
+        tfp_k=?,
+        tb_k=?,
+        tc_k=?,
+        pc_bar=?,
+        vc_cm3_per_mol=?,
+        zc=?,
+        omega=?,
+        molar_weigth=? WHERE substance_id=?
+        """
+        db.cursor.execute(
+            query,
+            (
+                name,
+                formula,
+                cas,
+                tfp_k,
+                tb_k,
+                tc_k,
+                pc_bar,
+                vc_cm3_per_mol,
+                zc,
+                omega,
+                molar_weigth,
+                self.substance_id_int,
+            ),
+        )
+
+    def returnNULLifEmptyString(self, le):
+        if le.text() == "":
+            return None
+        return le.text()
+
+    def returnNULLifEmptyFloat(self, le):
+        if le.text() == "":
+            return None
+        return float(le.text())
+
+    def returnNULLifEmptyInteger(self, le):
+        if le.text() == "":
+            return None
+        return int(le.text())

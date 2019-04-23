@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/db_ui.ui',
 # licensing of 'designer/db_ui.ui' applies.
 #
-# Created: Fri Apr 19 13:26:35 2019
+# Created: Tue Apr 23 14:20:05 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -16,7 +16,7 @@ class Ui_databaseWindow(object):
         databaseWindow.setObjectName("databaseWindow")
         databaseWindow.setWindowModality(QtCore.Qt.ApplicationModal)
         databaseWindow.setEnabled(True)
-        databaseWindow.resize(744, 398)
+        databaseWindow.resize(625, 359)
         databaseWindow.setMinimumSize(QtCore.QSize(600, 250))
         databaseWindow.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.gridLayout = QtWidgets.QGridLayout(databaseWindow)
@@ -25,7 +25,7 @@ class Ui_databaseWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 724, 378))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 605, 339))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -138,6 +138,11 @@ class Ui_databaseWindow(object):
             self.btn_RestoreOriginalDB,
             QtCore.SIGNAL("clicked()"),
             databaseWindow.restore_original_database,
+        )
+        QtCore.QObject.connect(
+            self.tableWidget_db,
+            QtCore.SIGNAL("doubleClicked(QModelIndex)"),
+            self.btn_editSubstance.click,
         )
         QtCore.QMetaObject.connectSlotsByName(databaseWindow)
 

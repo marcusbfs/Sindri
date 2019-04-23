@@ -2,6 +2,7 @@ from PySide2 import QtCore, QtWidgets
 
 import db
 from ui.db_substanceProperties_ui import Ui_Form_db_substanceProperties
+from validators import getDoubleValidatorRegex
 
 
 class Form_AddSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProperties):
@@ -54,52 +55,146 @@ class Form_AddSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substancePropert
         self.le_formula.textChanged.connect(self.disableConfirmButton)
         self.le_CAS.textChanged.connect(self.disableConfirmButton)
 
+        doublevalidator = getDoubleValidatorRegex(self)
+        # general
+        self.le_MM.setValidator(doublevalidator)
+        self.le_Tb.setValidator(doublevalidator)
+        self.le_Tfp.setValidator(doublevalidator)
+        self.le_Tc.setValidator(doublevalidator)
+        self.le_Pc.setValidator(doublevalidator)
+        self.le_Vc.setValidator(doublevalidator)
+        self.le_Zc.setValidator(doublevalidator)
+        self.le_omega.setValidator(doublevalidator)
+        # cp
+        self.le_a0.setValidator(doublevalidator)
+        self.le_a1.setValidator(doublevalidator)
+        self.le_a2.setValidator(doublevalidator)
+        self.le_a3.setValidator(doublevalidator)
+        self.le_a4.setValidator(doublevalidator)
+        self.le_CpTmin.setValidator(doublevalidator)
+        self.le_CpTmax.setValidator(doublevalidator)
+        # antoine
+        self.le_AntoineA.setValidator(doublevalidator)
+        self.le_AntoineB.setValidator(doublevalidator)
+        self.le_AntoineC.setValidator(doublevalidator)
+        self.le_AntoineTmin.setValidator(doublevalidator)
+        self.le_AntoineTmax.setValidator(doublevalidator)
+
     def confirm_clicked(self):
 
-        if self.isFloat(self.le_CpTmin.text()) and self.isFloat(self.le_CpTmax.text()):
-            Trange = self.le_CpTmin.text() + "-" + self.le_CpTmax.text()
-        else:
-            Trange = ""
+        try:
 
-        query = "insert into database values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-        items = (
-            self.le_formula.text(),
-            self.le_name.text(),
-            self.le_CAS.text(),
-            self.le_MM.text(),
-            self.le_Tfp.text(),
-            self.le_Tb.text(),
-            self.le_Tc.text(),
-            self.le_Pc.text(),
-            self.le_Vc.text(),
-            self.le_Zc.text(),
-            self.le_omega.text(),
-            Trange,
-            self.le_a0.text(),
-            self.le_a1.text(),
-            self.le_a2.text(),
-            self.le_a3.text(),
-            self.le_a4.text(),
-            "",
-            "",
-            self.le_AntoineA.text(),
-            self.le_AntoineC.text(),
-            self.le_AntoineB.text(),
-            "",
-            self.le_AntoineTmin.text(),
-            "",
-            self.le_AntoineTmax.text(),
-        )
+            # insert general properties substances
+            name = self.returnNULLifEmptyString(self.le_name)
+            formula = self.returnNULLifEmptyString(self.le_formula)
+            cas = self.returnNULLifEmptyString(self.le_CAS)
+            tfp_k = self.returnNULLifEmptyFloat(self.le_Tfp)
+            tb_k = self.returnNULLifEmptyFloat(self.le_Tb)
+            tc_k = self.returnNULLifEmptyFloat(self.le_Tc)
+            pc_bar = self.returnNULLifEmptyFloat(self.le_Pc)
+            vc_cm3_per_mol = self.returnNULLifEmptyFloat(self.le_Vc)
+            zc = self.returnNULLifEmptyFloat(self.le_Zc)
+            omega = self.returnNULLifEmptyFloat(self.le_omega)
+            molar_weigth = self.returnNULLifEmptyFloat(self.le_MM)
 
-        db.cursor.execute(query, items)
-        self.substance_added = True
+            query = (
+                "INSERT INTO substance (name,formula,cas,tfp_k,tb_k,tc_k,pc_bar,vc_cm3_per_mol,zc,omega,molar_weigth)"
+                + "VALUES(?,?,?,?,?,?,?,?,?,?,?)"
+            )
+            db.cursor.execute(
+                query,
+                (
+                    name,
+                    formula,
+                    cas,
+                    tfp_k,
+                    tb_k,
+                    tc_k,
+                    pc_bar,
+                    vc_cm3_per_mol,
+                    zc,
+                    omega,
+                    molar_weigth,
+                ),
+            )
+
+            query = (
+                "SELECT substance_id FROM substance WHERE name='"
+                + name
+                + "' AND formula='"
+                + formula
+                + "' AND cas='"
+                + cas
+                + "'"
+            )
+            db.cursor.execute(query)
+            substance_id = int(db.cursor.fetchone()[0])
+
+            cp_eq_type = 1
+            cp_tmin = self.returnNULLifEmptyFloat(self.le_CpTmin)
+            cp_tmax = self.returnNULLifEmptyFloat(self.le_CpTmax)
+            cp_a0 = self.returnNULLifEmptyFloat(self.le_a0)
+            cp_a1 = self.returnNULLifEmptyFloat(self.le_a1)
+            cp_a2 = self.returnNULLifEmptyFloat(self.le_a2)
+            cp_a3 = self.returnNULLifEmptyFloat(self.le_a3)
+            cp_a4 = self.returnNULLifEmptyFloat(self.le_a4)
+
+            query = (
+                "insert into cp_correlations (substance_id,eq_type,cp_tmin,cp_tmax,cp_a0,cp_a1,cp_a2,cp_a3,cp_a4)"
+                + "values(?,?,?,?,?,?,?,?,?)"
+            )
+            db.cursor.execute(
+                query,
+                (
+                    substance_id,
+                    cp_eq_type,
+                    cp_tmin,
+                    cp_tmax,
+                    cp_a0,
+                    cp_a1,
+                    cp_a2,
+                    cp_a3,
+                    cp_a4,
+                ),
+            )
+
+            antoine_eq_type = 1
+            antoine_a = self.returnNULLifEmptyFloat(self.le_AntoineA)
+            antoine_b = self.returnNULLifEmptyFloat(self.le_AntoineB)
+            antoine_c = self.returnNULLifEmptyFloat(self.le_AntoineC)
+            tmin_k = self.returnNULLifEmptyFloat(self.le_AntoineTmin)
+            tmax_k = self.returnNULLifEmptyFloat(self.le_AntoineTmax)
+
+            query = (
+                "insert into antoine_correlations (substance_id,eq_type,antoine_a,antoine_b,antoine_c,tmin_k,tmax_k)"
+                + "values(?,?,?,?,?,?,?)"
+            )
+            db.cursor.execute(
+                query,
+                (
+                    substance_id,
+                    antoine_eq_type,
+                    antoine_a,
+                    antoine_b,
+                    antoine_c,
+                    tmin_k,
+                    tmax_k,
+                ),
+            )
+
+            self.substance_added = True
+
+        except Exception as e:
+            QtWidgets.QMessageBox.about(self, "Error adding substance", str(e))
+            return -1
+
         self.close()
 
     def isFloat(self, s):
         try:
-            float(s)
+            float(s) * 1.0 + 1.0
             return True
-        except ValueError:
+        except:
             return False
 
     def cancel_clicked(self):
@@ -120,3 +215,18 @@ class Form_AddSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substancePropert
             self.btn_edit_confirm.setDisabled(False)
         else:
             self.btn_edit_confirm.setDisabled(True)
+
+    def returnNULLifEmptyString(self, le):
+        if le.text() == "":
+            return None
+        return le.text()
+
+    def returnNULLifEmptyFloat(self, le):
+        if le.text() == "":
+            return None
+        return float(le.text())
+
+    def returnNULLifEmptyInteger(self, le):
+        if le.text() == "":
+            return None
+        return int(le.text())

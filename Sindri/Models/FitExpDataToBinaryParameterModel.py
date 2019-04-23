@@ -1,4 +1,3 @@
-from Models.MixtureModel import MixtureModel
 import numpy as np
 from scipy.optimize import least_squares
 
@@ -88,12 +87,10 @@ class FitExpDataToBinaryParameterModel:
             k0_calc = phi_liq_0 / phi_vap_0
             k1_calc = phi_liq_1 / phi_vap_1
 
-            lnk0_exp = np.log(k0_exp)
-            lnk0_calc = np.log(k0_calc)
-            lnk1_exp = np.log(k1_exp)
-            lnk1_calc = np.log(k1_calc)
             s += ((np.log(k0_exp) - np.log(k0_calc)) / np.log(k0_exp)) ** 2
             s += ((np.log(k1_exp) - np.log(k1_calc)) / np.log(k1_exp)) ** 2
+            # s += ((np.log(k0_exp) - np.log(k0_calc)) ) ** 2
+            # s += ((np.log(k1_exp) - np.log(k1_calc)) ) ** 2
 
         return s
 

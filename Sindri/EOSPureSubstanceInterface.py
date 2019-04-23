@@ -37,6 +37,9 @@ class EOSPureSubstanceInterface:
     def getZfromPT(self, _P: float, _T: float):
         return self.eosmix.getZfromPT(_P, _T, self.y)
 
+    def getPfromTV(self, _T: float, _V: float):
+        return self.eosmix.getPfromTV(_T, _V, self.y)
+
     def getAllProps(
         self, Tref: float, T: float, Pref: float, P: float
     ) -> (Props, Props):

@@ -177,11 +177,14 @@ def get_compound_properties(name, formula):
 
     """
     db.init()  # verificar problemas com isso aqui
+    table_name = "v_all_properties_including_correlations"
     query = (
-        "SELECT * FROM database WHERE Formula LIKE '%"
+        "SELECT * FROM "
+        + table_name
+        + " WHERE formula LIKE '%"
         + formula
         + "%'"
-        + " AND Name LIKE '%"
+        + " AND name LIKE '%"
         + name
         + "%'"
     )

@@ -97,7 +97,9 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
 
     def show_full_db(self):
         try:
-            query = "SELECT * FROM database"
+            # join = "substance s LEFT JOIN cp_correlations c ON s.substance_id = c.substance_id LEFT JOIN antoine_correlations a ON a.substance_id = s.substance_id"
+            # query = "SELECT * FROM " + join
+            query = "SELECT * from v_all_properties_including_correlations"
             db.cursor.execute(query)
             results = db.cursor.fetchall()
             self.update_table_db(results)
@@ -202,20 +204,43 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             if choice == QtWidgets.QMessageBox.Yes:
                 try:
                     self.database_changed = True
+                    # query = (
+                    #     "DELETE FROM database WHERE Formula LIKE '"
+                    #     + row_values[0]
+                    #     + "%'"
+                    #     + " AND Name LIKE '"
+                    #     + row_values[1]
+                    #     + "%'"
+                    #     + " AND `CAS #` LIKE '"
+                    #     + row_values[2]
+                    #     + "%'"
+                    # )
                     query = (
-                        "DELETE FROM database WHERE Formula LIKE '"
+                        "SELECT substance_id FROM substance WHERE name='"
+                        + str(row_values[1])
+                        + "' AND formula='"
                         + row_values[0]
-                        + "%'"
-                        + " AND Name LIKE '"
-                        + row_values[1]
-                        + "%'"
-                        + " AND `CAS #` LIKE '"
+                        + "' AND cas='"
                         + row_values[2]
-                        + "%'"
+                        + "'"
+                    )
+                    db.cursor.execute(query)
+                    substance_id = "'{:d}'".format(db.cursor.fetchone()[0])
+                    query = "DELETE from cp_correlations where substance_id={0}".format(
+                        substance_id
+                    )
+                    db.cursor.execute(query)
+                    query = "DELETE FROM antoine_correlations where substance_id={0}".format(
+                        substance_id
+                    )
+                    db.cursor.execute(query)
+                    query = "DELETE FROM substance where substance_id={0}".format(
+                        substance_id
                     )
                     db.cursor.execute(query)
                     self.search_substance()
-                except:
+                except Exception as e:
+                    print(str(e))
                     pass
 
     def save_db(self):

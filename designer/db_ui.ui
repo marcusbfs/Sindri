@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>744</width>
-    <height>398</height>
+    <width>625</width>
+    <height>359</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -42,8 +42,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>724</width>
-        <height>378</height>
+        <width>605</width>
+        <height>339</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -214,11 +214,11 @@
    <slot>add_substance()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>539</x>
+     <x>420</x>
      <y>44</y>
     </hint>
     <hint type="destinationlabel">
-     <x>651</x>
+     <x>624</x>
      <y>153</y>
     </hint>
    </hints>
@@ -230,11 +230,11 @@
    <slot>edit_substance()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>623</x>
+     <x>504</x>
      <y>44</y>
     </hint>
     <hint type="destinationlabel">
-     <x>788</x>
+     <x>624</x>
      <y>157</y>
     </hint>
    </hints>
@@ -262,11 +262,11 @@
    <slot>del_substance()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>720</x>
+     <x>601</x>
      <y>45</y>
     </hint>
     <hint type="destinationlabel">
-     <x>892</x>
+     <x>624</x>
      <y>162</y>
     </hint>
    </hints>
@@ -310,7 +310,7 @@
    <slot>save_db()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>583</x>
+     <x>464</x>
      <y>76</y>
     </hint>
     <hint type="destinationlabel">
@@ -326,7 +326,7 @@
    <slot>search_substance()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>341</x>
+     <x>332</x>
      <y>59</y>
     </hint>
     <hint type="destinationlabel">
@@ -342,12 +342,28 @@
    <slot>restore_original_database()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>720</x>
+     <x>601</x>
      <y>76</y>
     </hint>
     <hint type="destinationlabel">
      <x>613</x>
      <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableWidget_db</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>btn_editSubstance</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>504</x>
+     <y>37</y>
     </hint>
    </hints>
   </connection>

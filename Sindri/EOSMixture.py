@@ -121,6 +121,20 @@ class EOSMixture:
         real_values = roots[roots >= 0]
         return real_values
 
+    def getPfromTV(self, T: float, V: float, y) -> float:
+        b = self.mixRuleBehavior.bm(y, T, self.biBehavior, self.substances)
+        theta = self.mixRuleBehavior.thetam(
+            y, T, self.thetaiBehavior, self.substances, self.k
+        )
+        delta = self.deltaMixBehavior.deltam(
+            y, T, self.biBehavior, self.mixRuleBehavior, self.substances
+        )
+        epsilon = self.epsilonMixBehavior.epsilonm(
+            y, T, self.biBehavior, self.mixRuleBehavior, self.substances
+        )
+        p = R_IG * T / (V - b) - theta / (V * (V + delta) + epsilon)
+        return p
+
     def getPhi_i(self, i: int, y, P: float, T: float, Z: float):
 
         RT = R_IG * T
