@@ -78,6 +78,21 @@ class SubstanceProp(object):
 
         self._no_cp_err = "Substance {} doesn't have Cp parameters".format(self.Name)
 
+        self.substance_id = int(
+            db.cursor.execute(
+                "SELECT substance_id from substance "
+                + " WHERE formula LIKE '%"
+                + formula
+                + "%'"
+                + " AND name LIKE '%"
+                + name
+                + "%'"
+            ).fetchone()[0]
+        )
+
+    def getSubstanceID(self):
+        return self.substance_id
+
     def getIGProps(self, Tref: float, T: float, Pref: float, P: float):
         if self.hasCp():
             cp = self.getCp(T)

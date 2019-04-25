@@ -5,6 +5,9 @@ class Compound:
     def __init__(self, cdict):
         self._cdict = cdict
 
+    def getSubstanceID(self):
+        return self._cdict["substance_id"]
+
     def getName(self):
         return self._testString(self._cdict["Name"])
 
@@ -192,7 +195,18 @@ def get_compound_properties(name, formula):
     results = db.cursor.fetchall()
     res = results[0]
 
+    substance_id = db.cursor.execute(
+        "SELECT substance_id from substance "
+        + " WHERE formula LIKE '%"
+        + formula
+        + "%'"
+        + " AND name LIKE '%"
+        + name
+        + "%'"
+    ).fetchone()[0]
+
     dict_names = [
+        "substance_id",
         "Formula",
         "Name",
         "CAS",
@@ -222,7 +236,7 @@ def get_compound_properties(name, formula):
         "Tmax_K",
     ]
 
-    res2 = []
+    res2 = [substance_id]
     for i in range(len(res)):
         if i == 11:
             tmin = None

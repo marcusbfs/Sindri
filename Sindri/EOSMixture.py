@@ -105,21 +105,7 @@ class EOSMixture:
         epsilon = self.epsilonMixBehavior.epsilonm(
             y, T, self.biBehavior, self.mixRuleBehavior, self.substances
         )
-
-        Bl = b * P / (R_IG * T)
-        deltal = delta * P / (R_IG * T)
-        epsilonl = epsilon * np.power(P / (R_IG * T), 2)
-        thetal = theta * P / np.power(R_IG * T, 2)
-
-        # 0 = ax ^ 3 + b * x ^ 2 + c * x + d
-        _a = 1.0
-        _b = deltal - Bl - 1.0
-        _c = thetal + epsilonl - deltal * (1.0 + Bl)
-        _d = -(epsilonl * (Bl + 1.0) + Bl * thetal)
-
-        roots = np.asarray(solve_cubic(_a, _b, _c, _d))
-        real_values = roots[roots >= 0]
-        return real_values
+        return _getZfromPT_helper(b, theta, delta, epsilon, T, P, R_IG)
 
     def getPfromTV(self, T: float, V: float, y) -> float:
         b = self.mixRuleBehavior.bm(y, T, self.biBehavior, self.substances)
@@ -137,26 +123,16 @@ class EOSMixture:
 
     def getPhi_i(self, i: int, y, P: float, T: float, Z: float):
 
-        RT = R_IG * T
-
-        V = RT * Z / P
-
         bm = self.mixRuleBehavior.bm(y, T, self.biBehavior, self.substances)
-
         thetam = self.mixRuleBehavior.thetam(
             y, T, self.thetaiBehavior, self.substances, self.k
         )
-
         deltam = self.deltaMixBehavior.deltam(
             y, T, self.biBehavior, self.mixRuleBehavior, self.substances
         )
-
         epsilonm = self.epsilonMixBehavior.epsilonm(
             y, T, self.biBehavior, self.mixRuleBehavior, self.substances
         )
-
-        deltam2_minus_4epislonm = deltam * deltam - 4.0 * epsilonm
-
         # derivatives
         diffthetam = self.mixRuleBehavior.diffThetam(
             i, y, T, self.thetaiBehavior, self.substances, self.k
@@ -168,42 +144,21 @@ class EOSMixture:
         diffepsilonm = self.epsilonMixBehavior.diffEpsilonm(
             i, y, T, self.biBehavior, self.mixRuleBehavior, self.substances
         )
-        deltaN = deltam * diffdeltam * 2.0 - 4.0 * diffepsilonm
-
-        if abs(deltam2_minus_4epislonm) < 100 * DBL_EPSILON:
-            substitute_term = -1.0 / (V + deltam / 2.0)
-            first_term = substitute_term * diffthetam / RT
-            last_term = diffbm / (V - bm) - np.log((V - bm) / V) - np.log(Z)
-            return np.exp(first_term + last_term)
-
-        sqrt_d2_minus_4eps = np.sqrt(deltam2_minus_4epislonm)
-        twoV_plus_deltam_minus_sqrtd24eps = 2.0 * V + deltam - sqrt_d2_minus_4eps
-        twoV_plus_deltam_plus_sqrtd24eps = 2.0 * V + deltam + sqrt_d2_minus_4eps
-
-        # Equation(Poling, 2001)
-
-        firstline = (1.0 / sqrt_d2_minus_4eps) * (diffthetam / RT) - (
-            thetam / RT
-        ) * deltaN / (2.0 * np.power(deltam2_minus_4epislonm, 1.5))
-
-        secline_p1 = np.log(
-            twoV_plus_deltam_minus_sqrtd24eps / twoV_plus_deltam_plus_sqrtd24eps
+        return _getPhi_i_helper(
+            P,
+            T,
+            Z,
+            R_IG,
+            bm,
+            thetam,
+            deltam,
+            epsilonm,
+            diffthetam,
+            diffbm,
+            diffdeltam,
+            diffepsilonm,
+            DBL_EPSILON,
         )
-
-        secline_p2 = (thetam / RT) / sqrt_d2_minus_4eps
-
-        thirdline = (
-            (diffdeltam - deltaN / (2.0 * sqrt_d2_minus_4eps))
-            / twoV_plus_deltam_minus_sqrtd24eps
-            - (diffdeltam + deltaN / (2.0 * sqrt_d2_minus_4eps))
-            / twoV_plus_deltam_plus_sqrtd24eps
-        )
-
-        fourthline = diffbm / (V - bm) - np.log((V - bm) / V) - np.log(Z)
-
-        lnphi_i = firstline * secline_p1 + secline_p2 * thirdline + fourthline
-        phi_i = np.exp(lnphi_i)
-        return phi_i
 
     def getFugacity(self, y, _P: float, _T: float, _V: float, _Z: float) -> float:
         f = 0.0
@@ -290,7 +245,7 @@ class EOSMixture:
             return (1.0 - _Zfunc(v, t)) / v
 
         # calculate UR
-        nhau = _URfunc(V, T)
+        # nhau = _URfunc(V, T)
         UR_RT = quad(_URfunc, V, np.inf, args=(T,))[0]
         UR = UR_RT * T * R_IG
         # calculate AR
@@ -357,6 +312,85 @@ class EOSMixture:
 
     def _getPd_guess(self, y, T):
         return _helper_getPd_guess(y, T, self.Pcs, self.Tcs, self.omegas)
+
+    # def getBubblePointPressure_UNIFAC_liquid_model(self, x, T, tol=1e3 * DBL_EPSILON, kmax=10000):
+
+    def getCapPhi_i(self, i: int, y, P: float, T: float) -> float:
+        zv = np.max(self.getZfromPT(P, T, y))
+        return self.getPhi_i(i, y, P, T, zv)
+
+    def getPSat_i(self, i: int, T: float) -> float:
+        has_antoine = self.substances[i].hasAntoine()
+        check_antoine_range = self.substances[i].checkAntoineRange(T)
+
+        if has_antoine and check_antoine_range:
+            P = self.substances[i].getPvpAntoine(T)
+        else:
+            P = self.substances[i].getPvpAW(T)
+            from EOSPureSubstanceInterface import EOSPureSubstanceInterface
+
+            system = EOSPureSubstanceInterface([self.substances[i]], self.eosname)
+            P, it = system.getPvp(T, P)
+        return P
+
+    def getCapPhiSat_i(self, i: int, y, T: float) -> float:
+        P = self.getPSat_i(i, T)
+        zv = np.max(self.getZfromPT(P, T, y))
+        return self.getPhi_i(i, y, P, T, zv)
+
+    def getDefCapPhi_i(self, i: int, y, P: float, T: float) -> float:
+        return self.getCapPhi_i(i, y, P, T) / self.getCapPhiSat_i(i, y, T)
+
+    def get_y_eq_12_9(self, x, gamma, Psat, CapPhi, P):
+        return x * gamma * Psat / (CapPhi * P)
+
+    def get_P_eq_12_11(self, x, gamma, Psat, CapPhi):
+        return np.sum(x * gamma * Psat / CapPhi)
+
+    def getPhiVap(self, y, P, T):
+        phivap = np.zeros(self.n, dtype=np.float64)
+        zsvap = self.getZfromPT(P, T, y)
+        zvap = np.max(zsvap)
+        for i in range(self.n):
+            phivap[i] = self.getPhi_i(i, y, P, T, zvap)
+        return phivap
+
+    def getCapPhi(self, y, P, T):
+        capphi = np.ones(self.n, dtype=np.float64)
+        for i in range(self.n):
+            capphi[i] = self.getDefCapPhi_i(i, y, P, T)
+        return capphi
+
+    def getBubblePointPressure_UNIFAC(self, x, T, tol=1e3 * DBL_EPSILON, kmax=100):
+        from Models.LiquidModel import UNIFAC
+
+        assert len(x) == self.n
+        assert np.sum(x) == 1.0
+
+        x = np.atleast_1d(x)
+
+        subs_ids = [s.getSubstanceID() for s in self.substances]
+        unifac_model = UNIFAC(subs_ids)
+
+        gamma = unifac_model.getGamma(x, T)
+        capphi = np.ones(self.n, dtype=np.float64)
+        PSat = np.asarray([self.getPSat_i(i, T) for i in range(self.n)])
+
+        pb = self.get_P_eq_12_11(x, gamma, PSat, capphi)
+        err = 100
+        ite = 0
+
+        while err > tol and ite < kmax:
+            ite += 1
+            y = self.get_y_eq_12_9(x, gamma, PSat, capphi, pb)
+            capphi = self.getCapPhi(y, pb, T)
+            pb_old = pb
+            pb = self.get_P_eq_12_11(x, gamma, PSat, capphi)
+            err = np.abs((pb - pb_old) / pb)
+
+        phivap = self.getPhiVap(y, pb, T)
+        k = gamma * PSat / (pb * capphi)
+        return y, pb, phivap, gamma, k, ite
 
     def getBubblePointPressure(self, x, T, tol=1e3 * DBL_EPSILON, kmax=10000):
 
@@ -850,3 +884,96 @@ def _helper_bubble_T_guess_from_wilson(x, P, T, Pcs, Tcs, omegas):
         T = told
 
     return T
+
+
+from numba import njit, float64, jit
+
+
+@jit((float64, float64, float64, float64, float64, float64, float64), cache=True)
+def _getZfromPT_helper(
+    b: float,
+    theta: float,
+    delta: float,
+    epsilon: float,
+    T: float,
+    P: float,
+    R_IG: float,
+):
+    Bl = b * P / (R_IG * T)
+    deltal = delta * P / (R_IG * T)
+    epsilonl = epsilon * np.power(P / (R_IG * T), 2)
+    thetal = theta * P / np.power(R_IG * T, 2)
+    _b = deltal - Bl - 1.0
+    _c = thetal + epsilonl - deltal * (1.0 + Bl)
+    _d = -(epsilonl * (Bl + 1.0) + Bl * thetal)
+    roots = np.array(solve_cubic(1.0, _b, _c, _d))
+    real_values = roots[roots >= 0]
+    return real_values
+
+
+@njit(
+    (
+        float64,
+        float64,
+        float64,
+        float64,
+        float64,
+        float64,
+        float64,
+        float64,
+        float64,
+        float64,
+        float64,
+        float64,
+        float64,
+    ),
+    cache=True,
+)
+def _getPhi_i_helper(
+    P: float,
+    T: float,
+    Z: float,
+    R_IG: float,
+    bm: float,
+    thetam: float,
+    deltam: float,
+    epsilonm: float,
+    diffthetam: float,
+    diffbm: float,
+    diffdeltam: float,
+    diffepsilonm: float,
+    DBL_EPSILON: float,
+) -> float:
+    RT = R_IG * T
+    V = RT * Z / P
+    deltam2_minus_4epislonm = deltam * deltam - 4.0 * epsilonm
+    deltaN = deltam * diffdeltam * 2.0 - 4.0 * diffepsilonm
+
+    if abs(deltam2_minus_4epislonm) < 100 * DBL_EPSILON:
+        substitute_term = -1.0 / (V + deltam / 2.0)
+        first_term = substitute_term * diffthetam / RT
+        last_term = diffbm / (V - bm) - np.log((V - bm) / V) - np.log(Z)
+        return np.exp(first_term + last_term)
+
+    sqrt_d2_minus_4eps = np.sqrt(deltam2_minus_4epislonm)
+    twoV_plus_deltam_minus_sqrtd24eps = 2.0 * V + deltam - sqrt_d2_minus_4eps
+    twoV_plus_deltam_plus_sqrtd24eps = 2.0 * V + deltam + sqrt_d2_minus_4eps
+
+    # Equation(Poling, 2001)
+    firstline = (1.0 / sqrt_d2_minus_4eps) * (diffthetam / RT) - (
+        thetam / RT
+    ) * deltaN / (2.0 * np.power(deltam2_minus_4epislonm, 1.5))
+    secline_p1 = np.log(
+        twoV_plus_deltam_minus_sqrtd24eps / twoV_plus_deltam_plus_sqrtd24eps
+    )
+    secline_p2 = (thetam / RT) / sqrt_d2_minus_4eps
+    thirdline = (
+        (diffdeltam - deltaN / (2.0 * sqrt_d2_minus_4eps))
+        / twoV_plus_deltam_minus_sqrtd24eps
+        - (diffdeltam + deltaN / (2.0 * sqrt_d2_minus_4eps))
+        / twoV_plus_deltam_plus_sqrtd24eps
+    )
+    fourthline = diffbm / (V - bm) - np.log((V - bm) / V) - np.log(Z)
+    lnphi_i = firstline * secline_p1 + secline_p2 * thirdline + fourthline
+    phi_i = np.exp(lnphi_i)
+    return phi_i
