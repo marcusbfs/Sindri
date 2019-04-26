@@ -3,6 +3,21 @@ import numpy as np
 import db
 
 
+def get_all_id_and_subgroups_formulas():
+    query = """select number, subgroup_name
+                 from unifac_subgroups 
+                 order by number"""
+    data = db.cursor.execute(query).fetchall()
+    number_of_groups = len(data)
+    ret_dict = {}
+    for i in range(number_of_groups):
+        value = int(data[i][0])
+        key = "{:d} {}".format(value, data[i][1])
+        ret_dict[key] = value
+
+    return ret_dict
+
+
 def has_unifac_in_db(subs_ids):
     cursor = db.cursor
     n = len(subs_ids)

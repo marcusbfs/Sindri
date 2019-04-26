@@ -1,6 +1,8 @@
 from PySide2 import QtCore, QtWidgets
 
 import db
+from Controllers.AddUNIFACsubgroupController import AddUNIFACsubgroupController
+from Models.LiquidModel import has_unifac_in_db
 from ui.db_substanceProperties_ui import Ui_Form_db_substanceProperties
 from validators import getDoubleValidatorRegex
 
@@ -19,6 +21,10 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         self.changes_made = False
 
         # Connect buttons
+        ## unifac connects
+        self.btn_UNIFACsubgroups_add.clicked.connect(self.addUNIFACsubgroup)
+        self.btn_UNIFACsubgroups_remove.clicked.connect(self.deleteUNIFACsubgroup)
+
         self.connect(
             self.le_name, QtCore.SIGNAL("textChanged(QString)"), self.lineEdit_changed
         )
@@ -206,6 +212,8 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         self.le_AntoineTmin.setValidator(doublevalidator)
         self.le_AntoineTmax.setValidator(doublevalidator)
 
+        self.loadUNIFACsubgroups()
+
     def load_entries(self):
         self.le_formula.setText(self.Formula)
         self.le_name.setText(self.Name)
@@ -261,6 +269,8 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
                     msg = QtWidgets.QMessageBox.about(
                         self, "Error", "Could not save changes"
                     )
+        else:
+            self.close()
 
     def isFloat(self, s):
         try:
@@ -396,3 +406,74 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         if le.text() == "":
             return None
         return int(le.text())
+
+    def hasUNIFAC(self):
+        return has_unifac_in_db([self.substance_id_int])
+
+    def loadUNIFACsubgroups(self):
+        # 1: subgroup_id, 2: subgroup formula, 3:frequency
+        self.tableWidget_UNIFACsubgroups.setRowCount(0)
+        if self.hasUNIFAC():
+            query = """select us.number, us.subgroup_name, sunifac.frequency
+                 from substance_unifac_subgroups sunifac inner join unifac_subgroups us on us.number = sunifac.subgroup_id
+                 where sunifac.substance_id={} order by us.number""".format(
+                self.substance_id_int
+            )
+            data = db.cursor.execute(query).fetchall()
+            number_subgroups = len(data)
+            self.tableWidget_UNIFACsubgroups.setRowCount(number_subgroups)
+
+            for i in range(number_subgroups):
+                item_id = QtWidgets.QTableWidgetItem("{:d}".format(data[i][0]))
+                item_subgroup = QtWidgets.QTableWidgetItem(data[i][1])
+                item_frequency = QtWidgets.QTableWidgetItem("{:d}".format(data[i][2]))
+                self.tableWidget_UNIFACsubgroups.setItem(i, 0, item_id)
+                self.tableWidget_UNIFACsubgroups.setItem(i, 1, item_subgroup)
+                self.tableWidget_UNIFACsubgroups.setItem(i, 2, item_frequency)
+
+    def getCurrenteUNIFAC_subgroup_id(self):
+        current_row = self.tableWidget_UNIFACsubgroups.currentRow()
+        subgroup_id = -1
+        if current_row >= 0:
+            subgroup_id = int(
+                self.tableWidget_UNIFACsubgroups.item(current_row, 0).text()
+            )
+        return subgroup_id
+
+    def getCurrenteUNIFAC_frequency(self):
+        current_row = self.tableWidget_UNIFACsubgroups.currentRow()
+        frequency = -1
+        if current_row >= 0:
+            frequency = int(
+                self.tableWidget_UNIFACsubgroups.item(current_row, 2).text()
+            )
+        return frequency
+
+    def deleteUNIFACsubgroup(self):
+        current_row = self.tableWidget_UNIFACsubgroups.currentRow()
+        if current_row < 0:
+            return
+        self.changes_made = True
+        try:
+            subgroup_id = self.getCurrenteUNIFAC_subgroup_id()
+            query = """delete from substance_unifac_subgroups 
+            where substance_id={} and subgroup_id={} and frequency={}""".format(
+                self.substance_id_int, subgroup_id, self.getCurrenteUNIFAC_frequency()
+            )
+            db.cursor.execute(query)
+            # db.db.commit() # todo implement rollback?
+            self.loadUNIFACsubgroups()
+        except Exception as e:
+            pass
+
+    def addUNIFACsubgroup(self):
+        self.changes_made = True
+        controller = AddUNIFACsubgroupController(self)
+        try:
+            controller.createView()
+        except Exception as e:
+            QtWidgets.QMessageBox.about(
+                controller.addSubgroupView,
+                "Error adding subgroup",
+                "Subgroup already in the list",
+            )

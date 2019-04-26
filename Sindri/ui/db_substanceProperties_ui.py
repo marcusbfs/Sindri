@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/db_substanceProperties_ui.ui',
 # licensing of 'designer/db_substanceProperties_ui.ui' applies.
 #
-# Created: Tue Apr 23 14:18:59 2019
+# Created: Fri Apr 26 10:32:23 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -428,13 +428,52 @@ class Ui_Form_db_substanceProperties(object):
         )
         self.verticalLayout_14.addItem(spacerItem1)
         self.tabWidget_substanceProperties.addTab(self.tab_VaporPressure, "")
+        self.tab_UNIFAC = QtWidgets.QWidget()
+        self.tab_UNIFAC.setObjectName("tab_UNIFAC")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.tab_UNIFAC)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.groupBox = QtWidgets.QGroupBox(self.tab_UNIFAC)
+        self.groupBox.setObjectName("groupBox")
+        self.gridLayout_3 = QtWidgets.QGridLayout(self.groupBox)
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.tableWidget_UNIFACsubgroups = QtWidgets.QTableWidget(self.groupBox)
+        self.tableWidget_UNIFACsubgroups.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers
+        )
+        self.tableWidget_UNIFACsubgroups.setAlternatingRowColors(True)
+        self.tableWidget_UNIFACsubgroups.setSelectionBehavior(
+            QtWidgets.QAbstractItemView.SelectRows
+        )
+        self.tableWidget_UNIFACsubgroups.setColumnCount(3)
+        self.tableWidget_UNIFACsubgroups.setObjectName("tableWidget_UNIFACsubgroups")
+        self.tableWidget_UNIFACsubgroups.setColumnCount(3)
+        self.tableWidget_UNIFACsubgroups.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget_UNIFACsubgroups.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget_UNIFACsubgroups.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget_UNIFACsubgroups.setHorizontalHeaderItem(2, item)
+        self.gridLayout_3.addWidget(self.tableWidget_UNIFACsubgroups, 0, 0, 1, 3)
+        self.btn_UNIFACsubgroups_add = QtWidgets.QPushButton(self.groupBox)
+        self.btn_UNIFACsubgroups_add.setObjectName("btn_UNIFACsubgroups_add")
+        self.gridLayout_3.addWidget(self.btn_UNIFACsubgroups_add, 1, 0, 1, 1)
+        self.btn_UNIFACsubgroups_remove = QtWidgets.QPushButton(self.groupBox)
+        self.btn_UNIFACsubgroups_remove.setObjectName("btn_UNIFACsubgroups_remove")
+        self.gridLayout_3.addWidget(self.btn_UNIFACsubgroups_remove, 1, 1, 1, 1)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            203, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.gridLayout_3.addItem(spacerItem2, 1, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.groupBox, 0, 0, 1, 1)
+        self.tabWidget_substanceProperties.addTab(self.tab_UNIFAC, "")
         self.verticalLayout_3.addWidget(self.tabWidget_substanceProperties)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem2 = QtWidgets.QSpacerItem(
+        spacerItem3 = QtWidgets.QSpacerItem(
             40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
-        self.horizontalLayout.addItem(spacerItem2)
+        self.horizontalLayout.addItem(spacerItem3)
         self.btn_edit_confirm = QtWidgets.QPushButton(Form_db_substanceProperties)
         self.btn_edit_confirm.setObjectName("btn_edit_confirm")
         self.horizontalLayout.addWidget(self.btn_edit_confirm)
@@ -668,6 +707,42 @@ class Ui_Form_db_substanceProperties(object):
             self.tabWidget_substanceProperties.indexOf(self.tab_VaporPressure),
             QtWidgets.QApplication.translate(
                 "Form_db_substanceProperties", "Vapor pressure", None, -1
+            ),
+        )
+        self.groupBox.setTitle(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Subgroups", None, -1
+            )
+        )
+        self.tableWidget_UNIFACsubgroups.horizontalHeaderItem(0).setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "ID", None, -1
+            )
+        )
+        self.tableWidget_UNIFACsubgroups.horizontalHeaderItem(1).setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Formula", None, -1
+            )
+        )
+        self.tableWidget_UNIFACsubgroups.horizontalHeaderItem(2).setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Frequency", None, -1
+            )
+        )
+        self.btn_UNIFACsubgroups_add.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Add", None, -1
+            )
+        )
+        self.btn_UNIFACsubgroups_remove.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Remove", None, -1
+            )
+        )
+        self.tabWidget_substanceProperties.setTabText(
+            self.tabWidget_substanceProperties.indexOf(self.tab_UNIFAC),
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "UNIFAC", None, -1
             ),
         )
         self.btn_edit_confirm.setText(
