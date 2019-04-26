@@ -1,34 +1,11 @@
-from typing import List
-
 import numpy as np
-
-from EOSMixture import EOSMixture
-from Factories.EOSMixFactory import createEOSMix
-from Properties import Props
-from compounds import SubstanceProp
 
 import db
 
 
-class LiquidModel:
-    def getFugacity(self, x, T: float, P: float) -> float:
-        raise ValueError("Not implemented")
-
-
-class VaporModel:
-    def getFugacity(self, y, T: float, P: float) -> float:
-        raise ValueError("Not implemented")
-
-
-class UNIFAC(LiquidModel):
+class UNIFAC:
     def __init__(self, subs_ids):
 
-        import sqlite3
-
-        # db_file = "unifac_parameters.db"
-        # db_file = "../db/database.db"
-        # conn = sqlite3.connect(db_file)
-        # cursor = conn.cursor()
         cursor = db.cursor
         query = """select distinct us.subgroup_name
          from substance_unifac_subgroups sunifac inner join unifac_subgroups us on us.number = sunifac.subgroup_id
@@ -87,7 +64,6 @@ class UNIFAC(LiquidModel):
             cursor.execute(query)
             self.k[i] = cursor.fetchone()[0]
 
-        # self.amk
         for _i in range(self.m):
             for _j in range(self.m):
                 query = "select Aij, Aji from unifac_interaction_parameters where i = {} and j = {} order by i, j"
@@ -99,79 +75,10 @@ class UNIFAC(LiquidModel):
         # cursor.close()
 
     def getGamma(self, x, T: float):
-
         x = np.atleast_1d(x)
-
-        # self.r = np.zeros(self.n, dtype=np.float64)
-        # self.q = np.zeros(self.n, dtype=np.float64)
-        # self.e = np.zeros((self.m, self.n), dtype=np.float64)
-        # self.beta = np.zeros((self.n, self.m), dtype=np.float64)
-        # self.theta = np.zeros(self.m, dtype=np.float64)
-        # self.s = np.zeros(self.m, dtype=np.float64)
-        # self.L = np.zeros(self.n, dtype=np.float64)
-        # self.J = np.zeros(self.n, dtype=np.float64)
-        # self.ln_gamma_C = np.zeros(self.n, dtype=np.float64)
-        # self.ln_gamma_R = np.zeros(self.n, dtype=np.float64)
-        #
-        # self.tau = np.exp(-self.amk / T)
-        #
-        # for i in range(self.n):
-        #     self.r[i] = np.sum(self.vk[i] * self.Rk)
-        #     self.q[i] = np.sum(self.vk[i] * self.Qk)
-        #
-        # # r, q
-        # for _k in range(self.m):
-        #     for _i in range(self.n):
-        #         self.e[_k][_i] = self.vk[_i][_k] * self.Qk[_k] / self.q[_i]
-        #
-        # # beta
-        # for _i in range(self.n):
-        #     for _k in range(self.m):
-        #         for _m in range(self.m):
-        #             self.beta[_i][_k] += self.e[_m][_i] * self.tau[_m][_k]
-        #
-        # for _k in range(self.m):
-        #     sup_s = 0.0
-        #     for _i in range(self.n):
-        #         sup_s += x[_i] * self.q[_i] * self.e[_k][_i]
-        #     self.theta[_k] = sup_s / np.sum(x * self.q)
-        #
-        # for _k in range(self.m):
-        #     for _m in range(self.m):
-        #         self.s[_k] += self.theta[_m] * self.tau[_m][_k]
-        #
-        # for _i in range(self.n):
-        #     self.J[_i] = self.r[_i] / np.sum(self.r * x)
-        #     self.L[_i] = self.q[_i] / np.sum(self.q * x)
-        #     self.ln_gamma_C[_i] = (
-        #         1.0
-        #         - self.J[_i]
-        #         + np.log(self.J[_i])
-        #         - 5.0
-        #         * self.q[_i]
-        #         * (1.0 - self.J[_i] / self.L[_i] + np.log(self.J[_i] / self.L[_i]))
-        #     )
-        #
-        #     _s = 0.0
-        #     for _k in range(self.m):
-        #         _s += self.theta[_k] * self.beta[_i][_k] / self.s[_k] - self.e[_k][
-        #             _i
-        #         ] * np.log(self.beta[_i][_k] / self.s[_k])
-        #     self.ln_gamma_R[_i] = self.q[_i] * (1.0 - _s)
-        #
-        # # print(self.amk)
-        # gamma = np.exp(self.ln_gamma_C + self.ln_gamma_R)
-        # return gamma
         return _helper_getGamma(
             x, T, self.n, self.m, self.amk, self.vk, self.Rk, self.Qk
         )
-
-
-class PR1976_VAP(VaporModel):
-    def __init__(self, subs_ids, k=None):
-        subs = []
-        self.eosname = "Peng and Robinson (1976)"
-        self.eos = createEOSMix(subs, self.eosname, k=None)
 
 
 from numba import njit, jit, float64, int8
@@ -182,8 +89,6 @@ from numba import njit, jit, float64, int8
     cache=True,
 )
 def _helper_getGamma(x, T: float, n, m, amk, vk, Rk, Qk):
-
-    x = np.atleast_1d(x)
 
     r = np.zeros(n, dtype=np.float64)
     q = np.zeros(n, dtype=np.float64)
