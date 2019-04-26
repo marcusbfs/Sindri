@@ -21,11 +21,12 @@ class MixtureModel:
         self.Pref: float = 150
         self.y: List[float] = []
         self.k: List[List[float]] = [[]]
-        self.eosname: str = "Peng and Robinson (1974)"
+        self.eosname: str = "Peng and Robinson (1976)"
         # VLE
         self.T_vle: float = 150
         self.P_vle: float = 1e5
         self.y_vle: List[float] = []
+        self.vle_method = "phi-phi"
         self.binaryDiagram_type = "isothermal"  # or isobaric
 
         self.substances_in_the_system: List[SubstanceProp] = []
@@ -38,6 +39,10 @@ class MixtureModel:
         self.log: str = ""
 
     # ================== SETTERS =========================
+
+    def setVLEmethod(self, method: str):
+        self.vle_method = method
+        self.system.setVLEmethod(method)
 
     def setProc(self, p: float, t: float):
         self.P = p
@@ -91,6 +96,7 @@ class MixtureModel:
 
     def setupSystem(self):
         self.system = createEOSMix(self.substances_in_the_system, self.eosname, self.k)
+        self.setVLEmethod(self.vle_method)
 
     def setVLEPT(self, p: float, t: float):
         self.P_vle, self.T_vle = p, t
@@ -108,6 +114,9 @@ class MixtureModel:
         self.binaryDiagram_type = t
 
     # ================== GETTERS =========================
+
+    def getVLEmethod(self) -> str:
+        return self.system.vle_method
 
     def getPref(self) -> float:
         return self.Pref

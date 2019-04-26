@@ -3,6 +3,21 @@ import numpy as np
 import db
 
 
+def has_unifac_in_db(subs_ids):
+    cursor = db.cursor
+    n = len(subs_ids)
+    for i in range(n):
+        query = """select distinct us.subgroup_name
+             from substance_unifac_subgroups sunifac inner join unifac_subgroups us on us.number = sunifac.subgroup_id
+             where sunifac.substance_id in ({}) order by us.number""".format(
+            ",".join("?" * len(subs_ids))
+        )
+        res = cursor.execute(query, subs_ids).fetchall()
+        if len(res) < 1:
+            return False
+    return True
+
+
 class UNIFAC:
     def __init__(self, subs_ids):
 
@@ -32,18 +47,6 @@ class UNIFAC:
         self.k = np.zeros(self.m, dtype=np.int64)
         self.Rk = np.zeros(self.m, dtype=np.float64)
         self.Qk = np.zeros(self.m, dtype=np.float64)
-
-        self.r = np.zeros(self.n, dtype=np.float64)
-        self.q = np.zeros(self.n, dtype=np.float64)
-        self.e = np.zeros((self.m, self.n), dtype=np.float64)
-        self.tau = np.zeros((self.m, self.m), dtype=np.float64)
-        self.beta = np.zeros((self.n, self.m), dtype=np.float64)
-        self.theta = np.zeros(self.m, dtype=np.float64)
-        self.s = np.zeros(self.m, dtype=np.float64)
-        self.L = np.zeros(self.n, dtype=np.float64)
-        self.J = np.zeros(self.n, dtype=np.float64)
-        self.ln_gamma_C = np.zeros(self.n, dtype=np.float64)
-        self.ln_gamma_R = np.zeros(self.n, dtype=np.float64)
 
         list_groups = ""
         for i in range(self.m - 1):

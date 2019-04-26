@@ -73,6 +73,11 @@ class MixtureVLEView(QtWidgets.QWidget, Ui_FormVLE):
             QtGui.QIcon(QtGui.QPixmap(":/images/loadexp_button.png"))
         )
 
+        self.checkBox_UNIFAC.stateChanged.connect(self.checkBoxUnifacStateChanged)
+
+    def checkBoxUnifacStateChanged(self):
+        self.controller.checkBoxUNIFACStateChanged()
+
     def calculate(self):
         self.controller.calculateClicked()
 

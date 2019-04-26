@@ -31,6 +31,17 @@ class MixtureVLEController:
         self.molarFractions_headers = ["Name", "Formula", "Molar fraction"]
         self.calctype = "bubbleP"
 
+        self.vleView.checkBox_UNIFAC.setEnabled(self.model.system.hasUNIFAC())
+
+    def vleMethod(self) -> str:
+        if self.vleView.checkBox_UNIFAC.isChecked():
+            return "UNIFAC"
+        else:
+            return "phi-phi"
+
+    def checkBoxUNIFACStateChanged(self):
+        self.model.setVLEmethod(self.vleMethod())
+
     def createMixVLEView(self):
         # initialize tablewidget of molar fractions
         self.vleView.tableWidget_MolarFractions.setRowCount(self.n)

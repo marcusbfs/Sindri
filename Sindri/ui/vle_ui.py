@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/vle_ui.ui',
 # licensing of 'designer/vle_ui.ui' applies.
 #
-# Created: Mon Apr 15 19:21:22 2019
+# Created: Thu Apr 25 23:14:12 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -265,20 +265,23 @@ class Ui_FormVLE(object):
         self.gridLayout_8.addItem(spacerItem5, 5, 0, 1, 1)
         self.gridLayout_9.addWidget(self.frame_2, 0, 0, 1, 1)
         self.tabWidget_VLE.addTab(self.tab_Diagrams, "")
-        self.gridLayout_2.addWidget(self.tabWidget_VLE, 3, 0, 1, 4)
+        self.gridLayout_2.addWidget(self.tabWidget_VLE, 3, 0, 1, 6)
         self.comboBox_EOS = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
         self.comboBox_EOS.setObjectName("comboBox_EOS")
         self.gridLayout_2.addWidget(self.comboBox_EOS, 1, 1, 1, 1)
-        self.label_2 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.label_2.setObjectName("label_2")
-        self.gridLayout_2.addWidget(self.label_2, 1, 0, 1, 1)
         spacerItem6 = QtWidgets.QSpacerItem(
             40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
-        self.gridLayout_2.addItem(spacerItem6, 1, 3, 1, 1)
+        self.gridLayout_2.addItem(spacerItem6, 1, 5, 1, 1)
         self.btn_EditBIParameters = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.btn_EditBIParameters.setObjectName("btn_EditBIParameters")
-        self.gridLayout_2.addWidget(self.btn_EditBIParameters, 1, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.btn_EditBIParameters, 1, 3, 1, 1)
+        self.label_2 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.label_2.setObjectName("label_2")
+        self.gridLayout_2.addWidget(self.label_2, 1, 0, 1, 1)
+        self.checkBox_UNIFAC = QtWidgets.QCheckBox(self.scrollAreaWidgetContents)
+        self.checkBox_UNIFAC.setObjectName("checkBox_UNIFAC")
+        self.gridLayout_2.addWidget(self.checkBox_UNIFAC, 1, 4, 1, 1)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
 
@@ -357,13 +360,16 @@ class Ui_FormVLE(object):
                 "FormVLE", "Binary mixture diagrams", None, -1
             ),
         )
-        self.label_2.setText(
-            QtWidgets.QApplication.translate("FormVLE", "Equation of state", None, -1)
-        )
         self.btn_EditBIParameters.setText(
             QtWidgets.QApplication.translate(
                 "FormVLE", "Edit binary interaction parameters", None, -1
             )
+        )
+        self.label_2.setText(
+            QtWidgets.QApplication.translate("FormVLE", "Equation of state", None, -1)
+        )
+        self.checkBox_UNIFAC.setText(
+            QtWidgets.QApplication.translate("FormVLE", "UNIFAC", None, -1)
         )
 
 

@@ -17,7 +17,7 @@ from MixtureRules.MixtureRulesInterface import (
     EpsilonMixtureRuleBehavior,
     MixtureRuleBehavior,
 )
-from Models.LiquidModel import UNIFAC
+from Models.LiquidModel import UNIFAC, has_unifac_in_db
 from Properties import DeltaProp, Props
 from compounds import MixtureProp
 from compounds import SubstanceProp
@@ -88,13 +88,21 @@ class EOSMixture:
         self.Tcs = np.zeros(self.n)
         self.omegas = np.zeros(self.n)
         self.subs_ids = self.getSubstancesIDs()
-        self.unifac_model = UNIFAC(self.subs_ids)
+        self.vle_method = "phi-phi"
+
+        if self.hasUNIFAC():
+            self.unifac_model = UNIFAC(self.subs_ids)
 
         for i in range(self.n):
             self.Vcs[i] = self.substances[i].Vc
             self.Tcs[i] = self.substances[i].Tc
             self.Pcs[i] = self.substances[i].Pc
             self.omegas[i] = self.substances[i].omega
+
+    def hasUNIFAC(self):
+        if len(self.subs_ids) < 2:
+            return False
+        return has_unifac_in_db(self.subs_ids)
 
     def getZfromPT(self, P: float, T: float, y):
 
@@ -372,16 +380,13 @@ class EOSMixture:
     def getCapPhi(self, y, P, T):
         capphi = np.ones(self.n, dtype=np.float64)
         for i in range(self.n):
-            #     capphi[i] = self.getDefCapPhi_i(i, y, P, T)
             capphi[i] = self.getCapPhi_i(i, y, P, T)
         return capphi
 
-    def getBubblePointPressure(
-        self, x, T: float, method: str = "phi-phi", tol=1e3 * DBL_EPSILON, kmax=1000
-    ):
-        if method == "phi-phi":
+    def getBubblePointPressure(self, x, T: float, tol=1e3 * DBL_EPSILON, kmax=1000):
+        if self.vle_method == "phi-phi":
             return self.getBubblePointPressure_phi_phi(x, T, tol=tol, kmax=kmax)
-        elif method == "UNIFAC":
+        elif self.vle_method == "UNIFAC":
             return self.getBubblePointPressure_UNIFAC(x, T, tol=tol, kmax=kmax)
         else:
             raise NotImplementedError("gamma-phi not implemented")
@@ -418,7 +423,7 @@ class EOSMixture:
             err = np.abs((pb - pb_old) / pb)
 
         phivap = self.getPhiVap(y, pb, T)
-        k = gamma * PSat / (pb * capphi)
+        k = self.get_k_gamma_phi(gamma, PSat, pb, capphi)
         return y, pb, phivap, gamma, k, ite
 
     def getBubblePointPressure_phi_phi(self, x, T, tol=1e3 * DBL_EPSILON, kmax=1000):
@@ -463,12 +468,10 @@ class EOSMixture:
 
     ####### DEW POINT ###########
 
-    def getDewPointPressure(
-        self, y, T: float, method: str = "phi-phi", tol=1e3 * DBL_EPSILON, kmax=1000
-    ):
-        if method == "phi-phi":
+    def getDewPointPressure(self, y, T: float, tol=1e3 * DBL_EPSILON, kmax=1000):
+        if self.vle_method == "phi-phi":
             return self.getDewPointPressure_phi_phi(y, T, tol=tol, kmax=kmax)
-        elif method == "UNIFAC":
+        elif self.vle_method == "UNIFAC":
             return self.getDewPointPressure_UNIFAC(y, T, tol=tol, kmax=kmax)
         else:
             raise NotImplementedError("gamma-phi not implemented")
@@ -557,18 +560,20 @@ class EOSMixture:
             err = np.abs((pd - pd_old) / pd)
 
         phivap = self.getPhiVap(y, pd, T)
-        k = gamma * Psat / (pd * capphi)
+        k = self.get_k_gamma_phi(gamma, Psat, pd, capphi)
         return x, pd, phivap, gamma, k, ite
 
-    def getBubblePointTemperature(
-        self, x, P: float, method: str = "phi-phi", tol=1e3 * DBL_EPSILON, kmax=100
-    ):
-        if method == "phi-phi":
+    def getBubblePointTemperature(self, x, P: float, tol=1e3 * DBL_EPSILON, kmax=100):
+        if self.vle_method == "phi-phi":
             return self.getBubblePointTemperature_phi_phi(x, P, tol=tol, kmax=kmax)
-        elif method == "UNIFAC":
+        elif self.vle_method == "UNIFAC":
             return self.getBubblePointTemperature_UNIFAC(x, P, tol=tol, kmax=kmax)
         else:
             raise NotImplementedError("gamma-phi not implemented")
+
+    def get_k_gamma_phi(self, gamma, psat, P, capphi):
+        k = gamma * psat / (P * capphi)
+        return k
 
     def getBubblePointTemperature_UNIFAC(self, x, P, tol=1e3 * DBL_EPSILON, kmax=100):
         assert len(x) == self.n
@@ -581,7 +586,7 @@ class EOSMixture:
         capphi = np.ones(self.n, dtype=np.float64)
         psat = self.getPsat(tb)
         gamma = self.unifac_model.getGamma(x, tb)
-        k = gamma * psat / (P * capphi)
+        k = self.get_k_gamma_phi(gamma, psat, P, capphi)
 
         tb2 = tb
         f2 = np.sum(x * k) - 1.0
@@ -591,7 +596,7 @@ class EOSMixture:
         capphi = self.getCapPhi(y, P, tb1)
         psat = self.getPsat(tb1)
         gamma = self.unifac_model.getGamma(x, tb1)
-        k = gamma * psat / (P * capphi)
+        k = self.get_k_gamma_phi(gamma, psat, P, capphi)
         f1 = np.sum(x * k) - 1.0
 
         y = x * k / np.sum(x * k)
@@ -606,7 +611,7 @@ class EOSMixture:
             capphi = self.getCapPhi(y, P, tb)
             psat = self.getPsat(tb)
             gamma = self.unifac_model.getGamma(x, tb)
-            k = gamma * psat / (P * capphi)
+            k = self.get_k_gamma_phi(gamma, psat, P, capphi)
 
             y = x * k
             yt = np.sum(y)
@@ -687,12 +692,10 @@ class EOSMixture:
 
         return y, tb, phivap, philiq, k, ite
 
-    def getDewPointTemperature(
-        self, y, P: float, method: str = "phi-phi", tol=1e3 * DBL_EPSILON, kmax=100
-    ):
-        if method == "phi-phi":
+    def getDewPointTemperature(self, y, P: float, tol=1e3 * DBL_EPSILON, kmax=100):
+        if self.vle_method == "phi-phi":
             return self.getDewPointTemperature_phi_phi(y, P, tol=tol, kmax=kmax)
-        elif method == "UNIFAC":
+        elif self.vle_method == "UNIFAC":
             return self.getDewPointTemperature_UNIFAC(y, P, tol=tol, kmax=kmax)
         else:
             raise NotImplementedError("gamma-phi not implemented")
@@ -710,7 +713,7 @@ class EOSMixture:
         capphi = self.getCapPhi(y, P, td)
         psat = self.getPsat(td)
         x = self.get_x_eq_12_10(y, gamma, psat, capphi, P)
-        k = gamma * psat / (P * capphi)
+        k = self.get_k_gamma_phi(gamma, psat, P, capphi)
 
         td2 = td
         f2 = np.sum(y / k) - 1.0
@@ -719,7 +722,7 @@ class EOSMixture:
         capphi = self.getCapPhi(y, P, td1)
         psat = self.getPsat(td1)
         gamma = self.unifac_model.getGamma(x, td1)
-        k = gamma * psat / (P * capphi)
+        k = self.get_k_gamma_phi(gamma, psat, P, capphi)
         f1 = np.sum(y / k) - 1.0
 
         x = self.get_x_eq_12_10(y, gamma, psat, capphi, P)
@@ -733,7 +736,7 @@ class EOSMixture:
             capphi = self.getCapPhi(y, P, td)
             psat = self.getPsat(td)
             gamma = self.unifac_model.getGamma(x, td)
-            k = gamma * psat / (P * capphi)
+            k = self.get_k_gamma_phi(gamma, psat, P, capphi)
 
             x = self.get_x_eq_12_10(y, gamma, psat, capphi, P)
             xt = np.sum(x)
@@ -815,7 +818,15 @@ class EOSMixture:
 
         return x, td, phivap, philiq, k, ite
 
-    def getFlash(self, z, P, T, tol=1e5 * DBL_EPSILON, kmax=1000):
+    def getFlash(self, z, P: float, T: float, tol=1e5 * DBL_EPSILON, kmax=1000):
+        if self.vle_method == "phi-phi":
+            return self.getFlash_phi_phi(z, P, T, tol=tol, kmax=kmax)
+        elif self.vle_method == "UNIFAC":
+            return self.getFlash_UNIFAC(z, P, T, tol=tol, kmax=kmax)
+        else:
+            raise NotImplementedError("gamma-phi not implemented")
+
+    def getFlash_phi_phi(self, z, P: float, T: float, tol=1e5 * DBL_EPSILON, kmax=1000):
 
         assert self.n == len(z)
         z = np.atleast_1d(z)
@@ -860,6 +871,43 @@ class EOSMixture:
             err = np.abs(v - vold)
 
         return x, y, v, phivap, philiq, k, ite
+
+    def getFlash_UNIFAC(self, z, P: float, T: float, tol=1e5 * DBL_EPSILON, kmax=1000):
+
+        assert self.n == len(z)
+        z = np.atleast_1d(z)
+        assert np.sum(z) == 1.0
+
+        # check if is flash problem
+        y, pd, pv, pl, k, ite = self.getDewPointPressure(z, T)
+        x, pb, pv, pl, k, ite = self.getBubblePointPressure(z, T)
+
+        if not (pd <= P <= pb):
+            raise ValueError("P is not between Pdew and Pbubble")
+
+        v = (pb - P) / (pb - pd)
+
+        psat = self.getPsat(T)
+        y = np.full(self.n, 1.0 / self.n)
+        x = np.full(self.n, 1.0 / self.n)
+
+        err = 100
+        ite = 0
+
+        while err > tol and ite < kmax:
+            ite += 1
+            phivap = self.getPhiVap(y, P, T)
+            gamma = self.unifac_model.getGamma(x, T)
+            capphi = self.getCapPhi(y, P, T)
+            k = self.get_k_gamma_phi(gamma, psat, P, capphi)
+
+            vold = v
+            v = _RachfordRice(v, k, z, tol=1e-8, kmax=500)
+            x = z / (1.0 + v * (k - 1.0))
+            y = k * x
+            err = np.abs(v - vold)
+
+        return x, y, v, phivap, gamma, k, ite
 
     def isobaricBinaryMixtureGenData(self, P, x=None, Punit="Pa", Tunit="K"):
 
@@ -978,11 +1026,17 @@ class EOSMixture:
             P, x, Punit=Punit, Tunit=Tunit
         )
 
-        title = "{} (1) / {} (2) at {:0.3f} {}\nEquation of state: {}".format(
+        if self.vle_method == "UNIFAC":
+            gamma_title = "UNIFAC + "
+        else:
+            gamma_title = ""
+
+        title = "{} (1) / {} (2) at {:0.3f} {}\n{}Equation of state: {}".format(
             self.substances[0].Name,
             self.substances[1].Name,
             conv_unit(P, "Pa", Punit),
             Punit,
+            gamma_title,
             self.eosname,
         )
 
@@ -992,6 +1046,12 @@ class EOSMixture:
         if os.path.exists(expfilename):
             vleplot.expPlot(expfilename)
         vleplot.plot()
+
+    def setVLEmethod(self, method: str):
+        if not self.hasUNIFAC():
+            self.vle_method = "phi-phi"
+            return
+        self.vle_method = method
 
     def isothermalBinaryMixturePlot(
         self, T, x=None, Punit="Pa", Tunit="K", expfilename="", plottype="both"
@@ -1006,11 +1066,17 @@ class EOSMixture:
             T, x, Punit=Punit, Tunit=Tunit
         )
 
-        title = "{} (1) / {} (2) at {:0.3f} {}\nEquation of state: {}".format(
+        if self.vle_method == "UNIFAC":
+            gamma_title = "UNIFAC + "
+        else:
+            gamma_title = ""
+
+        title = "{} (1) / {} (2) at {:0.3f} {}\n{}Equation of state: {}".format(
             self.substances[0].Name,
             self.substances[1].Name,
             conv_unit(T, "K", Tunit),
             Tunit,
+            gamma_title,
             self.eosname,
         )
 
