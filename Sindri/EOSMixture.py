@@ -334,6 +334,19 @@ class EOSMixture:
             P, it = system.getPvp(T, P)
         return P
 
+    def getTSat_i(self, i: int, P: float) -> float:
+        has_antoine = self.substances[i].hasAntoine()
+
+        if has_antoine:
+            t = self.substances[i].getAntoineTsat(P)
+        else:
+            t = 300.0  # check this!
+        return t
+
+    def getTsat(self, P: float):
+        tsat = np.asarray([self.getTSat_i(i, P) for i in range(self.n)])
+        return tsat
+
     def getCapPhiSat_i(self, i: int, y, T: float) -> float:
         P = self.getPSat_i(i, T)
         zv = np.max(self.getZfromPT(P, T, y))
@@ -454,7 +467,6 @@ class EOSMixture:
         self, y, T: float, method: str = "phi-phi", tol=1e3 * DBL_EPSILON, kmax=1000
     ):
         if method == "phi-phi":
-            return self.getDewPointPressure_UNIFAC(y, T, tol=tol, kmax=kmax)
             return self.getDewPointPressure_phi_phi(y, T, tol=tol, kmax=kmax)
         elif method == "UNIFAC":
             return self.getDewPointPressure_UNIFAC(y, T, tol=tol, kmax=kmax)
@@ -548,8 +560,68 @@ class EOSMixture:
         k = gamma * Psat / (pd * capphi)
         return x, pd, phivap, gamma, k, ite
 
+    def getBubblePointTemperature(
+        self, x, P: float, method: str = "phi-phi", tol=1e3 * DBL_EPSILON, kmax=100
+    ):
+        if method == "phi-phi":
+            return self.getBubblePointTemperature_phi_phi(x, P, tol=tol, kmax=kmax)
+        elif method == "UNIFAC":
+            return self.getBubblePointTemperature_UNIFAC(x, P, tol=tol, kmax=kmax)
+        else:
+            raise NotImplementedError("gamma-phi not implemented")
+
+    def getBubblePointTemperature_UNIFAC(self, x, P, tol=1e3 * DBL_EPSILON, kmax=100):
+        assert len(x) == self.n
+        x = np.atleast_1d(x)
+        assert np.sum(x) == 1.0
+
+        tsat = self.getTsat(P)
+
+        tb = np.float(np.sum(x * tsat))
+        capphi = np.ones(self.n, dtype=np.float64)
+        psat = self.getPsat(tb)
+        gamma = self.unifac_model.getGamma(x, tb)
+        k = gamma * psat / (P * capphi)
+
+        tb2 = tb
+        f2 = np.sum(x * k) - 1.0
+
+        tb1 = tb * 1.1
+        y = x * k / np.sum(x * k)
+        capphi = self.getCapPhi(y, P, tb1)
+        psat = self.getPsat(tb1)
+        gamma = self.unifac_model.getGamma(x, tb1)
+        k = gamma * psat / (P * capphi)
+        f1 = np.sum(x * k) - 1.0
+
+        y = x * k / np.sum(x * k)
+
+        err = 100
+        ite = 0
+
+        while err > tol and ite < kmax:
+            ite += 1
+
+            tb = tb1 - f1 * ((tb1 - tb2) / (f1 - f2))
+            capphi = self.getCapPhi(y, P, tb)
+            psat = self.getPsat(tb)
+            gamma = self.unifac_model.getGamma(x, tb)
+            k = gamma * psat / (P * capphi)
+
+            y = x * k
+            yt = np.sum(y)
+            err = np.abs(1.0 - yt)
+            y = y / yt
+            tb2 = tb1
+            tb1 = tb
+            f2 = f1
+            f1 = np.sum(k * x) - 1.0
+
+        phivap = self.getPhiVap(y, P, tb)
+        return y, tb, phivap, gamma, k, ite
+
     # TODO optimize this! here, I used the secant method for Tb convergence.
-    def getBubblePointTemperature(self, x, P, tol=1e3 * DBL_EPSILON, kmax=100):
+    def getBubblePointTemperature_phi_phi(self, x, P, tol=1e3 * DBL_EPSILON, kmax=100):
 
         assert len(x) == self.n
         x = np.atleast_1d(x)

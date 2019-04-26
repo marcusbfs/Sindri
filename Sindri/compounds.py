@@ -172,6 +172,10 @@ class SubstanceProp(object):
         else:
             return 0.0
 
+    def getAntoineTsat(self, P: float) -> float:
+        tsat = 273.15 - self.Ant_C + self.Ant_B / (self.Ant_A - np.log10(P * 1e-5))
+        return tsat
+
     def checkAntoineRange(self, T: float) -> bool:
         if self.Tvmin <= T <= self.Tvmax:
             return True

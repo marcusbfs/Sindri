@@ -7,7 +7,7 @@
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
       <change beforePath="$PROJECT_DIR$/Sindri/EOSMixture.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/EOSMixture.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/Models/LiquidModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/Models/LiquidModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/compounds.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/compounds.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,22 +20,22 @@
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/Sindri/Models/LiquidModel.py">
+            <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="34">
-                  <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+                <state relative-caret-position="400">
+                  <caret line="561" lean-forward="true" selection-start-line="561" selection-end-line="561" />
+                  <folding>
+                    <element signature="e#0#9#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
+            <entry file="file://$PROJECT_DIR$/Sindri/compounds.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="369">
-                  <caret line="402" column="22" selection-start-line="402" selection-start-column="22" selection-end-line="402" selection-end-column="22" />
-                  <folding>
-                    <element signature="e#0#9#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="358">
+                  <caret line="175" column="18" selection-start-line="175" selection-start-column="18" selection-end-line="175" selection-end-column="18" />
                 </state>
               </provider>
             </entry>
@@ -47,8 +47,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="408">
-                  <caret line="90" column="8" selection-start-line="90" selection-start-column="8" selection-end-line="90" selection-end-column="8" />
+                <state relative-caret-position="-34">
+                  <caret line="557" lean-forward="true" selection-start-line="557" selection-end-line="557" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -149,8 +149,8 @@
         <option value="$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py" />
         <option value="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" />
         <option value="$PROJECT_DIR$/Sindri/db_utils.py" />
-        <option value="$PROJECT_DIR$/Sindri/compounds.py" />
         <option value="$PROJECT_DIR$/Sindri/Models/LiquidModel.py" />
+        <option value="$PROJECT_DIR$/Sindri/compounds.py" />
         <option value="$PROJECT_DIR$/Sindri/EOSMixture.py" />
       </list>
     </option>
@@ -476,15 +476,15 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4888393" weight="0.32643312" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5247629" visible="true" weight="0.29042554" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5237092" weight="0.29042554" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49420443" weight="0.32446808" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49209693" weight="0.32765958" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.41412014" weight="0.2968085" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.4752371" side_tool="true" visible="true" weight="0.29042554" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.4130664" visible="true" weight="0.2968085" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5869336" side_tool="true" visible="true" weight="0.2968085" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.55431545" weight="0.43152866" />
-      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.51159114" weight="0.39468086" />
+      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5110643" weight="0.39468086" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -865,13 +865,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/compounds.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="84" column="36" lean-forward="true" selection-start-line="84" selection-start-column="36" selection-end-line="84" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Controllers/MixtureVLEController.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2516">
@@ -929,15 +922,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Models/LiquidModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        <state relative-caret-position="68">
+          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/compounds.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="175" column="18" selection-start-line="175" selection-start-column="18" selection-end-line="175" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="90" column="8" selection-start-line="90" selection-start-column="8" selection-end-line="90" selection-end-column="8" />
+        <state relative-caret-position="400">
+          <caret line="561" lean-forward="true" selection-start-line="561" selection-end-line="561" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
