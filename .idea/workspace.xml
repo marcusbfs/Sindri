@@ -6,15 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change afterPath="$PROJECT_DIR$/Sindri/Controllers/AddUNIFACsubgroupController.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Sindri/Views/AddUNIFACsubgroupView.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/Models/LiquidModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/Models/LiquidModel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sindri/db/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db/database.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sindri/db/database.db.orig" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db/database.db.orig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/ui/db_substanceProperties_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/ui/db_substanceProperties_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/designer/db_substanceProperties_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/db_substanceProperties_ui.ui" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -479,22 +472,23 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1096" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.19599578" />
       <window_info id="Structure" order="1" sideWeight="0.1953125" side_tool="true" weight="0.17755532" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4888393" weight="0.32643312" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5147524" weight="0.28936172" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5142255" visible="true" weight="0.28936172" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49420443" weight="0.32446808" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49209693" weight="0.32765958" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.40990517" visible="true" weight="0.2957447" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.59009486" side_tool="true" visible="true" weight="0.2957447" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.40990517" weight="0.2957447" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.4857745" side_tool="true" visible="true" weight="0.28936172" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.5537408" weight="0.43085107" />
-      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.50421494" weight="0.39255318" />
+      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5036881" weight="0.39255318" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
