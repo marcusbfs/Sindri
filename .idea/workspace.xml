@@ -5,10 +5,7 @@
     <bookmark url="file://$PROJECT_DIR$/Sindri/VLE.py" line="383" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change beforePath="$PROJECT_DIR$/Sindri/EOSMixture.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/EOSMixture.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/Models/LiquidModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/Models/LiquidModel.py" afterDir="false" />
-    </list>
+    <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +29,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Sindri/Models/MixtureModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="216" lean-forward="true" selection-start-line="216" selection-end-line="216" />
+            <state relative-caret-position="138">
+              <caret line="209" column="45" selection-start-line="209" selection-start-column="45" selection-end-line="209" selection-end-column="45" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -45,7 +42,7 @@
         <entry file="file://$PROJECT_DIR$/Sindri/Models/LiquidModel.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
-              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -927,7 +924,7 @@
     <entry file="file://$PROJECT_DIR$/Sindri/Models/LiquidModel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -946,8 +943,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Models/MixtureModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="216" lean-forward="true" selection-start-line="216" selection-end-line="216" />
+        <state relative-caret-position="138">
+          <caret line="209" column="45" selection-start-line="209" selection-start-column="45" selection-end-line="209" selection-end-column="45" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
