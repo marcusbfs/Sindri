@@ -313,8 +313,6 @@ class EOSMixture:
     def _getPd_guess(self, y, T):
         return _helper_getPd_guess(y, T, self.Pcs, self.Tcs, self.omegas)
 
-    # def getBubblePointPressure_UNIFAC_liquid_model(self, x, T, tol=1e3 * DBL_EPSILON, kmax=10000):
-
     def getCapPhi_i(self, i: int, y, P: float, T: float) -> float:
         zv = np.max(self.getZfromPT(P, T, y))
         return self.getPhi_i(i, y, P, T, zv)
@@ -358,7 +356,8 @@ class EOSMixture:
     def getCapPhi(self, y, P, T):
         capphi = np.ones(self.n, dtype=np.float64)
         for i in range(self.n):
-            capphi[i] = self.getDefCapPhi_i(i, y, P, T)
+            #     capphi[i] = self.getDefCapPhi_i(i, y, P, T)
+            capphi[i] = self.getCapPhi_i(i, y, P, T)
         return capphi
 
     def getBubblePointPressure_UNIFAC(self, x, T, tol=1e3 * DBL_EPSILON, kmax=100):
@@ -392,7 +391,15 @@ class EOSMixture:
         k = gamma * PSat / (pb * capphi)
         return y, pb, phivap, gamma, k, ite
 
-    def getBubblePointPressure(self, x, T, tol=1e3 * DBL_EPSILON, kmax=10000):
+    def getBubblePointPressure(
+        self, x, T: float, method: str = "phi-phi", tol=1e3 * DBL_EPSILON, kmax=1000
+    ):
+        if method == "phi-phi":
+            return self.getBubblePointPressure_phi_phi(x, T, tol=tol, kmax=kmax)
+        else:
+            raise NotImplementedError("gamma-phi not implemented")
+
+    def getBubblePointPressure_phi_phi(self, x, T, tol=1e3 * DBL_EPSILON, kmax=1000):
 
         assert len(x) == self.n
         assert np.sum(x) == 1.0

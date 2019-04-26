@@ -42,7 +42,7 @@ class UNIFAC(LiquidModel):
 
         self.m = len(groups)
         self.n = len(subs_ids)
-        self.vk = np.zeros((self.n, self.m), dtype=np.int)
+        self.vk = np.zeros((self.n, self.m), dtype=np.int64)
         for _i in range(self.n):
             for _j in range(self.m):
                 query = """select frequency from substance_unifac_subgroups
@@ -52,7 +52,7 @@ class UNIFAC(LiquidModel):
                     self.vk[_i][_j] = res[0]
 
         self.amk = np.zeros((self.m, self.m), dtype=np.float64)
-        self.k = np.zeros(self.m, dtype=np.int)
+        self.k = np.zeros(self.m, dtype=np.int64)
         self.Rk = np.zeros(self.m, dtype=np.float64)
         self.Qk = np.zeros(self.m, dtype=np.float64)
 
@@ -167,16 +167,6 @@ class UNIFAC(LiquidModel):
         )
 
 
-if __name__ == "__main__":
-    subs_ids = [140, 259]
-    liqmodel = UNIFAC(subs_ids)
-    x = [0.4, 0.6]
-    T = 308.15
-    g = liqmodel.getGamma(x, T)
-    print(g)
-    print(liqmodel.getFugacity([0.3, 0.7], T, T))
-
-
 class PR1976_VAP(VaporModel):
     def __init__(self, subs_ids, k=None):
         subs = []
@@ -188,7 +178,7 @@ from numba import njit, jit, float64, int8
 
 
 @njit(
-    (float64, float64, int8, int8, float64[:][:], float64[:], float64[:], float64[:]),
+    "float64[:](float64[:], float64, int64, int64, float64[:,:], int64[:,:], float64[:], float64[:])",
     cache=True,
 )
 def _helper_getGamma(x, T: float, n, m, amk, vk, Rk, Qk):
