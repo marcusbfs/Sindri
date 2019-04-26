@@ -31,6 +31,7 @@ class AddUNIFACsubgroupController:
         db.cursor.execute(query, (self.substance_id, self.subgroup_id, self.frequency))
         # db.db.commit()
         self.edit_db.loadUNIFACsubgroups()
+        self.edit_db.changes_made = True
         self.addSubgroupView.close()
 
     def cancel_clicked(self):

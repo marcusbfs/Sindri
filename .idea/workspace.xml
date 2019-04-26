@@ -6,8 +6,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change beforePath="$PROJECT_DIR$/Sindri/db/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db/database.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/db/database.db.orig" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db/database.db.orig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/Controllers/AddUNIFACsubgroupController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/Controllers/AddUNIFACsubgroupController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/EOSMixture.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/EOSMixture.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,45 +19,12 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py">
+        <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="448" column="12" selection-start-line="448" selection-start-column="12" selection-end-line="448" selection-end-column="12" />
+            <state relative-caret-position="140">
+              <caret line="737" column="44" selection-start-line="737" selection-start-column="44" selection-end-line="737" selection-end-column="44" />
               <folding>
-                <element signature="e#0#37#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sindri/Views/AddUNIFACsubgroupView.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="21" selection-start-column="21" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sindri/Controllers/AddUNIFACsubgroupController.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#61#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sindri/databaseWindow.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="282" column="22" selection-start-line="282" selection-start-column="22" selection-end-line="282" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#0#9#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -151,11 +119,11 @@
         <option value="$PROJECT_DIR$/Sindri/Views/MixtureVLEView.py" />
         <option value="$PROJECT_DIR$/Sindri/Models/MixtureModel.py" />
         <option value="$PROJECT_DIR$/Sindri/Controllers/MixtureVLEController.py" />
-        <option value="$PROJECT_DIR$/Sindri/EOSMixture.py" />
         <option value="$PROJECT_DIR$/Sindri/Models/LiquidModel.py" />
         <option value="$PROJECT_DIR$/Sindri/Views/AddUNIFACsubgroupView.py" />
-        <option value="$PROJECT_DIR$/Sindri/Controllers/AddUNIFACsubgroupController.py" />
         <option value="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" />
+        <option value="$PROJECT_DIR$/Sindri/Controllers/AddUNIFACsubgroupController.py" />
+        <option value="$PROJECT_DIR$/Sindri/EOSMixture.py" />
       </list>
     </option>
   </component>
@@ -472,7 +440,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.19599578" />
@@ -480,15 +448,15 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4888393" weight="0.32643312" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5142255" visible="true" weight="0.28936172" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5142255" weight="0.28936172" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49420443" weight="0.32446808" />
-      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49209693" weight="0.32765958" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.40990517" weight="0.2957447" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.4857745" side_tool="true" visible="true" weight="0.28936172" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4915701" weight="0.32765958" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.40885141" visible="true" weight="0.2957447" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.59114856" side_tool="true" visible="true" weight="0.2957447" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.5537408" weight="0.43085107" />
-      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5036881" weight="0.39255318" />
+      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.50316125" weight="0.39255318" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -518,13 +486,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Sindri/EOSMixture.py</url>
-          <line>814</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -888,16 +849,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6256">
-          <caret line="393" selection-start-line="393" selection-end-line="393" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Views/EditBinaryInteractionParametersView.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -934,16 +885,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/Controllers/AddUNIFACsubgroupController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Views/AddUNIFACsubgroupView.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -961,12 +902,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/Controllers/AddUNIFACsubgroupController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#0#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="448" column="12" selection-start-line="448" selection-start-column="12" selection-end-line="448" selection-end-column="12" />
+        <state relative-caret-position="127">
+          <caret line="455" column="11" selection-start-line="455" selection-start-column="11" selection-end-line="455" selection-end-column="11" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="737" column="44" selection-start-line="737" selection-start-column="44" selection-end-line="737" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>

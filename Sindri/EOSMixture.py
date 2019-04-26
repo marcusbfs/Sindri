@@ -701,7 +701,7 @@ class EOSMixture:
             raise NotImplementedError("gamma-phi not implemented")
 
     def getDewPointTemperature_UNIFAC(
-        self, y, P: float, tol: float = 1e3 * DBL_EPSILON, kmax: int = 1000
+        self, y, P: float, tol: float = 1e4 * DBL_EPSILON, kmax: int = 1000
     ):
         assert len(y) == self.n
         y = np.atleast_1d(y)
@@ -714,6 +714,7 @@ class EOSMixture:
         psat = self.getPsat(td)
         x = self.get_x_eq_12_10(y, gamma, psat, capphi, P)
         k = self.get_k_gamma_phi(gamma, psat, P, capphi)
+        x = x / np.sum(x)
 
         td2 = td
         f2 = np.sum(y / k) - 1.0
@@ -726,6 +727,7 @@ class EOSMixture:
         f1 = np.sum(y / k) - 1.0
 
         x = self.get_x_eq_12_10(y, gamma, psat, capphi, P)
+        x = x / np.sum(x)
 
         err = 100
         ite = 0
@@ -749,10 +751,10 @@ class EOSMixture:
             f1 = np.sum(y / k) - 1.0
 
         phivap = self.getPhiVap(y, P, td)
-        return y, td, phivap, gamma, k, ite
+        return x, td, phivap, gamma, k, ite
 
     def getDewPointTemperature_phi_phi(
-        self, y, P: float, tol: float = 1e3 * DBL_EPSILON, kmax: int = 1000
+        self, y, P: float, tol: float = 1e4 * DBL_EPSILON, kmax: int = 1000
     ):
         assert len(y) == self.n
         y = np.atleast_1d(y)

@@ -453,7 +453,6 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         current_row = self.tableWidget_UNIFACsubgroups.currentRow()
         if current_row < 0:
             return
-        self.changes_made = True
         try:
             subgroup_id = self.getCurrenteUNIFAC_subgroup_id()
             query = """delete from substance_unifac_subgroups 
@@ -462,12 +461,12 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
             )
             db.cursor.execute(query)
             # db.db.commit() # todo implement rollback?
+            self.changes_made = True
             self.loadUNIFACsubgroups()
         except Exception as e:
             pass
 
     def addUNIFACsubgroup(self):
-        self.changes_made = True
         controller = AddUNIFACsubgroupController(self)
         try:
             controller.createView()
