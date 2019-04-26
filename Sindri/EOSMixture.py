@@ -89,8 +89,9 @@ class EOSMixture:
         self.omegas = np.zeros(self.n)
         self.subs_ids = self.getSubstancesIDs()
         self.vle_method = "phi-phi"
+        self.has_UNIFAC = self.hasUNIFAC()
 
-        if self.hasUNIFAC():
+        if self.has_UNIFAC:
             self.unifac_model = UNIFAC(self.subs_ids)
 
         for i in range(self.n):
@@ -1050,7 +1051,7 @@ class EOSMixture:
         vleplot.plot()
 
     def setVLEmethod(self, method: str):
-        if not self.hasUNIFAC():
+        if not self.has_UNIFAC:
             self.vle_method = "phi-phi"
             return
         self.vle_method = method

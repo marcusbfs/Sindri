@@ -21,13 +21,14 @@ def get_all_id_and_subgroups_formulas():
 def has_unifac_in_db(subs_ids):
     cursor = db.cursor
     n = len(subs_ids)
+    subs_ids = np.atleast_1d(subs_ids)
     for i in range(n):
         query = """select distinct us.subgroup_name
              from substance_unifac_subgroups sunifac inner join unifac_subgroups us on us.number = sunifac.subgroup_id
-             where sunifac.substance_id in ({}) order by us.number""".format(
-            ",".join("?" * len(subs_ids))
+             where sunifac.substance_id ={} order by us.number""".format(
+            subs_ids[0]
         )
-        res = cursor.execute(query, subs_ids).fetchall()
+        res = cursor.execute(query).fetchall()
         if len(res) < 1:
             return False
     return True
