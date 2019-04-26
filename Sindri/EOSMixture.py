@@ -688,6 +688,67 @@ class EOSMixture:
         return y, tb, phivap, philiq, k, ite
 
     def getDewPointTemperature(
+        self, y, P: float, method: str = "phi-phi", tol=1e3 * DBL_EPSILON, kmax=100
+    ):
+        if method == "phi-phi":
+            return self.getDewPointTemperature_phi_phi(y, P, tol=tol, kmax=kmax)
+        elif method == "UNIFAC":
+            return self.getDewPointTemperature_UNIFAC(y, P, tol=tol, kmax=kmax)
+        else:
+            raise NotImplementedError("gamma-phi not implemented")
+
+    def getDewPointTemperature_UNIFAC(
+        self, y, P: float, tol: float = 1e3 * DBL_EPSILON, kmax: int = 1000
+    ):
+        assert len(y) == self.n
+        y = np.atleast_1d(y)
+        assert np.sum(y) == 1.0
+
+        td = float(np.sum(y * self.getTsat(P)))
+        gamma = np.ones(self.n, dtype=np.float64)
+
+        capphi = self.getCapPhi(y, P, td)
+        psat = self.getPsat(td)
+        x = self.get_x_eq_12_10(y, gamma, psat, capphi, P)
+        k = gamma * psat / (P * capphi)
+
+        td2 = td
+        f2 = np.sum(y / k) - 1.0
+
+        td1 = td * 1.1
+        capphi = self.getCapPhi(y, P, td1)
+        psat = self.getPsat(td1)
+        gamma = self.unifac_model.getGamma(x, td1)
+        k = gamma * psat / (P * capphi)
+        f1 = np.sum(y / k) - 1.0
+
+        x = self.get_x_eq_12_10(y, gamma, psat, capphi, P)
+
+        err = 100
+        ite = 0
+        while err > tol and ite < kmax:
+            ite += 1
+
+            td = td1 - f1 * ((td1 - td2) / (f1 - f2))
+            capphi = self.getCapPhi(y, P, td)
+            psat = self.getPsat(td)
+            gamma = self.unifac_model.getGamma(x, td)
+            k = gamma * psat / (P * capphi)
+
+            x = self.get_x_eq_12_10(y, gamma, psat, capphi, P)
+            xt = np.sum(x)
+            err = np.abs(1.0 - xt)
+
+            x = x / xt
+            td2 = td1
+            td1 = td
+            f2 = f1
+            f1 = np.sum(y / k) - 1.0
+
+        phivap = self.getPhiVap(y, P, td)
+        return y, td, phivap, gamma, k, ite
+
+    def getDewPointTemperature_phi_phi(
         self, y, P: float, tol: float = 1e3 * DBL_EPSILON, kmax: int = 1000
     ):
         assert len(y) == self.n

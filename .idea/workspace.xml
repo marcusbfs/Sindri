@@ -7,7 +7,6 @@
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
       <change beforePath="$PROJECT_DIR$/Sindri/EOSMixture.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/EOSMixture.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/compounds.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/compounds.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,8 +21,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="400">
-                  <caret line="561" lean-forward="true" selection-start-line="561" selection-end-line="561" />
+                <state relative-caret-position="247">
+                  <caret line="603" lean-forward="true" selection-start-line="603" selection-end-line="603" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -47,8 +46,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-34">
-                  <caret line="557" lean-forward="true" selection-start-line="557" selection-end-line="557" />
+                <state relative-caret-position="170">
+                  <caret line="693" column="12" selection-start-line="693" selection-start-column="12" selection-end-line="693" selection-end-column="12" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -481,10 +480,10 @@
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49420443" weight="0.32446808" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49209693" weight="0.32765958" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.4130664" visible="true" weight="0.2968085" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5869336" side_tool="true" visible="true" weight="0.2968085" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4130664" weight="0.2968085" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.48946258" side_tool="true" visible="true" weight="0.39468086" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.55431545" weight="0.43152866" />
-      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5110643" weight="0.39468086" />
+      <window_info active="true" anchor="bottom" id="Debug" order="10" sideWeight="0.5105374" visible="true" weight="0.39468086" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -514,6 +513,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Sindri/EOSMixture.py</url>
+          <line>730</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -939,8 +945,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="561" lean-forward="true" selection-start-line="561" selection-end-line="561" />
+        <state relative-caret-position="170">
+          <caret line="693" column="12" selection-start-line="693" selection-start-column="12" selection-end-line="693" selection-end-column="12" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
