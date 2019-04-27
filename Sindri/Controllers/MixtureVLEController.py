@@ -21,6 +21,7 @@ class MixtureVLEController:
 
         self.model = model
         self.mixCalcController = MixCalcController
+
         self.vleView: MixtureVLEView = MixtureVLEView(self, self.model)
 
         self.editBinIntController: EditBinaryInteractionParametersController = EditBinaryInteractionParametersController(
@@ -32,6 +33,11 @@ class MixtureVLEController:
         self.calctype = "bubbleP"
 
         self.vleView.checkBox_UNIFAC.setEnabled(self.model.system.hasUNIFAC())
+
+        if self.model.getVLEmethod() == "phi-phi":
+            self.vleView.checkBox_UNIFAC.setChecked(False)
+        else:
+            self.vleView.checkBox_UNIFAC.setChecked(True)
 
     def vleMethod(self) -> str:
         if self.vleView.checkBox_UNIFAC.isChecked():
