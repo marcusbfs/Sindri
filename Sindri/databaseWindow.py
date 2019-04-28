@@ -97,8 +97,6 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
 
     def show_full_db(self):
         try:
-            # join = "substance s LEFT JOIN cp_correlations c ON s.substance_id = c.substance_id LEFT JOIN antoine_correlations a ON a.substance_id = s.substance_id"
-            # query = "SELECT * FROM " + join
             query = "SELECT * from v_all_properties_including_correlations"
             db.cursor.execute(query)
             results = db.cursor.fetchall()
@@ -204,17 +202,6 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             if choice == QtWidgets.QMessageBox.Yes:
                 try:
                     self.database_changed = True
-                    # query = (
-                    #     "DELETE FROM database WHERE Formula LIKE '"
-                    #     + row_values[0]
-                    #     + "%'"
-                    #     + " AND Name LIKE '"
-                    #     + row_values[1]
-                    #     + "%'"
-                    #     + " AND `CAS #` LIKE '"
-                    #     + row_values[2]
-                    #     + "%'"
-                    # )
                     query = (
                         "SELECT substance_id FROM substance WHERE name='"
                         + str(row_values[1])

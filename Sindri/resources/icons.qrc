@@ -20,5 +20,7 @@
     <file>../../images/about_button.png</file>
     <file>../../images/pureSubstance_button.png</file>
     <file>../../images/mixture_button.png</file>
+    <file>../../images/cp_ideal_gas_equation.png</file>
+    <file>../../images/antoine_correlation_equation.png</file>
 </qresource>
 </RCC>

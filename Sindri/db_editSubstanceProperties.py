@@ -1,4 +1,4 @@
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtWidgets, QtGui
 
 import db
 from Controllers.AddUNIFACsubgroupController import AddUNIFACsubgroupController
@@ -213,6 +213,14 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         self.le_AntoineTmax.setValidator(doublevalidator)
 
         self.loadUNIFACsubgroups()
+
+        # images
+        self.label_cp_equation.setPixmap(
+            QtGui.QPixmap(":/images/cp_ideal_gas_equation.png")
+        )
+        self.label_antoine_equation.setPixmap(
+            QtGui.QPixmap(":/images/antoine_correlation_equation.png")
+        )
 
     def load_entries(self):
         self.le_formula.setText(self.Formula)
