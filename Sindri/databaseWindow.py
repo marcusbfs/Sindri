@@ -61,7 +61,6 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
         self.tableWidget_db.horizontalHeader().setDefaultAlignment(QtCore.Qt.AlignLeft)
 
         self.load_db()
-        self.le_db_search.setFocus()
         self.database_changed = False
 
         # button icons
@@ -84,6 +83,8 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
         self.btn_RestoreOriginalDB.setIcon(
             QtGui.QIcon(QtGui.QPixmap(":/images/restore_button.png"))
         )
+
+        self.le_db_search.setFocus()
 
     def load_db(self):
         # Abrir banco de dados

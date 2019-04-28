@@ -2,6 +2,7 @@ from PySide2 import QtCore, QtWidgets, QtGui
 
 import db
 from Controllers.AddUNIFACsubgroupController import AddUNIFACsubgroupController
+from Controllers.AddAliasController import AddAliasController
 from Models.LiquidModel import has_unifac_in_db
 from ui.db_substanceProperties_ui import Ui_Form_db_substanceProperties
 from validators import getDoubleValidatorRegex
@@ -221,6 +222,12 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         self.label_antoine_equation.setPixmap(
             QtGui.QPixmap(":/images/antoine_correlation_equation.png")
         )
+
+        # alias
+        self.btn_add_alias.clicked.connect(self.addAlias)
+        self.btn_remove_alias.clicked.connect(self.removeAlias)
+        self.loadAliases()
+
 
     def load_entries(self):
         self.le_formula.setText(self.Formula)
@@ -484,3 +491,34 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
                 "Error adding subgroup",
                 "Subgroup already in the list",
             )
+
+
+    def loadAliases(self):
+        self.tableWidget_aliases.setRowCount(0)
+        query = """SELECT alias FROM substance_name_aliases
+                    WHERE substance_id={}""".format(self.substance_id_int)
+        data = db.cursor.execute(query).fetchall()
+        n = len(data)
+        self.tableWidget_aliases.setRowCount(n)
+        for i in range(n):
+            alias_item = QtWidgets.QTableWidgetItem(str(data[i][0]))
+            self.tableWidget_aliases.setItem(i,0,alias_item)
+
+
+    def removeAlias(self):
+        current_row = self.tableWidget_aliases.currentRow()
+        if current_row < 0:
+            return
+
+    def addAlias(self):
+        controller = AddAliasController(self)
+        try:
+            controller.createView()
+        except Exception as e:
+            QtWidgets.QMessageBox.about(
+                controller.view,
+                "Error adding alias",
+                ""
+            )
+
+
