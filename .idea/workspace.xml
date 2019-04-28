@@ -6,14 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change afterPath="$PROJECT_DIR$/Sindri/Controllers/AddAliasController.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Sindri/Views/AddAliasView.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/databaseWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/databaseWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/resources/icons_rc.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/resources/icons_rc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/ui/db_substanceProperties_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/ui/db_substanceProperties_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/designer/db_substanceProperties_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/db_substanceProperties_ui.ui" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,53 +19,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="3383">
               <caret line="203" column="22" selection-start-line="203" selection-start-column="22" selection-end-line="203" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sindri/Views/AddAliasView.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#29#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sindri/Controllers/AddAliasController.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#61#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Sindri/databaseWindow.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="79" column="38" selection-start-line="79" selection-start-column="38" selection-end-line="79" selection-end-column="38" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="229" selection-start-line="229" selection-end-line="229" />
+            <state relative-caret-position="212">
+              <caret line="515" column="66" selection-start-line="515" selection-start-column="66" selection-end-line="515" selection-end-column="66" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -171,9 +128,9 @@
         <option value="$PROJECT_DIR$/Sindri/resources/icons.qrc" />
         <option value="$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py" />
         <option value="$PROJECT_DIR$/Sindri/Views/AddAliasView.py" />
-        <option value="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" />
         <option value="$PROJECT_DIR$/Sindri/Controllers/AddAliasController.py" />
         <option value="$PROJECT_DIR$/Sindri/databaseWindow.py" />
+        <option value="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" />
       </list>
     </option>
   </component>
@@ -190,7 +147,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -224,6 +180,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -474,13 +431,13 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4888393" weight="0.32643312" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.50790304" weight="0.28936172" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5073762" weight="0.28936172" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49420443" weight="0.32446808" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4915701" weight="0.32765958" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.40147525" visible="true" weight="0.2957447" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.59852475" side_tool="true" visible="true" weight="0.2957447" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.4004215" visible="true" weight="0.2957447" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5995785" side_tool="true" visible="true" weight="0.2957447" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.5532139" weight="0.43085107" />
       <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5015806" weight="0.39255318" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -903,16 +860,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/Views/AddAliasView.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Controllers/AddUNIFACsubgroupController.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="501">
@@ -925,28 +872,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="3383">
           <caret line="203" column="22" selection-start-line="203" selection-start-column="22" selection-end-line="203" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py">
+    <entry file="file://$PROJECT_DIR$/Sindri/Views/AddAliasView.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="229" selection-start-line="229" selection-end-line="229" />
+        <state relative-caret-position="272">
+          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
           <folding>
-            <element signature="e#0#44#0" expanded="true" />
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Controllers/AddAliasController.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
+        <state relative-caret-position="170">
           <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#61#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -956,6 +900,16 @@
           <caret line="79" column="38" selection-start-line="79" selection-start-column="38" selection-end-line="79" selection-end-column="38" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="515" column="66" selection-start-line="515" selection-start-column="66" selection-end-line="515" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>

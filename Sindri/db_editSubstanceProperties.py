@@ -509,6 +509,15 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         current_row = self.tableWidget_aliases.currentRow()
         if current_row < 0:
             return
+        try:
+            alias = self.tableWidget_aliases.item(current_row,0).text()
+            query = """ DELETE FROM substance_name_aliases
+                        WHERE substance_id=? AND alias=?"""
+            db.cursor.execute(query, (self.substance_id_int,alias))
+            self.changes_made = True
+            self.loadAliases()
+        except Exception as e:
+            pass
 
     def addAlias(self):
         controller = AddAliasController(self)
