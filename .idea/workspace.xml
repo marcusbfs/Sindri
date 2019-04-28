@@ -6,14 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/databaseWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/databaseWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/resources/icons.qrc" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/resources/icons.qrc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sindri/resources/icons_rc.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/resources/icons_rc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/ui/db_substanceProperties_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/ui/db_substanceProperties_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/designer/db_substanceProperties_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/db_substanceProperties_ui.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/antoine_correlation_equation.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/antoine_correlation_equation.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,7 +20,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="586">
+            <state relative-caret-position="1122">
               <caret line="91" column="13" selection-start-line="91" selection-start-column="13" selection-end-line="91" selection-end-column="13" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -38,11 +32,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="82" selection-start-line="82" selection-end-line="82" />
-              <folding>
-                <element signature="e#0#37#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="221">
+              <caret line="76" column="53" selection-start-line="76" selection-start-column="53" selection-end-line="76" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -477,13 +468,13 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4888393" weight="0.32643312" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5105374" weight="0.28936172" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.51001054" weight="0.28936172" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49420443" weight="0.32446808" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4915701" weight="0.32765958" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.40305585" visible="true" weight="0.2957447" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.59694415" side_tool="true" visible="true" weight="0.2957447" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.40252897" weight="0.2957447" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.48998946" side_tool="true" visible="true" weight="0.2957447" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.5532139" weight="0.43085107" />
       <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5021075" weight="0.39255318" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -911,16 +902,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="586">
-          <caret line="91" column="13" selection-start-line="91" selection-start-column="13" selection-end-line="91" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/databaseWindow.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="314">
@@ -948,13 +929,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1122">
+          <caret line="91" column="13" selection-start-line="91" selection-start-column="13" selection-end-line="91" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="82" selection-start-line="82" selection-end-line="82" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="221">
+          <caret line="76" column="53" selection-start-line="76" selection-start-column="53" selection-end-line="76" selection-end-column="53" />
         </state>
       </provider>
     </entry>
