@@ -23,5 +23,3 @@ class AddAliasController:
 
     def cancel_clicked(self):
         self.view.close()
-
-

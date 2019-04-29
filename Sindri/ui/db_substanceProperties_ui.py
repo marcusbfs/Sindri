@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_Form_db_substanceProperties(object):
     def setupUi(self, Form_db_substanceProperties):
         Form_db_substanceProperties.setObjectName("Form_db_substanceProperties")
@@ -19,13 +20,17 @@ class Ui_Form_db_substanceProperties(object):
         self.gridLayout.setObjectName("gridLayout")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.tabWidget_substanceProperties = QtWidgets.QTabWidget(Form_db_substanceProperties)
+        self.tabWidget_substanceProperties = QtWidgets.QTabWidget(
+            Form_db_substanceProperties
+        )
         self.tabWidget_substanceProperties.setAcceptDrops(False)
         self.tabWidget_substanceProperties.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.tabWidget_substanceProperties.setAutoFillBackground(False)
         self.tabWidget_substanceProperties.setTabPosition(QtWidgets.QTabWidget.North)
         self.tabWidget_substanceProperties.setTabShape(QtWidgets.QTabWidget.Rounded)
-        self.tabWidget_substanceProperties.setObjectName("tabWidget_substanceProperties")
+        self.tabWidget_substanceProperties.setObjectName(
+            "tabWidget_substanceProperties"
+        )
         self.tab_identification = QtWidgets.QWidget()
         self.tab_identification.setObjectName("tab_identification")
         self.gridLayout_6 = QtWidgets.QGridLayout(self.tab_identification)
@@ -44,7 +49,9 @@ class Ui_Form_db_substanceProperties(object):
         self.le_name.setInputMethodHints(QtCore.Qt.ImhNone)
         self.le_name.setText("")
         self.le_name.setCursorPosition(0)
-        self.le_name.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.le_name.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
         self.le_name.setObjectName("le_name")
         self.horizontalLayout_2.addWidget(self.le_name)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
@@ -56,7 +63,9 @@ class Ui_Form_db_substanceProperties(object):
         self.horizontalLayout_3.addWidget(self.label_2)
         self.le_formula = QtWidgets.QLineEdit(self.tab_identification)
         self.le_formula.setMinimumSize(QtCore.QSize(146, 0))
-        self.le_formula.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.le_formula.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
         self.le_formula.setObjectName("le_formula")
         self.horizontalLayout_3.addWidget(self.le_formula)
         self.verticalLayout.addLayout(self.horizontalLayout_3)
@@ -68,7 +77,9 @@ class Ui_Form_db_substanceProperties(object):
         self.horizontalLayout_4.addWidget(self.label_3)
         self.le_CAS = QtWidgets.QLineEdit(self.tab_identification)
         self.le_CAS.setMinimumSize(QtCore.QSize(146, 0))
-        self.le_CAS.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.le_CAS.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
         self.le_CAS.setObjectName("le_CAS")
         self.horizontalLayout_4.addWidget(self.le_CAS)
         self.verticalLayout.addLayout(self.horizontalLayout_4)
@@ -88,12 +99,18 @@ class Ui_Form_db_substanceProperties(object):
         self.btn_add_alias = QtWidgets.QPushButton(self.groupBox_2)
         self.btn_add_alias.setObjectName("btn_add_alias")
         self.gridLayout_5.addWidget(self.btn_add_alias, 1, 0, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout_5.addItem(spacerItem, 1, 2, 1, 1)
         self.tableWidget_aliases = QtWidgets.QTableWidget(self.groupBox_2)
-        self.tableWidget_aliases.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget_aliases.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers
+        )
         self.tableWidget_aliases.setAlternatingRowColors(True)
-        self.tableWidget_aliases.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.tableWidget_aliases.setSelectionBehavior(
+            QtWidgets.QAbstractItemView.SelectRows
+        )
         self.tableWidget_aliases.setObjectName("tableWidget_aliases")
         self.tableWidget_aliases.setColumnCount(1)
         self.tableWidget_aliases.setRowCount(0)
@@ -252,7 +269,9 @@ class Ui_Form_db_substanceProperties(object):
         self.le_a0.setObjectName("le_a0")
         self.horizontalLayout_16.addWidget(self.le_a0)
         self.gridLayout_4.addLayout(self.horizontalLayout_16, 2, 0, 1, 1)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 92, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            20, 92, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.gridLayout_4.addItem(spacerItem1, 5, 2, 1, 1)
         self.horizontalLayout_19 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_19.setObjectName("horizontalLayout_19")
@@ -330,7 +349,9 @@ class Ui_Form_db_substanceProperties(object):
         self.le_a3.setObjectName("le_a3")
         self.horizontalLayout_18.addWidget(self.le_a3)
         self.gridLayout_4.addLayout(self.horizontalLayout_18, 3, 0, 1, 1)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.gridLayout_4.addItem(spacerItem2, 1, 0, 1, 1)
         self.tabWidget_substanceProperties.addTab(self.tab_Cp, "")
         self.tab_VaporPressure = QtWidgets.QWidget()
@@ -371,7 +392,9 @@ class Ui_Form_db_substanceProperties(object):
         self.le_AntoineC.setObjectName("le_AntoineC")
         self.horizontalLayout_23.addWidget(self.le_AntoineC)
         self.gridLayout_8.addLayout(self.horizontalLayout_23, 3, 0, 1, 1)
-        spacerItem3 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem3 = QtWidgets.QSpacerItem(
+            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.gridLayout_8.addItem(spacerItem3, 5, 0, 1, 1)
         self.horizontalLayout_22 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_22.setObjectName("horizontalLayout_22")
@@ -380,7 +403,9 @@ class Ui_Form_db_substanceProperties(object):
         self.label_34.setAlignment(QtCore.Qt.AlignCenter)
         self.label_34.setObjectName("label_34")
         self.horizontalLayout_22.addWidget(self.label_34)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem4 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_22.addItem(spacerItem4)
         self.gridLayout_8.addLayout(self.horizontalLayout_22, 2, 0, 1, 1)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
@@ -410,7 +435,9 @@ class Ui_Form_db_substanceProperties(object):
         self.horizontalLayout_31.addWidget(self.le_AntoineTmax)
         self.horizontalLayout_5.addLayout(self.horizontalLayout_31)
         self.gridLayout_8.addLayout(self.horizontalLayout_5, 4, 0, 1, 1)
-        spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem5 = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.gridLayout_8.addItem(spacerItem5, 1, 0, 1, 1)
         self.tabWidget_substanceProperties.addTab(self.tab_VaporPressure, "")
         self.tab_UNIFAC = QtWidgets.QWidget()
@@ -422,9 +449,13 @@ class Ui_Form_db_substanceProperties(object):
         self.gridLayout_3 = QtWidgets.QGridLayout(self.groupBox)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.tableWidget_UNIFACsubgroups = QtWidgets.QTableWidget(self.groupBox)
-        self.tableWidget_UNIFACsubgroups.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget_UNIFACsubgroups.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers
+        )
         self.tableWidget_UNIFACsubgroups.setAlternatingRowColors(True)
-        self.tableWidget_UNIFACsubgroups.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.tableWidget_UNIFACsubgroups.setSelectionBehavior(
+            QtWidgets.QAbstractItemView.SelectRows
+        )
         self.tableWidget_UNIFACsubgroups.setColumnCount(3)
         self.tableWidget_UNIFACsubgroups.setObjectName("tableWidget_UNIFACsubgroups")
         self.tableWidget_UNIFACsubgroups.setColumnCount(3)
@@ -442,14 +473,18 @@ class Ui_Form_db_substanceProperties(object):
         self.btn_UNIFACsubgroups_remove = QtWidgets.QPushButton(self.groupBox)
         self.btn_UNIFACsubgroups_remove.setObjectName("btn_UNIFACsubgroups_remove")
         self.gridLayout_3.addWidget(self.btn_UNIFACsubgroups_remove, 1, 1, 1, 1)
-        spacerItem6 = QtWidgets.QSpacerItem(203, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem6 = QtWidgets.QSpacerItem(
+            203, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout_3.addItem(spacerItem6, 1, 2, 1, 1)
         self.gridLayout_2.addWidget(self.groupBox, 0, 0, 1, 1)
         self.tabWidget_substanceProperties.addTab(self.tab_UNIFAC, "")
         self.verticalLayout_3.addWidget(self.tabWidget_substanceProperties)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem7 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout.addItem(spacerItem7)
         self.btn_edit_confirm = QtWidgets.QPushButton(Form_db_substanceProperties)
         self.btn_edit_confirm.setObjectName("btn_edit_confirm")
@@ -462,70 +497,296 @@ class Ui_Form_db_substanceProperties(object):
 
         self.retranslateUi(Form_db_substanceProperties)
         self.tabWidget_substanceProperties.setCurrentIndex(0)
-        QtCore.QObject.connect(self.btn_edit_confirm, QtCore.SIGNAL("clicked()"), Form_db_substanceProperties.confirm_clicked)
-        QtCore.QObject.connect(self.btn_edit_cancel, QtCore.SIGNAL("clicked()"), Form_db_substanceProperties.cancel_clicked)
+        QtCore.QObject.connect(
+            self.btn_edit_confirm,
+            QtCore.SIGNAL("clicked()"),
+            Form_db_substanceProperties.confirm_clicked,
+        )
+        QtCore.QObject.connect(
+            self.btn_edit_cancel,
+            QtCore.SIGNAL("clicked()"),
+            Form_db_substanceProperties.cancel_clicked,
+        )
         QtCore.QMetaObject.connectSlotsByName(Form_db_substanceProperties)
 
     def retranslateUi(self, Form_db_substanceProperties):
-        Form_db_substanceProperties.setWindowTitle(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Substance properties", None, -1))
-        self.label.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Name", None, -1))
-        self.label_2.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Formula", None, -1))
-        self.label_3.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "CAS number", None, -1))
-        self.label_6.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "(all fields above are required)", None, -1))
-        self.groupBox_2.setTitle(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Aliases", None, -1))
-        self.btn_remove_alias.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Remove", None, -1))
-        self.btn_add_alias.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Add", None, -1))
-        self.tableWidget_aliases.horizontalHeaderItem(0).setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Alias", None, -1))
-        self.tabWidget_substanceProperties.setTabText(self.tabWidget_substanceProperties.indexOf(self.tab_identification), QtWidgets.QApplication.translate("Form_db_substanceProperties", "Identification", None, -1))
-        self.label_4.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Molar weight", None, -1))
-        self.label_5.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "[g/mol]", None, -1))
-        self.label_11.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "<html><head/><body><p>Freezing point temp. (Tfp)</p></body></html>", None, -1))
-        self.le_Tfp.setToolTip(QtWidgets.QApplication.translate("Form_db_substanceProperties", "<html><head/><body><p>Freezing point temperature</p></body></html>", None, -1))
-        self.label_12.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "[K]", None, -1))
-        self.label_13.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Boiling temp. (Tb)", None, -1))
-        self.label_14.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "[K]", None, -1))
-        self.label_15.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Critical temp. (Tc)", None, -1))
-        self.label_16.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "[K]", None, -1))
-        self.label_17.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Critical pressure (Pc)", None, -1))
-        self.label_18.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "[bar]", None, -1))
-        self.label_19.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Critical volume (Vc)", None, -1))
-        self.label_20.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "[cm3/mol]", None, -1))
-        self.label_21.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Compressibility factor (Zc)", None, -1))
-        self.label_23.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Acentric factor", None, -1))
-        self.tabWidget_substanceProperties.setTabText(self.tabWidget_substanceProperties.indexOf(self.tab_generalData), QtWidgets.QApplication.translate("Form_db_substanceProperties", "General data", None, -1))
-        self.label_25.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "a0", None, -1))
-        self.label_29.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "a2", None, -1))
-        self.label_27.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "a4", None, -1))
-        self.label_30.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "a1", None, -1))
-        self.label_31.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Temperature range ", None, -1))
-        self.label_32.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Tmin [K]", None, -1))
-        self.label_33.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Tmax [K]", None, -1))
-        self.label_28.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "a3", None, -1))
-        self.tabWidget_substanceProperties.setTabText(self.tabWidget_substanceProperties.indexOf(self.tab_Cp), QtWidgets.QApplication.translate("Form_db_substanceProperties", "Cp", None, -1))
-        self.label_35.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "A", None, -1))
-        self.label_36.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "B", None, -1))
-        self.label_37.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "C", None, -1))
-        self.label_34.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Antoine correlation", None, -1))
-        self.label_39.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Tmin [K]", None, -1))
-        self.label_40.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Tmax [K]", None, -1))
-        self.tabWidget_substanceProperties.setTabText(self.tabWidget_substanceProperties.indexOf(self.tab_VaporPressure), QtWidgets.QApplication.translate("Form_db_substanceProperties", "Vapor pressure", None, -1))
-        self.groupBox.setTitle(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Subgroups", None, -1))
-        self.tableWidget_UNIFACsubgroups.horizontalHeaderItem(0).setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "ID", None, -1))
-        self.tableWidget_UNIFACsubgroups.horizontalHeaderItem(1).setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Formula", None, -1))
-        self.tableWidget_UNIFACsubgroups.horizontalHeaderItem(2).setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Frequency", None, -1))
-        self.btn_UNIFACsubgroups_add.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Add", None, -1))
-        self.btn_UNIFACsubgroups_remove.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Remove", None, -1))
-        self.tabWidget_substanceProperties.setTabText(self.tabWidget_substanceProperties.indexOf(self.tab_UNIFAC), QtWidgets.QApplication.translate("Form_db_substanceProperties", "UNIFAC", None, -1))
-        self.btn_edit_confirm.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Confirm", None, -1))
-        self.btn_edit_cancel.setText(QtWidgets.QApplication.translate("Form_db_substanceProperties", "Cancel", None, -1))
+        Form_db_substanceProperties.setWindowTitle(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Substance properties", None, -1
+            )
+        )
+        self.label.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Name", None, -1
+            )
+        )
+        self.label_2.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Formula", None, -1
+            )
+        )
+        self.label_3.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "CAS number", None, -1
+            )
+        )
+        self.label_6.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties",
+                "(all fields above are required)",
+                None,
+                -1,
+            )
+        )
+        self.groupBox_2.setTitle(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Aliases", None, -1
+            )
+        )
+        self.btn_remove_alias.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Remove", None, -1
+            )
+        )
+        self.btn_add_alias.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Add", None, -1
+            )
+        )
+        self.tableWidget_aliases.horizontalHeaderItem(0).setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Alias", None, -1
+            )
+        )
+        self.tabWidget_substanceProperties.setTabText(
+            self.tabWidget_substanceProperties.indexOf(self.tab_identification),
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Identification", None, -1
+            ),
+        )
+        self.label_4.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Molar weight", None, -1
+            )
+        )
+        self.label_5.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "[g/mol]", None, -1
+            )
+        )
+        self.label_11.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties",
+                "<html><head/><body><p>Freezing point temp. (Tfp)</p></body></html>",
+                None,
+                -1,
+            )
+        )
+        self.le_Tfp.setToolTip(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties",
+                "<html><head/><body><p>Freezing point temperature</p></body></html>",
+                None,
+                -1,
+            )
+        )
+        self.label_12.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "[K]", None, -1
+            )
+        )
+        self.label_13.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Boiling temp. (Tb)", None, -1
+            )
+        )
+        self.label_14.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "[K]", None, -1
+            )
+        )
+        self.label_15.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Critical temp. (Tc)", None, -1
+            )
+        )
+        self.label_16.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "[K]", None, -1
+            )
+        )
+        self.label_17.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Critical pressure (Pc)", None, -1
+            )
+        )
+        self.label_18.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "[bar]", None, -1
+            )
+        )
+        self.label_19.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Critical volume (Vc)", None, -1
+            )
+        )
+        self.label_20.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "[cm3/mol]", None, -1
+            )
+        )
+        self.label_21.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Compressibility factor (Zc)", None, -1
+            )
+        )
+        self.label_23.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Acentric factor", None, -1
+            )
+        )
+        self.tabWidget_substanceProperties.setTabText(
+            self.tabWidget_substanceProperties.indexOf(self.tab_generalData),
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "General data", None, -1
+            ),
+        )
+        self.label_25.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "a0", None, -1
+            )
+        )
+        self.label_29.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "a2", None, -1
+            )
+        )
+        self.label_27.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "a4", None, -1
+            )
+        )
+        self.label_30.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "a1", None, -1
+            )
+        )
+        self.label_31.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Temperature range ", None, -1
+            )
+        )
+        self.label_32.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Tmin [K]", None, -1
+            )
+        )
+        self.label_33.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Tmax [K]", None, -1
+            )
+        )
+        self.label_28.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "a3", None, -1
+            )
+        )
+        self.tabWidget_substanceProperties.setTabText(
+            self.tabWidget_substanceProperties.indexOf(self.tab_Cp),
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Cp", None, -1
+            ),
+        )
+        self.label_35.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "A", None, -1
+            )
+        )
+        self.label_36.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "B", None, -1
+            )
+        )
+        self.label_37.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "C", None, -1
+            )
+        )
+        self.label_34.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Antoine correlation", None, -1
+            )
+        )
+        self.label_39.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Tmin [K]", None, -1
+            )
+        )
+        self.label_40.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Tmax [K]", None, -1
+            )
+        )
+        self.tabWidget_substanceProperties.setTabText(
+            self.tabWidget_substanceProperties.indexOf(self.tab_VaporPressure),
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Vapor pressure", None, -1
+            ),
+        )
+        self.groupBox.setTitle(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Subgroups", None, -1
+            )
+        )
+        self.tableWidget_UNIFACsubgroups.horizontalHeaderItem(0).setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "ID", None, -1
+            )
+        )
+        self.tableWidget_UNIFACsubgroups.horizontalHeaderItem(1).setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Formula", None, -1
+            )
+        )
+        self.tableWidget_UNIFACsubgroups.horizontalHeaderItem(2).setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Frequency", None, -1
+            )
+        )
+        self.btn_UNIFACsubgroups_add.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Add", None, -1
+            )
+        )
+        self.btn_UNIFACsubgroups_remove.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Remove", None, -1
+            )
+        )
+        self.tabWidget_substanceProperties.setTabText(
+            self.tabWidget_substanceProperties.indexOf(self.tab_UNIFAC),
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "UNIFAC", None, -1
+            ),
+        )
+        self.btn_edit_confirm.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Confirm", None, -1
+            )
+        )
+        self.btn_edit_cancel.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Cancel", None, -1
+            )
+        )
 
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     Form_db_substanceProperties = QtWidgets.QWidget()
     ui = Ui_Form_db_substanceProperties()
     ui.setupUi(Form_db_substanceProperties)
     Form_db_substanceProperties.show()
     sys.exit(app.exec_())
-

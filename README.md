@@ -18,6 +18,7 @@ This software was developed as part of a undergraduate thesis in Chemical Engine
 
 - 20 cubic equations of state implemented for all calculations. The active equation 
 can be easily changed, which provides a quickly comparision tool
+- UNIFAC method (group contribution method) for determining activity coefficients
 - Calculation of thermodynamics properties for single substances and multicomponent mixtures
 - Multiple saturation diagram plots for pure substances
 - Vapor-liquid equilibrium calculations for mixtures: bubble point, dew point and P-T-z flash calculations

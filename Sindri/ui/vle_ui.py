@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/vle_ui.ui',
 # licensing of 'designer/vle_ui.ui' applies.
 #
-# Created: Thu Apr 25 23:14:12 2019
+# Created: Mon Apr 29 10:48:58 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -280,6 +280,9 @@ class Ui_FormVLE(object):
         self.label_2.setObjectName("label_2")
         self.gridLayout_2.addWidget(self.label_2, 1, 0, 1, 1)
         self.checkBox_UNIFAC = QtWidgets.QCheckBox(self.scrollAreaWidgetContents)
+        self.checkBox_UNIFAC.setToolTip(
+            "To enable this option, please add the subgroups to the database of current substances"
+        )
         self.checkBox_UNIFAC.setObjectName("checkBox_UNIFAC")
         self.gridLayout_2.addWidget(self.checkBox_UNIFAC, 1, 4, 1, 1)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)

@@ -466,6 +466,9 @@
        </item>
        <item row="1" column="4">
         <widget class="QCheckBox" name="checkBox_UNIFAC">
+         <property name="toolTip">
+          <string notr="true">To enable this option, please add the subgroups to the database of current substances</string>
+         </property>
          <property name="text">
           <string>UNIFAC</string>
          </property>

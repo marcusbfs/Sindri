@@ -6,7 +6,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change beforePath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/ui/vle_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/ui/vle_ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy_pyinstaller.bat" beforeDir="false" afterPath="$PROJECT_DIR$/deploy_pyinstaller.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/designer/vle_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/vle_ui.ui" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,13 +22,25 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3383">
+            <state relative-caret-position="365">
               <caret line="203" column="22" selection-start-line="203" selection-start-column="22" selection-end-line="203" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="102">
+                <caret line="18" column="80" selection-start-line="18" selection-start-column="80" selection-end-line="18" selection-end-column="80" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="212">
@@ -109,7 +124,6 @@
         <option value="$PROJECT_DIR$/Sindri/aboutWindow.py" />
         <option value="$PROJECT_DIR$/Sindri/texts/about.html" />
         <option value="$PROJECT_DIR$/Sindri/Controllers/MixtureCalculationsController.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/Sindri/EOSPureSubstanceInterface.py" />
         <option value="$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py" />
         <option value="$PROJECT_DIR$/Sindri/diagrams.py" />
@@ -131,13 +145,15 @@
         <option value="$PROJECT_DIR$/Sindri/Controllers/AddAliasController.py" />
         <option value="$PROJECT_DIR$/Sindri/databaseWindow.py" />
         <option value="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="697" />
-    <option name="height" value="775" />
+    <option name="height" value="391" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -147,6 +163,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -180,7 +197,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -423,21 +439,21 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.19599578" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8046875" weight="0.19568452" />
       <window_info id="Structure" order="1" sideWeight="0.1953125" side_tool="true" weight="0.17755532" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4888393" weight="0.32643312" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5073762" weight="0.28936172" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5066964" weight="0.28821656" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49420443" weight="0.32446808" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4915701" weight="0.32765958" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.4004215" visible="true" weight="0.2957447" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5995785" side_tool="true" visible="true" weight="0.2957447" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.39955357" weight="0.29458597" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.49330357" side_tool="true" weight="0.28821656" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.5532139" weight="0.43085107" />
       <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5015806" weight="0.39255318" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -446,6 +462,27 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" x="0" y="0" width="434" height="896" id="Documentation" order="3" side_tool="true" weight="0.32995737" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.19568452" />
+      <window_info id="Structure" order="1" sideWeight="0.1953125" side_tool="true" weight="0.17755532" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4888393" weight="0.32643312" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5066964" visible="true" weight="0.28821656" />
+      <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49420443" weight="0.32446808" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4915701" weight="0.32765958" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.39955357" weight="0.29458597" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.49330357" side_tool="true" visible="true" weight="0.28821656" />
+      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.5532139" weight="0.43085107" />
+      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5015806" weight="0.39255318" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" x="0" y="0" width="434" height="896" id="Documentation" order="3" side_tool="true" weight="0.32995737" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -550,16 +587,6 @@
             <element signature="n#style#0;n#p#11;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#a#0;n#p#11;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="85">
-            <caret line="5" selection-start-line="5" selection-end-line="5" />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>
@@ -870,13 +897,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3383">
-          <caret line="203" column="22" selection-start-line="203" selection-start-column="22" selection-end-line="203" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Views/AddAliasView.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -911,6 +931,23 @@
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="203" column="22" selection-start-line="203" selection-start-column="22" selection-end-line="203" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="102">
+            <caret line="18" column="80" selection-start-line="18" selection-start-column="80" selection-end-line="18" selection-end-column="80" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

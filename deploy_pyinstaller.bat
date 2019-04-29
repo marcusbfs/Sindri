@@ -28,4 +28,6 @@ xcopy %innofile% %work_folder% /E
 
 REM if exist %s7z% (call %s7z% a Sindri -t"zip" Sindri & call %s7z% a Sindri.exe Sindri -sfx)
 
+%work_folder%\Sindri_inno.iss
+
 cd %current_dir%

@@ -228,7 +228,6 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         self.btn_remove_alias.clicked.connect(self.removeAlias)
         self.loadAliases()
 
-
     def load_entries(self):
         self.le_formula.setText(self.Formula)
         self.le_name.setText(self.Name)
@@ -492,28 +491,28 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
                 "Subgroup already in the list",
             )
 
-
     def loadAliases(self):
         self.tableWidget_aliases.setRowCount(0)
         query = """SELECT alias FROM substance_name_aliases
-                    WHERE substance_id={}""".format(self.substance_id_int)
+                    WHERE substance_id={}""".format(
+            self.substance_id_int
+        )
         data = db.cursor.execute(query).fetchall()
         n = len(data)
         self.tableWidget_aliases.setRowCount(n)
         for i in range(n):
             alias_item = QtWidgets.QTableWidgetItem(str(data[i][0]))
-            self.tableWidget_aliases.setItem(i,0,alias_item)
-
+            self.tableWidget_aliases.setItem(i, 0, alias_item)
 
     def removeAlias(self):
         current_row = self.tableWidget_aliases.currentRow()
         if current_row < 0:
             return
         try:
-            alias = self.tableWidget_aliases.item(current_row,0).text()
+            alias = self.tableWidget_aliases.item(current_row, 0).text()
             query = """ DELETE FROM substance_name_aliases
                         WHERE substance_id=? AND alias=?"""
-            db.cursor.execute(query, (self.substance_id_int,alias))
+            db.cursor.execute(query, (self.substance_id_int, alias))
             self.changes_made = True
             self.loadAliases()
         except Exception as e:
@@ -524,10 +523,4 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         try:
             controller.createView()
         except Exception as e:
-            QtWidgets.QMessageBox.about(
-                controller.view,
-                "Error adding alias",
-                ""
-            )
-
-
+            QtWidgets.QMessageBox.about(controller.view, "Error adding alias", "")

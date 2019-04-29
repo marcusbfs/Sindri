@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_Form_AddAlias(object):
     def setupUi(self, Form_AddAlias):
         Form_AddAlias.setObjectName("Form_AddAlias")
@@ -22,7 +23,9 @@ class Ui_Form_AddAlias(object):
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
         self.gridLayout.addWidget(self.line, 1, 0, 1, 3)
-        spacerItem = QtWidgets.QSpacerItem(47, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(
+            47, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout.addItem(spacerItem, 2, 0, 1, 1)
         self.btn_ok = QtWidgets.QPushButton(Form_AddAlias)
         self.btn_ok.setObjectName("btn_ok")
@@ -35,21 +38,29 @@ class Ui_Form_AddAlias(object):
         self.gridLayout.addWidget(self.le_alias, 0, 0, 1, 3)
 
         self.retranslateUi(Form_AddAlias)
-        QtCore.QObject.connect(self.le_alias, QtCore.SIGNAL("returnPressed()"), self.btn_ok.click)
+        QtCore.QObject.connect(
+            self.le_alias, QtCore.SIGNAL("returnPressed()"), self.btn_ok.click
+        )
         QtCore.QMetaObject.connectSlotsByName(Form_AddAlias)
 
     def retranslateUi(self, Form_AddAlias):
-        Form_AddAlias.setWindowTitle(QtWidgets.QApplication.translate("Form_AddAlias", "Add alias", None, -1))
-        self.btn_ok.setText(QtWidgets.QApplication.translate("Form_AddAlias", "Ok", None, -1))
-        self.btn_cancel.setText(QtWidgets.QApplication.translate("Form_AddAlias", "Cancel", None, -1))
+        Form_AddAlias.setWindowTitle(
+            QtWidgets.QApplication.translate("Form_AddAlias", "Add alias", None, -1)
+        )
+        self.btn_ok.setText(
+            QtWidgets.QApplication.translate("Form_AddAlias", "Ok", None, -1)
+        )
+        self.btn_cancel.setText(
+            QtWidgets.QApplication.translate("Form_AddAlias", "Cancel", None, -1)
+        )
 
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     Form_AddAlias = QtWidgets.QWidget()
     ui = Ui_Form_AddAlias()
     ui.setupUi(Form_AddAlias)
     Form_AddAlias.show()
     sys.exit(app.exec_())
-
