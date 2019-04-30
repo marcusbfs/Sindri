@@ -88,6 +88,8 @@ class Form_AddSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substancePropert
             QtGui.QPixmap(":/images/antoine_correlation_equation.png")
         )
 
+        self.tableWidget_aliases.horizontalHeader().setDefaultAlignment(QtCore.Qt.AlignLeft)
+
     def confirm_clicked(self):
 
         try:
