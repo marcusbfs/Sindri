@@ -7,7 +7,6 @@ from ui.pure_substance_diagrams_ui import Ui_Form_PureSubstanceDiagrams
 class PureSubstanceDiagramsView(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams):
     def __init__(
         self,
-        # controller: PureSubstanceController,
         controller,
         model: PureSubstanceModel,
         parent=None,
@@ -44,24 +43,16 @@ class PureSubstanceDiagramsView(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams
         self.le_Ti.setValidator(doublevalidator)
         self.le_points.setValidator(positiveIntvalidator)
 
-        self.points = 30
+        self.points = 20
         self.data_is_gen = False
         self.le_points.setText(str(self.points))
-        # self.le_isotherms.setText("120 150 190")  # TODO remove this line after testing
 
         # connections
-        # self.le_Ti.textChanged.connect(self.changed_Trange)
-        # self.le_points.textChanged.connect(self.changed_Trange)
-        # self.le_isotherms.textChanged.connect(self.changed_Trange)
         self.btn_gen.clicked.connect(self.gen)
         self.btn_plot.clicked.connect(self.plot)
         self.comboBox_diagram.currentTextChanged.connect(self.update_axis)
+        self.comboBox_diagram.currentTextChanged.connect(self.comboBox_diagram_changed)
         self.checkBox_isotherms.stateChanged.connect(self.isothermsStateChanged)
-
-        # set initial and final temperatures to freezing and critical point
-
-        self.Ti = 0
-        self.Tf = 1
 
     @QtCore.Slot()
     def gen(self):
@@ -76,8 +67,8 @@ class PureSubstanceDiagramsView(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams
         self.controller.updateAxisDiagrams()
 
     @QtCore.Slot()
-    def changed_Trange(self):
-        self.data_is_gen = False
+    def comboBox_diagram_changed(self, state):
+        self.controller.diagram_combobox_changed()
 
     @QtCore.Slot()
     def isothermsStateChanged(self, state):

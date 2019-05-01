@@ -6,9 +6,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change beforePath="$PROJECT_DIR$/Sindri/Views/AddAliasView.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/Views/AddAliasView.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/Views/PureSubstanceDiagramsView.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/Views/PureSubstanceDiagramsView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/diagrams.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/diagrams.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,31 +19,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
+        <entry file="file://$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="90" column="7" selection-start-line="90" selection-start-column="7" selection-end-line="90" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sindri/databaseWindow.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="60" column="21" selection-start-line="60" selection-start-column="21" selection-end-line="60" selection-end-column="21" />
+            <state relative-caret-position="503">
+              <caret line="362" column="54" selection-start-line="362" selection-start-column="54" selection-end-line="362" selection-end-column="54" />
               <folding>
-                <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#0#29#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py">
+        <entry file="file://$PROJECT_DIR$/Sindri/Views/PureSubstanceDiagramsView.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="226" column="31" selection-start-line="226" selection-start-column="31" selection-end-line="226" selection-end-column="31" />
+            <state relative-caret-position="265">
+              <caret line="65" column="26" lean-forward="true" selection-start-line="65" selection-start-column="26" selection-end-line="65" selection-end-column="26" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -119,13 +110,10 @@
         <option value="$PROJECT_DIR$/Sindri/Views/PureSubstanceView.py" />
         <option value="$PROJECT_DIR$/Sindri/Views/MixtureCalculationsView.py" />
         <option value="$PROJECT_DIR$/Sindri/mainwindow.py" />
-        <option value="$PROJECT_DIR$/Sindri/Views/PureSubstanceDiagramsView.py" />
         <option value="$PROJECT_DIR$/Sindri/aboutWindow.py" />
         <option value="$PROJECT_DIR$/Sindri/texts/about.html" />
         <option value="$PROJECT_DIR$/Sindri/Controllers/MixtureCalculationsController.py" />
         <option value="$PROJECT_DIR$/Sindri/EOSPureSubstanceInterface.py" />
-        <option value="$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py" />
-        <option value="$PROJECT_DIR$/Sindri/diagrams.py" />
         <option value="$PROJECT_DIR$/Sindri/Models/FitExpDataToBinaryParameterModel.py" />
         <option value="$PROJECT_DIR$/Sindri/DatabaseInterface/DatabaseTableWidgetView.py" />
         <option value="$PROJECT_DIR$/Sindri/db_utils.py" />
@@ -145,6 +133,9 @@
         <option value="$PROJECT_DIR$/Sindri/Views/AddAliasView.py" />
         <option value="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" />
         <option value="$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py" />
+        <option value="$PROJECT_DIR$/Sindri/diagrams.py" />
+        <option value="$PROJECT_DIR$/Sindri/Views/PureSubstanceDiagramsView.py" />
+        <option value="$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py" />
       </list>
     </option>
   </component>
@@ -162,7 +153,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -196,6 +186,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -439,21 +430,22 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8046875" visible="true" weight="0.19546892" />
       <window_info id="Structure" order="1" sideWeight="0.1953125" side_tool="true" weight="0.17755532" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4888393" weight="0.32643312" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5057956" weight="0.28723404" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5015806" weight="0.28723404" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49420443" weight="0.32446808" />
-      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4915701" weight="0.32765958" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.39831403" visible="true" weight="0.293617" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.601686" side_tool="true" visible="true" weight="0.293617" />
-      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.5532139" weight="0.43085107" />
-      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.5015806" weight="0.39255318" />
+      <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49367756" weight="0.32446808" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4910432" weight="0.32765958" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.3967334" weight="0.293617" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.49841937" side_tool="true" visible="true" weight="0.293617" />
+      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.55268705" weight="0.43085107" />
+      <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.49789253" weight="0.39255318" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -483,6 +475,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py</url>
+          <line>220</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -493,44 +492,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Sindri/CubicEquationsOfState/SchmidtAndWenzel1979.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/CubicEquationsOfState/HarmensAndKnapp1980.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="56" column="24" lean-forward="true" selection-start-line="56" selection-start-column="24" selection-end-line="56" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/DatabaseInterface/DatabaseInterface.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/resources/icons_rc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-663" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/mainwindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Controllers/UnitsOptionsController.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -587,13 +548,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/diagrams.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="277" column="53" selection-start-line="277" selection-start-column="53" selection-end-line="277" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/utils.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -611,33 +565,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/Views/PureSubstanceDiagramsView.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/Views/PureSubstanceView.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="41" selection-start-line="41" selection-end-line="41" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -683,13 +610,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
           <caret line="107" selection-start-line="107" selection-end-line="107" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/EOSPureSubstanceInterface.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="20" column="8" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -787,23 +707,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/Controllers/MixtureVLEController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Models/LiquidModel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -854,16 +757,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="586">
-          <caret line="91" column="13" selection-start-line="91" selection-start-column="13" selection-end-line="91" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Controllers/AddUNIFACsubgroupController.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="501">
@@ -891,16 +784,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="226" column="31" selection-start-line="226" selection-start-column="31" selection-end-line="226" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/Views/AddAliasView.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -911,9 +794,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="77" column="53" selection-start-line="77" selection-start-column="53" selection-end-line="77" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/databaseWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
+        <state relative-caret-position="884">
           <caret line="60" column="21" selection-start-line="60" selection-start-column="21" selection-end-line="60" selection-end-column="21" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
@@ -921,10 +811,119 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
+    <entry file="file://$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="90" column="7" selection-start-line="90" selection-start-column="7" selection-end-line="90" selection-end-column="7" />
+        <state relative-caret-position="272">
+          <caret line="226" column="31" selection-start-line="226" selection-start-column="31" selection-end-line="226" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Desktop/workspace/venv_TPCAE/Lib/site-packages/numpy/core/shape_base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="70" selection-start-line="70" selection-end-line="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/EOSPureSubstanceInterface.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="40" column="33" lean-forward="true" selection-start-line="40" selection-start-column="33" selection-end-line="40" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/EOSMixture.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-405">
+          <caret line="965" column="8" selection-start-line="965" selection-start-column="8" selection-end-line="965" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/Views/PureSubstanceView.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/Controllers/MixtureVLEController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="415" column="79" lean-forward="true" selection-start-line="415" selection-start-column="79" selection-end-line="415" selection-end-column="79" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/units.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="427">
+          <caret line="127" selection-start-line="127" selection-end-line="127" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Desktop/workspace/venv_TPCAE/Lib/site-packages/numpy/core/numeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="590" selection-start-line="590" selection-end-line="590" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Desktop/workspace/venv_TPCAE/Lib/site-packages/scipy/interpolate/fitpack.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="288" selection-start-line="288" selection-end-line="288" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Desktop/workspace/venv_TPCAE/Lib/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="2503" selection-start-line="2503" selection-end-line="2503" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/diagrams.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="258" column="47" selection-start-line="258" selection-start-column="47" selection-end-line="258" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/Views/PureSubstanceDiagramsView.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="65" column="26" lean-forward="true" selection-start-line="65" selection-start-column="26" selection-end-line="65" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="503">
+          <caret line="362" column="54" selection-start-line="362" selection-start-column="54" selection-end-line="362" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

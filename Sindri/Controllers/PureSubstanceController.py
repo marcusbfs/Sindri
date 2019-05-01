@@ -165,9 +165,10 @@ class PureSubstanceController:
             return -1
 
         try:
-            if self.diagramsView.le_isotherms.text() != "":
+            if self.diagramsView.le_isotherms.text().strip() != "":
                 self.isotherms_range = [
-                    float(i) for i in self.diagramsView.le_isotherms.text().split()
+                    float(i) for i in self.diagramsView.le_isotherms.text().replace(',', ' ').split()
+
                 ]
             else:
                 self.isotherms_range = []
@@ -181,7 +182,7 @@ class PureSubstanceController:
 
         try:
             s1 = time()
-            self.rl, self.rv, self.cp = diagrams.gen_data(
+            self.rl, self.rv, self.cp, isotherm_data = diagrams.gen_data(
                 self.model.system,
                 [self.Ti, self.Tf],
                 self.model.getPref(),
@@ -201,6 +202,7 @@ class PureSubstanceController:
                 self.cp,
                 self.model.getSubstanceName(),
                 self.model.getEOS(),
+                isotherms=isotherm_data,
             )
 
         except Exception as e:
@@ -229,6 +231,7 @@ class PureSubstanceController:
                         lnscale=self.diagramsView.checkBox_logscale.isChecked(),
                         grid=self.diagramsView.checkBox_grid.isChecked(),
                         smooth=self.diagramsView.checkBox_smooth.isChecked(),
+                        plotisothermals=self.diagramsView.checkBox_isotherms.isChecked()
                     )
                 elif choice == "TS":
                     self.diag.plotTS(
@@ -343,3 +346,18 @@ class PureSubstanceController:
 
     def diagrams_isothermStateChanged(self, state):
         self.diagramsView.le_isotherms.setEnabled(state)
+
+    def diagram_combobox_changed(self):
+        text = self.diagramsView.comboBox_diagram.currentText()
+        if text == "pressure-volume":
+            self.activate_isothermal_lineEdit_and_checkBox()
+        else:
+            self.deactivate_isothermal_lineEdit_and_checkBox()
+
+    def activate_isothermal_lineEdit_and_checkBox(self):
+        self.diagramsView.checkBox_isotherms.setEnabled(True)
+        self.diagramsView.le_isotherms.setEnabled(True)
+
+    def deactivate_isothermal_lineEdit_and_checkBox(self):
+        self.diagramsView.checkBox_isotherms.setDisabled(True)
+        self.diagramsView.le_isotherms.setDisabled(True)

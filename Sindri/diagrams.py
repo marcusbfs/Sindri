@@ -22,6 +22,12 @@ labels_dict = {
     "S": "Entropy",
 }
 
+class IsothermalPVStruct:
+    def __init__(self, T: List[float], V:List[float],P:List[List[float]]):
+        self.T = T
+        self.V = V
+        self.P = P
+
 
 class PlotPureSubstanceDiagrams(object):
     def __init__(
@@ -43,7 +49,7 @@ class PlotPureSubstanceDiagrams(object):
         self.compound = compound
         self.eosname = eosname
         self.eoseq = eoseq
-        self.isotherms = isotherms
+        self.isotherms :IsothermalPVStruct = isotherms
 
         self.Tliq, self.Tvap = np.zeros(self.n), np.zeros(self.n)
         self.Pliq, self.Pvap = np.zeros(self.n), np.zeros(self.n)
@@ -64,6 +70,7 @@ class PlotPureSubstanceDiagrams(object):
         self.lnscale = False
         self.grid = True
         self.smooth = True
+        self.plotisotherms= False
 
         for i in range(self.n):
             self.Tliq[i], self.Tvap[i] = self.propsliq[i].T, self.propsvap[i].T
@@ -90,27 +97,26 @@ class PlotPureSubstanceDiagrams(object):
                 self.propsvap[i].Props.A,
             )
 
-        if len(self.isotherms) > 0:
+        if len(self.isotherms.T) > 0:
             self.has_isotherms = True
         else:
             self.has_isotherms = False
 
-    def plotPV(self, xunit: str, yunit: str, lnscale=True, smooth=True, grid=True):
+
+    def plotPV(self, xunit: str, yunit: str, lnscale=True, smooth=True, grid=True, plotisothermals=False):
         self.x_letter, self.y_letter = "V", "P"
         self.xliq, self.yliq = self.Vliq, self.Pliq
         self.xvap, self.yvap = self.Vvap, self.Pvap
         self.xcp, self.ycp = self.cpoint.V, self.cpoint.P
         self.xunit, self.yunit = xunit, yunit
 
-        if self.has_isotherms:
-            self.iso_x = np.linspace(np.min(self.xliq), np.max(self.xvap), self.n)
-            self.iso_y = np.zeros(self.n)
-            for i in range(self.n):
-                self.iso_y[i] = self.eoseq.getPfromTV(self.isotherms[0], self.iso_x[i])
+        self.xliq = conv_unit(self.xliq, SI_dict[self.x_letter], self.xunit)
+        self.xvap = conv_unit(self.xvap, SI_dict[self.x_letter], self.xunit)
 
         self.lnscale = lnscale
         self.grid = grid
         self.smooth = smooth
+        self.plotisotherms = plotisothermals
 
     def plotTS(self, xunit: str, yunit: str, lnscale=False, smooth=True, grid=True):
         self.x_letter, self.y_letter = "S", "T"
@@ -168,6 +174,7 @@ class PlotPureSubstanceDiagrams(object):
         self.smooth = smooth
 
     def _plot(self):
+
         self.title = "{}: {}\n{}".format(
             self.compound,
             "{} vs {}".format(labels_dict[self.y_letter], labels_dict[self.x_letter]),
@@ -221,6 +228,7 @@ class PlotPureSubstanceDiagrams(object):
                 raise
 
         fig, ax = plt.subplots()
+
         if self.grid:
             ax.grid()
         try:
@@ -234,6 +242,23 @@ class PlotPureSubstanceDiagrams(object):
         except Exception as e:
             print("Error plotting critical point\n{}".format(str(e)))
             raise
+
+        try:
+            if self.plotisotherms and self.has_isotherms:
+                v = conv_unit(np.atleast_1d(self.isotherms.V), SI_dict[self.x_letter], self.xunit)
+                if self.lnscale:
+                    v = np.log(v)
+                for i in range(len(self.isotherms.T)):
+                    t = self.isotherms.T[i]
+                    p = conv_unit(np.atleast_1d(self.isotherms.P[i]), SI_dict[self.y_letter], self.yunit)
+                    if self.lnscale:
+                        p = np.log(p)
+                    label = "isothermal at {:.3f} K".format(t)
+                    ax.plot(v, p, label=label, linestyle='--')
+        except Exception as e:
+            print("Error plotting isothermal data\n{}".format(str(e)))
+            raise
+
         ax.set_xlabel(self.xlabel)
         ax.set_ylabel(self.ylabel)
         ax.set_title(self.title)
@@ -282,4 +307,21 @@ def gen_data(
     Tc, Pc = eoseq.mix.substances[0].Tc, eoseq.mix.substances[0].Pc
     critical_point = eoseq.getAllProps(_Tref, Tc, _Pref, Pc)[0]
 
-    return (retliq, retvap, critical_point)
+    # isothermals
+    vmin = np.min([retliq[i].V for i in range(len(retliq))])
+    vmax = np.max([retvap[i].V for i in range(len(retvap))])
+    n_isotherms = 1000
+    v_iso_space = np.linspace(vmin, vmax, n_isotherms)
+    PV_isotherms = []
+    for t in isotherms:
+        tmp = []
+        for v in v_iso_space:
+            p = eoseq.getPfromTV(t, v)
+            tmp.append(p)
+        PV_isotherms.append(tmp)
+
+    PV_isotherms = IsothermalPVStruct(isotherms, list(v_iso_space.tolist()), PV_isotherms)
+
+    return (retliq, retvap, critical_point, PV_isotherms)
+
+
