@@ -17,15 +17,15 @@ This software was developed as part of a undergraduate thesis in Chemical Engine
 ### Features
 
 - 20 cubic equations of state implemented for all calculations. The active equation 
-can be easily changed, which provides a quickly comparision tool
+can be easily changed, which provides a quickly comparison tool
 - UNIFAC method (group contribution method) for determining activity coefficients
 - Calculation of thermodynamics properties for single substances and multicomponent mixtures
 - Multiple saturation diagram plots for pure substances
 - Vapor-liquid equilibrium calculations for mixtures: bubble point, dew point and P-T-z flash calculations
 - Binary mixture isothermal and isobaric equilibrium curves. The models can be adjusted to
 experimental data by fitting a binary interaction parameter
-- Reports generation
-- Modifiable database with 469 substances
+- Generates calculation reports
+- Modifiable database with 468 substances
 
 ## Getting Started
 
@@ -37,7 +37,7 @@ Download the *.exe* file and run the installer.
 ## Authors
 
 ### Developer
-- Marcus Bruno Fernandes Silva - Chemical Engineer student at Universidade Federal de Lavras, Brazil.
+- Marcus Bruno Fernandes Silva - Chemical Engineering student at Universidade Federal de Lavras, Brazil.
 
 ### Advisor
 - Nathan Sombra Evangelista - Professor at Universidade Federal de Lavras, Brazil. [Website](https://www.nsevangelista.com/)
