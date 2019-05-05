@@ -1,4 +1,5 @@
 import numpy as np
+from fortran.UNIFAC import getgamma as _helper_getGamma2
 
 import db
 
@@ -94,13 +95,16 @@ class UNIFAC:
         # cursor.close()
 
     def getGamma(self, x, T: float):
-        x = np.atleast_1d(x)
-        return _helper_getGamma(
-            x, T, self.n, self.m, self.amk, self.vk, self.Rk, self.Qk
+        return _helper_getGamma2(
+            x, T,self.amk, self.vk, self.Rk, self.Qk
         )
+        # x = np.atleast_1d(x)
+        # return _helper_getGamma(
+        #     x, T, self.amk, self.vk, self.Rk, self.Qk
+        # )
 
 
-from numba import njit, jit, float64, int8
+from numba import njit
 
 
 @njit(
