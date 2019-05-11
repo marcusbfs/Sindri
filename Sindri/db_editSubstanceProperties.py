@@ -224,7 +224,9 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         )
 
         # alias
-        self.tableWidget_aliases.horizontalHeader().setDefaultAlignment(QtCore.Qt.AlignLeft)
+        self.tableWidget_aliases.horizontalHeader().setDefaultAlignment(
+            QtCore.Qt.AlignLeft
+        )
         self.btn_add_alias.clicked.connect(self.addAlias)
         self.btn_remove_alias.clicked.connect(self.removeAlias)
         self.loadAliases()

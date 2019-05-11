@@ -14,7 +14,6 @@ class AddAliasView(QtWidgets.QWidget, Ui_Form_AddAlias):
 
         self.btn_ok.clicked.connect(self.ok_clicked)
         self.btn_cancel.clicked.connect(self.cancel_clicked)
-        
 
     def ok_clicked(self):
         self.controller.ok_clicked()

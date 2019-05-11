@@ -5,12 +5,7 @@ from ui.pure_substance_diagrams_ui import Ui_Form_PureSubstanceDiagrams
 
 
 class PureSubstanceDiagramsView(QtWidgets.QWidget, Ui_Form_PureSubstanceDiagrams):
-    def __init__(
-        self,
-        controller,
-        model: PureSubstanceModel,
-        parent=None,
-    ):
+    def __init__(self, controller, model: PureSubstanceModel, parent=None):
         super().__init__(parent)
         self.setupUi(self)
 

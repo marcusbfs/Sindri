@@ -167,8 +167,10 @@ class PureSubstanceController:
         try:
             if self.diagramsView.le_isotherms.text().strip() != "":
                 self.isotherms_range = [
-                    float(i) for i in self.diagramsView.le_isotherms.text().replace(',', ' ').split()
-
+                    float(i)
+                    for i in self.diagramsView.le_isotherms.text()
+                    .replace(",", " ")
+                    .split()
                 ]
             else:
                 self.isotherms_range = []
@@ -231,7 +233,7 @@ class PureSubstanceController:
                         lnscale=self.diagramsView.checkBox_logscale.isChecked(),
                         grid=self.diagramsView.checkBox_grid.isChecked(),
                         smooth=self.diagramsView.checkBox_smooth.isChecked(),
-                        plotisothermals=self.diagramsView.checkBox_isotherms.isChecked()
+                        plotisothermals=self.diagramsView.checkBox_isotherms.isChecked(),
                     )
                 elif choice == "TS":
                     self.diag.plotTS(

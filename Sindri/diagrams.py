@@ -22,8 +22,9 @@ labels_dict = {
     "S": "Entropy",
 }
 
+
 class IsothermalPVStruct:
-    def __init__(self, T: List[float], V:List[float],P:List[List[float]]):
+    def __init__(self, T: List[float], V: List[float], P: List[List[float]]):
         self.T = T
         self.V = V
         self.P = P
@@ -49,7 +50,7 @@ class PlotPureSubstanceDiagrams(object):
         self.compound = compound
         self.eosname = eosname
         self.eoseq = eoseq
-        self.isotherms :IsothermalPVStruct = isotherms
+        self.isotherms: IsothermalPVStruct = isotherms
 
         self.Tliq, self.Tvap = np.zeros(self.n), np.zeros(self.n)
         self.Pliq, self.Pvap = np.zeros(self.n), np.zeros(self.n)
@@ -70,7 +71,7 @@ class PlotPureSubstanceDiagrams(object):
         self.lnscale = False
         self.grid = True
         self.smooth = True
-        self.plotisotherms= False
+        self.plotisotherms = False
 
         for i in range(self.n):
             self.Tliq[i], self.Tvap[i] = self.propsliq[i].T, self.propsvap[i].T
@@ -102,8 +103,15 @@ class PlotPureSubstanceDiagrams(object):
         else:
             self.has_isotherms = False
 
-
-    def plotPV(self, xunit: str, yunit: str, lnscale=True, smooth=True, grid=True, plotisothermals=False):
+    def plotPV(
+        self,
+        xunit: str,
+        yunit: str,
+        lnscale=True,
+        smooth=True,
+        grid=True,
+        plotisothermals=False,
+    ):
         self.x_letter, self.y_letter = "V", "P"
         self.xliq, self.yliq = self.Vliq, self.Pliq
         self.xvap, self.yvap = self.Vvap, self.Pvap
@@ -245,16 +253,22 @@ class PlotPureSubstanceDiagrams(object):
 
         try:
             if self.plotisotherms and self.has_isotherms:
-                v = conv_unit(np.atleast_1d(self.isotherms.V), SI_dict[self.x_letter], self.xunit)
+                v = conv_unit(
+                    np.atleast_1d(self.isotherms.V), SI_dict[self.x_letter], self.xunit
+                )
                 if self.lnscale:
                     v = np.log(v)
                 for i in range(len(self.isotherms.T)):
                     t = self.isotherms.T[i]
-                    p = conv_unit(np.atleast_1d(self.isotherms.P[i]), SI_dict[self.y_letter], self.yunit)
+                    p = conv_unit(
+                        np.atleast_1d(self.isotherms.P[i]),
+                        SI_dict[self.y_letter],
+                        self.yunit,
+                    )
                     if self.lnscale:
                         p = np.log(p)
                     label = "isothermal at {:.3f} K".format(t)
-                    ax.plot(v, p, label=label, linestyle='--')
+                    ax.plot(v, p, label=label, linestyle="--")
         except Exception as e:
             print("Error plotting isothermal data\n{}".format(str(e)))
             raise
@@ -320,8 +334,8 @@ def gen_data(
             tmp.append(p)
         PV_isotherms.append(tmp)
 
-    PV_isotherms = IsothermalPVStruct(isotherms, list(v_iso_space.tolist()), PV_isotherms)
+    PV_isotherms = IsothermalPVStruct(
+        isotherms, list(v_iso_space.tolist()), PV_isotherms
+    )
 
     return (retliq, retvap, critical_point, PV_isotherms)
-
-
