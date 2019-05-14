@@ -19,6 +19,10 @@ state_dict = {
 
 
 class SubstanceProp(object):
+    """
+    Class that holds all information from database about the substance.
+    """
+
     def __init__(self, name: str, formula: str):
 
         db.init()

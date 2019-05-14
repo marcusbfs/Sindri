@@ -5,6 +5,25 @@ from constants import DBL_EPSILON
 
 @jit((float64, float64, float64), nopython=True, cache=True)
 def solve_quadratic(a, b, c):
+    """
+    Solves the real roots of a quadratic equation.
+
+    Solves the real root of the equation
+        a*x^2 + b*x + c = 0
+
+    Parameters
+    ----------
+    a : float
+    b : float
+    c : float
+
+    Returns
+    -------
+    ret : list of floats or None
+        list of floats containing all roots of the equation. If no real roots are found,
+        returns None.
+
+    """
 
     if abs(a) < DBL_EPSILON:  # linear
         return [-c / b]
@@ -26,6 +45,28 @@ def solve_quadratic(a, b, c):
 # @jit((float64, float64, float64, float64, Omitted(float64)), nopython=True, cache=True)
 @jit(nopython=True, cache=True)
 def solve_cubic(a, b, c, d, x0=1.0):
+    """
+    Solves the real roots of a cubic equation.
+
+    Solves the real root of the equation
+        a*x^3 + b*x^2 + c*x + d = 0
+
+    Parameters
+    ----------
+    a : float
+    b : float
+    c : float
+    d : float
+    x0 : float
+        initial guess for finding the first root using Newton-Raphson method
+
+    Returns
+    -------
+    ret : list of floats or None
+        list of floats containing all roots of the equation. If no real roots are found,
+        returns None.
+
+    """
 
     if abs(a) < DBL_EPSILON:  # quadratic
         ret = solve_quadratic(b, c, d)

@@ -4,6 +4,30 @@ from utils import f2str
 
 
 def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **units):
+    """
+    Generates a table-formatted calculations report.
+
+    Parameters
+    ----------
+    pliq : Props
+        liquid properties to be reported
+    pvap : Props
+        vapor properties to be reported
+    pvp : VaporPressure
+        vapor pressure(s) to be reported
+    units : kwarg
+        units in which the results will be reported
+
+    Returns
+    -------
+    labels : list of str
+        formatted properties labels
+    liq_values : list of str
+        formatted liquid properties
+    vap_values : list of str
+        formatted vapor properties
+
+    """
 
     labels = []
     liq_values = []

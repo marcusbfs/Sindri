@@ -69,6 +69,14 @@ calc_options = {
 
 
 class EOSMixture:
+    """
+    Main class for modeling a system with multiple substances, using a cubic equation of state.
+
+    This is the main class of the software. It's responsable for calculating all properties,
+    and all the vapor-liquid equilibrium data. It uses a generalized cubic equation of state for all
+    its calculations.
+    """
+
     def __init__(self, _subs: List[SubstanceProp], _k):
         self.substances = _subs
         self.k = _k

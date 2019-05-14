@@ -30,6 +30,26 @@ temperature_dict_from_K = {
 
 # derivative units
 def cbu(n, a, b):
+    """
+    Convert derivative units
+
+    Convert a number 'n' in units 'a' to units 'b', being 'a' and/or 'b' derivative units
+
+    Parameters
+    ----------
+    n : float
+        number to be converted
+    a : str
+        input unit
+    b : str
+        output unit
+
+    Returns
+    -------
+    ans : float
+        number converted, in 'b' units
+
+    """
     if a in pressure_dict and b in pressure_dict:
         ans = n * pressure_dict[a] / pressure_dict[b]
     elif a in volume_dict and b in volume_dict:
@@ -105,6 +125,26 @@ def convert_to_SI(unit, number, s):
 
 
 def conv_unit(number, a, b):
+    """
+    Convert a number units
+
+    Convert a number 'number' in units 'a' to units 'b'
+
+    Parameters
+    ----------
+    number : float
+        number to be converted
+    a : str
+        input unit
+    b : str
+        output unit
+
+    Returns
+    -------
+    ans : float
+        number converted, in 'b' units
+
+    """
     if a in pressure_dict and b in pressure_dict:
         ans = number * pressure_dict[a] / pressure_dict[b]
     elif a in volume_dict and b in volume_dict:

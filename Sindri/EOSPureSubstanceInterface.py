@@ -9,6 +9,12 @@ from Properties import Props
 
 
 class EOSPureSubstanceInterface:
+    """
+    Modeling class for a pure substance system using a cubic equation of state.
+
+    This class is a interface for EOSMixture, considering a single component system.
+    """
+
     def __init__(self, subs: List[SubstanceProp], eosname: str):
         self.eosname = eosname
         self.substances = subs

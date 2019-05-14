@@ -31,6 +31,19 @@ class IsothermalPVStruct:
 
 
 class PlotPureSubstanceDiagrams(object):
+    """
+    Plots pure substance saturation diagrams
+
+    This function will format and plot diagrams,
+    being 6 diagrams in total:
+    - PV
+    - PS
+    - TS
+    - HS
+    - TV
+    - PV
+    """
+
     def __init__(
         self,
         allpropsliq: List[Props],
@@ -284,6 +297,36 @@ class PlotPureSubstanceDiagrams(object):
 def gen_data(
     eoseq: EOS, Ti_f: List[float], _Pref: float, _Tref: float, points: int, isotherms=[]
 ):
+    """
+    Generates saturation data
+
+    Generations saturation data from 'Ti_f[0]' to 'Ti_f[1]', while considering a reference
+    state of '_Pref' and '_Tref'. Calculates in total, 'points' number of data.
+
+    Parameters
+    ----------
+    eoseq : EOSPureSubstanceInterface
+        The pure substance system model
+    Ti_f : list of float
+        Temperature interval for generating data, in Kelvin
+    _Pref : float
+        Reference pressure, bar.
+    _Tref : float
+        Referece temperature, Kelvin.
+    points : int
+        Number of points to be generated
+    isotherms : list of float
+        Temperature points in Kelvin to generate the corresponding isotherms
+
+    Returns
+    -------
+    retliq : list of Props
+        All data generated for the liquid phase
+    retvap : list of Props
+        All data generated for the vapor phase
+    critical_point : Props
+        All data generated for the critical point
+    """
     if not isinstance(Ti_f, list):
         raise TypeError("Temperature parameter must be an array of len 2")
 

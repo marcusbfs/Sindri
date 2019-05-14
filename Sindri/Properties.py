@@ -40,6 +40,10 @@ class DeltaProp(object):
 
 
 class VaporPressure(object):
+    """
+    Class containing information about the vapor pressure of a single substance system.
+    """
+
     def __init__(self):
         self.EOS = 0
         self.AW = 0
