@@ -28,9 +28,27 @@ class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
         )
         self.setWindowIcon(icon)
 
+        # with open("css/Aqua.css", 'r') as f_css:
+        #     self.setStyleSheet(f_css.read())
+
+        self.setFixedSize(300, 340)
+
         self.btn_MixtureCalculations.clicked.connect(self.open_MixtureCalculations)
         self.btn_about.clicked.connect(self.open_AboutWindow)
-        self.setWindowTitle(_devinfo.__SOFTWARE_NAME__)
+        self.setWindowTitle(_devinfo.__SOFTWARE_NAME__ + " - Jump Start")
+
+        main_logo_pixmap = QtGui.QPixmap(":/images/main_logo.png")
+        main_logo_pixmap = main_logo_pixmap.scaledToWidth(54)
+        self.label_main_icon.setPixmap(main_logo_pixmap)
+
+        self.label_main_title.setText(_devinfo.__SOFTWARE_NAME__)
+        self.label_main_subtitle.setText(_devinfo.__SOFTWARE_INFO__)
+        self.label_software_version.setText("v" + _devinfo.__SOFTWARE_VERSION__)
+
+        self.label_main_title.setStyleSheet(
+            "font-weight: bold;font-size: 20px;font-family: Dubai;"
+        )
+        self.label_main_subtitle.setStyleSheet("font-size: 16px; font-family: Calibri;")
 
         # button icons
         self.btn_BancoDeDados.setIcon(

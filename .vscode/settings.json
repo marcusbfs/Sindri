@@ -1,0 +1,9 @@
+{
+    "python.testing.pyTestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.pythonPath": "D:\\Desktop\\workspace\\venv_TPCAE\\Scripts\\python.exe",
+    "python.testing.pyTestEnabled": true
+}

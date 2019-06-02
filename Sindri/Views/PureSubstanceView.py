@@ -92,6 +92,15 @@ class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
         )
         self.btn_units.setIcon(QtGui.QIcon(QtGui.QPixmap(":/images/units_button.png")))
 
+        # row highlight
+        from css.genStyleSheet import (
+            genTableWidgetHighlightedRowSS,
+            genlistWidgetHighlightedRowSS,
+        )
+
+        genTableWidgetHighlightedRowSS(self.tableWidget_searchSubstance)
+        genlistWidgetHighlightedRowSS(self.listWidget_eos_options)
+
     def updateEOS(self):
         self.setWindowTitle(
             "Pure substance calculations - {}".format(self.model.getEOS())

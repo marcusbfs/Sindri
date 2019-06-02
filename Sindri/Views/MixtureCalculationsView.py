@@ -58,6 +58,15 @@ class MixtureCalculationsView(QtWidgets.QWidget, Ui_MixtureCalculationWindow):
         self.eos = None
         self.eosname = None
 
+        # row highlight
+        from css.genStyleSheet import (
+            genTableWidgetHighlightedRowSS,
+            genlistWidgetHighlightedRowSS,
+        )
+
+        genTableWidgetHighlightedRowSS(self.tableWidget_searchSubstance)
+        genlistWidgetHighlightedRowSS(self.listWidget_eos_options)
+
         # validators
         from validators import getDoubleValidatorRegex, getPositiveIntValidator
 

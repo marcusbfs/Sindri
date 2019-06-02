@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/units_options_ui.ui',
 # licensing of 'designer/units_options_ui.ui' applies.
 #
-# Created: Mon Apr 15 19:19:26 2019
+# Created: Sun Jun  2 14:43:54 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,7 +15,7 @@ class Ui_Form_UnitsOptions(object):
     def setupUi(self, Form_UnitsOptions):
         Form_UnitsOptions.setObjectName("Form_UnitsOptions")
         Form_UnitsOptions.setWindowModality(QtCore.Qt.ApplicationModal)
-        Form_UnitsOptions.resize(260, 270)
+        Form_UnitsOptions.resize(284, 274)
         Form_UnitsOptions.setMinimumSize(QtCore.QSize(260, 270))
         self.gridLayout_2 = QtWidgets.QGridLayout(Form_UnitsOptions)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -23,7 +23,7 @@ class Ui_Form_UnitsOptions(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 240, 250))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 264, 254))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout.setObjectName("gridLayout")

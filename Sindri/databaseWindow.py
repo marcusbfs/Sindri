@@ -84,6 +84,14 @@ class databaseWindow(QtWidgets.QWidget, Ui_databaseWindow):
             QtGui.QIcon(QtGui.QPixmap(":/images/restore_button.png"))
         )
 
+        # row highlight
+        from css.genStyleSheet import (
+            genTableWidgetHighlightedRowSS,
+            genlistWidgetHighlightedRowSS,
+        )
+
+        genTableWidgetHighlightedRowSS(self.tableWidget_db)
+
         self.le_db_search.setFocus()
 
     def load_db(self):
