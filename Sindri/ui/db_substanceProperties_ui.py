@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/db_substanceProperties_ui.ui',
 # licensing of 'designer/db_substanceProperties_ui.ui' applies.
 #
-# Created: Sun Apr 28 16:29:01 2019
+# Created: Sun Jun  2 17:56:04 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -258,32 +258,10 @@ class Ui_Form_db_substanceProperties(object):
         self.tab_Cp.setObjectName("tab_Cp")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.tab_Cp)
         self.gridLayout_4.setObjectName("gridLayout_4")
-        self.horizontalLayout_16 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_16.setObjectName("horizontalLayout_16")
-        self.label_25 = QtWidgets.QLabel(self.tab_Cp)
-        self.label_25.setMaximumSize(QtCore.QSize(20, 16777215))
-        self.label_25.setObjectName("label_25")
-        self.horizontalLayout_16.addWidget(self.label_25)
-        self.le_a0 = QtWidgets.QLineEdit(self.tab_Cp)
-        self.le_a0.setMaximumSize(QtCore.QSize(70, 16777215))
-        self.le_a0.setObjectName("le_a0")
-        self.horizontalLayout_16.addWidget(self.le_a0)
-        self.gridLayout_4.addLayout(self.horizontalLayout_16, 2, 0, 1, 1)
         spacerItem1 = QtWidgets.QSpacerItem(
-            20, 92, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
         )
-        self.gridLayout_4.addItem(spacerItem1, 5, 2, 1, 1)
-        self.horizontalLayout_19 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_19.setObjectName("horizontalLayout_19")
-        self.label_29 = QtWidgets.QLabel(self.tab_Cp)
-        self.label_29.setMaximumSize(QtCore.QSize(20, 16777215))
-        self.label_29.setObjectName("label_29")
-        self.horizontalLayout_19.addWidget(self.label_29)
-        self.le_a2 = QtWidgets.QLineEdit(self.tab_Cp)
-        self.le_a2.setMaximumSize(QtCore.QSize(70, 16777215))
-        self.le_a2.setObjectName("le_a2")
-        self.horizontalLayout_19.addWidget(self.le_a2)
-        self.gridLayout_4.addLayout(self.horizontalLayout_19, 2, 2, 1, 1)
+        self.gridLayout_4.addItem(spacerItem1, 3, 0, 1, 1)
         self.horizontalLayout_17 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_17.setObjectName("horizontalLayout_17")
         self.label_27 = QtWidgets.QLabel(self.tab_Cp)
@@ -294,11 +272,7 @@ class Ui_Form_db_substanceProperties(object):
         self.le_a4.setMaximumSize(QtCore.QSize(70, 16777215))
         self.le_a4.setObjectName("le_a4")
         self.horizontalLayout_17.addWidget(self.le_a4)
-        self.gridLayout_4.addLayout(self.horizontalLayout_17, 3, 1, 1, 1)
-        self.label_cp_equation = QtWidgets.QLabel(self.tab_Cp)
-        self.label_cp_equation.setText("")
-        self.label_cp_equation.setObjectName("label_cp_equation")
-        self.gridLayout_4.addWidget(self.label_cp_equation, 0, 0, 1, 3)
+        self.gridLayout_4.addLayout(self.horizontalLayout_17, 5, 1, 1, 1)
         self.horizontalLayout_20 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_20.setObjectName("horizontalLayout_20")
         self.label_30 = QtWidgets.QLabel(self.tab_Cp)
@@ -309,7 +283,22 @@ class Ui_Form_db_substanceProperties(object):
         self.le_a1.setMaximumSize(QtCore.QSize(70, 16777215))
         self.le_a1.setObjectName("le_a1")
         self.horizontalLayout_20.addWidget(self.le_a1)
-        self.gridLayout_4.addLayout(self.horizontalLayout_20, 2, 1, 1, 1)
+        self.gridLayout_4.addLayout(self.horizontalLayout_20, 4, 1, 1, 1)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            20, 92, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
+        self.gridLayout_4.addItem(spacerItem2, 7, 2, 1, 1)
+        self.horizontalLayout_16 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_16.setObjectName("horizontalLayout_16")
+        self.label_25 = QtWidgets.QLabel(self.tab_Cp)
+        self.label_25.setMaximumSize(QtCore.QSize(20, 16777215))
+        self.label_25.setObjectName("label_25")
+        self.horizontalLayout_16.addWidget(self.label_25)
+        self.le_a0 = QtWidgets.QLineEdit(self.tab_Cp)
+        self.le_a0.setMaximumSize(QtCore.QSize(70, 16777215))
+        self.le_a0.setObjectName("le_a0")
+        self.horizontalLayout_16.addWidget(self.le_a0)
+        self.gridLayout_4.addLayout(self.horizontalLayout_16, 4, 0, 1, 1)
         self.horizontalLayout_21 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_21.setObjectName("horizontalLayout_21")
         self.label_31 = QtWidgets.QLabel(self.tab_Cp)
@@ -337,7 +326,22 @@ class Ui_Form_db_substanceProperties(object):
         self.le_CpTmax.setMaximumSize(QtCore.QSize(100000, 16777215))
         self.le_CpTmax.setObjectName("le_CpTmax")
         self.horizontalLayout_21.addWidget(self.le_CpTmax)
-        self.gridLayout_4.addLayout(self.horizontalLayout_21, 4, 0, 1, 3)
+        self.gridLayout_4.addLayout(self.horizontalLayout_21, 6, 0, 1, 3)
+        spacerItem3 = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
+        self.gridLayout_4.addItem(spacerItem3, 1, 0, 1, 1)
+        self.horizontalLayout_19 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_19.setObjectName("horizontalLayout_19")
+        self.label_29 = QtWidgets.QLabel(self.tab_Cp)
+        self.label_29.setMaximumSize(QtCore.QSize(20, 16777215))
+        self.label_29.setObjectName("label_29")
+        self.horizontalLayout_19.addWidget(self.label_29)
+        self.le_a2 = QtWidgets.QLineEdit(self.tab_Cp)
+        self.le_a2.setMaximumSize(QtCore.QSize(70, 16777215))
+        self.le_a2.setObjectName("le_a2")
+        self.horizontalLayout_19.addWidget(self.le_a2)
+        self.gridLayout_4.addLayout(self.horizontalLayout_19, 4, 2, 1, 1)
         self.horizontalLayout_18 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_18.setObjectName("horizontalLayout_18")
         self.label_28 = QtWidgets.QLabel(self.tab_Cp)
@@ -348,20 +352,77 @@ class Ui_Form_db_substanceProperties(object):
         self.le_a3.setMaximumSize(QtCore.QSize(70, 16777215))
         self.le_a3.setObjectName("le_a3")
         self.horizontalLayout_18.addWidget(self.le_a3)
-        self.gridLayout_4.addLayout(self.horizontalLayout_18, 3, 0, 1, 1)
-        spacerItem2 = QtWidgets.QSpacerItem(
-            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        self.gridLayout_4.addLayout(self.horizontalLayout_18, 5, 0, 1, 1)
+        self.label_cp_equation = QtWidgets.QLabel(self.tab_Cp)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
         )
-        self.gridLayout_4.addItem(spacerItem2, 1, 0, 1, 1)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_cp_equation.sizePolicy().hasHeightForWidth()
+        )
+        self.label_cp_equation.setSizePolicy(sizePolicy)
+        self.label_cp_equation.setText("")
+        self.label_cp_equation.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_cp_equation.setObjectName("label_cp_equation")
+        self.gridLayout_4.addWidget(self.label_cp_equation, 2, 0, 1, 3)
         self.tabWidget_substanceProperties.addTab(self.tab_Cp, "")
         self.tab_VaporPressure = QtWidgets.QWidget()
         self.tab_VaporPressure.setObjectName("tab_VaporPressure")
         self.gridLayout_8 = QtWidgets.QGridLayout(self.tab_VaporPressure)
         self.gridLayout_8.setObjectName("gridLayout_8")
+        spacerItem4 = QtWidgets.QSpacerItem(
+            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
+        self.gridLayout_8.addItem(spacerItem4, 6, 0, 1, 1)
+        spacerItem5 = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
+        self.gridLayout_8.addItem(spacerItem5, 2, 0, 1, 1)
         self.label_antoine_equation = QtWidgets.QLabel(self.tab_VaporPressure)
         self.label_antoine_equation.setText("")
         self.label_antoine_equation.setObjectName("label_antoine_equation")
-        self.gridLayout_8.addWidget(self.label_antoine_equation, 0, 0, 1, 1)
+        self.gridLayout_8.addWidget(self.label_antoine_equation, 1, 0, 1, 1)
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.horizontalLayout_30 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_30.setObjectName("horizontalLayout_30")
+        self.label_39 = QtWidgets.QLabel(self.tab_VaporPressure)
+        self.label_39.setMaximumSize(QtCore.QSize(44, 16777215))
+        self.label_39.setObjectName("label_39")
+        self.horizontalLayout_30.addWidget(self.label_39)
+        self.le_AntoineTmin = QtWidgets.QLineEdit(self.tab_VaporPressure)
+        self.le_AntoineTmin.setMinimumSize(QtCore.QSize(40, 0))
+        self.le_AntoineTmin.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.le_AntoineTmin.setObjectName("le_AntoineTmin")
+        self.horizontalLayout_30.addWidget(self.le_AntoineTmin)
+        self.horizontalLayout_5.addLayout(self.horizontalLayout_30)
+        self.horizontalLayout_31 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_31.setObjectName("horizontalLayout_31")
+        self.label_40 = QtWidgets.QLabel(self.tab_VaporPressure)
+        self.label_40.setMaximumSize(QtCore.QSize(44, 16777215))
+        self.label_40.setObjectName("label_40")
+        self.horizontalLayout_31.addWidget(self.label_40)
+        self.le_AntoineTmax = QtWidgets.QLineEdit(self.tab_VaporPressure)
+        self.le_AntoineTmax.setMinimumSize(QtCore.QSize(40, 0))
+        self.le_AntoineTmax.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.le_AntoineTmax.setObjectName("le_AntoineTmax")
+        self.horizontalLayout_31.addWidget(self.le_AntoineTmax)
+        self.horizontalLayout_5.addLayout(self.horizontalLayout_31)
+        self.gridLayout_8.addLayout(self.horizontalLayout_5, 5, 0, 1, 1)
+        self.horizontalLayout_22 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_22.setObjectName("horizontalLayout_22")
+        self.label_34 = QtWidgets.QLabel(self.tab_VaporPressure)
+        self.label_34.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label_34.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_34.setObjectName("label_34")
+        self.horizontalLayout_22.addWidget(self.label_34)
+        spacerItem6 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.horizontalLayout_22.addItem(spacerItem6)
+        self.gridLayout_8.addLayout(self.horizontalLayout_22, 3, 0, 1, 1)
         self.horizontalLayout_23 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_23.setObjectName("horizontalLayout_23")
         self.label_35 = QtWidgets.QLabel(self.tab_VaporPressure)
@@ -391,54 +452,11 @@ class Ui_Form_db_substanceProperties(object):
         self.le_AntoineC.setMaximumSize(QtCore.QSize(100, 16777215))
         self.le_AntoineC.setObjectName("le_AntoineC")
         self.horizontalLayout_23.addWidget(self.le_AntoineC)
-        self.gridLayout_8.addLayout(self.horizontalLayout_23, 3, 0, 1, 1)
-        spacerItem3 = QtWidgets.QSpacerItem(
-            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
-        )
-        self.gridLayout_8.addItem(spacerItem3, 5, 0, 1, 1)
-        self.horizontalLayout_22 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_22.setObjectName("horizontalLayout_22")
-        self.label_34 = QtWidgets.QLabel(self.tab_VaporPressure)
-        self.label_34.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.label_34.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_34.setObjectName("label_34")
-        self.horizontalLayout_22.addWidget(self.label_34)
-        spacerItem4 = QtWidgets.QSpacerItem(
-            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
-        )
-        self.horizontalLayout_22.addItem(spacerItem4)
-        self.gridLayout_8.addLayout(self.horizontalLayout_22, 2, 0, 1, 1)
-        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.horizontalLayout_30 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_30.setObjectName("horizontalLayout_30")
-        self.label_39 = QtWidgets.QLabel(self.tab_VaporPressure)
-        self.label_39.setMaximumSize(QtCore.QSize(44, 16777215))
-        self.label_39.setObjectName("label_39")
-        self.horizontalLayout_30.addWidget(self.label_39)
-        self.le_AntoineTmin = QtWidgets.QLineEdit(self.tab_VaporPressure)
-        self.le_AntoineTmin.setMinimumSize(QtCore.QSize(40, 0))
-        self.le_AntoineTmin.setMaximumSize(QtCore.QSize(100, 16777215))
-        self.le_AntoineTmin.setObjectName("le_AntoineTmin")
-        self.horizontalLayout_30.addWidget(self.le_AntoineTmin)
-        self.horizontalLayout_5.addLayout(self.horizontalLayout_30)
-        self.horizontalLayout_31 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_31.setObjectName("horizontalLayout_31")
-        self.label_40 = QtWidgets.QLabel(self.tab_VaporPressure)
-        self.label_40.setMaximumSize(QtCore.QSize(44, 16777215))
-        self.label_40.setObjectName("label_40")
-        self.horizontalLayout_31.addWidget(self.label_40)
-        self.le_AntoineTmax = QtWidgets.QLineEdit(self.tab_VaporPressure)
-        self.le_AntoineTmax.setMinimumSize(QtCore.QSize(40, 0))
-        self.le_AntoineTmax.setMaximumSize(QtCore.QSize(100, 16777215))
-        self.le_AntoineTmax.setObjectName("le_AntoineTmax")
-        self.horizontalLayout_31.addWidget(self.le_AntoineTmax)
-        self.horizontalLayout_5.addLayout(self.horizontalLayout_31)
-        self.gridLayout_8.addLayout(self.horizontalLayout_5, 4, 0, 1, 1)
-        spacerItem5 = QtWidgets.QSpacerItem(
+        self.gridLayout_8.addLayout(self.horizontalLayout_23, 4, 0, 1, 1)
+        spacerItem7 = QtWidgets.QSpacerItem(
             20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
         )
-        self.gridLayout_8.addItem(spacerItem5, 1, 0, 1, 1)
+        self.gridLayout_8.addItem(spacerItem7, 0, 0, 1, 1)
         self.tabWidget_substanceProperties.addTab(self.tab_VaporPressure, "")
         self.tab_UNIFAC = QtWidgets.QWidget()
         self.tab_UNIFAC.setObjectName("tab_UNIFAC")
@@ -473,19 +491,19 @@ class Ui_Form_db_substanceProperties(object):
         self.btn_UNIFACsubgroups_remove = QtWidgets.QPushButton(self.groupBox)
         self.btn_UNIFACsubgroups_remove.setObjectName("btn_UNIFACsubgroups_remove")
         self.gridLayout_3.addWidget(self.btn_UNIFACsubgroups_remove, 1, 1, 1, 1)
-        spacerItem6 = QtWidgets.QSpacerItem(
+        spacerItem8 = QtWidgets.QSpacerItem(
             203, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
-        self.gridLayout_3.addItem(spacerItem6, 1, 2, 1, 1)
+        self.gridLayout_3.addItem(spacerItem8, 1, 2, 1, 1)
         self.gridLayout_2.addWidget(self.groupBox, 0, 0, 1, 1)
         self.tabWidget_substanceProperties.addTab(self.tab_UNIFAC, "")
         self.verticalLayout_3.addWidget(self.tabWidget_substanceProperties)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem7 = QtWidgets.QSpacerItem(
+        spacerItem9 = QtWidgets.QSpacerItem(
             40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
-        self.horizontalLayout.addItem(spacerItem7)
+        self.horizontalLayout.addItem(spacerItem9)
         self.btn_edit_confirm = QtWidgets.QPushButton(Form_db_substanceProperties)
         self.btn_edit_confirm.setObjectName("btn_edit_confirm")
         self.horizontalLayout.addWidget(self.btn_edit_confirm)
@@ -651,16 +669,6 @@ class Ui_Form_db_substanceProperties(object):
                 "Form_db_substanceProperties", "General data", None, -1
             ),
         )
-        self.label_25.setText(
-            QtWidgets.QApplication.translate(
-                "Form_db_substanceProperties", "a0", None, -1
-            )
-        )
-        self.label_29.setText(
-            QtWidgets.QApplication.translate(
-                "Form_db_substanceProperties", "a2", None, -1
-            )
-        )
         self.label_27.setText(
             QtWidgets.QApplication.translate(
                 "Form_db_substanceProperties", "a4", None, -1
@@ -669,6 +677,11 @@ class Ui_Form_db_substanceProperties(object):
         self.label_30.setText(
             QtWidgets.QApplication.translate(
                 "Form_db_substanceProperties", "a1", None, -1
+            )
+        )
+        self.label_25.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "a0", None, -1
             )
         )
         self.label_31.setText(
@@ -686,6 +699,11 @@ class Ui_Form_db_substanceProperties(object):
                 "Form_db_substanceProperties", "Tmax [K]", None, -1
             )
         )
+        self.label_29.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "a2", None, -1
+            )
+        )
         self.label_28.setText(
             QtWidgets.QApplication.translate(
                 "Form_db_substanceProperties", "a3", None, -1
@@ -696,6 +714,21 @@ class Ui_Form_db_substanceProperties(object):
             QtWidgets.QApplication.translate(
                 "Form_db_substanceProperties", "Cp", None, -1
             ),
+        )
+        self.label_39.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Tmin [K]", None, -1
+            )
+        )
+        self.label_40.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Tmax [K]", None, -1
+            )
+        )
+        self.label_34.setText(
+            QtWidgets.QApplication.translate(
+                "Form_db_substanceProperties", "Antoine correlation", None, -1
+            )
         )
         self.label_35.setText(
             QtWidgets.QApplication.translate(
@@ -710,21 +743,6 @@ class Ui_Form_db_substanceProperties(object):
         self.label_37.setText(
             QtWidgets.QApplication.translate(
                 "Form_db_substanceProperties", "C", None, -1
-            )
-        )
-        self.label_34.setText(
-            QtWidgets.QApplication.translate(
-                "Form_db_substanceProperties", "Antoine correlation", None, -1
-            )
-        )
-        self.label_39.setText(
-            QtWidgets.QApplication.translate(
-                "Form_db_substanceProperties", "Tmin [K]", None, -1
-            )
-        )
-        self.label_40.setText(
-            QtWidgets.QApplication.translate(
-                "Form_db_substanceProperties", "Tmax [K]", None, -1
             )
         )
         self.tabWidget_substanceProperties.setTabText(

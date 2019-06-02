@@ -216,11 +216,15 @@ class Form_EditSubstanceProperties(QtWidgets.QWidget, Ui_Form_db_substanceProper
         self.loadUNIFACsubgroups()
 
         # images
-        self.label_cp_equation.setPixmap(
-            QtGui.QPixmap(":/images/cp_ideal_gas_equation.png")
+        self.label_cp_equation.setPixmap(QtGui.QPixmap(":/images/cp_ideal_gas_eq.svg"))
+        self.label_cp_equation.setAlignment(
+            QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter
         )
         self.label_antoine_equation.setPixmap(
             QtGui.QPixmap(":/images/antoine_correlation_equation.png")
+        )
+        self.label_antoine_equation.setAlignment(
+            QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter
         )
 
         # alias
