@@ -12,7 +12,7 @@
 
 Sindri is a software developed to estimate thermodynamics properties and vapor-liquid equilibrium calculations using cubic equations of state.
 
-This software was developed as part of a undergraduate thesis in Chemical Engineer bachelor degree in Universidade Federal de Lavras, Brazil.
+This software was developed as part of an undergraduate thesis to obtain a bachelor degree in Chemical Engineering at the Federal University of Lavras, Brazil.
 
 ### Features
 

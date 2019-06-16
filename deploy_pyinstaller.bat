@@ -17,6 +17,7 @@ cd %app_name%
 mkdir %work_folder%
 
 call pyinstaller.exe -D -w --clean main.py -n %app_name% --distpath %work_folder% --workpath %work_folder%\build --icon %icon_file%
+REM call python -OO -m PyInstaller -D -w --clean main.py -n %app_name% --distpath %work_folder% --workpath %work_folder%\build --icon %icon_file%
 
 cd %work_folder%
 mkdir "%app_name%\db"

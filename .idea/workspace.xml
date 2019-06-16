@@ -6,12 +6,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change beforePath="$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/resources/icons.qrc" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/resources/icons.qrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/resources/icons_rc.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/resources/icons_rc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/ui/db_substanceProperties_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/ui/db_substanceProperties_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/designer/db_substanceProperties_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/db_substanceProperties_ui.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/texts/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/texts/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy_pyinstaller.bat" beforeDir="false" afterPath="$PROJECT_DIR$/deploy_pyinstaller.bat" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,13 +21,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="263">
+            <state relative-caret-position="1343">
               <caret line="83" selection-start-line="83" selection-end-line="83" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
@@ -38,6 +35,48 @@
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Sindri/aboutWindow.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+              <folding>
+                <element signature="e#0#44#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Sindri/texts/about.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+              <folding>
+                <element signature="n#style#0;n#p#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#6;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#10;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#11;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#a#0;n#p#11;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="238">
+                <caret line="14" column="70" lean-forward="true" selection-start-line="14" selection-start-column="70" selection-end-line="14" selection-end-column="70" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -108,8 +147,6 @@
         <option value="$PROJECT_DIR$/Sindri/Views/AddAliasView.py" />
         <option value="$PROJECT_DIR$/Sindri/Views/PureSubstanceDiagramsView.py" />
         <option value="$PROJECT_DIR$/Sindri/Controllers/PureSubstanceController.py" />
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/Sindri/texts/about.html" />
         <option value="$PROJECT_DIR$/Sindri/UNIFAC/unifac.py" />
         <option value="$PROJECT_DIR$/Sindri/Models/LiquidModel.py" />
         <option value="$PROJECT_DIR$/Sindri/aboutWindow.py" />
@@ -136,6 +173,8 @@
         <option value="$PROJECT_DIR$/Sindri/resources/icons.qrc" />
         <option value="$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py" />
         <option value="$PROJECT_DIR$/Sindri/db_editSubstanceProperties.py" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/Sindri/texts/about.html" />
       </list>
     </option>
   </component>
@@ -153,7 +192,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -164,42 +202,19 @@
             <path>
               <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
               <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="designer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
               <item name="Sindri" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
               <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
               <item name="Sindri" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="Sindri" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="font" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="Sindri" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TCC_software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TCC_software" type="462c0819:PsiDirectoryNode" />
-              <item name="Sindri" type="462c0819:PsiDirectoryNode" />
-              <item name="Views" type="462c0819:PsiDirectoryNode" />
+              <item name="texts" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -450,13 +465,13 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4888393" weight="0.32643312" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4963119" weight="0.42978725" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49578503" weight="0.42978725" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49367756" weight="0.32446808" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4910432" weight="0.32765958" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.3930453" visible="true" weight="0.293617" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.6069547" side_tool="true" visible="true" weight="0.293617" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.39199156" visible="true" weight="0.293617" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.60800844" side_tool="true" visible="true" weight="0.293617" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.55268705" weight="0.43085107" />
       <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.4963119" weight="0.39255318" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -589,32 +604,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="170">
-            <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/texts/about.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-          <folding>
-            <element signature="n#style#0;n#p#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#6;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#10;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#11;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#a#0;n#p#11;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/UNIFAC/unifac.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -656,16 +645,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/aboutWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -891,17 +870,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="83" selection-start-line="83" selection-end-line="83" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/resources/icons.qrc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="34" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/db_addSubstanceProperties.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1343">
+          <caret line="83" selection-start-line="83" selection-end-line="83" />
         </state>
       </provider>
     </entry>
@@ -911,6 +890,42 @@
           <caret line="226" column="42" selection-start-line="226" selection-start-column="42" selection-end-line="226" selection-end-column="42" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/aboutWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="238">
+            <caret line="14" column="70" lean-forward="true" selection-start-line="14" selection-start-column="70" selection-end-line="14" selection-end-column="70" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/texts/about.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="n#style#0;n#p#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#6;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#10;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#11;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#a#0;n#p#11;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
