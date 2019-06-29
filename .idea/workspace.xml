@@ -6,12 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sindri/mainwindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/mainwindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/resources/icons.qrc" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/resources/icons.qrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/resources/icons_rc.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/resources/icons_rc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/ui/mainwindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/ui/mainwindow_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/designer/mainwindow_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/mainwindow_ui.ui" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,8 +40,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Sindri/mainwindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="163" column="28" lean-forward="true" selection-start-line="163" selection-start-column="28" selection-end-line="163" selection-end-column="28" />
+            <state relative-caret-position="204">
+              <caret line="159" column="34" selection-start-line="159" selection-start-column="34" selection-end-line="159" selection-end-column="34" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
                 <element signature="e#3008#3023#0" />
@@ -483,7 +478,7 @@
       <window_info id="Favorites" order="2" sideWeight="0.1977612" side_tool="true" weight="0.2028451" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4888393" weight="0.32643312" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49367756" visible="true" weight="0.42978725" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49367756" weight="0.42978725" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49367756" weight="0.32446808" />
@@ -940,8 +935,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/mainwindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="163" column="28" lean-forward="true" selection-start-line="163" selection-start-column="28" selection-end-line="163" selection-end-column="28" />
+        <state relative-caret-position="204">
+          <caret line="159" column="34" selection-start-line="159" selection-start-column="34" selection-end-line="159" selection-end-column="34" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
             <element signature="e#3008#3023#0" />

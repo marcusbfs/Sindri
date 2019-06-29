@@ -166,16 +166,17 @@ class mainwindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Coloca texto correto no label
         self.label_buttonInfo.setText(self._database_information)
 
-        painter = QtGui.QPainter(self._SS_database)
-        painter.setOpacity(.5)
+        frame_width = 200
+        frame_height = self.frame_info.height()
 
         # Coloca imagem de fundo
-        self.label_SS_image.setPixmap(self._SS_database)
+        self.label_SS_image.setPixmap(self._SS_database.scaledToWidth(frame_width))
 
     def _setupAboutMouseHover(self):
         """
         Função executada ao passar o mouse sob o botão "About"
         """
+
         # Deixa invísivel informações principais
         self._disableSindriMainInfo()
 
