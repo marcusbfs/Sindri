@@ -3,21 +3,18 @@
 # Form implementation generated from reading ui file 'designer/mainwindow_ui.ui',
 # licensing of 'designer/mainwindow_ui.ui' applies.
 #
-# Created: Sun Jun  2 16:58:57 2019
+# Created: Sat Jun 29 11:49:48 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(317, 342)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred
-        )
+        MainWindow.resize(581, 274)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
@@ -25,71 +22,94 @@ class Ui_MainWindow(object):
         MainWindow.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
-        self.gridLayout.setObjectName("gridLayout")
-        self.label_main_title = QtWidgets.QLabel(self.centralwidget)
-        self.label_main_title.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_main_title.setWordWrap(True)
-        self.label_main_title.setObjectName("label_main_title")
-        self.gridLayout.addWidget(self.label_main_title, 1, 0, 1, 1)
-        self.btn_MixtureCalculations = QtWidgets.QPushButton(self.centralwidget)
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.frame_buttons = QtWidgets.QFrame(self.centralwidget)
+        self.frame_buttons.setMinimumSize(QtCore.QSize(0, 0))
+        self.frame_buttons.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.frame_buttons.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_buttons.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_buttons.setObjectName("frame_buttons")
+        self.gridLayout_3 = QtWidgets.QGridLayout(self.frame_buttons)
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_3.addItem(spacerItem, 4, 0, 1, 1)
+        self.btn_MixtureCalculations = QtWidgets.QPushButton(self.frame_buttons)
         self.btn_MixtureCalculations.setObjectName("btn_MixtureCalculations")
-        self.gridLayout.addWidget(self.btn_MixtureCalculations, 7, 0, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(
-            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
-        )
-        self.gridLayout.addItem(spacerItem, 3, 0, 1, 1)
-        self.label_main_subtitle = QtWidgets.QLabel(self.centralwidget)
-        self.label_main_subtitle.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_main_subtitle.setWordWrap(True)
-        self.label_main_subtitle.setObjectName("label_main_subtitle")
-        self.gridLayout.addWidget(self.label_main_subtitle, 2, 0, 1, 1)
-        self.btn_PureSubstanceCalculations = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_PureSubstanceCalculations.setObjectName(
-            "btn_PureSubstanceCalculations"
-        )
-        self.gridLayout.addWidget(self.btn_PureSubstanceCalculations, 6, 0, 1, 1)
-        self.btn_about = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_about.setObjectName("btn_about")
-        self.gridLayout.addWidget(self.btn_about, 8, 0, 1, 1)
-        self.label_main_icon = QtWidgets.QLabel(self.centralwidget)
-        self.label_main_icon.setText("")
-        self.label_main_icon.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_main_icon.setObjectName("label_main_icon")
-        self.gridLayout.addWidget(self.label_main_icon, 0, 0, 1, 1)
-        self.btn_BancoDeDados = QtWidgets.QPushButton(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
-        )
+        self.gridLayout_3.addWidget(self.btn_MixtureCalculations, 2, 0, 1, 1)
+        self.btn_PureSubstanceCalculations = QtWidgets.QPushButton(self.frame_buttons)
+        self.btn_PureSubstanceCalculations.setObjectName("btn_PureSubstanceCalculations")
+        self.gridLayout_3.addWidget(self.btn_PureSubstanceCalculations, 1, 0, 1, 1)
+        self.btn_BancoDeDados = QtWidgets.QPushButton(self.frame_buttons)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.btn_BancoDeDados.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.btn_BancoDeDados.sizePolicy().hasHeightForWidth())
         self.btn_BancoDeDados.setSizePolicy(sizePolicy)
         self.btn_BancoDeDados.setMaximumSize(QtCore.QSize(16777211, 16777215))
         self.btn_BancoDeDados.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.btn_BancoDeDados.setObjectName("btn_BancoDeDados")
-        self.gridLayout.addWidget(self.btn_BancoDeDados, 4, 0, 1, 1)
-        self.label_software_version = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred
-        )
+        self.gridLayout_3.addWidget(self.btn_BancoDeDados, 0, 0, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_3.addItem(spacerItem1, 3, 0, 1, 1)
+        self.btn_about = QtWidgets.QPushButton(self.frame_buttons)
+        self.btn_about.setObjectName("btn_about")
+        self.gridLayout_3.addWidget(self.btn_about, 5, 0, 1, 1)
+        self.label_software_version = QtWidgets.QLabel(self.frame_buttons)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_software_version.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.label_software_version.sizePolicy().hasHeightForWidth())
         self.label_software_version.setSizePolicy(sizePolicy)
         self.label_software_version.setText("")
-        self.label_software_version.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter
-        )
+        self.label_software_version.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.label_software_version.setObjectName("label_software_version")
-        self.gridLayout.addWidget(self.label_software_version, 9, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.label_software_version, 6, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.frame_buttons, 0, 0, 2, 1)
+        self.frame_info = QtWidgets.QFrame(self.centralwidget)
+        self.frame_info.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_info.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_info.setObjectName("frame_info")
+        self.gridLayout = QtWidgets.QGridLayout(self.frame_info)
+        self.gridLayout.setObjectName("gridLayout")
+        self.label_main_subtitle = QtWidgets.QLabel(self.frame_info)
+        self.label_main_subtitle.setText("")
+        self.label_main_subtitle.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_main_subtitle.setWordWrap(True)
+        self.label_main_subtitle.setObjectName("label_main_subtitle")
+        self.gridLayout.addWidget(self.label_main_subtitle, 3, 1, 1, 1)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout.addItem(spacerItem2, 6, 1, 1, 1)
+        spacerItem3 = QtWidgets.QSpacerItem(336, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem3, 7, 1, 1, 1)
+        self.label_main_icon = QtWidgets.QLabel(self.frame_info)
+        self.label_main_icon.setText("")
+        self.label_main_icon.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_main_icon.setObjectName("label_main_icon")
+        self.gridLayout.addWidget(self.label_main_icon, 1, 1, 1, 1)
+        self.label_main_title = QtWidgets.QLabel(self.frame_info)
+        self.label_main_title.setText("")
+        self.label_main_title.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_main_title.setWordWrap(True)
+        self.label_main_title.setObjectName("label_main_title")
+        self.gridLayout.addWidget(self.label_main_title, 2, 1, 1, 1)
+        self.textBrowser_about = QtWidgets.QTextBrowser(self.frame_info)
+        self.textBrowser_about.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.textBrowser_about.setObjectName("textBrowser_about")
+        self.gridLayout.addWidget(self.textBrowser_about, 5, 1, 1, 1)
+        self.label_buttonInfo = QtWidgets.QLabel(self.frame_info)
+        self.label_buttonInfo.setText("")
+        self.label_buttonInfo.setObjectName("label_buttonInfo")
+        self.gridLayout.addWidget(self.label_buttonInfo, 4, 1, 1, 1)
+        self.label_SS_image = QtWidgets.QLabel(self.frame_info)
+        self.label_SS_image.setText("")
+        self.label_SS_image.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_SS_image.setObjectName("label_SS_image")
+        self.gridLayout.addWidget(self.label_SS_image, 0, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.frame_info, 0, 2, 2, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 317, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 581, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -97,47 +117,23 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        QtCore.QObject.connect(
-            self.btn_BancoDeDados, QtCore.SIGNAL("clicked()"), MainWindow.open_db_window
-        )
+        QtCore.QObject.connect(self.btn_BancoDeDados, QtCore.SIGNAL("clicked()"), MainWindow.open_db_window)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(
-            QtWidgets.QApplication.translate(
-                "MainWindow", "Sindri - Jump Start", None, -1
-            )
-        )
-        self.label_main_title.setText(
-            QtWidgets.QApplication.translate("MainWindow", "TextLabel", None, -1)
-        )
-        self.btn_MixtureCalculations.setText(
-            QtWidgets.QApplication.translate(
-                "MainWindow", "Mixture calculations", None, -1
-            )
-        )
-        self.label_main_subtitle.setText(
-            QtWidgets.QApplication.translate("MainWindow", "TextLabel", None, -1)
-        )
-        self.btn_PureSubstanceCalculations.setText(
-            QtWidgets.QApplication.translate(
-                "MainWindow", "Pure substance calculations", None, -1
-            )
-        )
-        self.btn_about.setText(
-            QtWidgets.QApplication.translate("MainWindow", "About", None, -1)
-        )
-        self.btn_BancoDeDados.setText(
-            QtWidgets.QApplication.translate("MainWindow", "Database", None, -1)
-        )
+        MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "Sindri - Jump Start", None, -1))
+        self.btn_MixtureCalculations.setText(QtWidgets.QApplication.translate("MainWindow", "Mixture calculations", None, -1))
+        self.btn_PureSubstanceCalculations.setText(QtWidgets.QApplication.translate("MainWindow", "Pure substance calculations", None, -1))
+        self.btn_BancoDeDados.setText(QtWidgets.QApplication.translate("MainWindow", "Database", None, -1))
+        self.btn_about.setText(QtWidgets.QApplication.translate("MainWindow", "About", None, -1))
 
 
 if __name__ == "__main__":
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+
