@@ -1,4 +1,4 @@
-<p align="center"><a href="https://github.com/mrcsbrn/Sindri"><img src="https://raw.githubusercontent.com/mrcsbrn/Sindri/master/images/main_logo.png" width="150"></a></p> 
+<p align="center"><a href="https://github.com/marcusbfs/Sindri"><img src="https://raw.githubusercontent.com/marcusbfs/Sindri/master/images/main_logo.png" width="150"></a></p> 
 <h2 align="center"><b>Sindri</b></h2>
 <h4 align="center">Estimation of thermodynamics properties and vapor-liquid equilibrium calculations.</h4>
 
@@ -31,7 +31,7 @@ experimental data by fitting a binary interaction parameter
 
 ### Installing
 
-To install Sindri, please download the latest [release](https://github.com/mrcsbrn/Sindri/releases).
+To install Sindri, please download the latest [release](https://github.com/marcusbfs/Sindri/releases).
 Download the *.exe* file and run the installer.
 
 ## Authors
@@ -50,5 +50,5 @@ implemented, please send me the paper and I will try to add it as soon as possib
 
 ## License
 
-Sindri is licensed under the MIT License - see the [LICENSE.txt](https://github.com/mrcsbrn/Sindri/blob/master/LICENSE.txt) file for details.
+Sindri is licensed under the MIT License - see the [LICENSE.txt](https://github.com/marcusbfs/Sindri/blob/master/LICENSE.txt) file for details.
 
