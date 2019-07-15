@@ -2,7 +2,7 @@
 <h2 align="center"><b>Sindri</b></h2>
 <h4 align="center">Estimation of thermodynamics properties and vapor-liquid equilibrium calculations.</h4>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<p align="center" class="License-tag"><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a></p>
 
 <hr>
 <p align="center"><a href="#description">Description</a> &bull; <a href="#features">Features</a> &bull; <a href="#getting-started">Getting Started</a> &bull;  <a href="#authors">Authors</a> &bull;<a href="#contribution">Contribution</a> &bull; <a href="#license">License</a></p>
