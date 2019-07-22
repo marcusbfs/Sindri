@@ -1,6 +1,7 @@
 from Properties import VaporPressure, Props
 from units import conv_unit
 from utils import f2str
+from PySide2 import QtCore, QtWidgets, QtGui
 
 
 def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **units):
@@ -34,6 +35,9 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
     vap_values = []
 
     has_ig = True if pliq.IGProps != 0 else False
+
+    # defines delta string for state properties
+    delta_char = 'delta'
 
     # units
     Tu = units["T"] if "T" in units else "K"
@@ -100,7 +104,7 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
     if has_ig:
 
         # real properties
-        dHs = "H [{0}]".format(ene_per_molu)
+        dHs = delta_char + "H [{0}]".format(ene_per_molu)
         dHliq = f2str(
             conv_unit(pliq.Props.H, "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4
         )
@@ -111,7 +115,7 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
         liq_values.append(dHliq)
         vap_values.append(dHvap)
 
-        dSs = "S [{0}]".format(ene_per_mol_tempu)
+        dSs = delta_char + "S [{0}]".format(ene_per_mol_tempu)
         dSliq = f2str(
             conv_unit(pliq.Props.S, "J/molK", ene_per_mol_tempu), 6, lt=1e-2, gt=1e4
         )
@@ -122,7 +126,7 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
         liq_values.append(dSliq)
         vap_values.append(dSvap)
 
-        dGs = "G [{0}]".format(ene_per_molu)
+        dGs = delta_char + "G [{0}]".format(ene_per_molu)
         dGliq = f2str(
             conv_unit(pliq.Props.G, "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4
         )
@@ -133,7 +137,7 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
         liq_values.append(dGliq)
         vap_values.append(dGvap)
 
-        dUs = "U [{0}]".format(ene_per_molu)
+        dUs = delta_char + "U [{0}]".format(ene_per_molu)
         dUliq = f2str(
             conv_unit(pliq.Props.U, "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4
         )
@@ -144,7 +148,7 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
         liq_values.append(dUliq)
         vap_values.append(dUvap)
 
-        dAs = "A [{0}]".format(ene_per_molu)
+        dAs = delta_char + "A [{0}]".format(ene_per_molu)
         dAliq = f2str(
             conv_unit(pliq.Props.A, "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4
         )
@@ -173,7 +177,7 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
         liq_values.append(Cpl)
         vap_values.append(Cpl)
 
-        dHIGs = "IG H [{0}]".format(ene_per_molu)
+        dHIGs = delta_char + "IG H [{0}]".format(ene_per_molu)
         dHIG = f2str(
             conv_unit(pliq.IGProps.H, "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4
         )
@@ -181,7 +185,7 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
         liq_values.append(dHIG)
         vap_values.append(dHIG)
 
-        dSIGs = "IG S [{0}]".format(ene_per_mol_tempu)
+        dSIGs = delta_char + "IG S [{0}]".format(ene_per_mol_tempu)
         dSIG = f2str(
             conv_unit(pliq.IGProps.S, "J/molK", ene_per_mol_tempu), 6, lt=1e-2, gt=1e4
         )
@@ -189,7 +193,7 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
         liq_values.append(dSIG)
         vap_values.append(dSIG)
 
-        dGIGs = "IG G [{0}]".format(ene_per_molu)
+        dGIGs = delta_char + "IG G [{0}]".format(ene_per_molu)
         dGIG = f2str(
             conv_unit(pliq.IGProps.G, "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4
         )
@@ -197,7 +201,7 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
         liq_values.append(dGIG)
         vap_values.append(dGIG)
 
-        dUIGs = "IG U [{0}]".format(ene_per_molu)
+        dUIGs = delta_char + "IG U [{0}]".format(ene_per_molu)
         dUIG = f2str(
             conv_unit(pliq.IGProps.U, "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4
         )
@@ -205,7 +209,7 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
         liq_values.append(dUIG)
         vap_values.append(dUIG)
 
-        dAIGs = "IG A [{0}]".format(ene_per_molu)
+        dAIGs = delta_char + "IG A [{0}]".format(ene_per_molu)
         dAIG = f2str(
             conv_unit(pliq.IGProps.A, "J/mol", ene_per_molu), 6, lt=1e-2, gt=1e4
         )
