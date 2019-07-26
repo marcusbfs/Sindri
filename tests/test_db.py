@@ -6,8 +6,9 @@ def test_db_cursor():
     name = methane["Name"]
     formula = methane["Formula"]
     Sindri.db.init()  # verificar problemas com isso aqui
+    table_name = "v_all_properties_including_correlations"
     query = (
-        "SELECT * FROM database WHERE Formula LIKE '%"
+        "SELECT * FROM " + table_name + " WHERE Formula LIKE '%"
         + formula
         + "%'"
         + " AND Name LIKE '%"

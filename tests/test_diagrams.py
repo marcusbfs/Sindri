@@ -19,9 +19,10 @@ def test_gen_data_and_plot():
     Pref = 1e5
     Tref = 300
     points = 30
-    rl, rv, cp = gen_data(eos, ti_f, Pref, Tref, points)
-    diagrams = PlotPureSubstanceDiagrams(
-        rl, rv, cp, methane.Name, eos.getEOSDisplayName()
-    )
-    diagrams.plotPS("J/molK", "Pa")
+    gen_data_results = gen_data(eos, ti_f, Pref, Tref, points)
+    rl, rv, cp, pv_isotherms = list(gen_data_results)
+    # diagrams = PlotPureSubstanceDiagrams(
+    #     rl, rv, cp, methane.Name, eos.getEOSDisplayName()
+    # )
+    # diagrams.plotPS("J/molK", "Pa")
     # diagrams._plot()
