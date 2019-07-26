@@ -5,7 +5,8 @@
 <p align="center" class="License-tag"><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a></p>
 
 <hr>
-<p align="center"><a href="#description">Description</a> &bull; <a href="#features">Features</a> &bull; <a href="#getting-started">Getting Started</a> &bull;  <a href="#authors">Authors</a> &bull;<a href="#contribution">Contribution</a> &bull; <a href="#license">License</a></p>
+<p align="center"><a href="#description">Description</a> &bull; <a href="#features">Features</a> &bull; <a href="#getting-started">Getting Started</a> &bull; <a href="#screenshots">Screenshots</a> &bull;
+<a href="#authors">Authors</a> &bull;<a href="#contribution">Contribution</a> &bull; <a href="#license">License</a></p>
 <hr>
 
 ## Description
@@ -33,6 +34,28 @@ experimental data by fitting a binary interaction parameter
 
 To install Sindri, please download the latest [release](https://github.com/marcusbfs/Sindri/releases).
 Download the *.exe* file and run the installer.
+
+## Screenshots
+
+Click to view.
+
+### Main window
+[![main window](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/main_window.PNG)](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/main_window.PNG)
+
+### Database
+[![database window](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/database_window.PNG)](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/database_window.PNG)
+[![edit_substance window](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/edit_substance_methane.PNG)](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/edit_substance_methane.PNG)
+
+### Pure substance calculations
+[![pure_substance window](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/pure_substance_acetone.PNG)](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/pure_substance_acetone.PNG)
+
+### Mixtures calculations
+[![mixture_system_window](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/mixture_ternary_system.PNG)](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/mixture_ternary_system.PNG)
+[![mixture_calculations__window](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/mixture_ternary_calculations.PNG)](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/mixture_ternary_calculations.PNG)
+
+### Vapor-liquid equilibrium
+[![vle_unifac_window](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/vle_unifac.PNG)](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/vle_unifac.PNG)
+[![vle_flash_window](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/vle_flash.PNG)](https://raw.githubusercontent.com/marcusbfs/Sindri/master/Sindri_data/GUI_screenshots/vle_flash.PNG)
 
 ## Authors
 
