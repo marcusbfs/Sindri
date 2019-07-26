@@ -1,3 +1,7 @@
+<head>
+<link rel="shortcut icon" type="image/png" href="images/favicon.png">
+</head>
+
 <p align="center"><a href="https://github.com/marcusbfs/Sindri"><img src="https://raw.githubusercontent.com/marcusbfs/Sindri/master/images/main_logo.png" width="150"></a></p> 
 <h2 align="center"><b>Sindri</b></h2>
 <h4 align="center">Estimation of thermodynamics properties and vapor-liquid equilibrium calculations.</h4>
