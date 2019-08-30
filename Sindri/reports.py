@@ -3,8 +3,17 @@ from units import conv_unit
 from utils import f2str
 from PySide2 import QtCore, QtWidgets, QtGui
 
+from compounds import FluidState
 
-def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **units):
+
+def tablewidget_vap_liq_reports(
+    pliq: Props,
+    pvap: Props,
+    pvp: VaporPressure,
+    state: FluidState = FluidState.Unknown,
+    isMixture: bool = False,
+    **units
+):
     """
     Generates a table-formatted calculations report.
 
@@ -16,6 +25,10 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
         vapor properties to be reported
     pvp : VaporPressure
         vapor pressure(s) to be reported
+    state : FluidState, enum
+        State of the fluid
+    isMixture : bool
+        True value if system is a mixture
     units : kwarg
         units in which the results will be reported
 
@@ -27,7 +40,6 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
         formatted liquid properties
     vap_values : list of str
         formatted vapor properties
-
     """
 
     labels = []
@@ -37,7 +49,7 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
     has_ig = True if pliq.IGProps != 0 else False
 
     # defines delta string for state properties
-    delta_char = 'delta'
+    delta_char = "delta"
 
     # units
     Tu = units["T"] if "T" in units else "K"
@@ -71,34 +83,34 @@ def tablewidget_vap_liq_reports(pliq: Props, pvap: Props, pvp: VaporPressure, **
         vap_values.append(rhov)
 
     # Vapor pressure
+    if state not in (FluidState.Gas, FluidState.Supercritical):
+        if pvp.EOS:
+            Pvpeoss = "Vap. P (EOS) [{0}]".format(Pu)
+            Pvpeosl = f2str(conv_unit(pvp.EOS, "Pa", Pu), 6, lt=1e-2, gt=1e4)
+            labels.append(Pvpeoss)
+            liq_values.append(Pvpeosl)
+            vap_values.append(Pvpeosl)
 
-    if pvp.EOS:
-        Pvpeoss = "Vap. P (EOS) [{0}]".format(Pu)
-        Pvpeosl = f2str(conv_unit(pvp.EOS, "Pa", Pu), 6, lt=1e-2, gt=1e4)
-        labels.append(Pvpeoss)
-        liq_values.append(Pvpeosl)
-        vap_values.append(Pvpeosl)
+        if pvp.AW:
+            PvpAWs = "Vap. P (Ambrose-Walton) [{0}]".format(Pu)
+            PvpAWl = f2str(conv_unit(pvp.AW, "Pa", Pu), 6, lt=1e-2, gt=1e4)
+            labels.append(PvpAWs)
+            liq_values.append(PvpAWl)
+            vap_values.append(PvpAWl)
 
-    if pvp.AW:
-        PvpAWs = "Vap. P (Ambrose-Walton) [{0}]".format(Pu)
-        PvpAWl = f2str(conv_unit(pvp.AW, "Pa", Pu), 6, lt=1e-2, gt=1e4)
-        labels.append(PvpAWs)
-        liq_values.append(PvpAWl)
-        vap_values.append(PvpAWl)
+            PvpLKs = "Vap. P (Lee-Kesler) [{0}]".format(Pu)
+            PvpLKl = f2str(conv_unit(pvp.LK, "Pa", Pu), 6, lt=1e-2, gt=1e4)
+            labels.append(PvpLKs)
+            liq_values.append(PvpLKl)
+            vap_values.append(PvpLKl)
 
-        PvpLKs = "Vap. P (Lee-Kesler) [{0}]".format(Pu)
-        PvpLKl = f2str(conv_unit(pvp.LK, "Pa", Pu), 6, lt=1e-2, gt=1e4)
-        labels.append(PvpLKs)
-        liq_values.append(PvpLKl)
-        vap_values.append(PvpLKl)
-
-        #
-    if pvp.Antoine:
-        PvpAntoines = "Vap. P (Antoine) [{0}]".format(Pu)
-        PvpAntoinel = f2str(conv_unit(pvp.Antoine, "Pa", Pu), 6, lt=1e-2, gt=1e4)
-        labels.append(PvpAntoines)
-        liq_values.append(PvpAntoinel)
-        vap_values.append(PvpAntoinel)
+            #
+        if pvp.Antoine:
+            PvpAntoines = "Vap. P (Antoine) [{0}]".format(Pu)
+            PvpAntoinel = f2str(conv_unit(pvp.Antoine, "Pa", Pu), 6, lt=1e-2, gt=1e4)
+            labels.append(PvpAntoines)
+            liq_values.append(PvpAntoinel)
+            vap_values.append(PvpAntoinel)
 
     # real properties (if any)
     if has_ig:

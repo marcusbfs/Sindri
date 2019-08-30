@@ -8,7 +8,9 @@ def test_db_cursor():
     Sindri.db.init()  # verificar problemas com isso aqui
     table_name = "v_all_properties_including_correlations"
     query = (
-        "SELECT * FROM " + table_name + " WHERE Formula LIKE '%"
+        "SELECT * FROM "
+        + table_name
+        + " WHERE Formula LIKE '%"
         + formula
         + "%'"
         + " AND Name LIKE '%"

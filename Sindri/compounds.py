@@ -7,6 +7,8 @@ import db
 from Properties import DeltaProp, VaporPressure
 from constants import R_IG, DBL_EPSILON
 
+import enum
+
 state_dict = {
     # It must have the following order:
     #   supercritical, critical point, vapor-liquid equi., liquid, vapor.
@@ -15,7 +17,19 @@ state_dict = {
     "VL_equi": "vapor-liquid equilibrium",
     "liq": "compressed or unsaturated liquid",
     "vap": "superheated steam",
+    "gas": "superheated steam (above critical temperature)",
 }
+
+
+@enum.unique
+class FluidState(enum.Enum):
+    Vapor = enum.auto()
+    Liquid = enum.auto()
+    VLEquilibrium = enum.auto()
+    Gas = enum.auto()
+    CriticalPoint = enum.auto()
+    Supercritical = enum.auto()
+    Unknown = enum.auto()
 
 
 class SubstanceProp(object):
@@ -54,6 +68,8 @@ class SubstanceProp(object):
         self.Vc = self._ifNumber(results[8]) / 100 ** 3
         self.Zc = self._ifNumber(results[9])
         self.omega = self._ifNumber(results[10])
+
+        self.state = FluidState.Unknown
 
         try:
             tcps = results[11].split("-")
@@ -192,51 +208,86 @@ class SubstanceProp(object):
         return log
 
     def getPvpAW(self, T: float) -> float:
-        if self.Pc != 0 and self.Tc != 0 and self.omega != 0:
 
+        if T > self.Tc:
+            raise ValueError(
+                "Temperature is above critical temperature in Ambrose-Walton Pvp equation"
+            )
+
+        if self.Pc != 0 and self.Tc != 0 and self.omega != 0:
             return _ambroseWaltonVP_helper(self.Pc, T / self.Tc, self.omega)
         return 0.0
 
     def getPvpLK(self, T: float) -> float:
         if self.Pc != 0 and self.Tc != 0 and self.omega != 0:
-
             return _leeKeslerVP_helper(self.Pc, T / self.Tc, self.omega)
         return 0.0
 
     # will this function work for mixtures? (applying the necessaries
-    def getFluidState(self, P: float, T: float, eq, delta=1e-3):
-        pvpaw = self.getPvpAW(T)
-        Pvp = eq.getPvp(T, pvpaw)[0]
+    def getFluidState(self, P: float, T: float, eq, delta=1e-2):
 
         Pr = P / self.Pc
         Tr = T / self.Tc
 
-        def _relError(x, y):
-            if abs(x) < DBL_EPSILON:
-                return x - y
-            return (x - y) / x
-
-        if Tr > 1 or Pr > 1:
+        # Return if supercritical fluid
+        if Tr > 1 and Pr > 1:
             state = state_dict["supercritical"]
-        elif (Tr > 0.9 and Tr < 1.1) and (Pr > 0.9 and Pr < 1.1):
-            state = state_dict["critical_point"]
-        elif np.abs(_relError(P, Pvp)) < delta:
-            state = state_dict["VL_equi"]
-        elif P >= Pvp + delta:
-            state = state_dict["liq"]
-        elif P <= Pvp - delta:
-            state = state_dict["vap"]
+            self.state = FluidState.Supercritical
+
+        elif Tr > 1:
+            state = state_dict["gas"]
+            self.state = FluidState.Gas
+
         else:
-            raise ValueError("Couldn't identify fluid state.")
+            # Get initial pvp guess
+            pvpaw = self.getPvpAW(T)
+            Pvp = eq.getPvp(T, pvpaw)[0]
+
+            def _relError(x, y):
+                if abs(x) < DBL_EPSILON:
+                    return x - y
+                return (x - y) / x
+
+            if (Tr > 0.9 and Tr < 1.12) and (Pr > 0.9 and Pr < 1.12):
+                state = state_dict["critical_point"]
+                self.state = FluidState.CriticalPoint
+            elif np.abs(_relError(P, Pvp)) < delta:
+                state = state_dict["VL_equi"]
+                self.state = FluidState.VLEquilibrium
+            elif P >= Pvp + delta:
+                state = state_dict["liq"]
+                self.state = FluidState.Liquid
+            elif P <= Pvp - delta:
+                state = state_dict["vap"]
+                self.state = FluidState.Vapor
+            else:
+                raise ValueError("Couldn't identify fluid state.")
         return state
+
+    def getFluidStateFlag(self) -> FluidState:
+        """
+        Returns the enumerator corresponding to the current fluid state.
+        The user must update the current fluid state using "getFluidState"
+
+        Returns
+        -------
+        state: FluidState
+            The current fluid state enumerator
+        """
+        return self.state
 
     def getPvps(self, T: float) -> VaporPressure:
         pvp = VaporPressure()
-        aw = self.getPvpAW(T)
         lk = self.getPvpLK(T)
         ant = self.getPvpAntoine(T)
-        if aw:
-            pvp.setAW(aw)
+
+        # Ambrose Walton doest not work for T > Tc
+        try:
+            aw = self.getPvpAW(T)
+            if aw:
+                pvp.setAW(aw)
+        except:
+            pass
         if lk:
             pvp.setLK(lk)
         if ant:
@@ -439,7 +490,10 @@ def _ambroseWaltonVP_helper(Pc, Tr, omega):
         The estimated vapor pressure at T = Tc * Tr. The pressure is given in Pascal.
 
     """
+
+    # Taus has to be positive
     tau = 1.0 - Tr
+
     f0 = (
         -5.97616 * tau
         + 1.29874 * tau ** 1.5

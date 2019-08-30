@@ -1,5 +1,6 @@
 from EOSPureSubstanceInterface import EOSPureSubstanceInterface
 from Properties import VaporPressure
+from compounds import FluidState
 from compounds import SubstanceProp
 
 
@@ -17,11 +18,14 @@ class PureSubstanceModel:
         self.ProcObservers = []
         self.SubstanceObservers = []
         self.CalculationObservers = []
+        self.state = FluidState.Unknown
+        self.log = ""
 
     def setupSystem(self):
         self.substance = SubstanceProp(self.substance_name, self.formula)
         # self.mix = MixtureProp([self.substance], [1.0])
         self.system = EOSPureSubstanceInterface([self.substance], self.eosname)
+        self.log = ""
 
     def getZ(self):
         return self.system.getZfromPT(self.P, self.T)
@@ -81,6 +85,9 @@ class PureSubstanceModel:
     def getFluidState(self):
         return self.fluidState
 
+    def getFluidStateFlag(self):
+        return self.state
+
     def getLog(self):
         return self.log
 
@@ -96,6 +103,7 @@ class PureSubstanceModel:
     def calculate(self):
         try:
             self.fluidState = self.substance.getFluidState(self.P, self.T, self.system)
+            self.state = self.substance.getFluidStateFlag()
         except:
             raise ValueError(
                 "One or more of the following properties is not set: Tc, Pc, omega"
@@ -107,20 +115,26 @@ class PureSubstanceModel:
                 self.Tref, self.T, self.Pref, self.P
             )
 
-            self.PvpAW = self.substance.getPvpAW(self.T)
-            self.PvpLK = self.substance.getPvpLK(self.T)
-            self.PvpAnt = self.substance.getPvpAntoine(self.T)
-            self.AntLog = self.substance.getAntoineLog(self.T)
-            self.PvpEOS, self.PvpEOS_iter = self.system.getPvp(self.T, self.PvpAW)
+            # Not in supecritical or gaseous (T > Tc) state
+            if self.substance.state not in (FluidState.Supercritical, FluidState.Gas):
+                self.PvpAW = self.substance.getPvpAW(self.T)
+                self.PvpLK = self.substance.getPvpLK(self.T)
+                self.PvpAnt = self.substance.getPvpAntoine(self.T)
+                self.AntLog = self.substance.getAntoineLog(self.T)
+                self.PvpEOS, self.PvpEOS_iter = self.system.getPvp(self.T, self.PvpAW)
 
-            self.Pvp = VaporPressure()
-            self.Pvp.setEOS(self.PvpEOS)
-            self.Pvp.setAW(self.PvpAW)
-            self.Pvp.setLK(self.PvpLK)
-            self.Pvp.setAntoine(self.PvpAnt)
-            self.Pvp.AntonieLog = self.AntLog
+                self.Pvp = VaporPressure()
+                self.Pvp.setEOS(self.PvpEOS)
+                self.Pvp.setAW(self.PvpAW)
+                self.Pvp.setLK(self.PvpLK)
+                self.Pvp.setAntoine(self.PvpAnt)
+                self.Pvp.AntonieLog = self.AntLog
 
-            self.log = self.propsliq.log + self.AntLog
+                self.log = self.propsliq.log + self.AntLog
+
+            # In supecritical or gaseous (T > Tc) state
+            else:
+                self.Pvp = None
 
         except Exception as e:
             raise ValueError(

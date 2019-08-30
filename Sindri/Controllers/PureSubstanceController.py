@@ -75,16 +75,25 @@ class PureSubstanceController:
         print(id(self), "New EOS: {}".format(self.model.getEOS()))
 
     def calculate(self):
+        """
+        "Calculate button" clicked.
+        """
 
+        # Updates process and reference variables
         self.setProcAndRef()
+
+        # Update system (EOS and substances)
         self.setEOSandSubstance()
 
+        # If substances and EOS are selected
         if (
             len(self.model.getSubstanceName().strip()) > 1
             and len(self.model.getEOS().strip()) > 1
         ):
             try:
+                # Setups the system
                 self.model.setupSystem()
+                # Execute all model calculations
                 self.model.calculate()
             except Exception as e:
                 QtWidgets.QMessageBox.about(self.mainView, "Error", str(e))
@@ -225,6 +234,7 @@ class PureSubstanceController:
             yunit = self.diagramsView.comboBox_yUnits.currentText()
             seldiag_name = self.diagramsView.comboBox_diagram.currentText()
             choice = self.diagram_dict[seldiag_name]
+            plotIsotherms = self.diagramsView.checkBox_isotherms.isEnabled() and self.diagramsView.checkBox_isotherms.isChecked()
             try:
                 if choice == "PV":
                     self.diag.plotPV(
@@ -233,7 +243,7 @@ class PureSubstanceController:
                         lnscale=self.diagramsView.checkBox_logscale.isChecked(),
                         grid=self.diagramsView.checkBox_grid.isChecked(),
                         smooth=self.diagramsView.checkBox_smooth.isChecked(),
-                        plotisothermals=self.diagramsView.checkBox_isotherms.isChecked(),
+                        plotisothermals=plotIsotherms
                     )
                 elif choice == "TS":
                     self.diag.plotTS(

@@ -149,6 +149,8 @@ class PlotPureSubstanceDiagrams(object):
         self.lnscale = lnscale
         self.grid = grid
         self.smooth = smooth
+        # Disable isotherms for this plot (option not implemented"
+        self.plotisotherms = False
 
     def plotPS(self, xunit: str, yunit: str, lnscale=False, smooth=True, grid=True):
         self.x_letter, self.y_letter = "S", "P"
@@ -160,6 +162,8 @@ class PlotPureSubstanceDiagrams(object):
         self.lnscale = lnscale
         self.grid = grid
         self.smooth = smooth
+        # Disable isotherms for this plot (option not implemented"
+        self.plotisotherms = False
 
     def plotHS(self, xunit: str, yunit: str, lnscale=False, smooth=True, grid=True):
         self.x_letter, self.y_letter = "S", "H"
@@ -171,6 +175,8 @@ class PlotPureSubstanceDiagrams(object):
         self.lnscale = lnscale
         self.grid = grid
         self.smooth = smooth
+        # Disable isotherms for this plot (option not implemented"
+        self.plotisotherms = False
 
     def plotTV(self, xunit: str, yunit: str, lnscale=True, smooth=True, grid=True):
         self.x_letter, self.y_letter = "V", "T"
@@ -182,6 +188,8 @@ class PlotPureSubstanceDiagrams(object):
         self.lnscale = lnscale
         self.grid = grid
         self.smooth = smooth
+        # Disable isotherms for this plot (option not implemented"
+        self.plotisotherms = False
 
     def plotPT(self, xunit: str, yunit: str, lnscale=False, smooth=True, grid=True):
         self.x_letter, self.y_letter = "T", "P"
@@ -193,6 +201,8 @@ class PlotPureSubstanceDiagrams(object):
         self.lnscale = lnscale
         self.grid = grid
         self.smooth = smooth
+        # Disable isotherms for this plot (option not implemented"
+        self.plotisotherms = False
 
     def _plot(self):
 

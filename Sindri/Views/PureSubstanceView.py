@@ -8,6 +8,7 @@ from Factories.EOSMixFactory import getEOSMixOptions
 from Models.PureSubstanceModel import PureSubstanceModel
 from ui.pure_substance_calculations_ui import Ui_PureSubstanceCalculationsWindow
 from units import conv_unit
+from compounds import FluidState
 
 
 class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
@@ -145,11 +146,13 @@ class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
 
         self.propsliq = self.model.getPropsLiq()
         self.propsvap = self.model.getPropsVap()
-        self.Pvp = self.model.getPvp()
+
 
         try:
             self.rowlabels, self.liq, self.vap = reports.tablewidget_vap_liq_reports(
-                self.propsliq, self.propsvap, self.Pvp, **self.units
+                self.propsliq, self.propsvap, self.model.getPvp(),
+                state=self.model.getFluidStateFlag(),
+                isMixture=False, **self.units
             )
             for i in range(len(self.rowlabels)):
                 self.tableWidget_results.insertRow(i)
