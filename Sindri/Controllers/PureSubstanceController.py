@@ -234,7 +234,10 @@ class PureSubstanceController:
             yunit = self.diagramsView.comboBox_yUnits.currentText()
             seldiag_name = self.diagramsView.comboBox_diagram.currentText()
             choice = self.diagram_dict[seldiag_name]
-            plotIsotherms = self.diagramsView.checkBox_isotherms.isEnabled() and self.diagramsView.checkBox_isotherms.isChecked()
+            plotIsotherms = (
+                self.diagramsView.checkBox_isotherms.isEnabled()
+                and self.diagramsView.checkBox_isotherms.isChecked()
+            )
             try:
                 if choice == "PV":
                     self.diag.plotPV(
@@ -243,7 +246,7 @@ class PureSubstanceController:
                         lnscale=self.diagramsView.checkBox_logscale.isChecked(),
                         grid=self.diagramsView.checkBox_grid.isChecked(),
                         smooth=self.diagramsView.checkBox_smooth.isChecked(),
-                        plotisothermals=plotIsotherms
+                        plotisothermals=plotIsotherms,
                     )
                 elif choice == "TS":
                     self.diag.plotTS(
