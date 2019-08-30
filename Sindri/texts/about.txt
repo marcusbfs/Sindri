@@ -1,6 +1,6 @@
 This software was developed as part of a undergraduate thesis in Chemical Engineer bachelor degree in Universidade Federal de Lavras, Brazil,  by the author Marcus Bruno Fernandes Silva, under the orientation of Prof. Dr. Nathan Sombra Evangelista.
 
-Author: Marcus Bruno Fernandes Silva (https://github.com/mrcsbrn)
+Author: Marcus Bruno Fernandes Silva (https://github.com/marcusbfs)
 Advisor: Prof. Dr. Nathan Sombra Evangelista (https://www.nsevangelista.com/)
 
 Any bug reports or suggestions are welcome. Feel free to contact the author on his GitHub page.
