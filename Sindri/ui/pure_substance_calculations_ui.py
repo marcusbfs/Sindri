@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/pure_substance_calculations_ui.ui',
 # licensing of 'designer/pure_substance_calculations_ui.ui' applies.
 #
-# Created: Sun Jun  2 16:59:00 2019
+# Created: Fri Aug 30 18:23:44 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,7 +15,7 @@ class Ui_PureSubstanceCalculationsWindow(object):
     def setupUi(self, PureSubstanceCalculationsWindow):
         PureSubstanceCalculationsWindow.setObjectName("PureSubstanceCalculationsWindow")
         PureSubstanceCalculationsWindow.setWindowModality(QtCore.Qt.ApplicationModal)
-        PureSubstanceCalculationsWindow.resize(900, 740)
+        PureSubstanceCalculationsWindow.resize(900, 762)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
         )
@@ -37,7 +37,7 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 882, 722))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 882, 744))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_10 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_10.setObjectName("gridLayout_10")
@@ -58,8 +58,8 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.frame_results)
         self.verticalLayout.setObjectName("verticalLayout")
         self.groupBox_information = QtWidgets.QGroupBox(self.frame_results)
-        self.groupBox_information.setMinimumSize(QtCore.QSize(0, 115))
-        self.groupBox_information.setMaximumSize(QtCore.QSize(16777215, 250))
+        self.groupBox_information.setMinimumSize(QtCore.QSize(0, 140))
+        self.groupBox_information.setMaximumSize(QtCore.QSize(16777215, 275))
         self.groupBox_information.setObjectName("groupBox_information")
         self.gridLayout_6 = QtWidgets.QGridLayout(self.groupBox_information)
         self.gridLayout_6.setObjectName("gridLayout_6")
@@ -105,7 +105,7 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.verticalLayout.addWidget(self.groupBox_results)
         self.groupBox__log = QtWidgets.QGroupBox(self.frame_results)
         self.groupBox__log.setMinimumSize(QtCore.QSize(0, 200))
-        self.groupBox__log.setMaximumSize(QtCore.QSize(16777215, 250))
+        self.groupBox__log.setMaximumSize(QtCore.QSize(16777215, 225))
         self.groupBox__log.setObjectName("groupBox__log")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.groupBox__log)
         self.gridLayout_3.setObjectName("gridLayout_3")
@@ -204,8 +204,17 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.gridLayout.addWidget(self.listWidget_eos_options, 0, 0, 1, 1)
         self.gridLayout_11.addWidget(self.groupBox_EOS, 1, 0, 1, 1)
         self.groupBox_processVariables = QtWidgets.QGroupBox(self.frame_input)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.groupBox_processVariables.sizePolicy().hasHeightForWidth()
+        )
+        self.groupBox_processVariables.setSizePolicy(sizePolicy)
         self.groupBox_processVariables.setMinimumSize(QtCore.QSize(0, 0))
-        self.groupBox_processVariables.setMaximumSize(QtCore.QSize(16777215, 55))
+        self.groupBox_processVariables.setMaximumSize(QtCore.QSize(16777215, 1000))
         self.groupBox_processVariables.setObjectName("groupBox_processVariables")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.groupBox_processVariables)
         self.gridLayout_5.setObjectName("gridLayout_5")
@@ -214,7 +223,7 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.gridLayout_5.addWidget(self.label, 0, 0, 1, 1)
         self.le_procT = QtWidgets.QLineEdit(self.groupBox_processVariables)
         sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -226,6 +235,15 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.le_procT.setObjectName("le_procT")
         self.gridLayout_5.addWidget(self.le_procT, 0, 1, 1, 1)
         self.comboBox_procTunit = QtWidgets.QComboBox(self.groupBox_processVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.comboBox_procTunit.sizePolicy().hasHeightForWidth()
+        )
+        self.comboBox_procTunit.setSizePolicy(sizePolicy)
         self.comboBox_procTunit.setObjectName("comboBox_procTunit")
         self.gridLayout_5.addWidget(self.comboBox_procTunit, 0, 2, 1, 1)
         self.label_2 = QtWidgets.QLabel(self.groupBox_processVariables)
@@ -233,7 +251,7 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.gridLayout_5.addWidget(self.label_2, 0, 3, 1, 1)
         self.le_procP = QtWidgets.QLineEdit(self.groupBox_processVariables)
         sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -242,12 +260,30 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.le_procP.setObjectName("le_procP")
         self.gridLayout_5.addWidget(self.le_procP, 0, 4, 1, 1)
         self.comboBox_procPunit = QtWidgets.QComboBox(self.groupBox_processVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.comboBox_procPunit.sizePolicy().hasHeightForWidth()
+        )
+        self.comboBox_procPunit.setSizePolicy(sizePolicy)
         self.comboBox_procPunit.setObjectName("comboBox_procPunit")
         self.gridLayout_5.addWidget(self.comboBox_procPunit, 0, 5, 1, 1)
         self.gridLayout_11.addWidget(self.groupBox_processVariables, 2, 0, 1, 1)
         self.groupBox_refVariables = QtWidgets.QGroupBox(self.frame_input)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.groupBox_refVariables.sizePolicy().hasHeightForWidth()
+        )
+        self.groupBox_refVariables.setSizePolicy(sizePolicy)
         self.groupBox_refVariables.setMinimumSize(QtCore.QSize(0, 0))
-        self.groupBox_refVariables.setMaximumSize(QtCore.QSize(16777215, 55))
+        self.groupBox_refVariables.setMaximumSize(QtCore.QSize(16777215, 1000))
         self.groupBox_refVariables.setObjectName("groupBox_refVariables")
         self.gridLayout_7 = QtWidgets.QGridLayout(self.groupBox_refVariables)
         self.gridLayout_7.setObjectName("gridLayout_7")
@@ -256,7 +292,7 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.gridLayout_7.addWidget(self.label_3, 0, 0, 1, 1)
         self.le_refT = QtWidgets.QLineEdit(self.groupBox_refVariables)
         sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -268,6 +304,15 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.le_refT.setObjectName("le_refT")
         self.gridLayout_7.addWidget(self.le_refT, 0, 1, 1, 1)
         self.comboBox_refTunit = QtWidgets.QComboBox(self.groupBox_refVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.comboBox_refTunit.sizePolicy().hasHeightForWidth()
+        )
+        self.comboBox_refTunit.setSizePolicy(sizePolicy)
         self.comboBox_refTunit.setObjectName("comboBox_refTunit")
         self.gridLayout_7.addWidget(self.comboBox_refTunit, 0, 2, 1, 1)
         self.label_4 = QtWidgets.QLabel(self.groupBox_refVariables)
@@ -275,7 +320,7 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.gridLayout_7.addWidget(self.label_4, 0, 3, 1, 1)
         self.le_refP = QtWidgets.QLineEdit(self.groupBox_refVariables)
         sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -284,6 +329,15 @@ class Ui_PureSubstanceCalculationsWindow(object):
         self.le_refP.setObjectName("le_refP")
         self.gridLayout_7.addWidget(self.le_refP, 0, 4, 1, 1)
         self.comboBox_refPunit = QtWidgets.QComboBox(self.groupBox_refVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.comboBox_refPunit.sizePolicy().hasHeightForWidth()
+        )
+        self.comboBox_refPunit.setSizePolicy(sizePolicy)
         self.comboBox_refPunit.setObjectName("comboBox_refPunit")
         self.gridLayout_7.addWidget(self.comboBox_refPunit, 0, 5, 1, 1)
         self.gridLayout_11.addWidget(self.groupBox_refVariables, 3, 0, 1, 1)

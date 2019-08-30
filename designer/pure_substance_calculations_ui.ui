@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>900</width>
-    <height>740</height>
+    <height>762</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -55,7 +55,7 @@
         <x>0</x>
         <y>0</y>
         <width>882</width>
-        <height>722</height>
+        <height>744</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_10">
@@ -85,13 +85,13 @@
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>115</height>
+              <height>140</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>250</height>
+              <height>275</height>
              </size>
             </property>
             <property name="title">
@@ -192,7 +192,7 @@
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>250</height>
+              <height>225</height>
              </size>
             </property>
             <property name="title">
@@ -388,6 +388,12 @@
           </item>
           <item row="2" column="0">
            <widget class="QGroupBox" name="groupBox_processVariables">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -397,7 +403,7 @@
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>55</height>
+              <height>1000</height>
              </size>
             </property>
             <property name="title">
@@ -414,7 +420,7 @@
              <item row="0" column="1">
               <widget class="QLineEdit" name="le_procT">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -428,7 +434,14 @@
               </widget>
              </item>
              <item row="0" column="2">
-              <widget class="QComboBox" name="comboBox_procTunit"/>
+              <widget class="QComboBox" name="comboBox_procTunit">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
              <item row="0" column="3">
               <widget class="QLabel" name="label_2">
@@ -440,7 +453,7 @@
              <item row="0" column="4">
               <widget class="QLineEdit" name="le_procP">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -451,13 +464,26 @@
               </widget>
              </item>
              <item row="0" column="5">
-              <widget class="QComboBox" name="comboBox_procPunit"/>
+              <widget class="QComboBox" name="comboBox_procPunit">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
           </item>
           <item row="3" column="0">
            <widget class="QGroupBox" name="groupBox_refVariables">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -467,7 +493,7 @@
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>55</height>
+              <height>1000</height>
              </size>
             </property>
             <property name="title">
@@ -484,7 +510,7 @@
              <item row="0" column="1">
               <widget class="QLineEdit" name="le_refT">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -498,7 +524,14 @@
               </widget>
              </item>
              <item row="0" column="2">
-              <widget class="QComboBox" name="comboBox_refTunit"/>
+              <widget class="QComboBox" name="comboBox_refTunit">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
              <item row="0" column="3">
               <widget class="QLabel" name="label_4">
@@ -510,7 +543,7 @@
              <item row="0" column="4">
               <widget class="QLineEdit" name="le_refP">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -521,7 +554,14 @@
               </widget>
              </item>
              <item row="0" column="5">
-              <widget class="QComboBox" name="comboBox_refPunit"/>
+              <widget class="QComboBox" name="comboBox_refPunit">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

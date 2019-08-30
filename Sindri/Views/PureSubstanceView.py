@@ -101,6 +101,8 @@ class PureSubstanceView(QtWidgets.QWidget, Ui_PureSubstanceCalculationsWindow):
         genTableWidgetHighlightedRowSS(self.tableWidget_searchSubstance)
         genlistWidgetHighlightedRowSS(self.listWidget_eos_options)
 
+        self.le_refP.setStyleSheet("")
+
     def updateEOS(self):
         self.setWindowTitle(
             "Pure substance calculations - {}".format(self.model.getEOS())

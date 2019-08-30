@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/mixture_calculations_ui.ui',
 # licensing of 'designer/mixture_calculations_ui.ui' applies.
 #
-# Created: Fri Apr 19 13:43:41 2019
+# Created: Fri Aug 30 18:26:17 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,7 +15,7 @@ class Ui_MixtureCalculationWindow(object):
     def setupUi(self, MixtureCalculationWindow):
         MixtureCalculationWindow.setObjectName("MixtureCalculationWindow")
         MixtureCalculationWindow.setWindowModality(QtCore.Qt.ApplicationModal)
-        MixtureCalculationWindow.resize(770, 627)
+        MixtureCalculationWindow.resize(770, 635)
         MixtureCalculationWindow.setMinimumSize(QtCore.QSize(770, 0))
         self.gridLayout = QtWidgets.QGridLayout(MixtureCalculationWindow)
         self.gridLayout.setObjectName("gridLayout")
@@ -23,7 +23,7 @@ class Ui_MixtureCalculationWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 750, 607))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 750, 615))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -192,69 +192,179 @@ class Ui_MixtureCalculationWindow(object):
         self.gridLayout_7.addWidget(self.listWidget_eos_options, 0, 0, 1, 1)
         self.gridLayout_6.addWidget(self.groupBox_EOS, 0, 0, 1, 1)
         self.groupBox_processVariables = QtWidgets.QGroupBox(self.frame_input)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.groupBox_processVariables.sizePolicy().hasHeightForWidth()
+        )
+        self.groupBox_processVariables.setSizePolicy(sizePolicy)
         self.groupBox_processVariables.setMinimumSize(QtCore.QSize(0, 0))
-        self.groupBox_processVariables.setMaximumSize(QtCore.QSize(16777215, 55))
+        self.groupBox_processVariables.setMaximumSize(QtCore.QSize(16777215, 1000))
         self.groupBox_processVariables.setObjectName("groupBox_processVariables")
         self.gridLayout_8 = QtWidgets.QGridLayout(self.groupBox_processVariables)
         self.gridLayout_8.setObjectName("gridLayout_8")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label_2 = QtWidgets.QLabel(self.groupBox_processVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
+        self.label_2.setSizePolicy(sizePolicy)
         self.label_2.setObjectName("label_2")
         self.horizontalLayout.addWidget(self.label_2)
         self.le_procT = QtWidgets.QLineEdit(self.groupBox_processVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.le_procT.sizePolicy().hasHeightForWidth())
+        self.le_procT.setSizePolicy(sizePolicy)
         self.le_procT.setInputMethodHints(
             QtCore.Qt.ImhDigitsOnly | QtCore.Qt.ImhPreferNumbers
         )
         self.le_procT.setObjectName("le_procT")
         self.horizontalLayout.addWidget(self.le_procT)
         self.comboBox_procTunit = QtWidgets.QComboBox(self.groupBox_processVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.comboBox_procTunit.sizePolicy().hasHeightForWidth()
+        )
+        self.comboBox_procTunit.setSizePolicy(sizePolicy)
         self.comboBox_procTunit.setObjectName("comboBox_procTunit")
         self.horizontalLayout.addWidget(self.comboBox_procTunit)
         self.gridLayout_8.addLayout(self.horizontalLayout, 0, 0, 1, 1)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.label_3 = QtWidgets.QLabel(self.groupBox_processVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
+        self.label_3.setSizePolicy(sizePolicy)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_2.addWidget(self.label_3)
         self.le_procP = QtWidgets.QLineEdit(self.groupBox_processVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.le_procP.sizePolicy().hasHeightForWidth())
+        self.le_procP.setSizePolicy(sizePolicy)
         self.le_procP.setObjectName("le_procP")
         self.horizontalLayout_2.addWidget(self.le_procP)
         self.comboBox_procPunit = QtWidgets.QComboBox(self.groupBox_processVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.comboBox_procPunit.sizePolicy().hasHeightForWidth()
+        )
+        self.comboBox_procPunit.setSizePolicy(sizePolicy)
         self.comboBox_procPunit.setObjectName("comboBox_procPunit")
         self.horizontalLayout_2.addWidget(self.comboBox_procPunit)
         self.gridLayout_8.addLayout(self.horizontalLayout_2, 0, 1, 1, 1)
         self.gridLayout_6.addWidget(self.groupBox_processVariables, 1, 0, 1, 1)
         self.groupBox_refVariables = QtWidgets.QGroupBox(self.frame_input)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.groupBox_refVariables.sizePolicy().hasHeightForWidth()
+        )
+        self.groupBox_refVariables.setSizePolicy(sizePolicy)
         self.groupBox_refVariables.setMinimumSize(QtCore.QSize(0, 0))
-        self.groupBox_refVariables.setMaximumSize(QtCore.QSize(16777215, 55))
+        self.groupBox_refVariables.setMaximumSize(QtCore.QSize(16777215, 1000))
         self.groupBox_refVariables.setObjectName("groupBox_refVariables")
         self.gridLayout_9 = QtWidgets.QGridLayout(self.groupBox_refVariables)
         self.gridLayout_9.setObjectName("gridLayout_9")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.label_4 = QtWidgets.QLabel(self.groupBox_refVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
+        self.label_4.setSizePolicy(sizePolicy)
         self.label_4.setObjectName("label_4")
         self.horizontalLayout_3.addWidget(self.label_4)
         self.le_refT = QtWidgets.QLineEdit(self.groupBox_refVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.le_refT.sizePolicy().hasHeightForWidth())
+        self.le_refT.setSizePolicy(sizePolicy)
         self.le_refT.setInputMethodHints(
             QtCore.Qt.ImhDigitsOnly | QtCore.Qt.ImhPreferNumbers
         )
         self.le_refT.setObjectName("le_refT")
         self.horizontalLayout_3.addWidget(self.le_refT)
         self.comboBox_refTunit = QtWidgets.QComboBox(self.groupBox_refVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.comboBox_refTunit.sizePolicy().hasHeightForWidth()
+        )
+        self.comboBox_refTunit.setSizePolicy(sizePolicy)
         self.comboBox_refTunit.setObjectName("comboBox_refTunit")
         self.horizontalLayout_3.addWidget(self.comboBox_refTunit)
         self.gridLayout_9.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.label_5 = QtWidgets.QLabel(self.groupBox_refVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
+        self.label_5.setSizePolicy(sizePolicy)
         self.label_5.setObjectName("label_5")
         self.horizontalLayout_4.addWidget(self.label_5)
         self.le_refP = QtWidgets.QLineEdit(self.groupBox_refVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.le_refP.sizePolicy().hasHeightForWidth())
+        self.le_refP.setSizePolicy(sizePolicy)
         self.le_refP.setObjectName("le_refP")
         self.horizontalLayout_4.addWidget(self.le_refP)
         self.comboBox_refPunit = QtWidgets.QComboBox(self.groupBox_refVariables)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.comboBox_refPunit.sizePolicy().hasHeightForWidth()
+        )
+        self.comboBox_refPunit.setSizePolicy(sizePolicy)
         self.comboBox_refPunit.setObjectName("comboBox_refPunit")
         self.horizontalLayout_4.addWidget(self.comboBox_refPunit)
         self.gridLayout_9.addLayout(self.horizontalLayout_4, 0, 1, 1, 1)
@@ -310,7 +420,7 @@ class Ui_MixtureCalculationWindow(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.frame_results)
         self.verticalLayout.setObjectName("verticalLayout")
         self.groupBox_information = QtWidgets.QGroupBox(self.frame_results)
-        self.groupBox_information.setMinimumSize(QtCore.QSize(0, 115))
+        self.groupBox_information.setMinimumSize(QtCore.QSize(0, 140))
         self.groupBox_information.setMaximumSize(QtCore.QSize(16777215, 250))
         self.groupBox_information.setObjectName("groupBox_information")
         self.gridLayout_12 = QtWidgets.QGridLayout(self.groupBox_information)
