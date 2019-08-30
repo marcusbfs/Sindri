@@ -6,14 +6,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="039b234d-0304-4f32-8884-327e2d94d008" name="Default Changelist" comment="k">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/Views/PureSubstanceView.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/Views/PureSubstanceView.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/css/mainstyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/css/mainstyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/ui/mixture_calculations_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/ui/mixture_calculations_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sindri/ui/pure_substance_calculations_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/ui/pure_substance_calculations_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/designer/mixture_calculations_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/mixture_calculations_ui.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/designer/pure_substance_calculations_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/pure_substance_calculations_ui.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/ui/pure_substance_diagrams_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/ui/pure_substance_diagrams_ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sindri/ui/units_options_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sindri/ui/units_options_ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/designer/pure_substance_diagrams_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/pure_substance_diagrams_ui.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/designer/units_options_ui - Copia.ui" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/designer/units_options_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/designer/units_options_ui.ui" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,8 +23,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Sindri/Views/PureSubstanceView.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="98" column="8" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="8" />
+            <state relative-caret-position="51">
+              <caret line="84" column="8" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="8" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -38,8 +35,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sindri/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="17">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -50,7 +47,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sindri/mainwindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="799">
+            <state relative-caret-position="748">
               <caret line="56" column="44" selection-start-line="56" selection-start-column="44" selection-end-line="56" selection-end-column="44" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
@@ -175,7 +172,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -197,6 +193,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -440,13 +437,13 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.487882" weight="0.32553193" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49209693" weight="0.42765957" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4915701" weight="0.42765957" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49367756" weight="0.32446808" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.48998946" weight="0.32765958" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.38883033" visible="true" weight="0.2925532" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.61116964" side_tool="true" visible="true" weight="0.2925532" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.3877766" visible="true" weight="0.2925532" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.6122234" side_tool="true" visible="true" weight="0.2925532" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.55268705" weight="0.43085107" />
       <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.49367756" weight="0.39255318" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -846,16 +843,6 @@
     <entry file="file://$PROJECT_DIR$/Sindri/css/mainstyle.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sindri/UNIFAC/unifac.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="731">
@@ -880,22 +867,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/mainwindow.py">
+    <entry file="file://$PROJECT_DIR$/Sindri/Views/PureSubstanceView.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="56" column="44" selection-start-line="56" selection-start-column="44" selection-end-line="56" selection-end-column="44" />
+        <state relative-caret-position="51">
+          <caret line="84" column="8" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="8" />
           <folding>
-            <element signature="e#0#36#0" expanded="true" />
+            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sindri/Views/PureSubstanceView.py">
+    <entry file="file://$PROJECT_DIR$/Sindri/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="98" column="8" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="8" />
+        <state relative-caret-position="17">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
           <folding>
-            <element signature="e#0#44#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sindri/mainwindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="56" column="44" selection-start-line="56" selection-start-column="44" selection-end-line="56" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>

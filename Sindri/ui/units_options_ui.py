@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'designer/units_options_ui.ui',
 # licensing of 'designer/units_options_ui.ui' applies.
 #
-# Created: Sun Jun  2 14:43:54 2019
+# Created: Fri Aug 30 19:11:16 2019
 #      by: pyside2-uic  running on PySide2 5.12.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,15 +15,15 @@ class Ui_Form_UnitsOptions(object):
     def setupUi(self, Form_UnitsOptions):
         Form_UnitsOptions.setObjectName("Form_UnitsOptions")
         Form_UnitsOptions.setWindowModality(QtCore.Qt.ApplicationModal)
-        Form_UnitsOptions.resize(284, 274)
-        Form_UnitsOptions.setMinimumSize(QtCore.QSize(260, 270))
+        Form_UnitsOptions.resize(290, 290)
+        Form_UnitsOptions.setMinimumSize(QtCore.QSize(290, 290))
         self.gridLayout_2 = QtWidgets.QGridLayout(Form_UnitsOptions)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.scrollArea = QtWidgets.QScrollArea(Form_UnitsOptions)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 264, 254))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 270, 270))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout.setObjectName("gridLayout")
@@ -116,6 +116,15 @@ class Ui_Form_UnitsOptions(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.frame_2)
         self.verticalLayout.setObjectName("verticalLayout")
         self.comboBox_pressure = QtWidgets.QComboBox(self.frame_2)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.comboBox_pressure.sizePolicy().hasHeightForWidth()
+        )
+        self.comboBox_pressure.setSizePolicy(sizePolicy)
         self.comboBox_pressure.setObjectName("comboBox_pressure")
         self.verticalLayout.addWidget(self.comboBox_pressure)
         self.comboBox_temperature = QtWidgets.QComboBox(self.frame_2)
