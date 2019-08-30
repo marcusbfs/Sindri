@@ -7,12 +7,12 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{D3900E38-79E3-4D50-A50F-8C35F71529F0}
 AppName=Sindri
-AppVersion=1.0.0
-;AppVerName=Sindri 1.0.0
+AppVersion=1.1.0
+;AppVerName=Sindri 1.1.0
 AppPublisher=Marcus Bruno Fernandes Silva
-AppPublisherURL=https://github.com/mrcsbrn/Sindri
-AppSupportURL=https://github.com/mrcsbrn/Sindri
-AppUpdatesURL=https://github.com/mrcsbrn/Sindri
+AppPublisherURL=https://github.com/marcusbfs/Sindri
+AppSupportURL=https://github.com/marcusbfs/Sindri
+AppUpdatesURL=https://github.com/marcusbfs/Sindri
 DefaultDirName={pf}\Sindri
 DisableProgramGroupPage=yes
 OutputBaseFilename=Sindri
