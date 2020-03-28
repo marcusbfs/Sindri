@@ -64,10 +64,10 @@ Click to view.
 ## Authors
 
 ### Developer
-- Marcus Bruno Fernandes Silva - Chemical Engineering student at Universidade Federal de Lavras, Brazil.
+- Marcus Bruno Fernandes Silva - BSc in Chemical Engineering - Universidade Federal de Lavras, Brazil.
 
 ### Advisor
-- Nathan Sombra Evangelista - Professor at Universidade Federal de Lavras, Brazil. [Website](https://www.nsevangelista.com/)
+- Nathan Sombra Evangelista - Professor at Universidade Federal de Lavras, Brazil. [Website](https://www.evangelistans.com.br/)
 
 
 ## Contribution
