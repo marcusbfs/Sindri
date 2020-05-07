@@ -3,6 +3,7 @@ import numpy as np
 # from fortran.UNIFAC import getgamma as _helper_getGamma2
 
 import db
+from numba import njit, jit
 
 
 def get_all_id_and_subgroups_formulas():
@@ -104,8 +105,6 @@ class UNIFAC:
             x, T, self.n, self.m, self.amk, self.vk, self.Rk, self.Qk
         )
 
-
-from numba import njit
 
 
 @njit(
