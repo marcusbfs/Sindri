@@ -3,7 +3,7 @@ kiwisolver==1.2.0
 llvmlite==0.32.0
 matplotlib==3.0.3
 numba==0.49.0
-numpy==1.16.2
+numpy==1.22.0
 pyparsing==2.4.7
 PySide2==5.12.0
 python-dateutil==2.8.1
